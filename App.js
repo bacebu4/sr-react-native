@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "./HomeScreen";
 import { ReviewScreen } from "./ReviewScreen";
+import { SettingsScreen } from "./SettingsScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import BottomSheet from "reanimated-bottom-sheet";
 import ContextSheet from "./src/context-sheet";
@@ -26,6 +27,25 @@ function SearchScreen() {
 }
 
 const HomeStack = createStackNavigator();
+
+const Overlay = ({ show }) => {
+  if (show) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      ></View>
+    );
+  }
+  return null;
+};
 
 function HomeStackScreen() {
   return (
@@ -53,25 +73,22 @@ function HomeStackScreen() {
 
 const Tab = createBottomTabNavigator();
 
-const renderContent = () => (
-  <View
-    style={{
-      backgroundColor: "pink",
-      padding: 16,
-      height: 650,
-    }}
-  >
-    <Text>Swipe down to close</Text>
-  </View>
-);
-
 export default function App() {
   const sheetRef = React.useRef(null);
+  const [showOverlay, setShowOverlay] = useState(false);
+
+  const activateOverlay = () => {
+    setShowOverlay(true);
+  };
+
+  const deactivateOverlay = () => {
+    setShowOverlay(false);
+  };
 
   const handleSheet = () => {
     sheetRef.current.snapTo(0);
-    console.log("hey");
   };
+
   return (
     <ContextSheet.Provider value={{ handleSheet }}>
       <NavigationContainer>
@@ -106,12 +123,15 @@ export default function App() {
           <Tab.Screen name="Search" component={SearchScreen} />
         </Tab.Navigator>
       </NavigationContainer>
+      <Overlay show={showOverlay}></Overlay>
       <BottomSheet
         ref={sheetRef}
         snapPoints={[650, 0]}
         initialSnap={1}
         borderRadius={30}
-        renderContent={renderContent}
+        renderContent={SettingsScreen}
+        onOpenStart={activateOverlay}
+        onCloseStart={deactivateOverlay}
       />
     </ContextSheet.Provider>
   );
