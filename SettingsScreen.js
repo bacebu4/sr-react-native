@@ -6,7 +6,7 @@ export const SettingsScreen = () => {
   return (
     <View
       style={{
-        backgroundColor: "pink",
+        backgroundColor: "white",
         padding: 16,
         height: 650,
       }}

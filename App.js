@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Animated,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Animated } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -15,7 +9,6 @@ import { SettingsScreen } from "./SettingsScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import BottomSheet from "reanimated-bottom-sheet";
 import ContextSheet from "./src/context-sheet";
-import { TouchableHighlight } from "react-native-gesture-handler";
 
 function AddScreen() {
   return (
@@ -99,9 +92,7 @@ export default function App() {
   };
 
   const closeSheet = () => {
-    console.log("close");
     sheetRef.current.snapTo(1);
-    setShow(false);
   };
 
   return (
