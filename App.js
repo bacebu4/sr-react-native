@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Animated } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -29,22 +29,22 @@ function SearchScreen() {
 const HomeStack = createStackNavigator();
 
 const Overlay = ({ show }) => {
-  if (show) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-        }}
-      ></View>
-    );
-  }
-  return null;
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        opacity: show ? 1 : 0,
+        zIndex: show ? 1 : -1,
+        trans,
+      }}
+    ></View>
+  );
 };
 
 function HomeStackScreen() {
