@@ -1,21 +1,118 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, View, Text } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import { HomeScreen } from "./HomeScreen";
+import { ReviewScreen } from "./ReviewScreen";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import BottomSheet from "reanimated-bottom-sheet";
+import ContextSheet from "./src/context-sheet";
 
-export default function App() {
+function AddScreen() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>Add!</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function SearchScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>Search!</Text>
+    </View>
+  );
+}
+
+const HomeStack = createStackNavigator();
+
+function HomeStackScreen() {
+  return (
+    <>
+      <HomeStack.Navigator>
+        <HomeStack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <HomeStack.Screen
+          name="Review"
+          component={ReviewScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </HomeStack.Navigator>
+    </>
+  );
+}
+
+const Tab = createBottomTabNavigator();
+
+const renderContent = () => (
+  <View
+    style={{
+      backgroundColor: "pink",
+      padding: 16,
+      height: 650,
+    }}
+  >
+    <Text>Swipe down to close</Text>
+  </View>
+);
+
+export default function App() {
+  const sheetRef = React.useRef(null);
+
+  const handleSheet = () => {
+    sheetRef.current.snapTo(0);
+    console.log("hey");
+  };
+  return (
+    <ContextSheet.Provider value={{ handleSheet }}>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
+
+              if (route.name === "Home") {
+                iconName = "ios-home";
+              } else if (route.name === "Search") {
+                iconName = "ios-search";
+              } else if (route.name === "Add") {
+                iconName = focused
+                  ? "ios-add-circle"
+                  : "ios-add-circle-outline";
+              }
+
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: "#CCA9F9",
+            inactiveTintColor: "#B0AFAF",
+          }}
+          navigationOptions={{
+            header: null,
+          }}
+        >
+          <Tab.Screen name="Home" component={HomeStackScreen} />
+          <Tab.Screen name="Add" component={AddScreen} />
+          <Tab.Screen name="Search" component={SearchScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={[650, 0]}
+        initialSnap={1}
+        borderRadius={30}
+        renderContent={renderContent}
+      />
+    </ContextSheet.Provider>
+  );
+}
