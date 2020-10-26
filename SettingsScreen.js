@@ -1,29 +1,41 @@
 import React, { useContext } from "react";
-import { ScrollView, StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Title } from "./src/Title";
+// import ContextSheet from "./src/context-sheet";
 
-export const SettingsScreen = () => {
+export const SettingsScreen = ({ closeSheet }) => {
+  // const { handleSheet } = useContext(ContextSheet);
+
   return (
     <View
       style={{
         backgroundColor: "white",
-        padding: 16,
         height: 650,
       }}
     >
-      <Text>Swipe down to close</Text>
+      <View style={styles.center}>
+        <View style={styles.topBar}></View>
+      </View>
+      <View style={{ ...styles.container, ...styles.mt, ...styles.title }}>
+        <Title title={"Account preferences"}></Title>
+        <TouchableOpacity onPress={closeSheet}>
+          <Text style={styles.link}>Done</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: "white",
-  },
   container: {
     marginLeft: 32,
     marginRight: 32,
+  },
+  topBar: {
+    marginTop: 24,
+    width: 32,
+    height: 5,
+    backgroundColor: "#dbdbdb",
   },
   mt: {
     marginTop: 32,
@@ -39,5 +51,16 @@ const styles = StyleSheet.create({
   },
   center: {
     alignItems: "center",
+  },
+  title: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  link: {
+    color: "#CCA9F9",
+    fontSize: 16,
+    fontWeight: "600",
+    marginTop: 4,
   },
 });

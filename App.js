@@ -9,6 +9,7 @@ import { SettingsScreen } from "./SettingsScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import BottomSheet from "reanimated-bottom-sheet";
 import ContextSheet from "./src/context-sheet";
+import CloseContextSheet from "./src/close-context-sheet";
 
 function AddScreen() {
   return (
@@ -96,61 +97,65 @@ export default function App() {
   };
 
   return (
-    <ContextSheet.Provider value={{ handleSheet }}>
-      <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
+    <>
+      <ContextSheet.Provider value={{ handleSheet }}>
+        <NavigationContainer>
+          <Tab.Navigator
+            screenOptions={({ route }) => ({
+              tabBarIcon: ({ focused, color, size }) => {
+                let iconName;
 
-              if (route.name === "Home") {
-                iconName = "ios-home";
-              } else if (route.name === "Search") {
-                iconName = "ios-search";
-              } else if (route.name === "Add") {
-                iconName = focused
-                  ? "ios-add-circle"
-                  : "ios-add-circle-outline";
-              }
+                if (route.name === "Home") {
+                  iconName = "ios-home";
+                } else if (route.name === "Search") {
+                  iconName = "ios-search";
+                } else if (route.name === "Add") {
+                  iconName = focused
+                    ? "ios-add-circle"
+                    : "ios-add-circle-outline";
+                }
 
-              return <Ionicons name={iconName} size={size} color={color} />;
-            },
-          })}
-          tabBarOptions={{
-            activeTintColor: "#CCA9F9",
-            inactiveTintColor: "#B0AFAF",
+                return <Ionicons name={iconName} size={size} color={color} />;
+              },
+            })}
+            tabBarOptions={{
+              activeTintColor: "#CCA9F9",
+              inactiveTintColor: "#B0AFAF",
+            }}
+            navigationOptions={{
+              header: null,
+            }}
+          >
+            <Tab.Screen name="Home" component={HomeStackScreen} />
+            <Tab.Screen name="Add" component={AddScreen} />
+            <Tab.Screen name="Search" component={SearchScreen} />
+          </Tab.Navigator>
+        </NavigationContainer>
+
+        <Animated.View
+          style={{
+            flex: 1,
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            opacity: opacity,
+            zIndex: zIndex,
           }}
-          navigationOptions={{
-            header: null,
-          }}
-        >
-          <Tab.Screen name="Home" component={HomeStackScreen} />
-          <Tab.Screen name="Add" component={AddScreen} />
-          <Tab.Screen name="Search" component={SearchScreen} />
-        </Tab.Navigator>
-      </NavigationContainer>
-      <Animated.View
-        style={{
-          flex: 1,
-          backgroundColor: "rgba(0, 0, 0, 0.8)",
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          opacity: opacity,
-          zIndex: zIndex,
-        }}
-      ></Animated.View>
-      <BottomSheet
-        ref={sheetRef}
-        snapPoints={[650, 0]}
-        initialSnap={1}
-        borderRadius={30}
-        renderContent={SettingsScreen}
-        onOpenStart={activateOverlay}
-        onCloseStart={deactivateOverlay}
-      />
-    </ContextSheet.Provider>
+        ></Animated.View>
+        <BottomSheet
+          ref={sheetRef}
+          snapPoints={[650, 0]}
+          initialSnap={1}
+          renderContent={() => <SettingsScreen closeSheet={closeSheet} />}
+          borderRadius={30}
+          onOpenStart={activateOverlay}
+          onCloseStart={deactivateOverlay}
+          enabledContentTapInteraction={false}
+        ></BottomSheet>
+      </ContextSheet.Provider>
+    </>
   );
 }
