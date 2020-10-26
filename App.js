@@ -1,5 +1,11 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, Animated } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Animated,
+  TouchableOpacity,
+} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -9,6 +15,7 @@ import { SettingsScreen } from "./SettingsScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import BottomSheet from "reanimated-bottom-sheet";
 import ContextSheet from "./src/context-sheet";
+import { TouchableHighlight } from "react-native-gesture-handler";
 
 function AddScreen() {
   return (
@@ -27,25 +34,6 @@ function SearchScreen() {
 }
 
 const HomeStack = createStackNavigator();
-
-const Overlay = ({ show }) => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        opacity: show ? 1 : 0,
-        zIndex: show ? 1 : -1,
-        trans,
-      }}
-    ></View>
-  );
-};
 
 function HomeStackScreen() {
   return (
@@ -75,18 +63,45 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   const sheetRef = React.useRef(null);
-  const [showOverlay, setShowOverlay] = useState(false);
+  const [opacity] = useState(new Animated.Value(0));
+  const [show, setShow] = useState(false);
+  const [zIndex, setZIndex] = useState(-1);
+
+  useEffect(() => {
+    if (show) {
+      setZIndex(1);
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start(() => {
+        setZIndex(-1);
+      });
+    }
+  }, [show]);
 
   const activateOverlay = () => {
-    setShowOverlay(true);
+    setShow(true);
   };
 
   const deactivateOverlay = () => {
-    setShowOverlay(false);
+    setShow(false);
   };
 
   const handleSheet = () => {
     sheetRef.current.snapTo(0);
+  };
+
+  const closeSheet = () => {
+    console.log("close");
+    sheetRef.current.snapTo(1);
+    setShow(false);
   };
 
   return (
@@ -123,7 +138,19 @@ export default function App() {
           <Tab.Screen name="Search" component={SearchScreen} />
         </Tab.Navigator>
       </NavigationContainer>
-      <Overlay show={showOverlay}></Overlay>
+      <Animated.View
+        style={{
+          flex: 1,
+          backgroundColor: "rgba(0, 0, 0, 0.8)",
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          opacity: opacity,
+          zIndex: zIndex,
+        }}
+      ></Animated.View>
       <BottomSheet
         ref={sheetRef}
         snapPoints={[650, 0]}
