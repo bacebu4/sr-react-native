@@ -14,7 +14,8 @@ import { Title } from "./src/Title";
 import { Carousel } from "./src/Carousel";
 import { SeeAll } from "./src/SeeAll";
 import { Tag } from "./src/Tag";
-import ContextSheet from "./src/context-sheet";
+import { UiStoreContext } from "./src/store/UiStore";
+import { observer } from "mobx-react-lite";
 
 const wait = (timeout) => {
   return new Promise((resolve) => {
@@ -22,7 +23,7 @@ const wait = (timeout) => {
   });
 };
 
-export const HomeScreen = ({ navigation }) => {
+export const HomeScreen = observer(({ navigation }) => {
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -31,7 +32,7 @@ export const HomeScreen = ({ navigation }) => {
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
-  const { handleSheet } = useContext(ContextSheet);
+  const UiStore = useContext(UiStoreContext);
 
   return (
     <View style={styles.mainContainer}>
@@ -42,7 +43,10 @@ export const HomeScreen = ({ navigation }) => {
         }
       >
         <View style={styles.container}>
-          <Navbar title="Book stash" handleClick={handleSheet}></Navbar>
+          <Navbar
+            title="Book stash"
+            handleClick={() => UiStore.setShowSettingsSheet(true)}
+          ></Navbar>
         </View>
 
         <View style={{ ...styles.mt, ...styles.container }}>
@@ -85,7 +89,7 @@ export const HomeScreen = ({ navigation }) => {
       </ScrollView>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   mainContainer: {
