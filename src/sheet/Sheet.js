@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Animated } from "react-native";
+import { Animated } from "react-native";
 import { SettingsScreen } from "../../SettingsScreen";
 import BottomSheet from "reanimated-bottom-sheet";
 import { UiStoreContext } from "../store/UiStore";
