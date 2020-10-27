@@ -60,14 +60,14 @@ const Tab = createBottomTabNavigator();
 export default observer(function App() {
   const sheetRef = React.useRef(null);
   const [opacity] = useState(new Animated.Value(0));
-  const [show, setShow] = useState(false);
   const [zIndex, setZIndex] = useState(-1);
 
   const UiStore = useContext(UiStoreContext);
 
   useEffect(() => {
-    if (show) {
+    if (UiStore.showSettingsSheet) {
       setZIndex(1);
+      handleSheet();
       Animated.timing(opacity, {
         toValue: 1,
         duration: 200,
@@ -82,15 +82,13 @@ export default observer(function App() {
         setZIndex(-1);
       });
     }
-  }, [show]);
+  }, [UiStore.showSettingsSheet]);
 
   const activateOverlay = () => {
-    setShow(true);
     UiStore.setShowSettingsSheet(true);
   };
 
   const deactivateOverlay = () => {
-    setShow(false);
     UiStore.setShowSettingsSheet(false);
   };
 
@@ -101,12 +99,6 @@ export default observer(function App() {
   const closeSheet = () => {
     sheetRef.current.snapTo(1);
   };
-
-  useEffect(() => {
-    if (UiStore.showSettingsSheet) {
-      handleSheet();
-    }
-  }, [UiStore.showSettingsSheet]);
 
   return (
     <>
@@ -160,7 +152,7 @@ export default observer(function App() {
         ref={sheetRef}
         snapPoints={[650, 0]}
         initialSnap={1}
-        renderContent={() => <SettingsScreen closeSheet={closeSheet} />}
+        renderContent={() => <SettingsScreen closeSheet={closeSheet} />} // TODO pass state not func
         borderRadius={30}
         onOpenStart={activateOverlay}
         onCloseStart={deactivateOverlay}

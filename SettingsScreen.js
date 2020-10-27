@@ -1,11 +1,8 @@
 import React, { useContext } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Title } from "./src/Title";
-// import ContextSheet from "./src/context-sheet";
 
 export const SettingsScreen = ({ closeSheet }) => {
-  // const { handleSheet } = useContext(ContextSheet);
-
   return (
     <View
       style={{
@@ -36,6 +33,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 5,
     backgroundColor: "#dbdbdb",
+    borderRadius: 100,
   },
   mt: {
     marginTop: 32,
