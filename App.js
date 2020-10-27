@@ -37,7 +37,6 @@ function HomeStackScreen() {
             headerShown: false,
           }}
         />
-
         <HomeStack.Screen
           name="Review"
           component={ReviewScreen}
