@@ -2,7 +2,6 @@ import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
 
 class UiStore {
-  count = 0;
   showSettingsSheet = false;
 
   setShowSettingsSheet(value) {

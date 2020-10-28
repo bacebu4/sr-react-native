@@ -1,76 +1,65 @@
-import React from "react";
-import {
-  ScrollView,
-  RefreshControl,
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
-} from "react-native";
+import React, { useContext } from "react";
+import { ScrollView, StyleSheet, View, Dimensions } from "react-native";
 import { Card } from "./src/Card";
 import { NavbarSecondary } from "./src/NavbarSecondary";
 import { Title } from "./src/Title";
 import { Tag } from "./src/Tag";
-import { TabView, SceneMap } from "react-native-tab-view";
+import { TabView } from "react-native-tab-view";
 import { Comment } from "./src/Comment";
+import { observer } from "mobx-react-lite";
+import { NotesStoreContext } from "./src/store/NotesStore";
 
-const FirstRoute = () => (
-  <ScrollView showsVerticalScrollIndicator={false}>
-    <View style={{ ...styles.container, ...styles.mt }}>
-      <Card></Card>
-    </View>
+const FirstRoute = observer(({ noteIndex }) => {
+  const NotesStore = useContext(NotesStoreContext);
+  const note = NotesStore.highlights[noteIndex - 1];
 
-    <View style={{ ...styles.container, ...styles.mt }}>
-      <Title title="Your comment" type="small"></Title>
-    </View>
-    <View style={{ ...styles.container, ...styles.mts }}>
-      <Comment></Comment>
-    </View>
+  return (
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={{ ...styles.container, ...styles.mt }}>
+        <Card note={note}></Card>
+      </View>
 
-    <View style={{ ...styles.container, ...styles.mt, ...styles.mb }}>
-      <Title title="Review by tags" type="small"></Title>
-      <View style={styles.tagContainer}>
-        <View style={styles.tag}>
-          <Tag title="Life"></Tag>
-        </View>
-        <View style={styles.tag}>
-          <Tag hue={200} title="Success"></Tag>
-        </View>
-        <View style={styles.tag}>
-          <Tag hue={300} title="Important"></Tag>
+      <View style={{ ...styles.container, ...styles.mt }}>
+        <Title title="Your comment" type="small"></Title>
+      </View>
+      <View style={{ ...styles.container, ...styles.mts }}>
+        <Comment></Comment>
+      </View>
+
+      <View style={{ ...styles.container, ...styles.mt, ...styles.mb }}>
+        <Title title="Review by tags" type="small"></Title>
+        <View style={styles.tagContainer}>
+          <View style={styles.tag}>
+            <Tag title="Life"></Tag>
+          </View>
+          <View style={styles.tag}>
+            <Tag hue={200} title="Success"></Tag>
+          </View>
+          <View style={styles.tag}>
+            <Tag hue={300} title="Important"></Tag>
+          </View>
         </View>
       </View>
-    </View>
-  </ScrollView>
-);
+    </ScrollView>
+  );
+});
 
-const SecondRoute = () => (
-  <View style={{ ...styles.container, ...styles.mt }}>
-    <Card></Card>
-  </View>
-);
+const renderScene = ({ route, jumpTo }) => {
+  return <FirstRoute jumpTo={jumpTo} noteIndex={Number(route.key)} />;
+};
 
-const ThirdRoute = () => (
-  <View style={{ ...styles.container, ...styles.mt }}>
-    <Card></Card>
-  </View>
-);
-
-const initialLayout = { width: Dimensions.get("window").width - 64 };
+const initialLayout = { width: Dimensions.get("window").width };
+// const initialLayout = { width: Dimensions.get("window").width - 64 }; // why it was here???
 
 export const ReviewScreen = ({ navigation }) => {
+  const amount = 3;
+  const initialRoutes = [];
+  for (let i = 1; i <= amount; i++) {
+    initialRoutes.push({ key: i, title: i });
+  }
   const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: "first", title: "First" },
-    { key: "second", title: "Second" },
-    { key: "third", title: "Third" },
-  ]);
 
-  const renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-    third: ThirdRoute,
-  });
+  const [routes] = React.useState(initialRoutes);
 
   const handleNextSlide = () => {
     setIndex((prev) => prev + 1);
