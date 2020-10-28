@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -7,6 +7,8 @@ import { HomeScreen } from "./HomeScreen";
 import { ReviewScreen } from "./ReviewScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Sheet } from "./src/sheet/Sheet";
+import { HighlightsStoreContext } from "./src/store/HighlightsStore";
+import { observer } from "mobx-react-lite";
 
 function AddScreen() {
   return (
@@ -51,7 +53,14 @@ function HomeStackScreen() {
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+export default observer(function App() {
+  const HighlightsStore = useContext(HighlightsStoreContext);
+
+  useEffect(() => {
+    HighlightsStore.fetchHighlights();
+    // console.log(HighlightsStore.highlights[0]);
+  }, []);
+
   return (
     <>
       <Sheet></Sheet>
@@ -90,4 +99,4 @@ export default function App() {
       </NavigationContainer>
     </>
   );
-}
+});
