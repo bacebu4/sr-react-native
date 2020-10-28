@@ -26,9 +26,13 @@ class NotesStore {
       const notes = await request(
         `http://192.168.1.70:3000/api/getDailyNotes?amount=${amount}`
       );
-      this.highlights = [...notes];
+      runInAction(() => {
+        this.highlights = [...notes];
+      });
     } catch (e) {
-      console.log("error", e);
+      runInAction(() => {
+        console.log("error", e);
+      });
     }
   }
 }
