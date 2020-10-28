@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
+import Constants from "expo-constants";
 
 export const Navbar = ({ title, handleClick }) => {
   return (
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
   },
   navbar: {
     flexDirection: "row",
-    marginTop: 98,
+    marginTop: Constants.statusBarHeight + 40,
     justifyContent: "space-between",
     alignItems: "baseline",
   },
