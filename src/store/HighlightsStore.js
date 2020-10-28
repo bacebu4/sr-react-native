@@ -1,16 +1,20 @@
 import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
+import request from "../functions/request";
 
 class HighlightsStore {
   highlights = [];
 
-  fetchHighlights() {
-    this.highlights.push({
-      note_text:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit hic excepturi rerum modi similique odio totam beatae magni",
-      note_title: "Anna Karenina",
-      author_full_name: "Leo Tolstoy",
-    });
+  async fetchHighlights() {
+    try {
+      const amount = 3;
+      const notes = await request(
+        `http://192.168.1.70:3000/api/getDailyNotes?amount=${amount}`
+      );
+      this.highlights.push(...notes);
+    } catch (e) {
+      console.log("error", e);
+    }
   }
 
   constructor() {
