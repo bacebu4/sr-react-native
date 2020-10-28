@@ -65,6 +65,8 @@ const styles = StyleSheet.create({
   },
   info: {
     marginLeft: 16,
+    flexDirection: "column",
+    marginRight: 64,
   },
   more: {
     marginLeft: "auto",
@@ -84,6 +86,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "Cochin",
     color: "#B0AFAF",
+    marginTop: 0,
   },
   noteText: {
     textAlign: "justify",
