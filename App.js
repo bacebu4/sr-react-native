@@ -93,7 +93,7 @@ export default observer(function App() {
           }}
         >
           <Tab.Screen name="Home" component={HomeStackScreen} />
-          <Tab.Screen name="Add" component={AddScreen} />
+          {/* <Tab.Screen name="Add" component={AddScreen} /> */}
           <Tab.Screen name="Search" component={SearchScreen} />
         </Tab.Navigator>
       </NavigationContainer>
