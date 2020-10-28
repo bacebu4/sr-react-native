@@ -15,6 +15,7 @@ import { Carousel } from "./src/Carousel";
 import { SeeAll } from "./src/SeeAll";
 import { Tag } from "./src/Tag";
 import { UiStoreContext } from "./src/store/UiStore";
+import { NotesStoreContext } from "./src/store/NotesStore";
 import { observer } from "mobx-react-lite";
 
 const wait = (timeout) => {
@@ -28,11 +29,12 @@ export const HomeScreen = observer(({ navigation }) => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-
-    wait(2000).then(() => setRefreshing(false));
+    NotesStore.fetchHighlights().then(() => setRefreshing(false));
+    // wait(2000).then(() => setRefreshing(false));
   }, []);
 
   const UiStore = useContext(UiStoreContext);
+  const NotesStore = useContext(NotesStoreContext);
 
   return (
     <View style={styles.mainContainer}>
@@ -50,7 +52,11 @@ export const HomeScreen = observer(({ navigation }) => {
         </View>
 
         <View style={{ ...styles.mt, ...styles.container }}>
-          <Card></Card>
+          {NotesStore.highlights.length ? (
+            <Card note={NotesStore.highlights[0]} />
+          ) : (
+            <Text>nothing</Text>
+          )}
         </View>
 
         <View style={{ ...styles.mt, ...styles.container, ...styles.center }}>

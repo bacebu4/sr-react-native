@@ -7,7 +7,7 @@ import { HomeScreen } from "./HomeScreen";
 import { ReviewScreen } from "./ReviewScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Sheet } from "./src/sheet/Sheet";
-import { HighlightsStoreContext } from "./src/store/HighlightsStore";
+import { NotesStoreContext } from "./src/store/NotesStore";
 import { observer } from "mobx-react-lite";
 
 function AddScreen() {
@@ -54,10 +54,10 @@ function HomeStackScreen() {
 const Tab = createBottomTabNavigator();
 
 export default observer(function App() {
-  const HighlightsStore = useContext(HighlightsStoreContext);
+  const NotesStore = useContext(NotesStoreContext);
 
   useEffect(() => {
-    HighlightsStore.fetchHighlights();
+    NotesStore.fetchHighlights();
     // console.log(HighlightsStore.highlights[0]);
   }, []);
 

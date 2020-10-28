@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 
-export const Card = () => {
+export const Card = ({ note }) => {
   const actionSheetRef = React.useRef(null);
 
   const showActionSheet = () => {
@@ -17,10 +17,10 @@ export const Card = () => {
         </View>
         <View style={styles.info}>
           <View>
-            <Text style={styles.title}>4 Hour Workweek</Text>
+            <Text style={styles.title}>{note?.book_title}</Text>
           </View>
           <View>
-            <Text style={styles.author}>Tim Ferris</Text>
+            <Text style={styles.author}>{note?.author_full_name}</Text>
           </View>
         </View>
         <View style={styles.more}>
@@ -30,11 +30,7 @@ export const Card = () => {
         </View>
       </View>
       <View style={styles.note}>
-        <Text style={styles.noteText}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit hic
-          excepturi rerum modi similique odio totam beatae magni distinctio
-          accusamus explicab
-        </Text>
+        <Text style={styles.noteText}>{note?.note_text}</Text>
       </View>
       <ActionSheet
         style={styles}
