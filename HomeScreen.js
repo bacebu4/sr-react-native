@@ -18,19 +18,12 @@ import { UiStoreContext } from "./src/store/UiStore";
 import { NotesStoreContext } from "./src/store/NotesStore";
 import { observer } from "mobx-react-lite";
 
-const wait = (timeout) => {
-  return new Promise((resolve) => {
-    setTimeout(resolve, timeout);
-  });
-};
-
 export const HomeScreen = observer(({ navigation }) => {
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     NotesStore.fetchHighlights().then(() => setRefreshing(false));
-    // wait(2000).then(() => setRefreshing(false));
   }, []);
 
   const UiStore = useContext(UiStoreContext);

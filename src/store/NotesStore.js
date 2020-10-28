@@ -13,7 +13,6 @@ class NotesStore {
   highlights = [];
 
   constructor() {
-    // makeAutoObservable(this);
     makeObservable(this, {
       highlights: observable,
       fetchHighlights: action,
