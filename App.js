@@ -4,10 +4,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "./HomeScreen";
+import { AuthHomeScreen } from "./src/pages/auth/AuthHomeScreen";
+import { AuthLoginScreen } from "./src/pages/auth/AuthLoginScreen";
 import { ReviewScreen } from "./ReviewScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Sheet } from "./src/sheet/Sheet";
 import { NotesStoreContext } from "./src/store/NotesStore";
+import { AuthStoreContext } from "./src/store/AuthStore";
 import { observer } from "mobx-react-lite";
 
 function AddScreen() {
@@ -27,6 +30,7 @@ function SearchScreen() {
 }
 
 const HomeStack = createStackNavigator();
+const AuthStack = createStackNavigator();
 
 function HomeStackScreen() {
   return (
@@ -51,14 +55,38 @@ function HomeStackScreen() {
   );
 }
 
+function AuthStackScreen() {
+  return (
+    <>
+      <AuthStack.Navigator>
+        <AuthStack.Screen
+          name="AuthHome"
+          component={AuthHomeScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <AuthStack.Screen
+          name="AuthLogin"
+          component={AuthLoginScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </AuthStack.Navigator>
+    </>
+  );
+}
+
 const Tab = createBottomTabNavigator();
 
 export default observer(function App() {
   const NotesStore = useContext(NotesStoreContext);
+  const AuthStore = useContext(AuthStoreContext);
 
   useEffect(() => {
     NotesStore.fetchHighlights();
-    // console.log(HighlightsStore.highlights[0]);
+    AuthStore.initFirebase();
   }, []);
 
   return (
@@ -92,9 +120,21 @@ export default observer(function App() {
             header: null,
           }}
         >
-          <Tab.Screen name="Home" component={HomeStackScreen} />
-          {/* <Tab.Screen name="Add" component={AddScreen} /> */}
-          <Tab.Screen name="Search" component={SearchScreen} />
+          {!AuthStore.isLogged ? (
+            <Tab.Screen
+              name="Add"
+              component={AuthStackScreen}
+              options={{
+                tabBarVisible: false,
+              }}
+            />
+          ) : (
+            <>
+              <Tab.Screen name="Home" component={HomeStackScreen} />
+              {/* <Tab.Screen name="Add" component={AddScreen} /> */}
+              <Tab.Screen name="Search" component={SearchScreen} />
+            </>
+          )}
         </Tab.Navigator>
       </NavigationContainer>
     </>
