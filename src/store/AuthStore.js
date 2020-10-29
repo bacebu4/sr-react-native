@@ -38,7 +38,8 @@ class AuthStore {
       appId: "1:573287991778:web:639f72a2184fd0013c51bb",
     };
     const firebaseApp = firebase.initializeApp(firebaseConfig);
-    firebaseAuth = firebaseApp.auth();
+    this.firebaseAuth = firebaseApp.auth();
+    console.log(this.firebaseAuth);
   }
 }
 

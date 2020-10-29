@@ -8,6 +8,7 @@ import { ReviewScreen } from "./ReviewScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Sheet } from "./src/sheet/Sheet";
 import { NotesStoreContext } from "./src/store/NotesStore";
+import { AuthStoreContext } from "./src/store/AuthStore";
 import { observer } from "mobx-react-lite";
 
 function AddScreen() {
@@ -55,9 +56,11 @@ const Tab = createBottomTabNavigator();
 
 export default observer(function App() {
   const NotesStore = useContext(NotesStoreContext);
+  const AuthStore = useContext(AuthStoreContext);
 
   useEffect(() => {
     NotesStore.fetchHighlights();
+    AuthStore.initFirebase();
   }, []);
 
   return (
