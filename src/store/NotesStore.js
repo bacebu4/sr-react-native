@@ -1,12 +1,4 @@
-import {
-  makeAutoObservable,
-  makeObservable,
-  observable,
-  computed,
-  action,
-  runInAction,
-  flow,
-} from "mobx";
+import { makeObservable, observable, action, flow } from "mobx";
 import { createContext } from "react";
 import request from "../functions/request";
 
