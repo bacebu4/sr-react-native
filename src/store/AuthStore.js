@@ -13,6 +13,7 @@ class AuthStore {
     makeObservable(this, {
       isLoading: observable,
       isLogged: observable,
+      isLoginLoading: observable,
       firebaseAuth: observable,
       setLoading: action,
       setLogged: action,
@@ -20,6 +21,7 @@ class AuthStore {
       handleAuthStateChange: action,
       loginUser: flow,
       setLoginLoading: action,
+      logoutUser: flow,
     });
   }
 
@@ -72,7 +74,18 @@ class AuthStore {
         payload.password
       );
     } catch (error) {
-      console.log("error", error);
+      console.log("error", error.message);
+    } finally {
+      this.setLoginLoading(false);
+    }
+  }
+
+  *logoutUser() {
+    try {
+      this.setLoginLoading(true);
+      yield firebase.auth().signOut();
+    } catch (error) {
+      console.log("error", error.message);
     } finally {
       this.setLoginLoading(false);
     }

@@ -1,8 +1,20 @@
 import React, { useContext } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { MainButton } from "./src/MainButton";
 import { Title } from "./src/Title";
+import { observer } from "mobx-react-lite";
+import { AuthStoreContext } from "./src/store/AuthStore";
+import { UiStoreContext } from "./src/store/UiStore";
 
-export const SettingsScreen = ({ closeSheet }) => {
+export const SettingsScreen = observer(({ closeSheet }) => {
+  const AuthStore = useContext(AuthStoreContext);
+  const UiStore = useContext(UiStoreContext);
+
+  const handleLogout = () => {
+    AuthStore.logoutUser();
+    UiStore.setShowSettingsSheet(false);
+  };
+
   return (
     <View
       style={{
@@ -19,14 +31,27 @@ export const SettingsScreen = ({ closeSheet }) => {
           <Text style={styles.link}>Done</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.center}>
+        <View style={styles.button}>
+          <MainButton
+            title="Log Out"
+            loading={AuthStore.isLoginLoading}
+            clickAction={handleLogout}
+          ></MainButton>
+        </View>
+      </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
     marginLeft: 32,
     marginRight: 32,
+  },
+  button: {
+    marginTop: 74,
+    width: 180,
   },
   topBar: {
     marginTop: 24,

@@ -12,8 +12,6 @@ export const AuthLoginScreen = observer(({ navigation }) => {
   const AuthStore = useContext(AuthStoreContext);
 
   const handleSubmit = () => {
-    console.log("email: ", email);
-    console.log("password: ", password);
     AuthStore.loginUser({ email, password });
   };
   return (
