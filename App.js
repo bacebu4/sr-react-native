@@ -29,6 +29,7 @@ function SearchScreen() {
 }
 
 const HomeStack = createStackNavigator();
+const AuthStack = createStackNavigator();
 
 function HomeStackScreen() {
   return (
@@ -49,6 +50,22 @@ function HomeStackScreen() {
           }}
         />
       </HomeStack.Navigator>
+    </>
+  );
+}
+
+function AuthStackScreen() {
+  return (
+    <>
+      <AuthStack.Navigator>
+        <AuthStack.Screen
+          name="AuthHome"
+          component={AuthHomeScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </AuthStack.Navigator>
     </>
   );
 }
@@ -99,7 +116,7 @@ export default observer(function App() {
           {!AuthStore.isLogged ? (
             <Tab.Screen
               name="Add"
-              component={AuthHomeScreen}
+              component={AuthStackScreen}
               options={{
                 tabBarVisible: false,
               }}
