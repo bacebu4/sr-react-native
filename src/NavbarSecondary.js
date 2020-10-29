@@ -24,7 +24,7 @@ export const NavbarSecondary = ({ title, handleClick, handleNext, index }) => {
           shadowColor="#d7d7d7"
           bgColor="#fff"
         ></ProgressCircle>
-        <Text style={styles.info}>Review Process Pending</Text>
+        <Text style={styles.info}>Review Process</Text>
         <Text style={styles.stat}>{index} more left</Text>
       </View>
     </View>

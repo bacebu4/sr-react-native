@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
+    alignItems: "flex-start",
   },
   info: {
     marginLeft: 16,
@@ -81,6 +82,7 @@ const styles = StyleSheet.create({
     color: "#343434",
     fontWeight: "bold",
     fontFamily: "Cochin",
+    lineHeight: 22,
   },
   author: {
     fontSize: 18,

@@ -1,12 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 export const Book = () => {
   return (
     <View style={styles.wrapper}>
-      <Image source={require("./book.png")} />
-      <Text style={styles.title}>4 Hour Workweek</Text>
-      <Text style={styles.author}>Tim Ferris</Text>
+      <TouchableOpacity>
+        <Image source={require("./book.png")} />
+        <Text style={styles.title}>4 Hour Workweek</Text>
+        <Text style={styles.author}>Tim Ferris</Text>
+      </TouchableOpacity>
     </View>
   );
 };

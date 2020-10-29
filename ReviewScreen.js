@@ -20,14 +20,14 @@ const FirstRoute = observer(({ noteIndex }) => {
       </View>
 
       <View style={{ ...styles.container, ...styles.mt }}>
-        <Title title="Your comment" type="small"></Title>
+        <Title title="Your comment:" type="small"></Title>
       </View>
       <View style={{ ...styles.container, ...styles.mts }}>
         <Comment></Comment>
       </View>
 
       <View style={{ ...styles.container, ...styles.mt, ...styles.mb }}>
-        <Title title="Review by tags" type="small"></Title>
+        <Title title="Your tags:" type="small"></Title>
         <View style={styles.tagContainer}>
           <View style={styles.tag}>
             <Tag title="Life"></Tag>
