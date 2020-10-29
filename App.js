@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "./HomeScreen";
+import { AuthHomeScreen } from "./src/pages/auth/AuthHomeScreen";
 import { ReviewScreen } from "./ReviewScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Sheet } from "./src/sheet/Sheet";
@@ -60,7 +61,8 @@ export default observer(function App() {
 
   useEffect(() => {
     NotesStore.fetchHighlights();
-    AuthStore.initFirebase();
+    // AuthStore.initFirebase();
+    console.log(AuthStore.isLogged);
   }, []);
 
   return (
@@ -94,9 +96,21 @@ export default observer(function App() {
             header: null,
           }}
         >
-          <Tab.Screen name="Home" component={HomeStackScreen} />
-          {/* <Tab.Screen name="Add" component={AddScreen} /> */}
-          <Tab.Screen name="Search" component={SearchScreen} />
+          {!AuthStore.isLogged ? (
+            <Tab.Screen
+              name="Add"
+              component={AuthHomeScreen}
+              options={{
+                tabBarVisible: false,
+              }}
+            />
+          ) : (
+            <>
+              <Tab.Screen name="Home" component={HomeStackScreen} />
+              {/* <Tab.Screen name="Add" component={AddScreen} /> */}
+              <Tab.Screen name="Search" component={SearchScreen} />
+            </>
+          )}
         </Tab.Navigator>
       </NavigationContainer>
     </>

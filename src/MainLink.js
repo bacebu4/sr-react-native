@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-export const MainButton = ({ clickAction, title = "Start review process" }) => {
+export const MainLink = ({ clickAction, title = "Default title" }) => {
   return (
     <TouchableOpacity onPress={clickAction}>
       <View style={styles.wrapper}>
@@ -13,16 +13,11 @@ export const MainButton = ({ clickAction, title = "Start review process" }) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "#FE9CA4",
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    maxWidth: 180,
-    borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
   },
   title: {
-    color: "white",
+    color: "#343434",
     fontFamily: "Cochin-Bold",
   },
 });

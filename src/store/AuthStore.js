@@ -40,6 +40,17 @@ class AuthStore {
     const firebaseApp = firebase.initializeApp(firebaseConfig);
     this.firebaseAuth = firebaseApp.auth();
     console.log(this.firebaseAuth);
+    this.handleAuthStateChange();
+  }
+
+  handleAuthStateChange() {
+    this.firebaseAuth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setLogged(true);
+      } else {
+        this.setLogged(false);
+      }
+    });
   }
 }
 
