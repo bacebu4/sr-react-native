@@ -19,6 +19,7 @@ class AuthStore {
       initFirebase: action,
       handleAuthStateChange: action,
       loginUser: flow,
+      isFirstTime: observable,
     });
   }
 
@@ -42,6 +43,7 @@ class AuthStore {
         messagingSenderId: "573287991778",
         appId: "1:573287991778:web:639f72a2184fd0013c51bb",
       };
+
       const firebaseApp = firebase.initializeApp(firebaseConfig);
       this.firebaseAuth = firebaseApp.auth();
       this.isFirstTime = false;
