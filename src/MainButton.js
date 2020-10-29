@@ -1,11 +1,25 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 
-export const MainButton = ({ clickAction, title = "Start review process" }) => {
+export const MainButton = ({
+  clickAction,
+  title = "Start review process",
+  loading = false,
+}) => {
   return (
     <TouchableOpacity onPress={clickAction}>
       <View style={styles.wrapper}>
-        <Text style={styles.title}>{title}</Text>
+        {!loading ? (
+          <Text style={styles.title}>{title}</Text>
+        ) : (
+          <ActivityIndicator></ActivityIndicator>
+        )}
       </View>
     </TouchableOpacity>
   );

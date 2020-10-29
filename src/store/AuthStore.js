@@ -5,9 +5,9 @@ import firebase from "firebase";
 
 class AuthStore {
   isLoading = true;
+  isLoginLoading = false;
   isLogged = false;
   firebaseAuth = null;
-  isFirstTime = true;
 
   constructor() {
     makeObservable(this, {
@@ -19,7 +19,7 @@ class AuthStore {
       initFirebase: action,
       handleAuthStateChange: action,
       loginUser: flow,
-      isFirstTime: observable,
+      setLoginLoading: action,
     });
   }
 
@@ -27,12 +27,16 @@ class AuthStore {
     this.isLoading = value;
   }
 
+  setLoginLoading(value) {
+    this.isLoginLoading = value;
+  }
+
   setLogged(value) {
     this.isLogged = value;
   }
 
   initFirebase() {
-    if (this.isFirstTime) {
+    if (!firebase.apps.length) {
       const apiKey = FIREBASE_API;
       const firebaseConfig = {
         apiKey,
@@ -46,7 +50,6 @@ class AuthStore {
 
       const firebaseApp = firebase.initializeApp(firebaseConfig);
       this.firebaseAuth = firebaseApp.auth();
-      this.isFirstTime = false;
       this.handleAuthStateChange();
     }
   }
@@ -63,7 +66,7 @@ class AuthStore {
 
   *loginUser(payload) {
     try {
-      this.setLoading(true);
+      this.setLoginLoading(true);
       yield this.firebaseAuth.signInWithEmailAndPassword(
         payload.email,
         payload.password
@@ -71,7 +74,7 @@ class AuthStore {
     } catch (error) {
       console.log("error", error);
     } finally {
-      this.setLoading(false);
+      this.setLoginLoading(false);
     }
   }
 }

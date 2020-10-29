@@ -38,7 +38,11 @@ export const AuthLoginScreen = observer(({ navigation }) => {
       />
       <View style={styles.center}>
         <View style={styles.button}>
-          <MainButton title="Log In" clickAction={handleSubmit}></MainButton>
+          <MainButton
+            title="Log In"
+            clickAction={handleSubmit}
+            loading={AuthStore.isLoginLoading}
+          ></MainButton>
         </View>
       </View>
     </View>
