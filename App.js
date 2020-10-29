@@ -58,7 +58,6 @@ export default observer(function App() {
 
   useEffect(() => {
     NotesStore.fetchHighlights();
-    // console.log(HighlightsStore.highlights[0]);
   }, []);
 
   return (
