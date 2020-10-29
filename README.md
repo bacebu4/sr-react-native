@@ -12,6 +12,12 @@ yarn
 
 <br>
 
+## Some errors may occur
+
+You may have some problems with Firebase initialization. It may navigate you to login screen from time to time. Feel free just to reload the app
+
+<br>
+
 ## How to run for development
 
 Run the following command in terminal
