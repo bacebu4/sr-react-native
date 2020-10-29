@@ -5,6 +5,7 @@ import {
   computed,
   action,
   runInAction,
+  flow,
 } from "mobx";
 import { createContext } from "react";
 import request from "../functions/request";
@@ -15,23 +16,19 @@ class NotesStore {
   constructor() {
     makeObservable(this, {
       highlights: observable,
-      fetchHighlights: action,
+      fetchHighlights: flow,
     });
   }
 
-  async fetchHighlights() {
+  *fetchHighlights() {
     try {
       const amount = 3;
-      const notes = await request(
+      const notes = yield request(
         `http://192.168.1.70:3000/api/getDailyNotes?amount=${amount}`
       );
-      runInAction(() => {
-        this.highlights = [...notes];
-      });
+      this.highlights = [...notes];
     } catch (e) {
-      runInAction(() => {
-        console.log("error", e);
-      });
+      console.log("error", e);
     }
   }
 }
