@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { ScrollView, StyleSheet, View, Dimensions } from "react-native";
 import { Card } from "./src/Card";
 import { NavbarSecondary } from "./src/NavbarSecondary";
@@ -49,17 +49,21 @@ const renderScene = ({ route, jumpTo }) => {
 };
 
 const initialLayout = { width: Dimensions.get("window").width };
-// const initialLayout = { width: Dimensions.get("window").width - 64 }; // why it was here???
 
 export const ReviewScreen = ({ navigation }) => {
-  const amount = 3;
-  const initialRoutes = [];
-  for (let i = 1; i <= amount; i++) {
-    initialRoutes.push({ key: i, title: i });
-  }
+  const [amount] = React.useState(3);
+
+  const generateRoutes = useMemo(() => {
+    const initialRoutes = [];
+    for (let i = 1; i <= amount; i++) {
+      initialRoutes.push({ key: i, title: i });
+    }
+    return initialRoutes;
+  }, [amount]);
+
   const [index, setIndex] = React.useState(0);
 
-  const [routes] = React.useState(initialRoutes);
+  const [routes] = React.useState(generateRoutes);
 
   const handleNextSlide = () => {
     setIndex((prev) => prev + 1);
