@@ -7,6 +7,7 @@ class AuthStore {
   isLoading = true;
   isLogged = false;
   firebaseAuth = null;
+  isFirstTime = true;
 
   constructor() {
     makeObservable(this, {
@@ -15,6 +16,9 @@ class AuthStore {
       firebaseAuth: observable,
       setLoading: action,
       setLogged: action,
+      initFirebase: action,
+      handleAuthStateChange: action,
+      loginUser: flow,
     });
   }
 
@@ -27,20 +31,22 @@ class AuthStore {
   }
 
   initFirebase() {
-    const apiKey = FIREBASE_API;
-    const firebaseConfig = {
-      apiKey,
-      authDomain: "saferead-48509.firebaseapp.com",
-      databaseURL: "https://saferead-48509.firebaseio.com",
-      projectId: "saferead-48509",
-      storageBucket: "saferead-48509.appspot.com",
-      messagingSenderId: "573287991778",
-      appId: "1:573287991778:web:639f72a2184fd0013c51bb",
-    };
-    const firebaseApp = firebase.initializeApp(firebaseConfig);
-    this.firebaseAuth = firebaseApp.auth();
-    console.log(this.firebaseAuth);
-    this.handleAuthStateChange();
+    if (this.isFirstTime) {
+      const apiKey = FIREBASE_API;
+      const firebaseConfig = {
+        apiKey,
+        authDomain: "saferead-48509.firebaseapp.com",
+        databaseURL: "https://saferead-48509.firebaseio.com",
+        projectId: "saferead-48509",
+        storageBucket: "saferead-48509.appspot.com",
+        messagingSenderId: "573287991778",
+        appId: "1:573287991778:web:639f72a2184fd0013c51bb",
+      };
+      const firebaseApp = firebase.initializeApp(firebaseConfig);
+      this.firebaseAuth = firebaseApp.auth();
+      this.isFirstTime = false;
+      this.handleAuthStateChange();
+    }
   }
 
   handleAuthStateChange() {
@@ -51,6 +57,20 @@ class AuthStore {
         this.setLogged(false);
       }
     });
+  }
+
+  *loginUser(payload) {
+    try {
+      this.setLoading(true);
+      yield this.firebaseAuth.signInWithEmailAndPassword(
+        payload.email,
+        payload.password
+      );
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      this.setLoading(false);
+    }
   }
 }
 

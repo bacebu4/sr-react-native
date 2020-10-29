@@ -86,8 +86,7 @@ export default observer(function App() {
 
   useEffect(() => {
     NotesStore.fetchHighlights();
-    // AuthStore.initFirebase();
-    console.log(AuthStore.isLogged);
+    AuthStore.initFirebase();
   }, []);
 
   return (

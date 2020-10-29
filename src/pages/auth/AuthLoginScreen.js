@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View, Text, TextInput } from "react-native";
 import { MainButton } from "../../MainButton";
 import { NavbarTop } from "../../components/NavbarTop";
+import { observer } from "mobx-react-lite";
+import { AuthStoreContext } from "../../store/AuthStore";
 
-export const AuthLoginScreen = ({ navigation }) => {
+export const AuthLoginScreen = observer(({ navigation }) => {
   const [email, onEmail] = React.useState("some@some.com");
   const [password, onPassword] = React.useState("123456");
+
+  const AuthStore = useContext(AuthStoreContext);
 
   const handleSubmit = () => {
     console.log("email: ", email);
     console.log("password: ", password);
+    AuthStore.loginUser({ email, password });
   };
   return (
     <View style={styles.container}>
@@ -38,7 +43,7 @@ export const AuthLoginScreen = ({ navigation }) => {
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
