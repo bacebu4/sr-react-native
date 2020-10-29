@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import { MainButton } from "../../MainButton";
 import { MainLink } from "../../MainLink";
 
-export const AuthHomeScreen = () => {
+export const AuthHomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require("../../login.png")} />
@@ -14,7 +14,10 @@ export const AuthHomeScreen = () => {
         <MainButton title="Sign up free"></MainButton>
       </View>
       <View style={styles.mts}>
-        <MainLink title="Log in"></MainLink>
+        <MainLink
+          title="Log in"
+          clickAction={() => navigation.navigate("AuthLogin")}
+        ></MainLink>
       </View>
     </View>
   );
@@ -25,8 +28,8 @@ const styles = StyleSheet.create({
     marginLeft: 32,
     marginRight: 32,
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
   },
   image: {
     width: 315,
@@ -34,11 +37,13 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 45,
-    fontFamily: "Cochin",
+    fontFamily: "Cochin-Bold",
     textAlign: "center",
+    color: "#343434",
   },
   button: {
     marginTop: 74,
+    width: 180,
   },
   mt: {
     marginTop: 32,

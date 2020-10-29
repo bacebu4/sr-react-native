@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "./HomeScreen";
 import { AuthHomeScreen } from "./src/pages/auth/AuthHomeScreen";
+import { AuthLoginScreen } from "./src/pages/auth/AuthLoginScreen";
 import { ReviewScreen } from "./ReviewScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Sheet } from "./src/sheet/Sheet";
@@ -61,6 +62,13 @@ function AuthStackScreen() {
         <AuthStack.Screen
           name="AuthHome"
           component={AuthHomeScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <AuthStack.Screen
+          name="AuthLogin"
+          component={AuthLoginScreen}
           options={{
             headerShown: false,
           }}
