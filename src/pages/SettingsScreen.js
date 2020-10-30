@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import { MainButton } from "./src/MainButton";
-import { Title } from "./src/Title";
+import { MainButton } from "../MainButton";
+import { Title } from "../Title";
 import { observer } from "mobx-react-lite";
-import { AuthStoreContext } from "./src/store/AuthStore";
-import { UiStoreContext } from "./src/store/UiStore";
+import { AuthStoreContext } from "../store/AuthStore";
+import { UiStoreContext } from "../store/UiStore";
 
 export const SettingsScreen = observer(({ closeSheet }) => {
   const AuthStore = useContext(AuthStoreContext);
