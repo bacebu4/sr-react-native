@@ -3,7 +3,6 @@ import { Animated } from "react-native";
 import { SettingsScreen } from "../pages/SettingsScreen";
 import BottomSheet from "reanimated-bottom-sheet";
 import { UiStoreContext } from "../store/UiStore";
-import { AuthStoreContext } from "../store/AuthStore";
 import { observer } from "mobx-react-lite";
 
 export const Sheet = observer(() => {
