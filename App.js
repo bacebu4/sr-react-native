@@ -2,16 +2,13 @@ import React, { useEffect, useContext } from "react";
 import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-import { HomeScreen } from "./HomeScreen";
-import { AuthHomeScreen } from "./src/pages/auth/AuthHomeScreen";
-import { AuthLoginScreen } from "./src/pages/auth/AuthLoginScreen";
-import { ReviewScreen } from "./ReviewScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Sheet } from "./src/sheet/Sheet";
 import { NotesStoreContext } from "./src/store/NotesStore";
 import { AuthStoreContext } from "./src/store/AuthStore";
 import { observer } from "mobx-react-lite";
+import { HomeStackScreen } from "./src/stacks/HomeStackScreen";
+import { AuthStackScreen } from "./src/stacks/AuthStackScreen";
 
 function AddScreen() {
   return (
@@ -26,55 +23,6 @@ function SearchScreen() {
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Search!</Text>
     </View>
-  );
-}
-
-const HomeStack = createStackNavigator();
-const AuthStack = createStackNavigator();
-
-function HomeStackScreen() {
-  return (
-    <>
-      <HomeStack.Navigator>
-        <HomeStack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <HomeStack.Screen
-          name="Review"
-          component={ReviewScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-      </HomeStack.Navigator>
-    </>
-  );
-}
-
-function AuthStackScreen() {
-  return (
-    <>
-      <AuthStack.Navigator>
-        <AuthStack.Screen
-          name="AuthHome"
-          component={AuthHomeScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <AuthStack.Screen
-          name="AuthLogin"
-          component={AuthLoginScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-      </AuthStack.Navigator>
-    </>
   );
 }
 
