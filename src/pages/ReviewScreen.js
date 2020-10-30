@@ -1,13 +1,13 @@
 import React, { useContext, useMemo } from "react";
 import { ScrollView, StyleSheet, View, Dimensions } from "react-native";
-import { Card } from "./src/Card";
-import { NavbarSecondary } from "./src/NavbarSecondary";
-import { Title } from "./src/Title";
-import { Tag } from "./src/Tag";
+import { Card } from "../Card";
+import { NavbarSecondary } from "../NavbarSecondary";
+import { Title } from "../Title";
+import { Tag } from "../Tag";
 import { TabView } from "react-native-tab-view";
-import { Comment } from "./src/Comment";
+import { Comment } from "../Comment";
 import { observer } from "mobx-react-lite";
-import { NotesStoreContext } from "./src/store/NotesStore";
+import { NotesStoreContext } from "../store/NotesStore";
 
 const FirstRoute = observer(({ noteIndex }) => {
   const NotesStore = useContext(NotesStoreContext);

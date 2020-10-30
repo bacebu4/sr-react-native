@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "../pages/HomeScreen";
-import { ReviewScreen } from "../../ReviewScreen";
+import { ReviewScreen } from "../pages/ReviewScreen";
 
 const HomeStack = createStackNavigator();
 
