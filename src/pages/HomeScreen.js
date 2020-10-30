@@ -6,16 +6,16 @@ import {
   View,
   Text,
 } from "react-native";
-import { Card } from "./src/Card";
-import { Navbar } from "./src/Navbar";
-import { MainButton } from "./src/MainButton";
+import { Card } from "../Card";
+import { Navbar } from "../Navbar";
+import { MainButton } from "../MainButton";
 import Animated from "react-native-reanimated";
-import { Title } from "./src/Title";
-import { Carousel } from "./src/Carousel";
-import { SeeAll } from "./src/SeeAll";
-import { Tag } from "./src/Tag";
-import { UiStoreContext } from "./src/store/UiStore";
-import { NotesStoreContext } from "./src/store/NotesStore";
+import { Title } from "../Title";
+import { Carousel } from "../Carousel";
+import { SeeAll } from "../SeeAll";
+import { Tag } from "../Tag";
+import { UiStoreContext } from "../store/UiStore";
+import { NotesStoreContext } from "../store/NotesStore";
 import { observer } from "mobx-react-lite";
 
 export const HomeScreen = observer(({ navigation }) => {
