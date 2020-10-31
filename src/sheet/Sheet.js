@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Animated } from "react-native";
-import { SettingsScreen } from "../pages/SettingsScreen";
 import BottomSheet from "reanimated-bottom-sheet";
 import { observer } from "mobx-react-lite";
 
-export const Sheet = observer(({ refInit }) => {
+export const Sheet = observer(({ refInit, height = 650, renderContent }) => {
   const [opacity] = useState(new Animated.Value(0));
   const [zIndex, setZIndex] = useState(-1);
 
@@ -54,9 +53,9 @@ export const Sheet = observer(({ refInit }) => {
       ></Animated.View>
       <BottomSheet
         ref={refInit}
-        snapPoints={[650, 0]}
+        snapPoints={[height, 0]}
         initialSnap={1}
-        renderContent={() => <SettingsScreen />}
+        renderContent={renderContent}
         borderRadius={30}
         onOpenStart={activateOverlay}
         onCloseStart={deactivateOverlay}

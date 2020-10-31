@@ -12,15 +12,21 @@ import { Tag } from "../../Tag";
 import { Comment } from "../../Comment";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";
+import { UiStoreContext } from "../../store/UiStore";
 import ActionSheet from "react-native-actionsheet";
 
 export const ReviewTabScreen = observer(({ noteIndex }) => {
   const NotesStore = useContext(NotesStoreContext);
+  const UiStore = useContext(UiStoreContext);
   const note = NotesStore.highlights[noteIndex - 1];
   const actionAddRef = React.useRef(null);
 
   const showAddSheet = () => {
     actionAddRef.current.show();
+  };
+
+  const showAddTagStack = () => {
+    UiStore.addRef.current.snapTo(0);
   };
 
   return (
@@ -84,6 +90,9 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
         cancelButtonIndex={2}
         onPress={(index) => {
           /* do something */
+          if (index === 1) {
+            showAddTagStack();
+          }
         }}
       />
     </>
