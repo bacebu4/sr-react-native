@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from "react";
-import { ScrollView, StyleSheet, View, Dimensions } from "react-native";
+import { ScrollView, StyleSheet, View, Dimensions, Text } from "react-native";
 import { Card } from "../Card";
 import { NavbarSecondary } from "../NavbarSecondary";
 import { Title } from "../Title";
@@ -51,8 +51,19 @@ const FirstRoute = observer(({ noteIndex }) => {
   );
 });
 
+const SecondRoute = () => {
+  return (
+    <View>
+      <Text>Final screen</Text>
+    </View>
+  );
+};
+
 const renderScene = ({ route, jumpTo }) => {
-  return <FirstRoute jumpTo={jumpTo} noteIndex={Number(route.key)} />;
+  if (Number(route.key <= 3)) {
+    return <FirstRoute jumpTo={jumpTo} noteIndex={Number(route.key)} />;
+  }
+  return <SecondRoute jumpTo={jumpTo} />;
 };
 
 const initialLayout = { width: Dimensions.get("window").width };
@@ -65,7 +76,7 @@ export const ReviewScreen = ({ navigation }) => {
     for (let i = 1; i <= amount; i++) {
       initialRoutes.push({ key: i, title: i });
     }
-    // initialRoutes.push({key: amount + 1, title: amount + 1})
+    initialRoutes.push({ key: amount + 1, title: amount + 1 });
     return initialRoutes;
   }, [amount]);
 
