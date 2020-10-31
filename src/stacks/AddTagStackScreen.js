@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { ChooseScreen } from "../pages/addTag/ChooseScreen";
 import { View } from "react-native";
+import { AddScreen } from "../pages/addTag/AddScreen";
 
 const AddTagStack = createStackNavigator();
 
@@ -23,6 +24,13 @@ export const AddTagStackScreen = () => {
               headerShown: false,
             }}
           />
+          {/* <AddTagStack.Screen
+            name="AddScreen"
+            component={AddScreen}
+            options={{
+              headerShown: false,
+            }}
+          /> */}
         </AddTagStack.Navigator>
       </NavigationContainer>
     </View>
