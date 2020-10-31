@@ -11,6 +11,7 @@ export const Sheet = observer(({ refInit }) => {
 
   const UiStore = useContext(UiStoreContext);
 
+  // TODO make local state
   useEffect(() => {
     if (UiStore.showSettingsSheet) {
       setZIndex(2);
