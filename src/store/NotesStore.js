@@ -4,10 +4,12 @@ import request from "../functions/request";
 
 class NotesStore {
   highlights = [];
+  amount = 3;
 
   constructor() {
     makeObservable(this, {
       highlights: observable,
+      amount: observable,
       fetchHighlights: flow,
     });
   }

@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo, useEffect } from "react";
 import { ScrollView, StyleSheet, View, Dimensions, Text } from "react-native";
 import { Card } from "../Card";
 import { NavbarSecondary } from "../NavbarSecondary";
@@ -8,6 +8,8 @@ import { TabView } from "react-native-tab-view";
 import { Comment } from "../Comment";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../store/NotesStore";
+
+let AMOUNT = 1;
 
 const FirstRoute = observer(({ noteIndex }) => {
   const NotesStore = useContext(NotesStoreContext);
@@ -60,7 +62,7 @@ const SecondRoute = () => {
 };
 
 const renderScene = ({ route, jumpTo }) => {
-  if (Number(route.key <= 3)) {
+  if (Number(route.key <= AMOUNT)) {
     return <FirstRoute jumpTo={jumpTo} noteIndex={Number(route.key)} />;
   }
   return <SecondRoute jumpTo={jumpTo} />;
@@ -68,17 +70,24 @@ const renderScene = ({ route, jumpTo }) => {
 
 const initialLayout = { width: Dimensions.get("window").width };
 
-export const ReviewScreen = ({ navigation }) => {
-  const [amount] = React.useState(3);
+export const ReviewScreen = observer(({ navigation }) => {
+  const NotesStore = useContext(NotesStoreContext);
+
+  useEffect(() => {
+    AMOUNT = NotesStore.amount;
+  }, []);
 
   const generateRoutes = useMemo(() => {
     const initialRoutes = [];
-    for (let i = 1; i <= amount; i++) {
+    for (let i = 1; i <= NotesStore.amount; i++) {
       initialRoutes.push({ key: i, title: i });
     }
-    initialRoutes.push({ key: amount + 1, title: amount + 1 });
+    initialRoutes.push({
+      key: NotesStore.amount + 1,
+      title: NotesStore.amount + 1,
+    });
     return initialRoutes;
-  }, [amount]);
+  }, [NotesStore.amount]);
 
   const [index, setIndex] = React.useState(0);
 
@@ -107,7 +116,7 @@ export const ReviewScreen = ({ navigation }) => {
       />
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   mainContainer: {
