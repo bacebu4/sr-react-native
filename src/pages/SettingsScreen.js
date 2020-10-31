@@ -15,6 +15,10 @@ export const SettingsScreen = observer(({ closeSheet }) => {
     UiStore.setShowSettingsSheet(false);
   };
 
+  const closeSheet2 = () => {
+    UiStore.settingsRef.current.snapTo(1);
+  };
+
   return (
     <View
       style={{
@@ -27,7 +31,7 @@ export const SettingsScreen = observer(({ closeSheet }) => {
       </View>
       <View style={{ ...styles.container, ...styles.mt, ...styles.title }}>
         <Title title={"Account preferences"}></Title>
-        <TouchableOpacity onPress={closeSheet}>
+        <TouchableOpacity onPress={closeSheet2}>
           <Text style={styles.link}>Done</Text>
         </TouchableOpacity>
       </View>

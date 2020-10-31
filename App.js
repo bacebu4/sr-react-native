@@ -5,6 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { Sheet } from "./src/sheet/Sheet";
 import { NotesStoreContext } from "./src/store/NotesStore";
 import { AuthStoreContext } from "./src/store/AuthStore";
+import { UiStoreContext } from "./src/store/UiStore";
 import { observer } from "mobx-react-lite";
 import { HomeStackScreen } from "./src/stacks/HomeStackScreen";
 import { AuthStackScreen } from "./src/stacks/AuthStackScreen";
@@ -31,15 +32,18 @@ const screenOptions = ({ route }) => ({
 export default observer(function App() {
   const NotesStore = useContext(NotesStoreContext);
   const AuthStore = useContext(AuthStoreContext);
+  const UiStore = useContext(UiStoreContext);
+  const settingsRef = React.useRef(null);
 
   useEffect(() => {
     NotesStore.fetchHighlights();
     AuthStore.initFirebase();
+    UiStore.setSettingsRef(settingsRef);
   }, []);
 
   return (
     <>
-      <Sheet></Sheet>
+      <Sheet refInit={settingsRef}></Sheet>
 
       <NavigationContainer>
         <Tab.Navigator

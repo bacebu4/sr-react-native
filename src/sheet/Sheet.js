@@ -5,8 +5,8 @@ import BottomSheet from "reanimated-bottom-sheet";
 import { UiStoreContext } from "../store/UiStore";
 import { observer } from "mobx-react-lite";
 
-export const Sheet = observer(() => {
-  const sheetRef = React.useRef(null);
+export const Sheet = observer(({ refInit }) => {
+  // const sheetRef = React.useRef(ref);
   const [opacity] = useState(new Animated.Value(0));
   const [zIndex, setZIndex] = useState(-1);
 
@@ -42,11 +42,11 @@ export const Sheet = observer(() => {
   };
 
   const handleSheet = () => {
-    sheetRef.current.snapTo(0);
+    refInit.current.snapTo(0);
   };
 
   const closeSheet = () => {
-    sheetRef.current.snapTo(1);
+    refInit.current.snapTo(1);
   };
 
   return (
@@ -65,7 +65,7 @@ export const Sheet = observer(() => {
         }}
       ></Animated.View>
       <BottomSheet
-        ref={sheetRef}
+        ref={refInit}
         snapPoints={[650, 0]}
         initialSnap={1}
         renderContent={() => <SettingsScreen closeSheet={closeSheet} />} // TODO pass state not func

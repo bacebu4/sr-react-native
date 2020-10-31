@@ -12,33 +12,40 @@ import { Tag } from "../../Tag";
 import { Comment } from "../../Comment";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";
+import ActionSheet from "react-native-actionsheet";
 
 export const ReviewTabScreen = observer(({ noteIndex }) => {
   const NotesStore = useContext(NotesStoreContext);
   const note = NotesStore.highlights[noteIndex - 1];
+  const actionAddRef = React.useRef(null);
+
+  const showAddSheet = () => {
+    actionAddRef.current.show();
+  };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={{ ...styles.container, ...styles.mt }}>
-        <Card note={note}></Card>
-      </View>
+    <>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={{ ...styles.container, ...styles.mt }}>
+          <Card note={note}></Card>
+        </View>
 
-      <View style={{ ...styles.container, ...styles.mts }}>
-        {note.comment_text ? (
-          <>
-            <View style={styles.mt}>
-              <Title title="Your comment:" type="small"></Title>
-            </View>
+        <View style={{ ...styles.container, ...styles.mts }}>
+          {note.comment_text ? (
+            <>
+              <View style={styles.mt}>
+                <Title title="Your comment:" type="small"></Title>
+              </View>
 
-            <Comment text={note.comment_text}></Comment>
-          </>
-        ) : (
-          <View></View>
-        )}
-      </View>
+              <Comment text={note.comment_text}></Comment>
+            </>
+          ) : (
+            <View></View>
+          )}
+        </View>
 
-      <View style={{ ...styles.container, ...styles.mt, ...styles.mb }}>
-        {/* <View style={styles.line}>
+        <View style={{ ...styles.container, ...styles.mt, ...styles.mb }}>
+          {/* <View style={styles.line}>
           <Title title="Your tags:" type="small"></Title>
           <TouchableOpacity>
             <Image
@@ -60,16 +67,26 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
           </View>
         </View> */}
 
-        <View style={styles.biggerAdd}>
-          <TouchableOpacity>
-            <Image
-              style={styles.imageBigger}
-              source={require("../../assets/bigPlus.png")}
-            ></Image>
-          </TouchableOpacity>
+          <View style={styles.biggerAdd}>
+            <TouchableOpacity onPress={showAddSheet}>
+              <Image
+                style={styles.imageBigger}
+                source={require("../../assets/bigPlus.png")}
+              ></Image>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <ActionSheet
+        ref={actionAddRef}
+        title="What you want to add?"
+        options={["Add comment", "Add tag", "Cancel"]}
+        cancelButtonIndex={2}
+        onPress={(index) => {
+          /* do something */
+        }}
+      />
+    </>
   );
 });
 

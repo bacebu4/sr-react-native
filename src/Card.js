@@ -33,7 +33,6 @@ export const Card = ({ note }) => {
         <Text style={styles.noteText}>{note?.note_text}</Text>
       </View>
       <ActionSheet
-        style={styles}
         ref={actionSheetRef}
         options={["Delete", "Edit", "Share", "Сancel"]}
         cancelButtonIndex={3}
