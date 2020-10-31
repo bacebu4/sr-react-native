@@ -1,16 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import { Title } from "../Title";
-import { observer } from "mobx-react-lite";
-import { UiStoreContext } from "../store/UiStore";
+import { Title } from "../../Title";
 
-export const AddScreen = observer(() => {
-  const UiStore = useContext(UiStoreContext);
-
-  const closeSheet = () => {
-    UiStore.addRef.current.snapTo(1);
-  };
-
+export const ChooseScreen = () => {
   return (
     <View
       style={{
@@ -23,18 +15,19 @@ export const AddScreen = observer(() => {
       </View>
       <View style={{ ...styles.container, ...styles.mt, ...styles.title }}>
         <Title title={"Choose from existing"}></Title>
-        <TouchableOpacity onPress={closeSheet}>
-          <Text style={styles.link}>Done</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {
     marginLeft: 32,
     marginRight: 32,
+  },
+  button: {
+    marginTop: 74,
+    width: 180,
   },
   topBar: {
     marginTop: 24,

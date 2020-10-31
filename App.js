@@ -12,7 +12,7 @@ import { AuthStackScreen } from "./src/stacks/AuthStackScreen";
 import { SearchScreen } from "./src/pages/SearchScreen";
 import { LoadingScreen } from "./src/pages/LoadingScreen";
 import { SettingsScreen } from "./src/pages/SettingsScreen";
-import { AddScreen } from "./src/pages/AddScreen";
+import { AddTagStackScreen } from "./src/stacks/AddTagStackScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -55,7 +55,7 @@ export default observer(function App() {
       <Sheet
         refInit={addRef}
         height={400}
-        renderContent={() => <AddScreen />}
+        renderContent={() => <AddTagStackScreen />}
       ></Sheet>
 
       <NavigationContainer>
