@@ -68,7 +68,7 @@ export const Sheet = observer(({ refInit }) => {
         ref={refInit}
         snapPoints={[650, 0]}
         initialSnap={1}
-        renderContent={() => <SettingsScreen />} // TODO pass state not func
+        renderContent={() => <SettingsScreen />}
         borderRadius={30}
         onOpenStart={activateOverlay}
         onCloseStart={deactivateOverlay}
