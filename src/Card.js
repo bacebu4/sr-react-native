@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
   },
   more: {
     marginLeft: "auto",
-    marginTop: 4,
   },
   moreIcon: {
     width: 24,
