@@ -34,16 +34,19 @@ export default observer(function App() {
   const AuthStore = useContext(AuthStoreContext);
   const UiStore = useContext(UiStoreContext);
   const settingsRef = React.useRef(null);
+  const addRef = React.useRef(null);
 
   useEffect(() => {
     NotesStore.fetchHighlights();
     AuthStore.initFirebase();
     UiStore.setSettingsRef(settingsRef);
+    UiStore.setAddRef(addRef);
   }, []);
 
   return (
     <>
       <Sheet refInit={settingsRef}></Sheet>
+      <Sheet refInit={addRef}></Sheet>
 
       <NavigationContainer>
         <Tab.Navigator

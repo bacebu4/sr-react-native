@@ -2,15 +2,15 @@ import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
 
 class UiStore {
-  showSettingsSheet = false;
   settingsRef = null;
-
-  setShowSettingsSheet(value) {
-    this.showSettingsSheet = value;
-  }
+  addRef = null;
 
   setSettingsRef(value) {
     this.settingsRef = value;
+  }
+
+  setAddRef(value) {
+    this.addRef = value;
   }
 
   constructor() {

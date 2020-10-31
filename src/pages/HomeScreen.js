@@ -40,7 +40,7 @@ export const HomeScreen = observer(({ navigation }) => {
         <View style={styles.container}>
           <Navbar
             title="Book stash"
-            handleClick={() => UiStore.setShowSettingsSheet(true)}
+            handleClick={() => UiStore.settingsRef.current.snapTo(0)}
           ></Navbar>
         </View>
 

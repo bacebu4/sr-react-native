@@ -1,44 +1,32 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import { Animated } from "react-native";
 import { SettingsScreen } from "../pages/SettingsScreen";
 import BottomSheet from "reanimated-bottom-sheet";
-import { UiStoreContext } from "../store/UiStore";
 import { observer } from "mobx-react-lite";
 
 export const Sheet = observer(({ refInit }) => {
   const [opacity] = useState(new Animated.Value(0));
   const [zIndex, setZIndex] = useState(-1);
 
-  const UiStore = useContext(UiStoreContext);
-
-  // TODO make local state
-  useEffect(() => {
-    if (UiStore.showSettingsSheet) {
-      setZIndex(2);
-      handleSheet();
-      Animated.timing(opacity, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      Animated.timing(opacity, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start(() => {
-        setZIndex(-1);
-      });
-      closeSheet();
-    }
-  }, [UiStore.showSettingsSheet]);
-
   const activateOverlay = () => {
-    UiStore.setShowSettingsSheet(true);
+    setZIndex(2);
+    handleSheet();
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
   };
 
   const deactivateOverlay = () => {
-    UiStore.setShowSettingsSheet(false);
+    Animated.timing(opacity, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      setZIndex(-1);
+    });
+    closeSheet();
   };
 
   const handleSheet = () => {
