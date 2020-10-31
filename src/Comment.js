@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 
-export const Comment = () => {
+export const Comment = ({ text }) => {
   const actionSheetRef = React.useRef(null);
 
   const showActionSheet = () => {
@@ -22,11 +22,7 @@ export const Comment = () => {
         </View>
       </View>
       <View style={styles.note}>
-        <Text style={styles.noteText}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit hic
-          excepturi rerum modi similique odio totam beatae magni distinctio
-          accusamus explicab
-        </Text>
+        <Text style={styles.noteText}>{text}</Text>
       </View>
       <ActionSheet
         style={styles}

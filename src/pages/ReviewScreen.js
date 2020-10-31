@@ -19,11 +19,18 @@ const FirstRoute = observer(({ noteIndex }) => {
         <Card note={note}></Card>
       </View>
 
-      <View style={{ ...styles.container, ...styles.mt }}>
-        <Title title="Your comment:" type="small"></Title>
-      </View>
       <View style={{ ...styles.container, ...styles.mts }}>
-        <Comment></Comment>
+        {note.comment_text ? (
+          <>
+            <View style={styles.mt}>
+              <Title title="Your comment:" type="small"></Title>
+            </View>
+
+            <Comment text={note.comment_text}></Comment>
+          </>
+        ) : (
+          <View></View>
+        )}
       </View>
 
       <View style={{ ...styles.container, ...styles.mt, ...styles.mb }}>
@@ -58,6 +65,7 @@ export const ReviewScreen = ({ navigation }) => {
     for (let i = 1; i <= amount; i++) {
       initialRoutes.push({ key: i, title: i });
     }
+    // initialRoutes.push({key: amount + 1, title: amount + 1})
     return initialRoutes;
   }, [amount]);
 
