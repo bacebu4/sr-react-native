@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import { Tag } from "../../Tag";
 import { Title } from "../../Title";
 
 export const ChooseScreen = () => {
@@ -13,8 +14,28 @@ export const ChooseScreen = () => {
       <View style={styles.center}>
         <View style={styles.topBar}></View>
       </View>
-      <View style={{ ...styles.container, ...styles.mt, ...styles.title }}>
-        <Title title={"Choose from existing"}></Title>
+      <View style={{ ...styles.container, ...styles.mts, ...styles.title }}>
+        <View></View>
+        <Title type="small" title={"Choose from existing"}></Title>
+        <TouchableOpacity>
+          <Image
+            style={styles.icon}
+            source={require("../../assets/smallPlus.png")}
+          ></Image>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.container}>
+        <View style={styles.tagContainer}>
+          <View style={styles.tag}>
+            <Tag title="Life"></Tag>
+          </View>
+          <View style={styles.tag}>
+            <Tag hue={200} title="Success"></Tag>
+          </View>
+          <View style={styles.tag}>
+            <Tag hue={300} title="Important"></Tag>
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -36,6 +57,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#dbdbdb",
     borderRadius: 100,
   },
+  icon: {
+    width: 24,
+    height: 24,
+  },
   mt: {
     marginTop: 32,
   },
@@ -55,11 +80,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d7d7d7",
+    paddingBottom: 16,
   },
-  link: {
-    color: "#CCA9F9",
-    fontSize: 16,
-    fontWeight: "600",
-    marginTop: 4,
+  tagContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  tag: {
+    marginRight: 16,
+    marginTop: 24,
   },
 });

@@ -4,9 +4,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { ChooseScreen } from "../pages/addTag/ChooseScreen";
 import { View } from "react-native";
 import { AddScreen } from "../pages/addTag/AddScreen";
+import { observer } from "mobx-react-lite";
 
 const AddTagStack = createStackNavigator();
 
+// TODO add observer here and ref to navigation
+// https://reactnavigation.org/docs/navigating-without-navigation-prop/
 export const AddTagStackScreen = () => {
   return (
     <View
@@ -24,13 +27,13 @@ export const AddTagStackScreen = () => {
               headerShown: false,
             }}
           />
-          {/* <AddTagStack.Screen
+          <AddTagStack.Screen
             name="AddScreen"
             component={AddScreen}
             options={{
               headerShown: false,
             }}
-          /> */}
+          />
         </AddTagStack.Navigator>
       </NavigationContainer>
     </View>

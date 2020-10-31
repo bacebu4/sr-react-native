@@ -3,6 +3,7 @@ import { createContext } from "react";
 
 class UiStore {
   settingsRef = null;
+  addNavigationRef = null;
   addRef = null;
 
   setSettingsRef(value) {
