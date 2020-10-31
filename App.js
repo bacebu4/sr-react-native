@@ -13,6 +13,21 @@ import { LoadingScreen } from "./src/pages/LoadingScreen";
 
 const Tab = createBottomTabNavigator();
 
+// configuring icons here
+const screenOptions = ({ route }) => ({
+  tabBarIcon: ({ _, color, size }) => {
+    let iconName;
+
+    if (route.name === "Home") {
+      iconName = "ios-home";
+    } else if (route.name === "Search") {
+      iconName = "ios-search";
+    }
+
+    return <Ionicons name={iconName} size={size} color={color} />;
+  },
+});
+
 export default observer(function App() {
   const NotesStore = useContext(NotesStoreContext);
   const AuthStore = useContext(AuthStoreContext);
@@ -28,19 +43,7 @@ export default observer(function App() {
 
       <NavigationContainer>
         <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
-
-              if (route.name === "Home") {
-                iconName = "ios-home";
-              } else if (route.name === "Search") {
-                iconName = "ios-search";
-              }
-
-              return <Ionicons name={iconName} size={size} color={color} />;
-            },
-          })}
+          screenOptions={screenOptions}
           tabBarOptions={{
             activeTintColor: "#CCA9F9",
             inactiveTintColor: "#B0AFAF",
