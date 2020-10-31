@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useEffect } from "react";
-import { StyleSheet, View, Dimensions, Text } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import { NavbarSecondary } from "../NavbarSecondary";
 import { TabView } from "react-native-tab-view";
 import { observer } from "mobx-react-lite";
