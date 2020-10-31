@@ -6,7 +6,7 @@ import { observer } from "mobx-react-lite";
 import { AuthStoreContext } from "../store/AuthStore";
 import { UiStoreContext } from "../store/UiStore";
 
-export const SettingsScreen = observer(({ closeSheet }) => {
+export const SettingsScreen = observer(() => {
   const AuthStore = useContext(AuthStoreContext);
   const UiStore = useContext(UiStoreContext);
 
@@ -15,7 +15,7 @@ export const SettingsScreen = observer(({ closeSheet }) => {
     UiStore.setShowSettingsSheet(false);
   };
 
-  const closeSheet2 = () => {
+  const closeSheet = () => {
     UiStore.settingsRef.current.snapTo(1);
   };
 
@@ -31,7 +31,7 @@ export const SettingsScreen = observer(({ closeSheet }) => {
       </View>
       <View style={{ ...styles.container, ...styles.mt, ...styles.title }}>
         <Title title={"Account preferences"}></Title>
-        <TouchableOpacity onPress={closeSheet2}>
+        <TouchableOpacity onPress={closeSheet}>
           <Text style={styles.link}>Done</Text>
         </TouchableOpacity>
       </View>

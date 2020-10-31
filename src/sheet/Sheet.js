@@ -6,7 +6,6 @@ import { UiStoreContext } from "../store/UiStore";
 import { observer } from "mobx-react-lite";
 
 export const Sheet = observer(({ refInit }) => {
-  // const sheetRef = React.useRef(ref);
   const [opacity] = useState(new Animated.Value(0));
   const [zIndex, setZIndex] = useState(-1);
 
@@ -68,7 +67,7 @@ export const Sheet = observer(({ refInit }) => {
         ref={refInit}
         snapPoints={[650, 0]}
         initialSnap={1}
-        renderContent={() => <SettingsScreen closeSheet={closeSheet} />} // TODO pass state not func
+        renderContent={() => <SettingsScreen />} // TODO pass state not func
         borderRadius={30}
         onOpenStart={activateOverlay}
         onCloseStart={deactivateOverlay}
