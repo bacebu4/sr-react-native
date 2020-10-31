@@ -9,6 +9,7 @@ import { observer } from "mobx-react-lite";
 import { HomeStackScreen } from "./src/stacks/HomeStackScreen";
 import { AuthStackScreen } from "./src/stacks/AuthStackScreen";
 import { SearchScreen } from "./src/pages/SearchScreen";
+import { LoadingScreen } from "./src/pages/LoadingScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -48,18 +49,30 @@ export default observer(function App() {
             header: null,
           }}
         >
-          {!AuthStore.isLogged ? (
+          {AuthStore.isLoading ? (
             <Tab.Screen
               name="Add"
-              component={AuthStackScreen}
+              component={LoadingScreen}
               options={{
                 tabBarVisible: false,
               }}
             />
           ) : (
             <>
-              <Tab.Screen name="Home" component={HomeStackScreen} />
-              <Tab.Screen name="Search" component={SearchScreen} />
+              {!AuthStore.isLogged ? (
+                <Tab.Screen
+                  name="Add"
+                  component={AuthStackScreen}
+                  options={{
+                    tabBarVisible: false,
+                  }}
+                />
+              ) : (
+                <>
+                  <Tab.Screen name="Home" component={HomeStackScreen} />
+                  <Tab.Screen name="Search" component={SearchScreen} />
+                </>
+              )}
             </>
           )}
         </Tab.Navigator>

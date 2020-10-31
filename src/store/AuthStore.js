@@ -38,6 +38,7 @@ class AuthStore {
   }
 
   initFirebase() {
+    this.setLoading(true);
     if (!firebase.apps.length) {
       const apiKey = FIREBASE_API;
       const firebaseConfig = {
@@ -53,16 +54,20 @@ class AuthStore {
       const firebaseApp = firebase.initializeApp(firebaseConfig);
       this.firebaseAuth = firebaseApp.auth();
       this.handleAuthStateChange();
+    } else {
+      this.setLoading(false);
     }
   }
 
   handleAuthStateChange() {
     this.firebaseAuth.onAuthStateChanged((user) => {
+      this.setLoading(true);
       if (user) {
         this.setLogged(true);
       } else {
         this.setLogged(false);
       }
+      this.setLoading(false);
     });
   }
 
