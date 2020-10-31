@@ -1,5 +1,11 @@
 import React, { useContext } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import { Card } from "../../Card";
 import { Title } from "../../Title";
 import { Tag } from "../../Tag";
@@ -32,7 +38,16 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
       </View>
 
       <View style={{ ...styles.container, ...styles.mt, ...styles.mb }}>
-        <Title title="Your tags:" type="small"></Title>
+        {/* <View style={styles.line}>
+          <Title title="Your tags:" type="small"></Title>
+          <TouchableOpacity>
+            <Image
+              style={styles.image}
+              source={require("../../assets/plus.png")}
+            ></Image>
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.tagContainer}>
           <View style={styles.tag}>
             <Tag title="Life"></Tag>
@@ -43,6 +58,15 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
           <View style={styles.tag}>
             <Tag hue={300} title="Important"></Tag>
           </View>
+        </View> */}
+
+        <View style={styles.biggerAdd}>
+          <TouchableOpacity>
+            <Image
+              style={styles.imageBigger}
+              source={require("../../assets/bigPlus.png")}
+            ></Image>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -73,5 +97,21 @@ const styles = StyleSheet.create({
   tag: {
     marginRight: 16,
     marginTop: 24,
+  },
+  line: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  image: {
+    width: 24,
+    height: 24,
+  },
+  imageBigger: {
+    width: 40,
+    height: 40,
+  },
+  biggerAdd: {
+    alignItems: "center",
+    marginTop: 32,
   },
 });
