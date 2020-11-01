@@ -3,7 +3,13 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
 
-export const NavbarSecondary = ({ title, handleClick, handleNext, index }) => {
+export const NavbarSecondary = ({
+  title,
+  handleClick,
+  handleNext,
+  index,
+  amount,
+}) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.navbar}>
@@ -17,7 +23,7 @@ export const NavbarSecondary = ({ title, handleClick, handleNext, index }) => {
       </View>
       <View style={styles.subbar}>
         <ProgressCircle
-          percent={((3 - index) / 3) * 100}
+          percent={((amount - index) / amount) * 100}
           radius={10}
           borderWidth={4}
           color="#CCA9F9"

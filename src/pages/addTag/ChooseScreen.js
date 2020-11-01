@@ -11,12 +11,14 @@ import { Tag } from "../../Tag";
 import { Title } from "../../Title";
 import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../../store/UiStore";
+import { NotesStoreContext } from "../../store/NotesStore";
 
 export const ChooseScreen = observer(() => {
   const [tag, onTag] = React.useState("");
   const [color, onColor] = React.useState(0);
   const [showAddSheet, setShowAddSheet] = React.useState(false);
   const UiStore = React.useContext(UiStoreContext);
+  const NotesStore = React.useContext(NotesStoreContext);
 
   React.useEffect(() => {
     refreshColor();
@@ -71,20 +73,25 @@ export const ChooseScreen = observer(() => {
               ></Image>
             </TouchableOpacity>
           </View>
-
-          <View style={styles.container}>
-            <View style={styles.tagContainer}>
-              <View style={styles.tag}>
-                <Tag title="Life"></Tag>
+          {NotesStore.tags ? (
+            <>
+              <View style={styles.container}>
+                <View style={styles.tagContainer}>
+                  {NotesStore.tags.map((tag) => {
+                    return (
+                      <View style={styles.tag} key={tag.tag_id}>
+                        <Tag title={tag.tag_name} hue={tag.hue}></Tag>
+                      </View>
+                    );
+                  })}
+                </View>
               </View>
-              <View style={styles.tag}>
-                <Tag hue={200} title="Success"></Tag>
-              </View>
-              <View style={styles.tag}>
-                <Tag hue={300} title="Important"></Tag>
-              </View>
-            </View>
-          </View>
+            </>
+          ) : (
+            <>
+              <Text>No tags created yet</Text>
+            </>
+          )}
         </>
       ) : (
         <>

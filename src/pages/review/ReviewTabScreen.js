@@ -67,12 +67,8 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
               <View style={styles.tagContainer}>
                 {note.tags.map((tag) => {
                   return (
-                    <View style={styles.tag}>
-                      <Tag
-                        title="Life"
-                        hue={tag.hue}
-                        title={tag.tag_name}
-                      ></Tag>
+                    <View style={styles.tag} key={tag.tag_id}>
+                      <Tag hue={tag.hue} title={tag.tag_name}></Tag>
                     </View>
                   );
                 })}

@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
-export const Book = () => {
+export const Book = ({ title = "title", author = "author" }) => {
   return (
     <View style={styles.wrapper}>
       <TouchableOpacity>
         <Image source={require("./book.png")} />
-        <Text style={styles.title}>4 Hour Workweek</Text>
-        <Text style={styles.author}>Tim Ferris</Text>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.author}>{author}</Text>
       </TouchableOpacity>
     </View>
   );

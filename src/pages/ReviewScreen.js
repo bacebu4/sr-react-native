@@ -52,7 +52,8 @@ export const ReviewScreen = observer(({ navigation }) => {
           title="Review mode"
           handleNext={handleNextSlide}
           handleClick={() => navigation.navigate("Home")}
-          index={3 - index}
+          index={NotesStore.amount - index}
+          amount={NotesStore.amount}
         ></NavbarSecondary>
       </View>
       <TabView

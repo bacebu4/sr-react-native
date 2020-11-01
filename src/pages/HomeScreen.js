@@ -58,6 +58,7 @@ export const HomeScreen = observer(({ navigation }) => {
           ></MainButton>
         </View>
 
+        {/* Latest reads */}
         <View style={{ ...styles.mt, ...styles.container }}>
           <Title title="Latest reads"></Title>
         </View>
@@ -67,24 +68,31 @@ export const HomeScreen = observer(({ navigation }) => {
           <SeeAll></SeeAll>
         </View>
 
-        <View style={{ ...styles.mtx, ...styles.container }}>
-          <Title title="Review by tags"></Title>
-          <View style={styles.tagContainer}>
-            <View style={styles.tag}>
-              <Tag title="Life"></Tag>
+        {/* Review by tags */}
+        {NotesStore.tags.length ? (
+          <>
+            <View style={{ ...styles.mtx, ...styles.container }}>
+              <Title title="Review by tags"></Title>
+              <View style={styles.tagContainer}>
+                {NotesStore.tags.map((tag) => {
+                  return (
+                    <View style={styles.tag} key={tag.tag_id}>
+                      <Tag title={tag.tag_name} hue={tag.hue}></Tag>
+                    </View>
+                  );
+                })}
+              </View>
             </View>
-            <View style={styles.tag}>
-              <Tag hue={200} title="Success"></Tag>
+            <View style={{ ...styles.container, ...styles.border }}></View>
+            <View style={{ ...styles.mts, ...styles.mb, ...styles.container }}>
+              <SeeAll></SeeAll>
             </View>
-            <View style={styles.tag}>
-              <Tag hue={300} title="Important"></Tag>
-            </View>
-          </View>
-        </View>
-        <View style={{ ...styles.container, ...styles.border }}></View>
-        <View style={{ ...styles.mts, ...styles.mb, ...styles.container }}>
-          <SeeAll></SeeAll>
-        </View>
+          </>
+        ) : (
+          <>
+            <View></View>
+          </>
+        )}
       </ScrollView>
     </View>
   );
