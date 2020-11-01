@@ -6,6 +6,7 @@ class UiStore {
   addNavigationRef = null;
   addRef = null;
   showAddSheet = false;
+  currentNote = null;
 
   setSettingsRef(value) {
     this.settingsRef = value;
@@ -17,6 +18,10 @@ class UiStore {
 
   setShowAddSheet(value) {
     this.showAddSheet = value;
+  }
+
+  setCurrentNote(value) {
+    this.currentNote = value;
   }
 
   constructor() {

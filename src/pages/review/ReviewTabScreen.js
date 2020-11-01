@@ -28,6 +28,7 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
   const showAddTagStack = () => {
     // UiStore.setShowAddSheet(true);
     UiStore.addRef.current.snapTo(1);
+    UiStore.currentNote = note.note_id;
   };
 
   return (

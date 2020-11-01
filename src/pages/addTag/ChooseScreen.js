@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -19,6 +19,10 @@ export const ChooseScreen = observer(() => {
   const UiStore = React.useContext(UiStoreContext);
 
   React.useEffect(() => {
+    refreshColor();
+  }, []);
+
+  React.useEffect(() => {
     setShowAddSheet(UiStore.showAddSheet);
   }, [UiStore.showAddSheet]);
 
@@ -35,6 +39,13 @@ export const ChooseScreen = observer(() => {
   const refreshColor = () => {
     const newColor = Math.floor(Math.random() * 361);
     onColor(newColor);
+  };
+
+  const handleSubmit = () => {
+    console.log(tag.trim());
+    console.log(color);
+    console.log(UiStore.currentNote);
+    UiStore.addRef.current.snapTo(2);
   };
 
   return (
@@ -85,7 +96,9 @@ export const ChooseScreen = observer(() => {
               ></Image>
             </TouchableOpacity>
             <Title type="small" title={"New tag"}></Title>
-            <Text style={styles.link}>Save</Text>
+            <TouchableOpacity onPress={handleSubmit}>
+              <Text style={styles.link}>Save</Text>
+            </TouchableOpacity>
           </View>
           <View style={{ ...styles.center, ...styles.mtx }}>
             <Tag hue={color} title={tag}></Tag>
