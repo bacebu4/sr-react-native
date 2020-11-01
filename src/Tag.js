@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     borderRadius: 200,
     paddingLeft: 16,
     paddingVertical: 8,
+    height: 35,
     alignSelf: "flex-start",
   },
   title: {

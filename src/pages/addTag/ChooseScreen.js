@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Text,
 } from "react-native";
 import { Tag } from "../../Tag";
 import { Title } from "../../Title";
@@ -12,59 +13,96 @@ import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../../store/UiStore";
 
 export const ChooseScreen = observer(() => {
-  const [showAdd, setShowAdd] = useState(false);
-  const [email, onEmail] = React.useState("some@some.com");
+  const [tag, onTag] = React.useState("");
+  const [color, onColor] = React.useState(0);
+  const [showAddSheet, setShowAddSheet] = React.useState(false);
   const UiStore = React.useContext(UiStoreContext);
 
+  React.useEffect(() => {
+    setShowAddSheet(UiStore.showAddSheet);
+  }, [UiStore.showAddSheet]);
+
   const handleAdd = () => {
-    setShowAdd(true);
     UiStore.setShowAddSheet(true);
     UiStore.addRef.current.snapTo(0);
+  };
+
+  const handleBack = () => {
+    UiStore.setShowAddSheet(false);
+    UiStore.addRef.current.snapTo(1);
+  };
+
+  const refreshColor = () => {
+    const newColor = Math.floor(Math.random() * 361);
+    onColor(newColor);
   };
 
   return (
     <View
       style={{
         backgroundColor: "white",
-        height: showAdd ? 650 : 400,
+        height: showAddSheet ? 650 : 650,
       }}
     >
       <View style={styles.center}>
         <View style={styles.topBar}></View>
       </View>
-      <View style={{ ...styles.container, ...styles.mts, ...styles.title }}>
-        <View></View>
-        <Title type="small" title={"Choose from existing"}></Title>
-        <TouchableOpacity onPress={handleAdd}>
-          <Image
-            style={styles.icon}
-            source={require("../../assets/smallPlus.png")}
-          ></Image>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.container}>
-        <View style={styles.tagContainer}>
-          <View style={styles.tag}>
-            <Tag title="Life"></Tag>
+
+      {!showAddSheet ? (
+        <>
+          <View style={{ ...styles.container, ...styles.mts, ...styles.title }}>
+            <View></View>
+            <Title type="small" title={"Choose from existing"}></Title>
+            <TouchableOpacity onPress={handleAdd}>
+              <Image
+                style={styles.icon}
+                source={require("../../assets/smallPlus.png")}
+              ></Image>
+            </TouchableOpacity>
           </View>
-          <View style={styles.tag}>
-            <Tag hue={200} title="Success"></Tag>
+
+          <View style={styles.container}>
+            <View style={styles.tagContainer}>
+              <View style={styles.tag}>
+                <Tag title="Life"></Tag>
+              </View>
+              <View style={styles.tag}>
+                <Tag hue={200} title="Success"></Tag>
+              </View>
+              <View style={styles.tag}>
+                <Tag hue={300} title="Important"></Tag>
+              </View>
+            </View>
           </View>
-          <View style={styles.tag}>
-            <Tag hue={300} title="Important"></Tag>
-          </View>
-        </View>
-      </View>
-      {UiStore.showAddSheet ? (
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => onEmail(text)}
-          value={email}
-          keyboardType="email-address"
-          autoFocus
-        />
+        </>
       ) : (
-        <View></View>
+        <>
+          <View style={{ ...styles.container, ...styles.mts, ...styles.title }}>
+            <TouchableOpacity onPress={handleBack}>
+              <Image
+                style={styles.icon}
+                source={require("../../assets/left.png")}
+              ></Image>
+            </TouchableOpacity>
+            <Title type="small" title={"New tag"}></Title>
+            <Text style={styles.link}>Save</Text>
+          </View>
+          <View style={{ ...styles.center, ...styles.mtx }}>
+            <Tag hue={color} title={tag}></Tag>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => onTag(text)}
+              value={tag}
+              autoFocus
+            />
+            <TouchableOpacity onPress={refreshColor}>
+              <Image
+                style={{ ...styles.icon, ...styles.mt }}
+                source={require("../../assets/refresh.png")}
+              ></Image>
+            </TouchableOpacity>
+          </View>
+        </>
       )}
     </View>
   );
@@ -123,11 +161,20 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    backgroundColor: "#e5e5e5",
     borderRadius: 4,
     color: "#343434",
     paddingVertical: 8,
     paddingHorizontal: 12,
-    marginTop: 8,
+    marginTop: 16,
+    borderBottomColor: "#dbdbdb",
+    borderBottomWidth: 1,
+    textAlign: "center",
+    width: 150,
+  },
+  link: {
+    color: "#CCA9F9",
+    fontSize: 16,
+    fontWeight: "600",
+    marginTop: 4,
   },
 });

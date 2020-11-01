@@ -49,6 +49,7 @@ export const Sheet = observer(({ refInit, height = 650, renderContent }) => {
   const destroySheet = () => {
     // showAddSheet
     UiStore.setShowAddSheet(false);
+    deactivateOverlay();
   };
 
   return (
@@ -74,7 +75,7 @@ export const Sheet = observer(({ refInit, height = 650, renderContent }) => {
           renderContent={renderContent}
           borderRadius={30}
           onOpenStart={activateOverlay}
-          onCloseStart={deactivateOverlay}
+          // onCloseStart={deactivateOverlay}
           onCloseEnd={destroySheet}
           enabledContentTapInteraction={false}
         ></BottomSheet>
