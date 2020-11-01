@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Animated } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
 import { observer } from "mobx-react-lite";
+import { UiStoreContext } from "../store/UiStore";
 
 export const Sheet = observer(({ refInit, height = 650, renderContent }) => {
   const [opacity] = useState(new Animated.Value(0));
   const [zIndex, setZIndex] = useState(-1);
+  const UiStore = React.useContext(UiStoreContext);
 
   const activateOverlay = () => {
     setZIndex(2);
@@ -29,11 +31,24 @@ export const Sheet = observer(({ refInit, height = 650, renderContent }) => {
   };
 
   const handleSheet = () => {
-    refInit.current.snapTo(0);
+    if (height === 400) {
+      refInit.current.snapTo(1);
+    } else {
+      refInit.current.snapTo(0);
+    }
   };
 
   const closeSheet = () => {
-    refInit.current.snapTo(1);
+    if (height === 400) {
+      refInit.current.snapTo(2);
+    } else {
+      refInit.current.snapTo(1);
+    }
+  };
+
+  const destroySheet = () => {
+    // showAddSheet
+    UiStore.setShowAddSheet(false);
   };
 
   return (
@@ -51,16 +66,30 @@ export const Sheet = observer(({ refInit, height = 650, renderContent }) => {
           zIndex: zIndex,
         }}
       ></Animated.View>
-      <BottomSheet
-        ref={refInit}
-        snapPoints={[height, 0]}
-        initialSnap={1}
-        renderContent={renderContent}
-        borderRadius={30}
-        onOpenStart={activateOverlay}
-        onCloseStart={deactivateOverlay}
-        enabledContentTapInteraction={false}
-      ></BottomSheet>
+      {height === 400 ? (
+        <BottomSheet
+          ref={refInit}
+          snapPoints={[650, height, 0]}
+          initialSnap={2}
+          renderContent={renderContent}
+          borderRadius={30}
+          onOpenStart={activateOverlay}
+          onCloseStart={deactivateOverlay}
+          onCloseEnd={destroySheet}
+          enabledContentTapInteraction={false}
+        ></BottomSheet>
+      ) : (
+        <BottomSheet
+          ref={refInit}
+          snapPoints={[height, 0]}
+          initialSnap={1}
+          renderContent={renderContent}
+          borderRadius={30}
+          onOpenStart={activateOverlay}
+          onCloseStart={deactivateOverlay}
+          enabledContentTapInteraction={false}
+        ></BottomSheet>
+      )}
     </>
   );
 });

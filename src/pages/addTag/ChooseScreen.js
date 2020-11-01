@@ -1,14 +1,32 @@
-import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import { Tag } from "../../Tag";
 import { Title } from "../../Title";
+import { observer } from "mobx-react-lite";
+import { UiStoreContext } from "../../store/UiStore";
 
-export const ChooseScreen = () => {
+export const ChooseScreen = observer(() => {
+  const [showAdd, setShowAdd] = useState(false);
+  const [email, onEmail] = React.useState("some@some.com");
+  const UiStore = React.useContext(UiStoreContext);
+
+  const handleAdd = () => {
+    setShowAdd(true);
+    UiStore.setShowAddSheet(true);
+    UiStore.addRef.current.snapTo(0);
+  };
+
   return (
     <View
       style={{
         backgroundColor: "white",
-        height: 400,
+        height: showAdd ? 650 : 400,
       }}
     >
       <View style={styles.center}>
@@ -17,7 +35,7 @@ export const ChooseScreen = () => {
       <View style={{ ...styles.container, ...styles.mts, ...styles.title }}>
         <View></View>
         <Title type="small" title={"Choose from existing"}></Title>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleAdd}>
           <Image
             style={styles.icon}
             source={require("../../assets/smallPlus.png")}
@@ -37,9 +55,20 @@ export const ChooseScreen = () => {
           </View>
         </View>
       </View>
+      {UiStore.showAddSheet ? (
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => onEmail(text)}
+          value={email}
+          keyboardType="email-address"
+          autoFocus
+        />
+      ) : (
+        <View></View>
+      )}
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -91,5 +120,14 @@ const styles = StyleSheet.create({
   tag: {
     marginRight: 16,
     marginTop: 24,
+  },
+  input: {
+    height: 40,
+    backgroundColor: "#e5e5e5",
+    borderRadius: 4,
+    color: "#343434",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginTop: 8,
   },
 });

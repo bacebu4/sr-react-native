@@ -12,7 +12,8 @@ import { AuthStackScreen } from "./src/stacks/AuthStackScreen";
 import { SearchScreen } from "./src/pages/SearchScreen";
 import { LoadingScreen } from "./src/pages/LoadingScreen";
 import { SettingsScreen } from "./src/pages/SettingsScreen";
-import { AddTagStackScreen } from "./src/stacks/AddTagStackScreen";
+import { ChooseScreen } from "./src/pages/addTag/ChooseScreen";
+import { View } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -55,7 +56,7 @@ export default observer(function App() {
       <Sheet
         refInit={addRef}
         height={400}
-        renderContent={() => <AddTagStackScreen />}
+        renderContent={() => <ChooseScreen />}
       ></Sheet>
 
       <NavigationContainer>

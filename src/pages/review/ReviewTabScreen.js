@@ -21,12 +21,13 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
   const note = NotesStore.highlights[noteIndex - 1];
   const actionAddRef = React.useRef(null);
 
-  const showAddSheet = () => {
+  const showActionSheet = () => {
     actionAddRef.current.show();
   };
 
   const showAddTagStack = () => {
-    UiStore.addRef.current.snapTo(0);
+    // UiStore.setShowAddSheet(true);
+    UiStore.addRef.current.snapTo(1);
   };
 
   return (
@@ -74,7 +75,7 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
         </View> */}
 
           <View style={styles.biggerAdd}>
-            <TouchableOpacity onPress={showAddSheet}>
+            <TouchableOpacity onPress={showActionSheet}>
               <Image
                 style={styles.imageBigger}
                 source={require("../../assets/bigPlus.png")}
