@@ -10,9 +10,9 @@ export const SettingsScreen = observer(() => {
   const AuthStore = useContext(AuthStoreContext);
   const UiStore = useContext(UiStoreContext);
 
-  const handleLogout = () => {
-    AuthStore.logoutUser();
-    UiStore.setShowSettingsSheet(false);
+  const handleLogout = async () => {
+    await AuthStore.logoutUser();
+    closeSheet();
   };
 
   const closeSheet = () => {

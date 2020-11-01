@@ -19,7 +19,7 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
   const NotesStore = useContext(NotesStoreContext);
   const UiStore = useContext(UiStoreContext);
   const note = NotesStore.highlights[noteIndex - 1];
-  const actionAddRef = React.useRef(null);
+  // const actionAddRef = React.useRef(null);
 
   // const showActionSheet = () => {
   //   actionAddRef.current.show();
