@@ -1,10 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
-// let HUE = 100;
-
 export const Tag = ({ clickAction, hue = 100, title = "Tag" }) => {
-  // HUE = hue;
   return (
     <TouchableOpacity onPress={clickAction}>
       <View

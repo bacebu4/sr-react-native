@@ -13,7 +13,7 @@ import { Comment } from "../../Comment";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { UiStoreContext } from "../../store/UiStore";
-import ActionSheet from "react-native-actionsheet";
+// import ActionSheet from "react-native-actionsheet";
 
 export const ReviewTabScreen = observer(({ noteIndex }) => {
   const NotesStore = useContext(NotesStoreContext);
@@ -21,12 +21,11 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
   const note = NotesStore.highlights[noteIndex - 1];
   const actionAddRef = React.useRef(null);
 
-  const showActionSheet = () => {
-    actionAddRef.current.show();
-  };
+  // const showActionSheet = () => {
+  //   actionAddRef.current.show();
+  // };
 
   const showAddTagStack = () => {
-    // UiStore.setShowAddSheet(true);
     UiStore.addRef.current.snapTo(1);
     UiStore.currentNote = note.note_id;
   };
@@ -53,50 +52,54 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
         </View>
 
         <View style={{ ...styles.container, ...styles.mt, ...styles.mb }}>
-          {/* <View style={styles.line}>
-          <Title title="Your tags:" type="small"></Title>
-          <TouchableOpacity>
-            <Image
-              style={styles.image}
-              source={require("../../assets/plus.png")}
-            ></Image>
-          </TouchableOpacity>
-        </View>
+          {note.tags.length ? (
+            <>
+              <View style={styles.line}>
+                <Title title="Your tags:" type="small"></Title>
+                <TouchableOpacity onPress={showAddTagStack}>
+                  <Image
+                    style={styles.image}
+                    source={require("../../assets/plus.png")}
+                  ></Image>
+                </TouchableOpacity>
+              </View>
 
-        <View style={styles.tagContainer}>
-          <View style={styles.tag}>
-            <Tag title="Life"></Tag>
-          </View>
-          <View style={styles.tag}>
-            <Tag hue={200} title="Success"></Tag>
-          </View>
-          <View style={styles.tag}>
-            <Tag hue={300} title="Important"></Tag>
-          </View>
-        </View> */}
-
-          <View style={styles.biggerAdd}>
-            <TouchableOpacity onPress={showActionSheet}>
-              <Image
-                style={styles.imageBigger}
-                source={require("../../assets/bigPlus.png")}
-              ></Image>
-            </TouchableOpacity>
-          </View>
+              <View style={styles.tagContainer}>
+                {note.tags.map((tag) => {
+                  return (
+                    <View style={styles.tag}>
+                      <Tag
+                        title="Life"
+                        hue={tag.hue}
+                        title={tag.tag_name}
+                      ></Tag>
+                    </View>
+                  );
+                })}
+              </View>
+            </>
+          ) : (
+            <>
+              <View style={styles.biggerAdd}>
+                <TouchableOpacity onPress={showAddTagStack}>
+                  <Image
+                    style={styles.imageBigger}
+                    source={require("../../assets/bigPlus.png")}
+                  ></Image>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
         </View>
       </ScrollView>
-      <ActionSheet
+      {/* TODO implement adding comments */}
+      {/* <ActionSheet
         ref={actionAddRef}
         title="What you want to add?"
         options={["Add comment", "Add tag", "Cancel"]}
         cancelButtonIndex={2}
-        onPress={(index) => {
-          /* do something */
-          if (index === 1) {
-            showAddTagStack();
-          }
-        }}
-      />
+        onPress={}
+      /> */}
     </>
   );
 });
