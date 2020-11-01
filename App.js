@@ -48,7 +48,6 @@ export default observer(function App() {
 
   useEffect(() => {
     if (AuthStore.email) {
-      console.log(AuthStore.email);
       NotesStore.init(AuthStore.email);
       NotesStore.fetchHighlights();
     }

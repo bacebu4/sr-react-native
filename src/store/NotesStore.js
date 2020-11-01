@@ -5,6 +5,7 @@ import request from "../functions/request";
 class NotesStore {
   highlights = [];
   amount = 3;
+  email = null;
 
   constructor() {
     makeObservable(this, {
@@ -12,14 +13,15 @@ class NotesStore {
       amount: observable,
       fetchHighlights: flow,
       init: flow,
+      setEmail: action,
     });
   }
 
   *fetchHighlights() {
     try {
-      const amount = 3;
+      console.log(this.email);
       const notes = yield request(
-        `http://192.168.1.70:3000/api/getDailyNotes?amount=${amount}`
+        `http://192.168.1.70:3000/api/getDailyNotes?id=1`
       );
       this.highlights = [...notes];
     } catch (e) {
@@ -29,10 +31,14 @@ class NotesStore {
 
   *init(email) {
     try {
-      console.log(email);
+      this.setEmail(email);
     } catch (error) {
       console.log(error);
     }
+  }
+
+  setEmail(value) {
+    this.email = value;
   }
 }
 
