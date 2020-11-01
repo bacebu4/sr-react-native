@@ -11,6 +11,7 @@ class NotesStore {
       highlights: observable,
       amount: observable,
       fetchHighlights: flow,
+      init: flow,
     });
   }
 
@@ -23,6 +24,14 @@ class NotesStore {
       this.highlights = [...notes];
     } catch (e) {
       console.log("error", e);
+    }
+  }
+
+  *init(email) {
+    try {
+      console.log(email);
+    } catch (error) {
+      console.log(error);
     }
   }
 }

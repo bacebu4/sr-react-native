@@ -40,11 +40,19 @@ export default observer(function App() {
   const addRef = React.useRef(null);
 
   useEffect(() => {
-    NotesStore.fetchHighlights();
     AuthStore.initFirebase();
+
     UiStore.setSettingsRef(settingsRef);
     UiStore.setAddRef(addRef);
   }, []);
+
+  useEffect(() => {
+    if (AuthStore.email) {
+      console.log(AuthStore.email);
+      NotesStore.init(AuthStore.email);
+      NotesStore.fetchHighlights();
+    }
+  }, [AuthStore.email]);
 
   return (
     <>

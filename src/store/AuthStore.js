@@ -8,6 +8,7 @@ class AuthStore {
   isLoginLoading = false;
   isLogged = false;
   firebaseAuth = null;
+  email = null;
 
   constructor() {
     makeObservable(this, {
@@ -15,13 +16,15 @@ class AuthStore {
       isLogged: observable,
       isLoginLoading: observable,
       firebaseAuth: observable,
+      email: observable,
       setLoading: action,
       setLogged: action,
-      initFirebase: action,
-      handleAuthStateChange: action,
+      initFirebase: flow,
+      handleAuthStateChange: flow,
       loginUser: flow,
       setLoginLoading: action,
       logoutUser: flow,
+      setEmail: action,
     });
   }
 
@@ -37,9 +40,13 @@ class AuthStore {
     this.isLogged = value;
   }
 
-  initFirebase() {
+  setEmail(value) {
+    this.email = value;
+  }
+
+  *initFirebase() {
     this.setLoading(true);
-    if (!firebase.apps.length) {
+    if (yield !firebase.apps.length) {
       const apiKey = FIREBASE_API;
       const firebaseConfig = {
         apiKey,
@@ -51,19 +58,20 @@ class AuthStore {
         appId: "1:573287991778:web:639f72a2184fd0013c51bb",
       };
 
-      const firebaseApp = firebase.initializeApp(firebaseConfig);
-      this.firebaseAuth = firebaseApp.auth();
-      this.handleAuthStateChange();
+      const firebaseApp = yield firebase.initializeApp(firebaseConfig);
+      this.firebaseAuth = yield firebaseApp.auth();
+      yield this.handleAuthStateChange();
     } else {
       this.setLoading(false);
     }
   }
 
-  handleAuthStateChange() {
-    this.firebaseAuth.onAuthStateChanged((user) => {
+  *handleAuthStateChange() {
+    yield this.firebaseAuth.onAuthStateChanged((user) => {
       this.setLoading(true);
       if (user) {
         this.setLogged(true);
+        this.setEmail(user.email);
       } else {
         this.setLogged(false);
       }
