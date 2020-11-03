@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Animated } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
 import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../store/UiStore";
+import { NotesStoreContext } from "../store/NotesStore";
 
 export const Sheet = observer(({ refInit, height = 650, renderContent }) => {
   const [opacity] = useState(new Animated.Value(0));
   const [zIndex, setZIndex] = useState(-1);
   const UiStore = React.useContext(UiStoreContext);
+  const NotesStore = React.useContext(NotesStoreContext);
+
+  useEffect(() => {
+    deactivateOverlay();
+  }, [NotesStore.isLogged]);
 
   const activateOverlay = () => {
     setZIndex(2);

@@ -3,16 +3,15 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { MainButton } from "../MainButton";
 import { Title } from "../Title";
 import { observer } from "mobx-react-lite";
-import { AuthStoreContext } from "../store/AuthStore";
+import { NotesStoreContext } from "../store/NotesStore";
 import { UiStoreContext } from "../store/UiStore";
 
 export const SettingsScreen = observer(() => {
-  const AuthStore = useContext(AuthStoreContext);
+  const NotesStore = useContext(NotesStoreContext);
   const UiStore = useContext(UiStoreContext);
 
-  const handleLogout = async () => {
-    await AuthStore.logoutUser();
-    closeSheet();
+  const handleLogout = () => {
+    NotesStore.logout();
   };
 
   const closeSheet = () => {
@@ -37,11 +36,7 @@ export const SettingsScreen = observer(() => {
       </View>
       <View style={styles.center}>
         <View style={styles.button}>
-          <MainButton
-            title="Log Out"
-            loading={AuthStore.isLoginLoading}
-            clickAction={handleLogout}
-          ></MainButton>
+          <MainButton title="Log Out" clickAction={handleLogout}></MainButton>
         </View>
       </View>
     </View>

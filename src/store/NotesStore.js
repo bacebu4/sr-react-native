@@ -1,6 +1,7 @@
 import { makeObservable, observable, action, flow } from "mobx";
 import { createContext } from "react";
 import request from "../functions/request";
+import * as SecureStore from "expo-secure-store";
 
 class NotesStore {
   highlights = [];
@@ -11,6 +12,10 @@ class NotesStore {
   uid = null;
   token = null;
 
+  isLoginLoading = false;
+  isLoading = false;
+  isLogged = false;
+
   constructor() {
     makeObservable(this, {
       highlights: observable,
@@ -19,10 +24,14 @@ class NotesStore {
       uid: observable,
       token: observable,
       latestBooks: observable,
+      isLoginLoading: observable,
+      isLoading: observable,
+      isLogged: observable,
       amount: observable,
       fetchHighlights: flow,
       fetchInitInfo: flow,
       init: flow,
+      login: flow,
       register: flow,
       setEmail: action,
       setToken: action,
@@ -30,6 +39,10 @@ class NotesStore {
       setTags: action,
       setLatestBooks: action,
       setAmount: action,
+      setLoginLoading: action,
+      setLoading: action,
+      setLogged: action,
+      logout: flow,
     });
   }
 
@@ -46,22 +59,54 @@ class NotesStore {
     }
   }
 
-  *init(email, uid) {
+  *init() {
+    this.setLoading(true);
     try {
+      const available = yield SecureStore.isAvailableAsync();
+      if (available) {
+        const token = yield SecureStore.getItemAsync("token");
+        if (token) {
+          this.setToken(token);
+          this.setLogged(true);
+          yield this.fetchInitInfo();
+          yield this.fetchHighlights();
+        }
+      }
+    } catch (error) {
+      console.log("token was not found");
+    } finally {
+      this.setLoading(false);
+    }
+  }
+
+  *login(email, password) {
+    try {
+      this.setLoginLoading(true);
       this.setEmail(email);
-      this.setUid(uid);
       const token = yield request(
         "http://192.168.1.70:3000/api/login",
         "POST",
         "",
-        { email, uid }
+        { email, password }
       );
+
       console.log("success login ", token);
       this.setToken(token);
+      const available = yield SecureStore.isAvailableAsync();
+      if (available) {
+        yield SecureStore.setItemAsync("token", token);
+      }
+
+      this.setLogged(true);
+      this.setLoading(true);
+
       yield this.fetchInitInfo();
+      yield this.fetchHighlights();
     } catch (error) {
       console.log("error login ", error);
-      yield this.register();
+    } finally {
+      this.setLoginLoading(false);
+      this.setLoading(false);
     }
   }
 
@@ -96,8 +141,26 @@ class NotesStore {
     }
   }
 
+  *logout() {
+    this.setLogged(false);
+    this.setToken(null);
+    yield SecureStore.deleteItemAsync("token");
+  }
+
   setToken(value) {
     this.token = value;
+  }
+
+  setLoginLoading(value) {
+    this.isLoginLoading = value;
+  }
+
+  setLoading(value) {
+    this.isLoading = value;
+  }
+
+  setLogged(value) {
+    this.isLogged = value;
   }
 
   setUid(value) {

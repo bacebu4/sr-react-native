@@ -3,16 +3,16 @@ import { StyleSheet, View, Text, TextInput } from "react-native";
 import { MainButton } from "../../MainButton";
 import { NavbarTop } from "../../components/NavbarTop";
 import { observer } from "mobx-react-lite";
-import { AuthStoreContext } from "../../store/AuthStore";
+import { NotesStoreContext } from "../../store/NotesStore";
 
 export const AuthLoginScreen = observer(({ navigation }) => {
-  const [email, onEmail] = React.useState("some@some.com");
+  const [email, onEmail] = React.useState("v@mail.ru");
   const [password, onPassword] = React.useState("123456");
 
-  const AuthStore = useContext(AuthStoreContext);
+  const NotesStore = useContext(NotesStoreContext);
 
   const handleSubmit = () => {
-    AuthStore.loginUser({ email, password });
+    NotesStore.login(email, password);
   };
   return (
     <View style={styles.container}>
@@ -39,7 +39,7 @@ export const AuthLoginScreen = observer(({ navigation }) => {
           <MainButton
             title="Log In"
             clickAction={handleSubmit}
-            loading={AuthStore.isLoginLoading}
+            loading={NotesStore.isLoginLoading}
           ></MainButton>
         </View>
       </View>

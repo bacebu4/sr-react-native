@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Sheet } from "./src/sheet/Sheet";
 import { NotesStoreContext } from "./src/store/NotesStore";
-import { AuthStoreContext } from "./src/store/AuthStore";
 import { UiStoreContext } from "./src/store/UiStore";
 import { observer } from "mobx-react-lite";
 import { HomeStackScreen } from "./src/stacks/HomeStackScreen";
@@ -13,7 +12,6 @@ import { SearchScreen } from "./src/pages/SearchScreen";
 import { LoadingScreen } from "./src/pages/LoadingScreen";
 import { SettingsScreen } from "./src/pages/SettingsScreen";
 import { ChooseScreen } from "./src/pages/addTag/ChooseScreen";
-import { View } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -34,27 +32,15 @@ const screenOptions = ({ route }) => ({
 
 export default observer(function App() {
   const NotesStore = useContext(NotesStoreContext);
-  const AuthStore = useContext(AuthStoreContext);
   const UiStore = useContext(UiStoreContext);
   const settingsRef = React.useRef(null);
   const addRef = React.useRef(null);
 
   useEffect(() => {
-    AuthStore.initFirebase();
-
+    NotesStore.init();
     UiStore.setSettingsRef(settingsRef);
     UiStore.setAddRef(addRef);
   }, []);
-
-  useEffect(() => {
-    if (AuthStore.email) {
-      NotesStore.init(AuthStore.email, AuthStore.uid);
-    }
-  }, [AuthStore.email]);
-
-  useEffect(() => {
-    NotesStore.fetchHighlights();
-  }, [NotesStore.token]);
 
   return (
     <>
@@ -80,7 +66,7 @@ export default observer(function App() {
             header: null,
           }}
         >
-          {AuthStore.isLoading ? (
+          {NotesStore.isLoading ? (
             <Tab.Screen
               name="Add"
               component={LoadingScreen}
@@ -90,7 +76,7 @@ export default observer(function App() {
             />
           ) : (
             <>
-              {!AuthStore.isLogged ? (
+              {!NotesStore.isLogged ? (
                 <Tab.Screen
                   name="Add"
                   component={AuthStackScreen}
