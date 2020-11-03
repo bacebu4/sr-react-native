@@ -50,11 +50,16 @@ export const ChooseScreen = observer(() => {
     UiStore.addRef.current.snapTo(2);
   };
 
+  const handleSubmitFromExisting = (id) => {
+    NotesStore.addExistingTag(UiStore.currentNote, id);
+    UiStore.addRef.current.snapTo(2);
+  };
+
   return (
     <View
       style={{
         backgroundColor: "white",
-        height: showAddSheet ? 650 : 650,
+        height: 650,
       }}
     >
       <View style={styles.center}>
@@ -79,9 +84,17 @@ export const ChooseScreen = observer(() => {
                 <View style={styles.tagContainer}>
                   {NotesStore.tags.map((tag) => {
                     return (
-                      <View style={styles.tag} key={tag.tag_id}>
-                        <Tag title={tag.tag_name} hue={tag.hue}></Tag>
-                      </View>
+                      <>
+                        <View style={styles.tag} key={tag.tag_id}>
+                          <Tag
+                            title={tag.tag_name}
+                            hue={tag.hue}
+                            clickAction={() =>
+                              handleSubmitFromExisting(tag.tag_id)
+                            }
+                          ></Tag>
+                        </View>
+                      </>
                     );
                   })}
                 </View>

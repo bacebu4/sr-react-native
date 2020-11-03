@@ -43,6 +43,8 @@ class NotesStore {
       setLoading: action,
       setLogged: action,
       logout: flow,
+      addExistingTag: action,
+      setTag: action,
     });
   }
 
@@ -147,6 +149,12 @@ class NotesStore {
     yield SecureStore.deleteItemAsync("token");
   }
 
+  addExistingTag(noteId, tagId) {
+    const noteIndex = this.highlights.findIndex((h) => h.note_id === noteId);
+    const { tag_id, hue, tag_name } = this.tags.find((t) => t.tag_id === tagId);
+    this.setTag(noteIndex, { tag_id, hue, tag_name });
+  }
+
   setToken(value) {
     this.token = value;
   }
@@ -181,6 +189,10 @@ class NotesStore {
 
   setAmount(value) {
     this.amount = value;
+  }
+
+  setTag(noteIndex, tag) {
+    this.highlights[noteIndex].tags.push(tag);
   }
 }
 
