@@ -1,6 +1,9 @@
-export default async function request(url, method = "GET", data = null) {
+export default async function request(url, method = "GET", token, data = null) {
   try {
     const headers = {};
+    if (token) {
+      headers["auth-token"] = token;
+    }
     let body = null;
 
     if (data) {
@@ -16,7 +19,6 @@ export default async function request(url, method = "GET", data = null) {
 
     return await response.json();
   } catch (error) {
-    console.warn("Error, ", error.message);
-    return [];
+    throw new Error("Could not access the server");
   }
 }

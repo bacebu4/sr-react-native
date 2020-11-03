@@ -9,6 +9,7 @@ class AuthStore {
   isLogged = false;
   firebaseAuth = null;
   email = null;
+  uid = null;
 
   constructor() {
     makeObservable(this, {
@@ -17,6 +18,7 @@ class AuthStore {
       isLoginLoading: observable,
       firebaseAuth: observable,
       email: observable,
+      uid: observable,
       setLoading: action,
       setLogged: action,
       initFirebase: flow,
@@ -25,6 +27,7 @@ class AuthStore {
       setLoginLoading: action,
       logoutUser: flow,
       setEmail: action,
+      setUid: action,
     });
   }
 
@@ -44,6 +47,9 @@ class AuthStore {
     this.email = value;
   }
 
+  setUid(value) {
+    this.uid = value;
+  }
   *initFirebase() {
     this.setLoading(true);
     if (yield !firebase.apps.length) {
@@ -72,6 +78,7 @@ class AuthStore {
       if (user) {
         this.setLogged(true);
         this.setEmail(user.email);
+        this.setUid(user.uid);
       } else {
         this.setLogged(false);
       }
