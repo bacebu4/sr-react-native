@@ -73,7 +73,7 @@ export const ChooseScreen = observer(() => {
               ></Image>
             </TouchableOpacity>
           </View>
-          {NotesStore.tags ? (
+          {NotesStore.tags.length ? (
             <>
               <View style={styles.container}>
                 <View style={styles.tagContainer}>
@@ -89,7 +89,13 @@ export const ChooseScreen = observer(() => {
             </>
           ) : (
             <>
-              <Text>No tags created yet</Text>
+              <View style={{ ...styles.center, ...styles.mtx }}>
+                <Image
+                  style={styles.image}
+                  source={require("../../assets/empty_tags.png")}
+                ></Image>
+                <Text style={styles.text}>No tags created yet</Text>
+              </View>
             </>
           )}
         </>
@@ -196,5 +202,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     marginTop: 4,
+  },
+  image: {
+    width: 153,
+    height: 120,
+  },
+  text: {
+    color: "#B0AFAF",
+    marginTop: 16,
   },
 });

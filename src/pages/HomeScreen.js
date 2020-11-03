@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View,
   Text,
+  Image,
 } from "react-native";
 import { Card } from "../Card";
 import { Navbar } from "../Navbar";
@@ -46,27 +47,52 @@ export const HomeScreen = observer(({ navigation }) => {
 
         <View style={{ ...styles.mt, ...styles.container }}>
           {NotesStore.highlights.length ? (
-            <Card note={NotesStore.highlights[0]} />
+            <>
+              <Card note={NotesStore.highlights[0]} />
+              <View
+                style={{ ...styles.mt, ...styles.container, ...styles.center }}
+              >
+                <MainButton
+                  clickAction={() => navigation.navigate("Review")}
+                ></MainButton>
+              </View>
+            </>
           ) : (
-            <Text>nothing</Text>
+            <>
+              <View style={{ ...styles.mt, ...styles.center }}>
+                <Image
+                  style={styles.image}
+                  source={require("../assets/empty_main.png")}
+                ></Image>
+                <Text style={styles.text}>No highlights added yet</Text>
+                <View style={styles.mt}>
+                  <MainButton
+                    clickAction={() => navigation.navigate("Review")}
+                    title="Learn how to add"
+                  ></MainButton>
+                </View>
+              </View>
+            </>
           )}
         </View>
 
-        <View style={{ ...styles.mt, ...styles.container, ...styles.center }}>
-          <MainButton
-            clickAction={() => navigation.navigate("Review")}
-          ></MainButton>
-        </View>
-
         {/* Latest reads */}
-        <View style={{ ...styles.mt, ...styles.container }}>
-          <Title title="Latest reads"></Title>
-        </View>
-        <Carousel></Carousel>
-        <View style={{ ...styles.container, ...styles.border }}></View>
-        <View style={{ ...styles.mts, ...styles.container }}>
-          <SeeAll></SeeAll>
-        </View>
+        {NotesStore.latestBooks.length ? (
+          <>
+            <View style={{ ...styles.mt, ...styles.container }}>
+              <Title title="Latest reads"></Title>
+            </View>
+            <Carousel></Carousel>
+            <View style={{ ...styles.container, ...styles.border }}></View>
+            <View style={{ ...styles.mts, ...styles.container }}>
+              <SeeAll></SeeAll>
+            </View>
+          </>
+        ) : (
+          <>
+            <View></View>
+          </>
+        )}
 
         {/* Review by tags */}
         {NotesStore.tags.length ? (
@@ -134,5 +160,13 @@ const styles = StyleSheet.create({
   tag: {
     marginRight: 16,
     marginTop: 24,
+  },
+  image: {
+    width: 186,
+    height: 173,
+  },
+  text: {
+    color: "#B0AFAF",
+    marginTop: 32,
   },
 });

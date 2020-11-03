@@ -16,24 +16,16 @@ export const Carousel = observer(() => {
       >
         <View style={styles.empty8}></View>
 
-        {NotesStore.latestBooks.length ? (
-          <>
-            {NotesStore.latestBooks.map((book) => {
-              return (
-                <View style={styles.item} key={book.book_id}>
-                  <Book
-                    title={book.book_title}
-                    author={book.author_full_name}
-                  ></Book>
-                </View>
-              );
-            })}
-          </>
-        ) : (
-          <>
-            <Text>No books added yet</Text>
-          </>
-        )}
+        {NotesStore.latestBooks.map((book) => {
+          return (
+            <View style={styles.item} key={book.book_id}>
+              <Book
+                title={book.book_title}
+                author={book.author_full_name}
+              ></Book>
+            </View>
+          );
+        })}
 
         <View style={styles.empty32}></View>
       </ScrollView>

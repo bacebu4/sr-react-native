@@ -11,10 +11,16 @@ export const MainButton = ({
   clickAction,
   title = "Start review process",
   loading = false,
+  dark = false,
 }) => {
   return (
     <TouchableOpacity onPress={clickAction}>
-      <View style={styles.wrapper}>
+      <View
+        style={{
+          ...styles.wrapper,
+          backgroundColor: dark ? "#343434" : "#FE9CA4",
+        }}
+      >
         {!loading ? (
           <Text style={styles.title}>{title}</Text>
         ) : (
@@ -27,10 +33,8 @@ export const MainButton = ({
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "#FE9CA4",
-    paddingHorizontal: 16,
+    paddingHorizontal: 24,
     paddingVertical: 10,
-    maxWidth: 180,
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
