@@ -150,7 +150,7 @@ class NotesStore {
   }
 
   addExistingTag(noteIndex, tagId) {
-    // const noteIndex = this.highlights.findIndex((h) => h.note_id === noteId);
+    const noteId = this.highlights[noteIndex].note_id;
     const { tag_id, hue, tag_name } = this.tags.find((t) => t.tag_id === tagId);
     this.setTag(noteIndex, { tag_id, hue, tag_name });
   }

@@ -86,13 +86,10 @@ export const ChooseScreen = observer(() => {
                   <View style={styles.container}>
                     <View style={styles.tagContainer}>
                       {NotesStore.tags.map((tag) => {
-                        console.log(UiStore?.currentNote);
-                        console.log(
-                          NotesStore?.highlights[UiStore?.currentNote].tags
-                        );
                         const findResults = NotesStore?.highlights[
                           UiStore?.currentNote
                         ]?.tags.find((t) => t.tag_id === tag.tag_id);
+
                         if (!findResults) {
                           return (
                             <View style={styles.tag} key={tag.tag_id}>
@@ -106,6 +103,7 @@ export const ChooseScreen = observer(() => {
                             </View>
                           );
                         }
+
                         return <View key={tag.tag_id}></View>;
                       })}
                     </View>
