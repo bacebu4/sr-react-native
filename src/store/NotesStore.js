@@ -149,8 +149,8 @@ class NotesStore {
     yield SecureStore.deleteItemAsync("token");
   }
 
-  addExistingTag(noteId, tagId) {
-    const noteIndex = this.highlights.findIndex((h) => h.note_id === noteId);
+  addExistingTag(noteIndex, tagId) {
+    // const noteIndex = this.highlights.findIndex((h) => h.note_id === noteId);
     const { tag_id, hue, tag_name } = this.tags.find((t) => t.tag_id === tagId);
     this.setTag(noteIndex, { tag_id, hue, tag_name });
   }

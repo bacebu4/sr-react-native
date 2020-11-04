@@ -65,82 +65,101 @@ export const ChooseScreen = observer(() => {
       <View style={styles.center}>
         <View style={styles.topBar}></View>
       </View>
-
-      {!showAddSheet ? (
+      {UiStore.showChooseSheet ? (
         <>
-          <View style={{ ...styles.container, ...styles.mts, ...styles.title }}>
-            <View></View>
-            <Title type="small" title={"Choose from existing"}></Title>
-            <TouchableOpacity onPress={handleAdd}>
-              <Image
-                style={styles.icon}
-                source={require("../../assets/smallPlus.png")}
-              ></Image>
-            </TouchableOpacity>
-          </View>
-          {NotesStore.tags.length ? (
+          {!showAddSheet ? (
             <>
-              <View style={styles.container}>
-                <View style={styles.tagContainer}>
-                  {NotesStore.tags.map((tag) => {
-                    return (
-                      <>
-                        <View style={styles.tag} key={tag.tag_id}>
-                          <Tag
-                            title={tag.tag_name}
-                            hue={tag.hue}
-                            clickAction={() =>
-                              handleSubmitFromExisting(tag.tag_id)
-                            }
-                          ></Tag>
-                        </View>
-                      </>
-                    );
-                  })}
-                </View>
+              <View
+                style={{ ...styles.container, ...styles.mts, ...styles.title }}
+              >
+                <View></View>
+                <Title type="small" title={"Choose from existing"}></Title>
+                <TouchableOpacity onPress={handleAdd}>
+                  <Image
+                    style={styles.icon}
+                    source={require("../../assets/smallPlus.png")}
+                  ></Image>
+                </TouchableOpacity>
               </View>
+              {NotesStore.tags.length ? (
+                <>
+                  <View style={styles.container}>
+                    <View style={styles.tagContainer}>
+                      {NotesStore.tags.map((tag) => {
+                        console.log(UiStore?.currentNote);
+                        console.log(
+                          NotesStore?.highlights[UiStore?.currentNote].tags
+                        );
+                        const findResults = NotesStore?.highlights[
+                          UiStore?.currentNote
+                        ]?.tags.find((t) => t.tag_id === tag.tag_id);
+                        if (!findResults) {
+                          return (
+                            <View style={styles.tag} key={tag.tag_id}>
+                              <Tag
+                                title={tag.tag_name}
+                                hue={tag.hue}
+                                clickAction={() =>
+                                  handleSubmitFromExisting(tag.tag_id)
+                                }
+                              ></Tag>
+                            </View>
+                          );
+                        }
+                        return <View key={tag.tag_id}></View>;
+                      })}
+                    </View>
+                  </View>
+                </>
+              ) : (
+                <>
+                  <View style={{ ...styles.center, ...styles.mtx }}>
+                    <Image
+                      style={styles.image}
+                      source={require("../../assets/empty_tags.png")}
+                    ></Image>
+                    <Text style={styles.text}>No tags created yet</Text>
+                  </View>
+                </>
+              )}
             </>
           ) : (
             <>
+              <View
+                style={{ ...styles.container, ...styles.mts, ...styles.title }}
+              >
+                <TouchableOpacity onPress={handleBack}>
+                  <Image
+                    style={styles.icon}
+                    source={require("../../assets/left.png")}
+                  ></Image>
+                </TouchableOpacity>
+                <Title type="small" title={"New tag"}></Title>
+                <TouchableOpacity onPress={handleSubmit}>
+                  <Text style={styles.link}>Save</Text>
+                </TouchableOpacity>
+              </View>
               <View style={{ ...styles.center, ...styles.mtx }}>
-                <Image
-                  style={styles.image}
-                  source={require("../../assets/empty_tags.png")}
-                ></Image>
-                <Text style={styles.text}>No tags created yet</Text>
+                <Tag hue={color} title={tag}></Tag>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={(text) => onTag(text)}
+                  value={tag}
+                  autoFocus
+                />
+                <TouchableOpacity onPress={refreshColor}>
+                  <Image
+                    style={{ ...styles.icon, ...styles.mt }}
+                    source={require("../../assets/refresh.png")}
+                  ></Image>
+                </TouchableOpacity>
               </View>
             </>
           )}
         </>
       ) : (
         <>
-          <View style={{ ...styles.container, ...styles.mts, ...styles.title }}>
-            <TouchableOpacity onPress={handleBack}>
-              <Image
-                style={styles.icon}
-                source={require("../../assets/left.png")}
-              ></Image>
-            </TouchableOpacity>
-            <Title type="small" title={"New tag"}></Title>
-            <TouchableOpacity onPress={handleSubmit}>
-              <Text style={styles.link}>Save</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{ ...styles.center, ...styles.mtx }}>
-            <Tag hue={color} title={tag}></Tag>
-            <TextInput
-              style={styles.input}
-              onChangeText={(text) => onTag(text)}
-              value={tag}
-              autoFocus
-            />
-            <TouchableOpacity onPress={refreshColor}>
-              <Image
-                style={{ ...styles.icon, ...styles.mt }}
-                source={require("../../assets/refresh.png")}
-              ></Image>
-            </TouchableOpacity>
-          </View>
+          <View></View>
         </>
       )}
     </View>

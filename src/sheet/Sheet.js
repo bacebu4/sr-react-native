@@ -55,6 +55,7 @@ export const Sheet = observer(({ refInit, height = 650, renderContent }) => {
   const destroySheet = () => {
     // showAddSheet
     UiStore.setShowAddSheet(false);
+    UiStore.setShowChooseSheet(false);
     deactivateOverlay();
   };
 

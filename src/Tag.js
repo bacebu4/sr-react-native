@@ -1,11 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 export const Tag = ({ clickAction, hue = 100, title = "Tag" }) => {
   return (
     <TouchableOpacity onPress={clickAction}>
       <View
-        style={{ ...styles.wrapper, backgroundColor: `hsl(${hue}, 86%, 93%)` }}
+        style={{
+          ...styles.wrapper,
+          backgroundColor: `hsl(${hue}, 86%, 93%)`,
+        }}
       >
         <Text style={{ ...styles.title, color: `hsl(${hue}, 85%, 60%)` }}>
           <Text>{title}</Text>
