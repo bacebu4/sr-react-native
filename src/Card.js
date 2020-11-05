@@ -1,5 +1,13 @@
 import React from "react";
-import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+  Share,
+  Alert,
+} from "react-native";
 import ActionSheet from "react-native-actionsheet";
 
 export const Card = ({ note }) => {
@@ -7,6 +15,16 @@ export const Card = ({ note }) => {
 
   const showActionSheet = () => {
     actionSheetRef.current.show();
+  };
+
+  const onShare = async () => {
+    try {
+      await Share.share({
+        message: note.note_text.replace(/\&nbsp;/g, " "),
+      });
+    } catch (error) {
+      Alert.alert(error.message);
+    }
   };
 
   return (
@@ -41,7 +59,9 @@ export const Card = ({ note }) => {
         cancelButtonIndex={3}
         destructiveButtonIndex={0}
         onPress={(index) => {
-          /* do something */
+          if (index === 2) {
+            onShare();
+          }
         }}
       />
     </View>
