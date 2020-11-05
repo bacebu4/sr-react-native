@@ -43,7 +43,7 @@ class NotesStore {
       setLoading: action,
       setLogged: action,
       logout: flow,
-      addExistingTag: action,
+      addExistingTag: flow,
       setTag: action,
     });
   }
@@ -149,10 +149,18 @@ class NotesStore {
     yield SecureStore.deleteItemAsync("token");
   }
 
-  addExistingTag(noteIndex, tagId) {
+  *addExistingTag(noteIndex, tagId) {
     const noteId = this.highlights[noteIndex].note_id;
     const { tag_id, hue, tag_name } = this.tags.find((t) => t.tag_id === tagId);
     this.setTag(noteIndex, { tag_id, hue, tag_name });
+    try {
+      yield request(
+        `http://192.168.1.70:3000/api/addExistingTag`,
+        "POST",
+        this.token,
+        { tag_id: tagId, note_id: noteId }
+      );
+    } catch (error) {}
   }
 
   setToken(value) {
