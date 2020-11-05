@@ -13,13 +13,14 @@ import { Comment } from "../../Comment";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { UiStoreContext } from "../../store/UiStore";
-// import ActionSheet from "react-native-actionsheet";
+import ActionSheet from "react-native-actionsheet";
+import * as Haptics from "expo-haptics";
 
 export const ReviewTabScreen = observer(({ noteIndex }) => {
   const NotesStore = useContext(NotesStoreContext);
   const UiStore = useContext(UiStoreContext);
   const note = NotesStore.highlights[noteIndex - 1];
-  // const actionAddRef = React.useRef(null);
+  const actionTagRef = React.useRef(null);
 
   // const showActionSheet = () => {
   //   actionAddRef.current.show();
@@ -29,6 +30,12 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
     UiStore.addRef.current.snapTo(1);
     UiStore.setCurrentNote(noteIndex - 1);
     UiStore.setShowChooseSheet(true);
+  };
+
+  const handleLongAddPress = (tagId) => {
+    Haptics.selectionAsync();
+    console.log(tagId);
+    actionTagRef.current.show();
   };
 
   return (
@@ -69,7 +76,11 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
                 {note.tags.map((tag) => {
                   return (
                     <View style={styles.tag} key={tag.tag_id}>
-                      <Tag hue={tag.hue} title={tag.tag_name}></Tag>
+                      <Tag
+                        hue={tag.hue}
+                        title={tag.tag_name}
+                        onLongPress={() => handleLongAddPress(tag.tag_id)}
+                      ></Tag>
                     </View>
                   );
                 })}
@@ -97,6 +108,18 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
         cancelButtonIndex={2}
         onPress={}
       /> */}
+      <ActionSheet
+        ref={actionTagRef}
+        title="You sure you want to delete the tag from the highlight?"
+        options={["Delete", "Cancel"]}
+        cancelButtonIndex={1}
+        onPress={(index) => {
+          if (index === 0) {
+            console.log("deleting");
+          }
+        }}
+        destructiveButtonIndex={0}
+      />
     </>
   );
 });
