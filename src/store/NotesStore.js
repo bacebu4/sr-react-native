@@ -179,7 +179,9 @@ class NotesStore {
         this.token,
         { ...newTag, note_id: noteId }
       );
-    } catch (error) {}
+    } catch (error) {
+      throw new Error("Unable to proceed the action");
+    }
   }
 
   setToken(value) {
