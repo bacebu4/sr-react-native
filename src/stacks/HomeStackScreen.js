@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "../pages/HomeScreen";
 import { ReviewScreen } from "../pages/ReviewScreen";
+import { TransitionPresets } from "@react-navigation/stack";
 
 const HomeStack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export const HomeStackScreen = () => {
           component={ReviewScreen}
           options={{
             headerShown: false,
+            ...TransitionPresets.ModalSlideFromBottomIOS,
           }}
         />
       </HomeStack.Navigator>
