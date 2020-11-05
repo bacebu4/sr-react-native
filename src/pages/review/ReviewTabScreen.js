@@ -21,6 +21,7 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
   const UiStore = useContext(UiStoreContext);
   const note = NotesStore.highlights[noteIndex - 1];
   const actionTagRef = React.useRef(null);
+  const [tagId, setTagId] = React.useState(null);
 
   // const showActionSheet = () => {
   //   actionAddRef.current.show();
@@ -33,8 +34,13 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
   };
 
   const handleLongAddPress = (tagId) => {
+    setTagId(tagId);
     Haptics.selectionAsync();
     actionTagRef.current.show();
+  };
+
+  const handleDeleteTag = () => {
+    NotesStore.deleteTagFromNote(noteIndex - 1, tagId);
   };
 
   return (
@@ -114,7 +120,7 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
         cancelButtonIndex={1}
         onPress={(index) => {
           if (index === 0) {
-            console.log("deleting");
+            handleDeleteTag();
           }
         }}
         destructiveButtonIndex={0}

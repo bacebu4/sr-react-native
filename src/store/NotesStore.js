@@ -48,6 +48,7 @@ class NotesStore {
       addExistingTag: flow,
       addNewTag: flow,
       setTag: action,
+      deleteTagFromNote: action,
     });
   }
 
@@ -182,6 +183,13 @@ class NotesStore {
     } catch (error) {
       throw new Error("Unable to proceed the action");
     }
+  }
+
+  deleteTagFromNote(noteIndex, tagId) {
+    const noteId = this.highlights[noteIndex].note_id;
+    this.highlights[noteIndex].tags = this.highlights[noteIndex].tags.filter(
+      (t) => t.tag_id !== tagId
+    );
   }
 
   setToken(value) {
