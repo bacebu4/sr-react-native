@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   Text,
+  Alert,
 } from "react-native";
 import { Tag } from "../../Tag";
 import { Title } from "../../Title";
@@ -44,10 +45,18 @@ export const ChooseScreen = observer(() => {
   };
 
   const handleSubmit = () => {
-    console.log(tag.trim());
-    console.log(color);
-    console.log(UiStore.currentNote);
-    UiStore.addRef.current.snapTo(2);
+    const findResults = NotesStore.tags.find((t) => t.tag_name === tag.trim());
+    try {
+      if (findResults) {
+        throw new Error("This tag name already exists");
+      }
+      NotesStore.addNewTag(UiStore.currentNote, tag.trim(), color);
+      onTag("");
+      refreshColor();
+      UiStore.addRef.current.snapTo(2);
+    } catch (error) {
+      Alert.alert("Error occurred", error.message);
+    }
   };
 
   const handleSubmitFromExisting = (id) => {

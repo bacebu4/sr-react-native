@@ -44,6 +44,7 @@ class NotesStore {
       setLogged: action,
       logout: flow,
       addExistingTag: flow,
+      addNewTag: action,
       setTag: action,
     });
   }
@@ -161,6 +162,11 @@ class NotesStore {
         { tag_id: tagId, note_id: noteId }
       );
     } catch (error) {}
+  }
+
+  addNewTag(noteIndex, tagName, hue) {
+    const noteId = this.highlights[noteIndex].note_id;
+    console.log(noteId, tagName, hue);
   }
 
   setToken(value) {
