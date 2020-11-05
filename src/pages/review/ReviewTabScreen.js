@@ -34,7 +34,6 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
 
   const handleLongAddPress = (tagId) => {
     Haptics.selectionAsync();
-    console.log(tagId);
     actionTagRef.current.show();
   };
 

@@ -44,7 +44,6 @@ export const ReviewScreen = observer(({ navigation }) => {
 
   useEffect(() => {
     if (index === NotesStore.amount) {
-      console.log("here");
       Haptics.notificationAsync("success");
     }
   }, [index]);
