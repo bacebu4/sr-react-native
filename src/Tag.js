@@ -10,7 +10,8 @@ export const Tag = ({ clickAction, hue = 100, title = "Tag" }) => {
           backgroundColor: `hsl(${hue}, 86%, 93%)`,
         }}
       >
-        <Text style={{ ...styles.title, color: `hsl(${hue}, 85%, 60%)` }}>
+        <Text style={{ ...styles.title, color: `hsl(${hue}, 85%, 40%)` }}>
+          {/* <Text style={{ ...styles.title, color: `black` }}> */}
           <Text>{title}</Text>
         </Text>
       </View>
