@@ -4,7 +4,6 @@ import { NavbarSecondary } from "../NavbarSecondary";
 import { TabView } from "react-native-tab-view";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../store/NotesStore";
-import { UiStoreContext } from "../store/UiStore";
 import { ReviewTabScreen } from "./review/ReviewTabScreen";
 import { ReviewFinalScreen } from "./review/ReviewFinalScreen";
 import * as Haptics from "expo-haptics";
@@ -22,7 +21,6 @@ const initialLayout = { width: Dimensions.get("window").width };
 
 export const ReviewScreen = observer(({ navigation }) => {
   const NotesStore = useContext(NotesStoreContext);
-  const UiStore = useContext(UiStoreContext);
 
   useEffect(() => {
     AMOUNT = NotesStore.amount;
