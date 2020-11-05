@@ -30,7 +30,10 @@ export const Card = ({ note }) => {
         </View>
       </View>
       <View style={styles.note}>
-        <Text style={styles.noteText}>{note?.note_text}</Text>
+        <Text style={styles.noteText}>
+          {/* // TODO how safe it is? */}
+          {note?.note_text.replace(/\&nbsp;/g, " ")}
+        </Text>
       </View>
       <ActionSheet
         ref={actionSheetRef}
