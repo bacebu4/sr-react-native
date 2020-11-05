@@ -2,6 +2,8 @@ import { makeObservable, observable, action, flow } from "mobx";
 import { createContext } from "react";
 import request from "../functions/request";
 import * as SecureStore from "expo-secure-store";
+import "react-native-get-random-values";
+const { v4: uuidv4 } = require("uuid");
 
 class NotesStore {
   highlights = [];
@@ -166,7 +168,11 @@ class NotesStore {
 
   addNewTag(noteIndex, tagName, hue) {
     const noteId = this.highlights[noteIndex].note_id;
-    console.log(noteId, tagName, hue);
+    const tagId = uuidv4();
+    const newTag = { tag_id: tagId, hue, tag_name: tagName };
+    this.setTag(noteIndex, newTag);
+    this.setTags([...this.tags, newTag]);
+    console.log(tagId);
   }
 
   setToken(value) {
