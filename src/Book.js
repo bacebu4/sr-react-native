@@ -6,8 +6,12 @@ export const Book = ({ title = "title", author = "author" }) => {
     <View style={styles.wrapper}>
       <TouchableOpacity>
         <Image source={require("./book.png")} />
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.author}>{author}</Text>
+        <Text style={styles.title} numberOfLines={2}>
+          {title}
+        </Text>
+        <Text style={styles.author} numberOfLines={2}>
+          {author}
+        </Text>
       </TouchableOpacity>
     </View>
   );
