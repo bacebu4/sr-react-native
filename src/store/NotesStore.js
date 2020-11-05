@@ -46,7 +46,7 @@ class NotesStore {
       setLogged: action,
       logout: flow,
       addExistingTag: flow,
-      addNewTag: action,
+      addNewTag: flow,
       setTag: action,
     });
   }
@@ -166,13 +166,20 @@ class NotesStore {
     } catch (error) {}
   }
 
-  addNewTag(noteIndex, tagName, hue) {
+  *addNewTag(noteIndex, tagName, hue) {
     const noteId = this.highlights[noteIndex].note_id;
     const tagId = uuidv4();
     const newTag = { tag_id: tagId, hue, tag_name: tagName };
     this.setTag(noteIndex, newTag);
     this.setTags([...this.tags, newTag]);
-    console.log(tagId);
+    try {
+      yield request(
+        `http://192.168.1.70:3000/api/addNewTag`,
+        "POST",
+        this.token,
+        { ...newTag, note_id: noteId }
+      );
+    } catch (error) {}
   }
 
   setToken(value) {
