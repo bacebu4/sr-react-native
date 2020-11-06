@@ -116,7 +116,9 @@ export const HomeScreen = observer(({ navigation }) => {
                 })}
               </View>
             </Container>
+
             <Container mt={16} border></Container>
+
             <View style={{ ...styles.mts, ...styles.mb, ...styles.container }}>
               <SeeAll></SeeAll>
             </View>
