@@ -18,6 +18,8 @@ import { Tag } from "../Tag";
 import { UiStoreContext } from "../store/UiStore";
 import { NotesStoreContext } from "../store/NotesStore";
 import { observer } from "mobx-react-lite";
+import { MainContainer } from "../components/grid/MainContainer";
+import { Container } from "../components/grid/Container";
 
 export const HomeScreen = observer(({ navigation }) => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -31,62 +33,66 @@ export const HomeScreen = observer(({ navigation }) => {
   const NotesStore = useContext(NotesStoreContext);
 
   return (
-    <View style={styles.mainContainer}>
+    <MainContainer>
       <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <View style={styles.container}>
+        <Container>
           <Navbar
             title="Book stash"
             handleClick={() => UiStore.settingsRef.current.snapTo(0)}
           ></Navbar>
-        </View>
+        </Container>
 
-        <View style={{ ...styles.mt, ...styles.container }}>
+        <Container mt={32}>
           {NotesStore.highlights.length ? (
             <>
               <Card note={NotesStore.highlights[0]} />
-              <View
-                style={{ ...styles.mt, ...styles.container, ...styles.center }}
-              >
+
+              <Container mt={32} center>
                 <MainButton
                   clickAction={() => navigation.navigate("Review")}
                 ></MainButton>
-              </View>
+              </Container>
             </>
           ) : (
             <>
-              <View style={{ ...styles.mt, ...styles.center }}>
+              <Container mt={32} center>
                 <Image
                   style={styles.image}
                   source={require("../assets/empty_main.png")}
                 ></Image>
+
                 <Text style={styles.text}>No highlights added yet</Text>
-                <View style={styles.mt}>
+
+                <Container mt={32}>
                   <MainButton
                     clickAction={() => navigation.navigate("Review")}
                     title="Learn how to add"
                   ></MainButton>
-                </View>
-              </View>
+                </Container>
+              </Container>
             </>
           )}
-        </View>
+        </Container>
 
         {/* Latest reads */}
         {NotesStore.latestBooks.length ? (
           <>
-            <View style={{ ...styles.mt, ...styles.container }}>
+            <Container mt={32}>
               <Title title="Latest reads"></Title>
-            </View>
+            </Container>
+
             <Carousel></Carousel>
-            <View style={{ ...styles.container, ...styles.border }}></View>
-            <View style={{ ...styles.mts, ...styles.container }}>
+
+            <Container mt={16} border></Container>
+
+            <Container mt={16}>
               <SeeAll></SeeAll>
-            </View>
+            </Container>
           </>
         ) : (
           <>
@@ -97,8 +103,9 @@ export const HomeScreen = observer(({ navigation }) => {
         {/* Review by tags */}
         {NotesStore.tags.length ? (
           <>
-            <View style={{ ...styles.mtx, ...styles.container }}>
+            <Container mt={44}>
               <Title title="Review by tags"></Title>
+
               <View style={styles.tagContainer}>
                 {NotesStore.tags.map((tag) => {
                   return (
@@ -108,8 +115,8 @@ export const HomeScreen = observer(({ navigation }) => {
                   );
                 })}
               </View>
-            </View>
-            <View style={{ ...styles.container, ...styles.border }}></View>
+            </Container>
+            <Container mt={16} border></Container>
             <View style={{ ...styles.mts, ...styles.mb, ...styles.container }}>
               <SeeAll></SeeAll>
             </View>
@@ -120,15 +127,11 @@ export const HomeScreen = observer(({ navigation }) => {
           </>
         )}
       </ScrollView>
-    </View>
+    </MainContainer>
   );
 });
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: "white",
-  },
   container: {
     marginLeft: 32,
     marginRight: 32,
