@@ -1,20 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 import {
   ScrollView,
   StyleSheet,
   View,
   Image,
   TouchableOpacity,
-} from "react-native";
-import { Card } from "../../Card";
-import { Title } from "../../Title";
-import { Tag } from "../../Tag";
-import { Comment } from "../../Comment";
-import { observer } from "mobx-react-lite";
-import { NotesStoreContext } from "../../store/NotesStore";
-import { UiStoreContext } from "../../store/UiStore";
-import ActionSheet from "react-native-actionsheet";
-import * as Haptics from "expo-haptics";
+} from 'react-native';
+import { Card } from '../../Card';
+import { Title } from '../../Title';
+import { Tag } from '../../Tag';
+import { Comment } from '../../Comment';
+import { observer } from 'mobx-react-lite';
+import { NotesStoreContext } from '../../store/NotesStore';
+import { UiStoreContext } from '../../store/UiStore';
+import ActionSheet from 'react-native-actionsheet';
+import * as Haptics from 'expo-haptics';
+import { Container } from '../../components/grid/Container';
+import { TagContainer } from '../../components/grid/TagContainer';
 
 export const ReviewTabScreen = observer(({ noteIndex }) => {
   const NotesStore = useContext(NotesStoreContext);
@@ -46,11 +48,11 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
   return (
     <>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ ...styles.container, ...styles.mt }}>
+        <Container mt={32}>
           <Card note={note}></Card>
-        </View>
+        </Container>
 
-        <View style={{ ...styles.container, ...styles.mts }}>
+        <Container mt={16}>
           {note.comment_text ? (
             <>
               <View style={styles.mt}>
@@ -62,9 +64,9 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
           ) : (
             <View></View>
           )}
-        </View>
+        </Container>
 
-        <View style={{ ...styles.container, ...styles.mt, ...styles.mb }}>
+        <Container mt={32} mb={64}>
           {note.tags.length ? (
             <>
               <View style={styles.line}>
@@ -72,38 +74,35 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
                 <TouchableOpacity onPress={showAddTagStack}>
                   <Image
                     style={styles.image}
-                    source={require("../../assets/plus.png")}
+                    source={require('../../assets/plus.png')}
                   ></Image>
                 </TouchableOpacity>
               </View>
 
-              <View style={styles.tagContainer}>
-                {note.tags.map((tag) => {
-                  return (
-                    <View style={styles.tag} key={tag.tag_id}>
-                      <Tag
-                        hue={tag.hue}
-                        title={tag.tag_name}
-                        onLongPress={() => handleLongAddPress(tag.tag_id)}
-                      ></Tag>
-                    </View>
-                  );
-                })}
-              </View>
+              <TagContainer>
+                {note.tags.map((tag) => (
+                  <Tag
+                    hue={tag.hue}
+                    key={tag.tag_id}
+                    title={tag.tag_name}
+                    onLongPress={() => handleLongAddPress(tag.tag_id)}
+                  ></Tag>
+                ))}
+              </TagContainer>
             </>
           ) : (
             <>
-              <View style={styles.biggerAdd}>
+              <Container center mt={32}>
                 <TouchableOpacity onPress={showAddTagStack}>
                   <Image
                     style={styles.imageBigger}
-                    source={require("../../assets/bigPlus.png")}
+                    source={require('../../assets/bigPlus.png')}
                   ></Image>
                 </TouchableOpacity>
-              </View>
+              </Container>
             </>
           )}
-        </View>
+        </Container>
       </ScrollView>
       {/* TODO implement adding comments */}
       {/* <ActionSheet
@@ -116,7 +115,7 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
       <ActionSheet
         ref={actionTagRef}
         title="You sure you want to delete the tag from the highlight?"
-        options={["Delete", "Cancel"]}
+        options={['Delete', 'Cancel']}
         cancelButtonIndex={1}
         onPress={(index) => {
           if (index === 0) {
@@ -130,33 +129,13 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
 });
 
 const styles = StyleSheet.create({
-  container: {
-    marginLeft: 32,
-    marginRight: 32,
-  },
   mt: {
     marginTop: 32,
   },
-  mts: {
-    marginTop: 16,
-  },
-  mtx: {
-    marginTop: 44,
-  },
-  mb: {
-    marginBottom: 64,
-  },
-  tagContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  tag: {
-    marginRight: 16,
-    marginTop: 24,
-  },
+
   line: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   image: {
     width: 24,
@@ -165,9 +144,5 @@ const styles = StyleSheet.create({
   imageBigger: {
     width: 40,
     height: 40,
-  },
-  biggerAdd: {
-    alignItems: "center",
-    marginTop: 32,
   },
 });
