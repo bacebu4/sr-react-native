@@ -36,7 +36,6 @@ export const HomeScreen = observer(({ navigation }) => {
   return (
     <MainContainer>
       <ScrollView
-        contentContainerStyle={styles.scrollView}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
