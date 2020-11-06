@@ -130,38 +130,6 @@ export const HomeScreen = observer(({ navigation }) => {
 });
 
 const styles = StyleSheet.create({
-  container: {
-    marginLeft: 32,
-    marginRight: 32,
-  },
-  mt: {
-    marginTop: 32,
-  },
-  mts: {
-    marginTop: 16,
-  },
-  mtx: {
-    marginTop: 44,
-  },
-  mb: {
-    marginBottom: 150,
-  },
-  center: {
-    alignItems: 'center',
-  },
-  border: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#d7d7d7',
-    marginTop: 16,
-  },
-  tagContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  tag: {
-    marginRight: 16,
-    marginTop: 24,
-  },
   image: {
     width: 186,
     height: 173,
