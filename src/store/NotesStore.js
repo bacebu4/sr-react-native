@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, flow } from "mobx";
+import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
 import request from "../functions/request";
 import * as SecureStore from "expo-secure-store";
@@ -21,42 +21,7 @@ class NotesStore {
   isSearching = false;
 
   constructor() {
-    makeObservable(this, {
-      searchResults: observable,
-      highlights: observable,
-      tags: observable,
-      email: observable,
-      uid: observable,
-      token: observable,
-      latestBooks: observable,
-      isLoginLoading: observable,
-      isLoading: observable,
-      isLogged: observable,
-      isSearching: observable,
-      amount: observable,
-      fetchHighlights: flow,
-      fetchInitInfo: flow,
-      init: flow,
-      login: flow,
-      register: flow,
-      setEmail: action,
-      setToken: action,
-      setUid: action,
-      setTags: action,
-      setLatestBooks: action,
-      setAmount: action,
-      setLoginLoading: action,
-      setLoading: action,
-      setSearching: action,
-      setLogged: action,
-      logout: flow,
-      addExistingTag: flow,
-      addNewTag: flow,
-      setTag: action,
-      setSearchResults: action,
-      deleteTagFromNote: flow,
-      searchNotes: flow,
-    });
+    makeAutoObservable(this);
   }
 
   *fetchHighlights() {
