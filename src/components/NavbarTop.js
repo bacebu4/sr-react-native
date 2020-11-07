@@ -4,14 +4,12 @@ import Constants from "expo-constants";
 
 export const NavbarTop = ({ title = "Default", handleClick }) => {
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.navbar}>
-        <TouchableOpacity onPress={handleClick}>
-          <Image style={styles.icon} source={require("../back-arrow.png")} />
-        </TouchableOpacity>
-        <Text style={styles.title}>{title}</Text>
-        <View></View>
-      </View>
+    <View style={styles.navbar}>
+      <TouchableOpacity onPress={handleClick}>
+        <Image style={styles.icon} source={require("../back-arrow.png")} />
+      </TouchableOpacity>
+      <Text style={styles.title}>{title}</Text>
+      <View></View>
     </View>
   );
 };
