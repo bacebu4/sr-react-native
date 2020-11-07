@@ -77,7 +77,7 @@ export const Sheet = observer(({ refInit, height = 650, renderContent }) => {
       {height === 400 ? (
         <BottomSheet
           ref={refInit}
-          snapPoints={[650, height, 0]}
+          snapPoints={[650, 400, 0]}
           initialSnap={2}
           renderContent={renderContent}
           borderRadius={30}

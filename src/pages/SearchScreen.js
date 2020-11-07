@@ -24,6 +24,12 @@ export const SearchScreen = () => {
               marginLeft: 0,
               backgroundColor: "#eee",
             }}
+            cancelButtonProps={{
+              color: "#343434",
+              buttonStyle: {
+                marginLeft: 4,
+              },
+            }}
           />
         </Container>
       </ScrollView>

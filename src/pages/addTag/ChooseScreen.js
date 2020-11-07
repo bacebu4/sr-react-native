@@ -33,7 +33,9 @@ export const ChooseScreen = observer(() => {
 
   const handleAdd = () => {
     UiStore.setShowAddSheet(true);
-    UiStore.addRef.current.snapTo(0);
+    setTimeout(() => {
+      UiStore.addRef.current.snapTo(0);
+    }, 50);
   };
 
   const handleBack = () => {
