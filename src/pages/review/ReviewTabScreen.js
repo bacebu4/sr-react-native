@@ -1,22 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 import {
   ScrollView,
   StyleSheet,
   View,
   Image,
   TouchableOpacity,
-} from 'react-native';
-import { Card } from '../../Card';
-import { Title } from '../../Title';
-import { Tag } from '../../Tag';
-import { Comment } from '../../Comment';
-import { observer } from 'mobx-react-lite';
-import { NotesStoreContext } from '../../store/NotesStore';
-import { UiStoreContext } from '../../store/UiStore';
-import ActionSheet from 'react-native-actionsheet';
-import * as Haptics from 'expo-haptics';
-import { Container } from '../../components/grid/Container';
-import { TagContainer } from '../../components/grid/TagContainer';
+} from "react-native";
+import { Card } from "../../Card";
+import { Title } from "../../Title";
+import { Tag } from "../../Tag";
+import { Comment } from "../../Comment";
+import { observer } from "mobx-react-lite";
+import { NotesStoreContext } from "../../store/NotesStore";
+import { UiStoreContext } from "../../store/UiStore";
+import ActionSheet from "react-native-actionsheet";
+import * as Haptics from "expo-haptics";
+import { Container } from "../../components/grid/Container";
+import { TagContainer } from "../../components/grid/TagContainer";
 
 export const ReviewTabScreen = observer(({ noteIndex }) => {
   const NotesStore = useContext(NotesStoreContext);
@@ -74,7 +74,7 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
                 <TouchableOpacity onPress={showAddTagStack}>
                   <Image
                     style={styles.image}
-                    source={require('../../assets/plus.png')}
+                    source={require("../../assets/plus.png")}
                   ></Image>
                 </TouchableOpacity>
               </View>
@@ -86,6 +86,7 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
                     key={tag.tag_id}
                     title={tag.tag_name}
                     onLongPress={() => handleLongAddPress(tag.tag_id)}
+                    style={{ marginRight: 16, marginTop: 16 }}
                   ></Tag>
                 ))}
               </TagContainer>
@@ -96,7 +97,7 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
                 <TouchableOpacity onPress={showAddTagStack}>
                   <Image
                     style={styles.imageBigger}
-                    source={require('../../assets/bigPlus.png')}
+                    source={require("../../assets/bigPlus.png")}
                   ></Image>
                 </TouchableOpacity>
               </Container>
@@ -115,7 +116,7 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
       <ActionSheet
         ref={actionTagRef}
         title="You sure you want to delete the tag from the highlight?"
-        options={['Delete', 'Cancel']}
+        options={["Delete", "Cancel"]}
         cancelButtonIndex={1}
         onPress={(index) => {
           if (index === 0) {
@@ -134,8 +135,8 @@ const styles = StyleSheet.create({
   },
 
   line: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   image: {
     width: 24,

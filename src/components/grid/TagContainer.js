@@ -1,21 +1,17 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
 export const TagContainer = ({ children }) => {
-  return (
-    <View style={styles.tagContainer}>
-      <View style={styles.tag}>{children}</View>
-    </View>
-  );
+  return <View style={styles.tagContainer}>{children}</View>;
 };
 
 const styles = StyleSheet.create({
   tagContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
-  tag: {
-    marginRight: 16,
-    marginTop: 24,
-  },
+  // tag: {
+  //   marginRight: 16,
+  //   marginTop: 24,
+  // },
 });

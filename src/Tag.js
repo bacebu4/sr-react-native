@@ -1,13 +1,20 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-export const Tag = ({ clickAction, hue = 100, title = "Tag", onLongPress }) => {
+export const Tag = ({
+  clickAction,
+  hue = 100,
+  title = "Tag",
+  onLongPress,
+  style = {},
+}) => {
   return (
     <TouchableOpacity onPress={clickAction} onLongPress={onLongPress}>
       <View
         style={{
           ...styles.wrapper,
           backgroundColor: `hsl(${hue}, 86%, 93%)`,
+          ...style,
         }}
       >
         <Text style={{ ...styles.title, color: `hsl(${hue}, 85%, 40%)` }}>
