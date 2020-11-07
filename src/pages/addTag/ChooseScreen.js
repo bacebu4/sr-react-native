@@ -122,6 +122,7 @@ export const ChooseScreen = observer(() => {
                   </Container>
                 </>
               ) : (
+                // empty state
                 <>
                   <Container center mt={44}>
                     <Image
@@ -134,6 +135,7 @@ export const ChooseScreen = observer(() => {
               )}
             </>
           ) : (
+            // adding new tag
             <>
               <Container mt={16} row border pb={16}>
                 <TouchableOpacity onPress={handleBack}>
