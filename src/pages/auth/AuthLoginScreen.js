@@ -4,6 +4,8 @@ import { MainButton } from "../../MainButton";
 import { NavbarTop } from "../../components/NavbarTop";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";
+import { Container } from "../../components/grid/Container";
+import { MainContainer } from "../../components/grid/MainContainer";
 
 export const AuthLoginScreen = observer(({ navigation }) => {
   const [email, onEmail] = useState("v@mail.ru");
@@ -16,48 +18,45 @@ export const AuthLoginScreen = observer(({ navigation }) => {
     NotesStore.login(email, password);
   };
   return (
-    <View style={styles.container}>
-      <NavbarTop
-        title="Log In"
-        handleClick={() => navigation.goBack()}
-      ></NavbarTop>
-      <Text style={styles.heading}>Email</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => onEmail(text)}
-        value={email}
-        keyboardType="email-address"
-        onSubmitEditing={() => passwordInput.current.focus()}
-      />
-      <Text style={styles.heading}>Password</Text>
-      <TextInput
-        ref={passwordInput}
-        style={styles.input}
-        onChangeText={(text) => onPassword(text)}
-        value={password}
-        secureTextEntry
-        onSubmitEditing={handleSubmit}
-      />
-      <View style={styles.center}>
-        <View style={styles.button}>
-          <MainButton
-            title="Log In"
-            clickAction={handleSubmit}
-            loading={NotesStore.isLoginLoading}
-          ></MainButton>
+    <MainContainer>
+      <Container>
+        <NavbarTop
+          title="Log In"
+          handleClick={() => navigation.goBack()}
+        ></NavbarTop>
+        <Text style={styles.heading}>Email</Text>
+        <TextInput
+          autoFocus
+          style={styles.input}
+          onChangeText={(text) => onEmail(text)}
+          value={email}
+          keyboardType="email-address"
+          onSubmitEditing={() => passwordInput.current.focus()}
+        />
+        <Text style={styles.heading}>Password</Text>
+        <TextInput
+          ref={passwordInput}
+          style={styles.input}
+          onChangeText={(text) => onPassword(text)}
+          value={password}
+          secureTextEntry
+          onSubmitEditing={handleSubmit}
+        />
+        <View style={styles.center}>
+          <View style={styles.button}>
+            <MainButton
+              title="Log In"
+              clickAction={handleSubmit}
+              loading={NotesStore.isLoginLoading}
+            ></MainButton>
+          </View>
         </View>
-      </View>
-    </View>
+      </Container>
+    </MainContainer>
   );
 });
 
 const styles = StyleSheet.create({
-  container: {
-    paddingLeft: 32,
-    paddingRight: 32,
-    flex: 1,
-    backgroundColor: "white",
-  },
   heading: {
     fontSize: 20,
     color: "#343434",
@@ -74,10 +73,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontSize: 16,
   },
-  image: {
-    width: 315,
-    height: 250,
-  },
   text: {
     fontSize: 45,
     fontFamily: "Cochin",
@@ -86,18 +81,6 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 74,
     width: 180,
-  },
-  mt: {
-    marginTop: 32,
-  },
-  mts: {
-    marginTop: 16,
-  },
-  mtx: {
-    marginTop: 44,
-  },
-  mb: {
-    marginBottom: 150,
   },
   center: {
     alignItems: "center",
