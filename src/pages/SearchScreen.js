@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { Container } from "../components/grid/Container";
 import { MainContainer } from "../components/grid/MainContainer";
 import Constants from "expo-constants";
 import { Title } from "../Title";
 import { SearchBar } from "react-native-elements";
+import { observer } from "mobx-react-lite";
+import { NotesStoreContext } from "../store/NotesStore";
 
-export const SearchScreen = () => {
+export const SearchScreen = observer(() => {
   const [search, setSearch] = useState("");
+  const NotesStore = useContext(NotesStoreContext);
 
   return (
     <MainContainer>
@@ -30,9 +33,10 @@ export const SearchScreen = () => {
                 marginLeft: 4,
               },
             }}
+            onSubmitEditing={() => NotesStore.searchNotes(search)}
           />
         </Container>
       </ScrollView>
     </MainContainer>
   );
-};
+});

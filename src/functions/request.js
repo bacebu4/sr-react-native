@@ -19,6 +19,6 @@ export default async function request(url, method = "GET", token, data = null) {
 
     return await response.json();
   } catch (error) {
-    throw new Error("Could not access the server");
+    throw new Error(error.message);
   }
 }

@@ -7,6 +7,7 @@ const { v4: uuidv4 } = require("uuid");
 
 class NotesStore {
   highlights = [];
+  searchResults = [];
   tags = [];
   latestBooks = [];
   amount = 3;
@@ -17,9 +18,11 @@ class NotesStore {
   isLoginLoading = false;
   isLoading = false;
   isLogged = false;
+  isSearching = false;
 
   constructor() {
     makeObservable(this, {
+      searchResults: observable,
       highlights: observable,
       tags: observable,
       email: observable,
@@ -29,6 +32,7 @@ class NotesStore {
       isLoginLoading: observable,
       isLoading: observable,
       isLogged: observable,
+      isSearching: observable,
       amount: observable,
       fetchHighlights: flow,
       fetchInitInfo: flow,
@@ -43,12 +47,15 @@ class NotesStore {
       setAmount: action,
       setLoginLoading: action,
       setLoading: action,
+      setSearching: action,
       setLogged: action,
       logout: flow,
       addExistingTag: flow,
       addNewTag: flow,
       setTag: action,
+      setSearchResults: action,
       deleteTagFromNote: flow,
+      searchNotes: flow,
     });
   }
 
@@ -202,6 +209,24 @@ class NotesStore {
     }
   }
 
+  *searchNotes(substring) {
+    this.setSearching(true);
+    try {
+      const results = yield request(
+        `http://192.168.1.70:3000/api/searchNotes`,
+        "POST",
+        this.token,
+        { substring }
+      );
+      this.setSearchResults(results);
+      console.log(results);
+    } catch (error) {
+      throw new Error(error.message);
+    } finally {
+      this.setSearching(false);
+    }
+  }
+
   setToken(value) {
     this.token = value;
   }
@@ -238,8 +263,16 @@ class NotesStore {
     this.amount = value;
   }
 
+  setSearching(value) {
+    this.isSearching = value;
+  }
+
   setTag(noteIndex, tag) {
     this.highlights[noteIndex].tags.push(tag);
+  }
+
+  setSearchResults(value) {
+    this.searchResults = value;
   }
 }
 
