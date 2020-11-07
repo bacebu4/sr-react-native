@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Constants from "expo-constants";
+import { Title } from "../Title";
 
 export const NavbarTop = ({ title = "Default", handleClick }) => {
   return (
@@ -8,7 +9,7 @@ export const NavbarTop = ({ title = "Default", handleClick }) => {
       <TouchableOpacity onPress={handleClick}>
         <Image style={styles.icon} source={require("../back-arrow.png")} />
       </TouchableOpacity>
-      <Text style={styles.title}>{title}</Text>
+      <Title type="small" title={title} />
       <View></View>
     </View>
   );
