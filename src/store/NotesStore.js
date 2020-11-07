@@ -48,7 +48,7 @@ class NotesStore {
       addExistingTag: flow,
       addNewTag: flow,
       setTag: action,
-      deleteTagFromNote: action,
+      deleteTagFromNote: flow,
     });
   }
 
@@ -185,11 +185,21 @@ class NotesStore {
     }
   }
 
-  deleteTagFromNote(noteIndex, tagId) {
+  *deleteTagFromNote(noteIndex, tagId) {
     const noteId = this.highlights[noteIndex].note_id;
     this.highlights[noteIndex].tags = this.highlights[noteIndex].tags.filter(
       (t) => t.tag_id !== tagId
     );
+    try {
+      yield request(
+        `http://192.168.1.70:3000/api/deleteTagFromNote`,
+        "DELETE",
+        this.token,
+        { note_id: noteId, tag_id: tagId }
+      );
+    } catch (error) {
+      throw new Error("Unable to proceed the action");
+    }
   }
 
   setToken(value) {
