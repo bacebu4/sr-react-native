@@ -13,6 +13,8 @@ import { Title } from "../../Title";
 import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../../store/UiStore";
 import { NotesStoreContext } from "../../store/NotesStore";
+import { Container } from "../../components/grid/Container";
+import { TagContainer } from "../../components/grid/TagContainer";
 
 export const ChooseScreen = observer(() => {
   const [tag, onTag] = React.useState("");
@@ -78,9 +80,7 @@ export const ChooseScreen = observer(() => {
         <>
           {!showAddSheet ? (
             <>
-              <View
-                style={{ ...styles.container, ...styles.mts, ...styles.title }}
-              >
+              <Container mt={16} row border pb={16}>
                 <View></View>
                 <Title type="small" title={"Choose from existing"}></Title>
                 <TouchableOpacity onPress={handleAdd}>
@@ -89,11 +89,12 @@ export const ChooseScreen = observer(() => {
                     source={require("../../assets/smallPlus.png")}
                   ></Image>
                 </TouchableOpacity>
-              </View>
+              </Container>
+
               {NotesStore.tags.length ? (
                 <>
-                  <View style={styles.container}>
-                    <View style={styles.tagContainer}>
+                  <Container>
+                    <TagContainer>
                       {NotesStore.tags.map((tag) => {
                         const findResults = NotesStore?.highlights[
                           UiStore?.currentNote
@@ -101,40 +102,38 @@ export const ChooseScreen = observer(() => {
 
                         if (!findResults) {
                           return (
-                            <View style={styles.tag} key={tag.tag_id}>
-                              <Tag
-                                title={tag.tag_name}
-                                hue={tag.hue}
-                                clickAction={() =>
-                                  handleSubmitFromExisting(tag.tag_id)
-                                }
-                              ></Tag>
-                            </View>
+                            <Tag
+                              title={tag.tag_name}
+                              hue={tag.hue}
+                              key={tag.tag_id}
+                              style={{ marginRight: 16, marginTop: 24 }}
+                              clickAction={() =>
+                                handleSubmitFromExisting(tag.tag_id)
+                              }
+                            ></Tag>
                           );
                         }
 
                         return <View key={tag.tag_id}></View>;
                       })}
-                    </View>
-                  </View>
+                    </TagContainer>
+                  </Container>
                 </>
               ) : (
                 <>
-                  <View style={{ ...styles.center, ...styles.mtx }}>
+                  <Container center mt={44}>
                     <Image
                       style={styles.image}
                       source={require("../../assets/empty_tags.png")}
                     ></Image>
                     <Text style={styles.text}>No tags created yet</Text>
-                  </View>
+                  </Container>
                 </>
               )}
             </>
           ) : (
             <>
-              <View
-                style={{ ...styles.container, ...styles.mts, ...styles.title }}
-              >
+              <Container mt={16} row border pb={16}>
                 <TouchableOpacity onPress={handleBack}>
                   <Image
                     style={styles.icon}
@@ -145,8 +144,9 @@ export const ChooseScreen = observer(() => {
                 <TouchableOpacity onPress={handleSubmit}>
                   <Text style={styles.link}>Save</Text>
                 </TouchableOpacity>
-              </View>
-              <View style={{ ...styles.center, ...styles.mtx }}>
+              </Container>
+
+              <Container center mt={44}>
                 <Tag hue={color} title={tag}></Tag>
                 <TextInput
                   style={styles.input}
@@ -160,7 +160,7 @@ export const ChooseScreen = observer(() => {
                     source={require("../../assets/refresh.png")}
                   ></Image>
                 </TouchableOpacity>
-              </View>
+              </Container>
             </>
           )}
         </>
@@ -174,10 +174,6 @@ export const ChooseScreen = observer(() => {
 });
 
 const styles = StyleSheet.create({
-  container: {
-    marginLeft: 32,
-    marginRight: 32,
-  },
   button: {
     marginTop: 74,
     width: 180,
@@ -196,33 +192,8 @@ const styles = StyleSheet.create({
   mt: {
     marginTop: 32,
   },
-  mts: {
-    marginTop: 16,
-  },
-  mtx: {
-    marginTop: 44,
-  },
-  mb: {
-    marginBottom: 150,
-  },
   center: {
     alignItems: "center",
-  },
-  title: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "#d7d7d7",
-    paddingBottom: 16,
-  },
-  tagContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  tag: {
-    marginRight: 16,
-    marginTop: 24,
   },
   input: {
     height: 40,

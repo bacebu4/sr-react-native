@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
 export const Container = ({
   children,
@@ -7,6 +7,9 @@ export const Container = ({
   center = false,
   border = false,
   mb = 0,
+  pb = 0,
+  style = {},
+  row = false,
 }) => {
   return (
     <View
@@ -14,9 +17,13 @@ export const Container = ({
         ...styles.container,
         marginTop: mt,
         marginBottom: mb,
-        alignItems: center ? 'center' : 'stretch',
+        alignItems: center ? "center" : "stretch",
         borderBottomWidth: border ? 1 : 0,
-        borderBottomColor: border ? '#d7d7d7' : 'white',
+        borderBottomColor: border ? "#d7d7d7" : "white",
+        ...style,
+        flexDirection: row ? "row" : "column",
+        justifyContent: row ? "space-between" : "flex-start",
+        paddingBottom: pb,
       }}
     >
       {children}
