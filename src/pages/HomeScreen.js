@@ -10,7 +10,6 @@ import {
 import { Card } from "../Card";
 import { Navbar } from "../Navbar";
 import { MainButton } from "../MainButton";
-import Animated from "react-native-reanimated";
 import { Title } from "../Title";
 import { Carousel } from "../Carousel";
 import { SeeAll } from "../SeeAll";
