@@ -2,12 +2,13 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
+import { Title } from "./Title";
 
 export const Navbar = ({ title, handleClick }) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.navbar}>
-        <Text style={styles.text}>{title}</Text>
+        <Title type="big" title={title} />
         <TouchableOpacity onPress={handleClick}>
           <Image style={styles.icon} source={require("./avatar.png")} />
         </TouchableOpacity>
@@ -38,11 +39,6 @@ const styles = StyleSheet.create({
     marginTop: Constants.statusBarHeight + 40,
     justifyContent: "space-between",
     alignItems: "baseline",
-  },
-  text: {
-    fontSize: 46,
-    fontFamily: "Cochin-Bold",
-    color: "#343434",
   },
   icon: {
     width: 44,

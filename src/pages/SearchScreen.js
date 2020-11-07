@@ -1,10 +1,18 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
+import { Container } from "../components/grid/Container";
+import { MainContainer } from "../components/grid/MainContainer";
+import Constants from "expo-constants";
+import { Title } from "../Title";
 
 export const SearchScreen = () => {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Search!</Text>
-    </View>
+    <MainContainer>
+      <ScrollView>
+        <Container mt={Constants.statusBarHeight + 40}>
+          <Title type="big" title="Search" />
+        </Container>
+      </ScrollView>
+    </MainContainer>
   );
 };
