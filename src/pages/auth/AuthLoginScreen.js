@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { StyleSheet, View, Text, TextInput } from "react-native";
 import { MainButton } from "../../MainButton";
 import { NavbarTop } from "../../components/NavbarTop";
@@ -6,8 +6,9 @@ import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";
 
 export const AuthLoginScreen = observer(({ navigation }) => {
-  const [email, onEmail] = React.useState("v@mail.ru");
-  const [password, onPassword] = React.useState("123456");
+  const [email, onEmail] = useState("v@mail.ru");
+  const [password, onPassword] = useState("123456");
+  const passwordInput = useRef(null);
 
   const NotesStore = useContext(NotesStoreContext);
 
@@ -26,13 +27,16 @@ export const AuthLoginScreen = observer(({ navigation }) => {
         onChangeText={(text) => onEmail(text)}
         value={email}
         keyboardType="email-address"
+        onSubmitEditing={() => passwordInput.current.focus()}
       />
       <Text style={styles.heading}>Password</Text>
       <TextInput
+        ref={passwordInput}
         style={styles.input}
         onChangeText={(text) => onPassword(text)}
         value={password}
         secureTextEntry
+        onSubmitEditing={handleSubmit}
       />
       <View style={styles.center}>
         <View style={styles.button}>
