@@ -1,25 +1,29 @@
 import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
+import { Container } from "../../components/grid/Container";
+import { MainContainer } from "../../components/grid/MainContainer";
 import { MainButton } from "../../MainButton";
 import { MainLink } from "../../MainLink";
 
 export const AuthHomeScreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={require("../../login.png")} />
-      <Text style={{ ...styles.mtx, ...styles.text }}>
-        Remember what you read
-      </Text>
-      <View style={styles.button}>
-        <MainButton title="Sign up free"></MainButton>
-      </View>
-      <View style={styles.mts}>
-        <MainLink
-          title="Log in"
-          clickAction={() => navigation.navigate("AuthLogin")}
-        ></MainLink>
-      </View>
-    </View>
+    <MainContainer>
+      <Container>
+        <Image style={styles.image} source={require("../../login.png")} />
+        <Text style={{ ...styles.mtx, ...styles.text }}>
+          Remember what you read
+        </Text>
+        <View style={styles.button}>
+          <MainButton title="Sign up free"></MainButton>
+        </View>
+        <View style={styles.mts}>
+          <MainLink
+            title="Log in"
+            clickAction={() => navigation.navigate("AuthLogin")}
+          ></MainLink>
+        </View>
+      </Container>
+    </MainContainer>
   );
 };
 
@@ -45,18 +49,14 @@ const styles = StyleSheet.create({
     marginTop: 74,
     width: 180,
   },
-  mt: {
-    marginTop: 32,
-  },
+
   mts: {
     marginTop: 16,
   },
   mtx: {
     marginTop: 44,
   },
-  mb: {
-    marginBottom: 150,
-  },
+
   center: {
     alignItems: "center",
   },
