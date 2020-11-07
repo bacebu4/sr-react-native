@@ -9,18 +9,18 @@ export const Tag = ({
   style = {},
 }) => {
   return (
-    <TouchableOpacity onPress={clickAction} onLongPress={onLongPress}>
-      <View
-        style={{
-          ...styles.wrapper,
-          backgroundColor: `hsl(${hue}, 86%, 93%)`,
-          ...style,
-        }}
-      >
-        <Text style={{ ...styles.title, color: `hsl(${hue}, 85%, 40%)` }}>
-          <Text>{title}</Text>
-        </Text>
-      </View>
+    <TouchableOpacity
+      onPress={clickAction}
+      onLongPress={onLongPress}
+      style={{
+        ...styles.wrapper,
+        backgroundColor: `hsl(${hue}, 86%, 93%)`,
+        ...style,
+      }}
+    >
+      <Text style={{ ...styles.title, color: `hsl(${hue}, 85%, 40%)` }}>
+        <Text>{title}</Text>
+      </Text>
     </TouchableOpacity>
   );
 };

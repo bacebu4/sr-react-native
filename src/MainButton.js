@@ -14,19 +14,18 @@ export const MainButton = ({
   dark = false,
 }) => {
   return (
-    <TouchableOpacity onPress={clickAction}>
-      <View
-        style={{
-          ...styles.wrapper,
-          backgroundColor: dark ? "#343434" : "#FE9CA4",
-        }}
-      >
-        {!loading ? (
-          <Text style={styles.title}>{title}</Text>
-        ) : (
-          <ActivityIndicator></ActivityIndicator>
-        )}
-      </View>
+    <TouchableOpacity
+      onPress={clickAction}
+      style={{
+        ...styles.wrapper,
+        backgroundColor: dark ? "#343434" : "#FE9CA4",
+      }}
+    >
+      {!loading ? (
+        <Text style={styles.title}>{title}</Text>
+      ) : (
+        <ActivityIndicator></ActivityIndicator>
+      )}
     </TouchableOpacity>
   );
 };

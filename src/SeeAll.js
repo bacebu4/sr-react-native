@@ -3,11 +3,9 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 export const SeeAll = ({ clickAction }) => {
   return (
-    <TouchableOpacity onPress={clickAction}>
-      <View style={styles.wrapper}>
-        <Text style={styles.title}>See All</Text>
-        <Image style={styles.icon} source={require("./arrow.png")} />
-      </View>
+    <TouchableOpacity onPress={clickAction} style={styles.wrapper}>
+      <Text style={styles.title}>See All</Text>
+      <Image style={styles.icon} source={require("./arrow.png")} />
     </TouchableOpacity>
   );
 };

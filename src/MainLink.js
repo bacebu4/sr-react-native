@@ -1,12 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 
 export const MainLink = ({ clickAction, title = "Default title" }) => {
   return (
-    <TouchableOpacity onPress={clickAction}>
-      <View style={styles.wrapper}>
-        <Text style={styles.title}>{title}</Text>
-      </View>
+    <TouchableOpacity onPress={clickAction} style={styles.wrapper}>
+      <Text style={styles.title}>{title}</Text>
     </TouchableOpacity>
   );
 };

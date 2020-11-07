@@ -3,17 +3,15 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 export const Book = ({ title = "title", author = "author" }) => {
   return (
-    <View style={styles.wrapper}>
-      <TouchableOpacity>
-        <Image source={require("./book.png")} />
-        <Text style={styles.title} numberOfLines={2}>
-          {title}
-        </Text>
-        <Text style={styles.author} numberOfLines={2}>
-          {author}
-        </Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity style={styles.wrapper}>
+      <Image source={require("./book.png")} />
+      <Text style={styles.title} numberOfLines={2}>
+        {title}
+      </Text>
+      <Text style={styles.author} numberOfLines={2}>
+        {author}
+      </Text>
+    </TouchableOpacity>
   );
 };
 
