@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 import {
   ScrollView,
   RefreshControl,
@@ -6,20 +6,21 @@ import {
   View,
   Text,
   Image,
-} from "react-native";
-import { Card } from "../Card";
-import { Navbar } from "../Navbar";
-import { MainButton } from "../MainButton";
-import Animated from "react-native-reanimated";
-import { Title } from "../Title";
-import { Carousel } from "../Carousel";
-import { SeeAll } from "../SeeAll";
-import { Tag } from "../Tag";
-import { UiStoreContext } from "../store/UiStore";
-import { NotesStoreContext } from "../store/NotesStore";
-import { observer } from "mobx-react-lite";
-import { MainContainer } from "../components/grid/MainContainer";
-import { Container } from "../components/grid/Container";
+} from 'react-native';
+import { Card } from '../Card';
+import { Navbar } from '../Navbar';
+import { MainButton } from '../MainButton';
+import Animated from 'react-native-reanimated';
+import { Title } from '../Title';
+import { Carousel } from '../Carousel';
+import { SeeAll } from '../SeeAll';
+import { Tag } from '../Tag';
+import { UiStoreContext } from '../store/UiStore';
+import { NotesStoreContext } from '../store/NotesStore';
+import { observer } from 'mobx-react-lite';
+import { MainContainer } from '../components/grid/MainContainer';
+import { Container } from '../components/grid/Container';
+import { TagContainer } from '../components/grid/TagContainer';
 
 export const HomeScreen = observer(({ navigation }) => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -35,7 +36,6 @@ export const HomeScreen = observer(({ navigation }) => {
   return (
     <MainContainer>
       <ScrollView
-        contentContainerStyle={styles.scrollView}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
@@ -54,7 +54,7 @@ export const HomeScreen = observer(({ navigation }) => {
 
               <Container mt={32} center>
                 <MainButton
-                  clickAction={() => navigation.navigate("Review")}
+                  clickAction={() => navigation.navigate('Review')}
                 ></MainButton>
               </Container>
             </>
@@ -63,14 +63,14 @@ export const HomeScreen = observer(({ navigation }) => {
               <Container mt={32} center>
                 <Image
                   style={styles.image}
-                  source={require("../assets/empty_main.png")}
+                  source={require('../assets/empty_main.png')}
                 ></Image>
 
                 <Text style={styles.text}>No highlights added yet</Text>
 
                 <Container mt={32}>
                   <MainButton
-                    clickAction={() => navigation.navigate("Review")}
+                    clickAction={() => navigation.navigate('Review')}
                     title="Learn how to add"
                   ></MainButton>
                 </Container>
@@ -106,22 +106,18 @@ export const HomeScreen = observer(({ navigation }) => {
             <Container mt={44}>
               <Title title="Review by tags"></Title>
 
-              <View style={styles.tagContainer}>
+              <TagContainer>
                 {NotesStore.tags.map((tag) => {
-                  return (
-                    <View style={styles.tag} key={tag.tag_id}>
-                      <Tag title={tag.tag_name} hue={tag.hue}></Tag>
-                    </View>
-                  );
+                  <Tag title={tag.tag_name} key={tag.tag_id} hue={tag.hue} />;
                 })}
-              </View>
+              </TagContainer>
             </Container>
 
             <Container mt={16} border></Container>
 
-            <View style={{ ...styles.mts, ...styles.mb, ...styles.container }}>
+            <Container mt={16} mb={150}>
               <SeeAll></SeeAll>
-            </View>
+            </Container>
           </>
         ) : (
           <>
@@ -134,44 +130,12 @@ export const HomeScreen = observer(({ navigation }) => {
 });
 
 const styles = StyleSheet.create({
-  container: {
-    marginLeft: 32,
-    marginRight: 32,
-  },
-  mt: {
-    marginTop: 32,
-  },
-  mts: {
-    marginTop: 16,
-  },
-  mtx: {
-    marginTop: 44,
-  },
-  mb: {
-    marginBottom: 150,
-  },
-  center: {
-    alignItems: "center",
-  },
-  border: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#d7d7d7",
-    marginTop: 16,
-  },
-  tagContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  tag: {
-    marginRight: 16,
-    marginTop: 24,
-  },
   image: {
     width: 186,
     height: 173,
   },
   text: {
-    color: "#B0AFAF",
+    color: '#B0AFAF',
     marginTop: 32,
   },
 });
