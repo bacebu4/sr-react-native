@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { Book } from "./Book";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "./store/NotesStore";
