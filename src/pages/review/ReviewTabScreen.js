@@ -45,6 +45,10 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
     NotesStore.deleteTagFromNote(noteIndex - 1, tagId);
   };
 
+  const handleEditTag = () => {
+    console.log("editing");
+  };
+
   return (
     <>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -125,11 +129,13 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
       <ActionSheet
         ref={actionTagRef}
         title="You sure you want to delete the tag from the highlight?"
-        options={["Delete", "Cancel"]}
-        cancelButtonIndex={1}
+        options={["Delete", "Edit", "Cancel"]}
+        cancelButtonIndex={2}
         onPress={(index) => {
           if (index === 0) {
             handleDeleteTag();
+          } else if (index === 1) {
+            handleEditTag();
           }
         }}
         destructiveButtonIndex={0}

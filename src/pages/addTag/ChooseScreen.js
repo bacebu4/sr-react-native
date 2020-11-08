@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   View,
@@ -17,17 +17,17 @@ import { Container } from "../../components/grid/Container";
 import { TagContainer } from "../../components/grid/TagContainer";
 
 export const ChooseScreen = observer(() => {
-  const [tag, onTag] = React.useState("");
-  const [color, onColor] = React.useState(0);
-  const [showAddSheet, setShowAddSheet] = React.useState(false);
-  const UiStore = React.useContext(UiStoreContext);
-  const NotesStore = React.useContext(NotesStoreContext);
+  const [tag, onTag] = useState("");
+  const [color, onColor] = useState(0);
+  const [showAddSheet, setShowAddSheet] = useState(false);
+  const UiStore = useContext(UiStoreContext);
+  const NotesStore = useContext(NotesStoreContext);
 
-  React.useEffect(() => {
+  useEffect(() => {
     refreshColor();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setShowAddSheet(UiStore.showAddSheet);
   }, [UiStore.showAddSheet]);
 
