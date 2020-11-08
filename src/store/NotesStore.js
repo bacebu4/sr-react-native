@@ -239,6 +239,13 @@ class NotesStore {
   setSearchResults(value) {
     this.searchResults = value;
   }
+
+  setDeleted(noteId) {
+    const noteIndex = this.highlights.findIndex((h) => h.note_id === noteId);
+    if (noteIndex > -1) {
+      this.highlights[noteIndex].deleted = true;
+    }
+  }
 }
 
 export const NotesStoreContext = createContext(new NotesStore());

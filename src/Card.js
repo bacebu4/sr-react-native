@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -9,9 +9,12 @@ import {
   Alert,
 } from "react-native";
 import ActionSheet from "react-native-actionsheet";
+import { observer } from "mobx-react-lite";
+import { NotesStoreContext } from "./store/NotesStore";
 
-export const Card = ({ note }) => {
-  const actionSheetRef = React.useRef(null);
+export const Card = observer(({ note }) => {
+  const actionSheetRef = useRef(null);
+  const NotesStore = useContext(NotesStoreContext);
 
   const showActionSheet = () => {
     actionSheetRef.current.show();
@@ -27,8 +30,13 @@ export const Card = ({ note }) => {
     }
   };
 
+  const onDelete = async () => {
+    console.log("on delete", note.note_id);
+    NotesStore.setDeleted(note.note_id);
+  };
+
   return (
-    <View style={styles.wrapper}>
+    <View style={{ ...styles.wrapper, opacity: note.deleted ? 0.3 : 1 }}>
       <View style={styles.header}>
         <View style={styles.cover}>
           <Image style={styles.icon} source={require("./cover.png")} />
@@ -61,12 +69,14 @@ export const Card = ({ note }) => {
         onPress={(index) => {
           if (index === 2) {
             onShare();
+          } else if (index === 0) {
+            onDelete();
           }
         }}
       />
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   wrapper: {
