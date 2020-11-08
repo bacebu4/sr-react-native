@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
   mt: {
     marginTop: 32,
   },
-
   line: {
     flexDirection: "row",
     justifyContent: "space-between",
