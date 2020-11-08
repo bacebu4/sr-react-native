@@ -26,6 +26,9 @@ export const SearchScreen = observer(() => {
   const handleSubmit = () => {
     setSearched(true);
     setHistory([search, ...history]);
+    if (history.length > 8) {
+      setHistory(history.slice(0, 8));
+    }
     NotesStore.searchNotes(search);
   };
 
