@@ -15,11 +15,6 @@ class UiStore {
     this.settingsRef = value;
   }
 
-  setEditTagSheet(value) {
-    this.editTagSheet = value;
-    this.edit;
-  }
-
   setAddRef(value) {
     this.addRef = value;
   }
@@ -28,10 +23,16 @@ class UiStore {
     this.editRef = value;
   }
 
-  setShowEditSheet(value) {
+  setShowAddSheet(value) {
     this.showAddSheet = value;
+  }
+
+  setShowEditSheet(value) {
+    this.showEditTagSheet = value;
     if (value) {
       this.editRef.current.snapTo(0);
+    } else {
+      this.editRef.current.snapTo(1);
     }
   }
 

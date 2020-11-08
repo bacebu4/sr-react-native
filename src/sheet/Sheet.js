@@ -48,6 +48,8 @@ export const Sheet = observer(({ refInit, height = 650, renderContent }) => {
     if (height === 400) {
       refInit.current.snapTo(2);
     } else {
+      // FIXME сделать так чтобы все снапы были через uistore?
+      UiStore.setShowEditSheet(false);
       refInit.current.snapTo(1);
     }
   };

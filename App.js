@@ -12,7 +12,7 @@ import { SearchScreen } from "./src/pages/SearchScreen";
 import { LoadingScreen } from "./src/pages/LoadingScreen";
 import { SettingsScreen } from "./src/pages/SettingsScreen";
 import { ChooseScreen } from "./src/pages/addTag/ChooseScreen";
-import { View } from "react-native";
+import { EditTagScreen } from "./src/pages/addTag/EditTagScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -42,6 +42,7 @@ export default observer(function App() {
     NotesStore.init();
     UiStore.setSettingsRef(settingsRef);
     UiStore.setEditRef(editRef);
+    UiStore.setAddRef(addRef);
   }, []);
 
   return (
@@ -57,7 +58,7 @@ export default observer(function App() {
         renderContent={() => <ChooseScreen />}
       ></Sheet>
 
-      <Sheet refInit={editRef} renderContent={() => <SettingsScreen />}></Sheet>
+      <Sheet refInit={editRef} renderContent={() => <EditTagScreen />}></Sheet>
 
       <NavigationContainer>
         <Tab.Navigator
