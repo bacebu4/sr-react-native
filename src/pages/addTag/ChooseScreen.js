@@ -151,7 +151,9 @@ export const ChooseScreen = observer(() => {
               </Container>
 
               <Container center mt={44}>
-                <Tag hue={color} title={tag}></Tag>
+                <Container center>
+                  <Tag hue={color} title={tag}></Tag>
+                </Container>
                 <TextInput
                   style={styles.input}
                   onChangeText={(text) => onTag(text)}

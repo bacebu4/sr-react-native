@@ -24,17 +24,24 @@ export const SearchScreen = observer(() => {
   const NotesStore = useContext(NotesStoreContext);
 
   const handleSubmit = () => {
-    setSearched(true);
-    setHistory([search, ...history]);
-    if (history.length > 8) {
-      setHistory(history.slice(0, 8));
+    if (search.trim()) {
+      setSearched(true);
+      setHistory([search, ...history]);
+      if (history.length > 8) {
+        setHistory(history.slice(0, 8));
+      }
+      NotesStore.searchNotes(search);
     }
-    NotesStore.searchNotes(search);
   };
 
   const handleClear = () => {
     setSearched(false);
     NotesStore.setSearchResults([]);
+  };
+
+  const handleHistory = (pastSearch) => {
+    setSearch(pastSearch);
+    handleSubmit();
   };
 
   return (
@@ -109,7 +116,9 @@ export const SearchScreen = observer(() => {
                       {history.map((h) => {
                         return (
                           <Container mt={16}>
-                            <Title title={h} type="small"></Title>
+                            <TouchableOpacity onPress={() => handleHistory(h)}>
+                              <Title title={h} type="small"></Title>
+                            </TouchableOpacity>
                           </Container>
                         );
                       })}
@@ -140,14 +149,16 @@ const styles = StyleSheet.create({
   },
   textGrayCapital: {
     color: "#B0AFAF",
+    fontSize: 12,
     marginTop: 16,
-    fontWeight: "600",
+    fontWeight: "700",
     letterSpacing: 0.5,
   },
   textBlackCapital: {
     color: "#343434",
+    fontSize: 12,
     marginTop: 16,
-    fontWeight: "600",
+    fontWeight: "700",
     letterSpacing: 0.5,
   },
 });
