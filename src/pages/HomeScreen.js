@@ -106,7 +106,7 @@ export const HomeScreen = observer(({ navigation }) => {
               <Title title="Review by tags"></Title>
 
               <TagContainer>
-                {NotesStore.tags.map((tag) => (
+                {NotesStore.tags.slice(0, 10).map((tag) => (
                   <Tag
                     hue={tag.hue}
                     key={tag.tag_id}
