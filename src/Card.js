@@ -50,7 +50,10 @@ export const Card = observer(({ note }) => {
           </View>
         </View>
         <View style={styles.more}>
-          <TouchableOpacity onPress={() => showActionSheet()}>
+          <TouchableOpacity
+            onPress={() => showActionSheet()}
+            disabled={note.deleted}
+          >
             <Image style={styles.moreIcon} source={require("./dots.png")} />
           </TouchableOpacity>
         </View>

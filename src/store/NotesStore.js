@@ -256,9 +256,17 @@ class NotesStore {
   }
 
   setDeleted(noteId) {
-    const noteIndex = this.highlights.findIndex((h) => h.note_id === noteId);
-    if (noteIndex > -1) {
-      this.highlights[noteIndex].deleted = true;
+    const noteIndexHighlights = this.highlights.findIndex(
+      (h) => h.note_id === noteId
+    );
+    const noteIndexSearchResults = this.searchResults.findIndex(
+      (h) => h.note_id === noteId
+    );
+    if (noteIndexHighlights > -1) {
+      this.highlights[noteIndexHighlights].deleted = true;
+    }
+    if (noteIndexSearchResults > -1) {
+      this.searchResults[noteIndexSearchResults].deleted = true;
     }
   }
 }
