@@ -1,8 +1,17 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-export const MainContainer = ({ children }) => {
-  return <View style={styles.mainContainer}>{children}</View>;
+export const MainContainer = ({ children, center }) => {
+  return (
+    <View
+      style={{
+        ...styles.mainContainer,
+        justifyContent: center ? "center" : "flex-start",
+      }}
+    >
+      {children}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
