@@ -83,7 +83,7 @@ export const SearchScreen = observer(() => {
                 data={NotesStore.searchResults}
                 keyExtractor={(item) => item.note_id}
                 renderItem={({ item }) => (
-                  <Container mt={32}>
+                  <Container mt={16} mb={16}>
                     <TouchableOpacity>
                       <Card note={item}></Card>
                     </TouchableOpacity>
