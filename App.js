@@ -12,6 +12,7 @@ import { SearchScreen } from "./src/pages/SearchScreen";
 import { LoadingScreen } from "./src/pages/LoadingScreen";
 import { SettingsScreen } from "./src/pages/SettingsScreen";
 import { ChooseScreen } from "./src/pages/addTag/ChooseScreen";
+import { View } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -35,11 +36,12 @@ export default observer(function App() {
   const UiStore = useContext(UiStoreContext);
   const settingsRef = React.useRef(null);
   const addRef = React.useRef(null);
+  const editRef = React.useRef(null);
 
   useEffect(() => {
     NotesStore.init();
     UiStore.setSettingsRef(settingsRef);
-    UiStore.setAddRef(addRef);
+    UiStore.setEditRef(editRef);
   }, []);
 
   return (
@@ -54,6 +56,8 @@ export default observer(function App() {
         height={400}
         renderContent={() => <ChooseScreen />}
       ></Sheet>
+
+      <Sheet refInit={editRef} renderContent={() => <SettingsScreen />}></Sheet>
 
       <NavigationContainer>
         <Tab.Navigator
