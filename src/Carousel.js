@@ -1,12 +1,8 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Book } from "./Book";
-import { observer } from "mobx-react-lite";
-import { NotesStoreContext } from "./store/NotesStore";
 
-export const Carousel = observer(() => {
-  const NotesStore = React.useContext(NotesStoreContext);
-
+export const Carousel = ({ books }) => {
   return (
     <View style={styles.wrapper}>
       <ScrollView
@@ -16,7 +12,7 @@ export const Carousel = observer(() => {
       >
         <View style={styles.empty8}></View>
 
-        {NotesStore.latestBooks.map((book) => {
+        {books.map((book) => {
           return (
             <View style={styles.item} key={book.book_id}>
               <Book
@@ -31,7 +27,7 @@ export const Carousel = observer(() => {
       </ScrollView>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   text: {

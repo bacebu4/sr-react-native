@@ -85,7 +85,7 @@ export const HomeScreen = observer(({ navigation }) => {
               <Title title="Latest reads"></Title>
             </Container>
 
-            <Carousel></Carousel>
+            <Carousel books={NotesStore.latestBooks.slice(0, 10)}></Carousel>
 
             <Container mt={16} border></Container>
 
