@@ -52,26 +52,32 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
           <Card note={note}></Card>
         </Container>
 
-        <Container mt={16}>
+        <Container mt={16} style={{ opacity: note.deleted ? 0.3 : 1 }}>
           {note.comment_text ? (
             <>
               <View style={styles.mt}>
                 <Title title="Your comment:" type="small"></Title>
               </View>
 
-              <Comment text={note.comment_text}></Comment>
+              <Comment
+                text={note.comment_text}
+                disabled={note.deleted}
+              ></Comment>
             </>
           ) : (
             <View></View>
           )}
         </Container>
 
-        <Container mt={32} mb={64}>
+        <Container mt={32} mb={64} style={{ opacity: note.deleted ? 0.3 : 1 }}>
           {note.tags.length ? (
             <>
               <View style={styles.line}>
                 <Title title="Your tags:" type="small"></Title>
-                <TouchableOpacity onPress={showAddTagStack}>
+                <TouchableOpacity
+                  onPress={showAddTagStack}
+                  disabled={note.deleted}
+                >
                   <Image
                     style={styles.image}
                     source={require("../../assets/plus.png")}
@@ -94,7 +100,10 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
           ) : (
             <>
               <Container center mt={32}>
-                <TouchableOpacity onPress={showAddTagStack}>
+                <TouchableOpacity
+                  onPress={showAddTagStack}
+                  disabled={note.deleted}
+                >
                   <Image
                     style={styles.imageBigger}
                     source={require("../../assets/bigPlus.png")}

@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 
-export const Comment = ({ text }) => {
+export const Comment = ({ text, disabled = false }) => {
   const actionSheetRef = React.useRef(null);
 
   const showActionSheet = () => {
@@ -16,7 +16,7 @@ export const Comment = ({ text }) => {
           <Text style={styles.date}>2020-10-25</Text>
         </View>
         <View style={styles.more}>
-          <TouchableOpacity onPress={showActionSheet}>
+          <TouchableOpacity onPress={showActionSheet} disabled={disabled}>
             <Image style={styles.moreIcon} source={require("./dots.png")} />
           </TouchableOpacity>
         </View>
