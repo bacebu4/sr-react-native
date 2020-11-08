@@ -184,7 +184,7 @@ class NotesStore {
         { substring }
       );
       this.setSearchResults(results);
-      console.log(results);
+      console.log(...results);
     } catch (error) {
       throw new Error(error.message);
     } finally {
