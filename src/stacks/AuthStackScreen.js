@@ -2,6 +2,8 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AuthHomeScreen } from "../pages/auth/AuthHomeScreen";
 import { AuthLoginScreen } from "../pages/auth/AuthLoginScreen";
+import { AuthEmailScreen } from "../pages/auth/AuthEmailScreen";
+import { AuthPasswordScreen } from "../pages/auth/AuthPasswordScreen";
 
 const AuthStack = createStackNavigator();
 
@@ -19,6 +21,20 @@ export const AuthStackScreen = () => {
         <AuthStack.Screen
           name="AuthLogin"
           component={AuthLoginScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <AuthStack.Screen
+          name="AuthEmail"
+          component={AuthEmailScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <AuthStack.Screen
+          name="AuthPassword"
+          component={AuthPasswordScreen}
           options={{
             headerShown: false,
           }}

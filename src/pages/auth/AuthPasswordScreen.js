@@ -7,32 +7,39 @@ import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
 
-export const AuthEmailScreen = observer(({ navigation }) => {
-  const [email, onEmail] = useState("v@mail.ru");
+export const AuthPasswordScreen = observer(({ navigation }) => {
+  const [password, onPassword] = useState("123456");
 
   const NotesStore = useContext(NotesStoreContext);
 
   const handleSubmit = () => {
     // NotesStore.login(email, password);
-    navigation.navigate("AuthPassword");
   };
-
   return (
     <MainContainer>
       <Container>
         <NavbarTop
-          title="Email"
+          title="Password"
           handleClick={() => navigation.goBack()}
-          handleNext={handleSubmit}
         ></NavbarTop>
         <TextInput
           autoFocus
           style={styles.input}
-          onChangeText={(text) => onEmail(text)}
-          value={email}
-          keyboardType="email-address"
+          onChangeText={(text) => onPassword(text)}
+          value={password}
           onSubmitEditing={handleSubmit}
+          textContentType="password"
         />
+
+        <View style={styles.center}>
+          <View style={styles.button}>
+            <MainButton
+              title="Register"
+              clickAction={handleSubmit}
+              loading={NotesStore.isLoginLoading}
+            ></MainButton>
+          </View>
+        </View>
       </Container>
     </MainContainer>
   );

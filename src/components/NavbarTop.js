@@ -1,16 +1,26 @@
 import React from "react";
-import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
 import Constants from "expo-constants";
 import { Title } from "../Title";
 
-export const NavbarTop = ({ title = "Default", handleClick }) => {
+export const NavbarTop = ({ title = "Default", handleClick, handleNext }) => {
   return (
     <View style={styles.navbar}>
       <TouchableOpacity onPress={handleClick}>
         <Image style={styles.icon} source={require("../back-arrow.png")} />
       </TouchableOpacity>
       <Title type="small" title={title} />
-      <View></View>
+      {handleNext ? (
+        <>
+          <TouchableOpacity onPress={handleNext}>
+            <Text style={styles.link}>Next</Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <>
+          <View></View>
+        </>
+      )}
     </View>
   );
 };
@@ -22,34 +32,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  title: {
-    fontSize: 24,
-    fontFamily: "Cochin-Bold",
-    color: "#343434",
-  },
-  text: {
-    fontSize: 16,
-    color: "#CCA9F9",
-    fontWeight: "600",
-  },
   icon: {
     width: 24,
     height: 24,
   },
-  subbar: {
-    marginTop: 12,
-    paddingLeft: 4,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  info: {
-    marginLeft: 16,
-    fontWeight: "600",
-    alignItems: "center",
+  link: {
     color: "#CCA9F9",
-  },
-  stat: {
-    color: "#B0AFAF",
-    marginLeft: 16,
+    fontSize: 16,
+    fontWeight: "600",
+    marginTop: 4,
   },
 });
