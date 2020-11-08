@@ -19,17 +19,12 @@ import { TagContainer } from "../../components/grid/TagContainer";
 export const ChooseScreen = observer(() => {
   const [tag, onTag] = useState("");
   const [color, onColor] = useState(0);
-  const [showAddSheet, setShowAddSheet] = useState(false);
   const UiStore = useContext(UiStoreContext);
   const NotesStore = useContext(NotesStoreContext);
 
   useEffect(() => {
     refreshColor();
   }, []);
-
-  useEffect(() => {
-    setShowAddSheet(UiStore.showAddSheet);
-  }, [UiStore.showAddSheet]);
 
   const handleAdd = () => {
     UiStore.setShowAddSheet(true);
@@ -80,7 +75,7 @@ export const ChooseScreen = observer(() => {
       </View>
       {UiStore.showChooseSheet ? (
         <>
-          {!showAddSheet ? (
+          {!UiStore.showAddSheet ? (
             <>
               <Container mt={16} row border pb={16}>
                 <View></View>
