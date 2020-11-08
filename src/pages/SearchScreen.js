@@ -19,11 +19,13 @@ import { Card } from "../Card";
 
 export const SearchScreen = observer(() => {
   const [search, setSearch] = useState("");
+  const [history, setHistory] = useState([]);
   const [hasSearched, setSearched] = useState(false);
   const NotesStore = useContext(NotesStoreContext);
 
   const handleSubmit = () => {
     setSearched(true);
+    setHistory([search, ...history]);
     NotesStore.searchNotes(search);
   };
 
@@ -83,7 +85,7 @@ export const SearchScreen = observer(() => {
             <>
               {hasSearched ? (
                 <>
-                  <Container center mt={200}>
+                  <Container center mt={150}>
                     <Image
                       style={styles.image}
                       source={require("../assets/empty_search.png")}
@@ -93,7 +95,27 @@ export const SearchScreen = observer(() => {
                 </>
               ) : (
                 <>
-                  <View></View>
+                  {history.length ? (
+                    <>
+                      <Container row>
+                        <Text style={styles.textGrayCapital}>RECENT</Text>
+                        <TouchableOpacity onPress={() => setHistory([])}>
+                          <Text style={styles.textBlackCapital}>CLEAR</Text>
+                        </TouchableOpacity>
+                      </Container>
+                      {history.map((h) => {
+                        return (
+                          <Container mt={16}>
+                            <Title title={h} type="small"></Title>
+                          </Container>
+                        );
+                      })}
+                    </>
+                  ) : (
+                    <>
+                      <View></View>
+                    </>
+                  )}
                 </>
               )}
             </>
@@ -112,5 +134,17 @@ const styles = StyleSheet.create({
   text: {
     color: "#B0AFAF",
     marginTop: 32,
+  },
+  textGrayCapital: {
+    color: "#B0AFAF",
+    marginTop: 16,
+    fontWeight: "600",
+    letterSpacing: 0.5,
+  },
+  textBlackCapital: {
+    color: "#343434",
+    marginTop: 16,
+    fontWeight: "600",
+    letterSpacing: 0.5,
   },
 });
