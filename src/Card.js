@@ -32,7 +32,7 @@ export const Card = observer(({ note }) => {
 
   const onDelete = async () => {
     console.log("on delete", note.note_id);
-    NotesStore.setDeleted(note.note_id);
+    NotesStore.deleteNote(note.note_id);
   };
 
   return (

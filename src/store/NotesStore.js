@@ -192,6 +192,20 @@ class NotesStore {
     }
   }
 
+  *deleteNote(noteId) {
+    this.setDeleted(noteId);
+    try {
+      yield request(
+        `http://192.168.1.70:3000/api/deleteNote`,
+        "DELETE",
+        this.token,
+        { id: noteId }
+      );
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
   setToken(value) {
     this.token = value;
   }
