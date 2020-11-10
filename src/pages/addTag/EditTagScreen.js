@@ -18,25 +18,27 @@ import { Container } from "../../components/grid/Container";
 export const EditTagScreen = observer(() => {
   const [tag, onTag] = useState("");
   const [color, onColor] = useState(0);
+  const [initialTag, setInitialTag] = useState(null);
   const UiStore = useContext(UiStoreContext);
   const NotesStore = useContext(NotesStoreContext);
 
   useEffect(() => {
     if (UiStore.showEditTagSheet) {
-      const initialTag = NotesStore.tags.find(
+      const initialTagResults = NotesStore.tags.find(
         (t) => t.tag_id === UiStore.currentTag
       );
-      onTag(initialTag.tag_name);
-      onColor(initialTag.hue);
+      setInitialTag(initialTagResults);
+      onTag(initialTagResults.tag_name);
+      onColor(initialTagResults.hue);
     }
   }, [UiStore.showEditTagSheet]);
 
-  const handleAdd = () => {
-    UiStore.setShowAddSheet(true);
-    setTimeout(() => {
-      UiStore.addRef.current.snapTo(0);
-    }, 50);
-  };
+  // const handleAdd = () => {
+  //   UiStore.setShowAddSheet(true);
+  //   setTimeout(() => {
+  //     UiStore.addRef.current.snapTo(0);
+  //   }, 50);
+  // };
 
   const handleBack = () => {
     UiStore.setShowEditSheet(false);
@@ -53,18 +55,13 @@ export const EditTagScreen = observer(() => {
       if (findResults) {
         throw new Error("This tag name already exists");
       }
-      NotesStore.addNewTag(UiStore.currentNote, tag.trim(), color);
+      NotesStore.updateTag(UiStore.currentTag, tag);
       onTag("");
       refreshColor();
-      UiStore.addRef.current.snapTo(2);
+      UiStore.setShowEditSheet(false);
     } catch (error) {
       Alert.alert("Error occurred", error.message);
     }
-  };
-
-  const handleSubmitFromExisting = (id) => {
-    NotesStore.addExistingTag(UiStore.currentNote, id);
-    UiStore.addRef.current.snapTo(2);
   };
 
   return (
@@ -101,6 +98,7 @@ export const EditTagScreen = observer(() => {
                 onChangeText={(text) => onTag(text)}
                 value={tag}
                 autoFocus
+                onSubmitEditing={handleSubmit}
               />
               <TouchableOpacity onPress={refreshColor}>
                 <Image
