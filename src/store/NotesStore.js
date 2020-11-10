@@ -175,7 +175,7 @@ class NotesStore {
     }
   }
 
-  updateTag(tag_id, tag_name) {
+  *updateTag(tag_id, tag_name) {
     this.highlights.forEach((h) => {
       if (h.tags.length) {
         h.tags.forEach((t) => {
@@ -192,16 +192,16 @@ class NotesStore {
       }
     });
 
-    // try {
-    //   yield request(
-    //     `http://192.168.1.70:3000/api/deleteTagFromNote`,
-    //     "DELETE",
-    //     this.token,
-    //     { note_id: noteId, tag_id: tagId }
-    //   );
-    // } catch (error) {
-    //   throw new Error("Unable to proceed the action");
-    // }
+    try {
+      yield request(
+        `http://192.168.1.70:3000/api/updateTag`,
+        "PUT",
+        this.token,
+        { tag_name, tag_id }
+      );
+    } catch (error) {
+      throw new Error("Unable to proceed the action");
+    }
   }
 
   *searchNotes(substring) {
