@@ -18,16 +18,18 @@ import { Container } from "../../components/grid/Container";
 export const EditTagScreen = observer(() => {
   const [tag, onTag] = useState("");
   const [color, onColor] = useState(0);
+  const [initialTag, setInitialTag] = useState({});
   const UiStore = useContext(UiStoreContext);
   const NotesStore = useContext(NotesStoreContext);
 
   useEffect(() => {
     if (UiStore.showEditTagSheet) {
-      const initialTag = NotesStore.tags.find(
+      const initialTagResults = NotesStore.tags.find(
         (t) => t.tag_id === UiStore.currentTag
       );
-      onTag(initialTag.tag_name);
-      onColor(initialTag.hue);
+      setInitialTag(initialTagResults);
+      onTag(initialTagResults.tag_name);
+      onColor(initialTagResults.hue);
     }
   }, [UiStore.showEditTagSheet]);
 
@@ -41,12 +43,18 @@ export const EditTagScreen = observer(() => {
   };
 
   const handleSubmit = () => {
-    const findResults = NotesStore.tags.find((t) => t.tag_name === tag.trim());
+    let findResults = NotesStore.tags.find((t) => t.tag_name === tag.trim());
+    if (findResults.tag_id === UiStore.currentTag) {
+      findResults = false;
+    }
     try {
+      if (tag.trim() === initialTag.tag_name && color === initialTag.hue) {
+        throw new Error("You haven't changed the tag");
+      }
       if (findResults) {
         throw new Error("This tag name already exists");
       }
-      NotesStore.updateTag(UiStore.currentTag, tag);
+      NotesStore.updateTag(UiStore.currentTag, tag.trim(), color);
       onTag("");
       refreshColor();
       UiStore.setShowEditSheet(false);

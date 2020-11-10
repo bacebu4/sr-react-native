@@ -175,12 +175,13 @@ class NotesStore {
     }
   }
 
-  *updateTag(tag_id, tag_name) {
+  *updateTag(tag_id, tag_name, hue) {
     this.highlights.forEach((h) => {
       if (h.tags.length) {
         h.tags.forEach((t) => {
           if (t.tag_id === tag_id) {
             t.tag_name = tag_name;
+            t.hue = hue;
           }
         });
       }
@@ -189,6 +190,7 @@ class NotesStore {
     this.tags.forEach((t) => {
       if (t.tag_id === tag_id) {
         t.tag_name = tag_name;
+        t.hue = hue;
       }
     });
 
@@ -197,7 +199,7 @@ class NotesStore {
         `http://192.168.1.70:3000/api/updateTag`,
         "PUT",
         this.token,
-        { tag_name, tag_id }
+        { tag_name, tag_id, hue }
       );
     } catch (error) {
       throw new Error("Unable to proceed the action");
