@@ -9,6 +9,7 @@ class UiStore {
   showAddSheet = false;
   showChooseSheet = false;
   currentNote = 0;
+  currentTag = null;
   showEditTagSheet = false;
 
   setSettingsRef(value) {
@@ -27,12 +28,15 @@ class UiStore {
     this.showAddSheet = value;
   }
 
-  setShowEditSheet(value) {
+  setShowEditSheet(value, tagId = null) {
     this.showEditTagSheet = value;
-    if (value) {
-      this.editRef.current.snapTo(0);
-    } else {
-      this.editRef.current.snapTo(1);
+    if (this.editRef) {
+      if (value) {
+        this.editRef.current.snapTo(0);
+        this.currentTag = tagId;
+      } else {
+        this.editRef.current.snapTo(1);
+      }
     }
   }
 

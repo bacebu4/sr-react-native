@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -20,6 +20,16 @@ export const EditTagScreen = observer(() => {
   const [color, onColor] = useState(0);
   const UiStore = useContext(UiStoreContext);
   const NotesStore = useContext(NotesStoreContext);
+
+  useEffect(() => {
+    if (UiStore.showEditTagSheet) {
+      const initialTag = NotesStore.tags.find(
+        (t) => t.tag_id === UiStore.currentTag
+      );
+      onTag(initialTag.tag_name);
+      onColor(initialTag.hue);
+    }
+  }, [UiStore.showEditTagSheet]);
 
   const handleAdd = () => {
     UiStore.setShowAddSheet(true);

@@ -46,8 +46,7 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
   };
 
   const handleEditTag = () => {
-    console.log("editing");
-    UiStore.setShowEditSheet(true);
+    UiStore.setShowEditSheet(true, tagId);
   };
 
   return (
