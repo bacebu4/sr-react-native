@@ -18,27 +18,18 @@ import { Container } from "../../components/grid/Container";
 export const EditTagScreen = observer(() => {
   const [tag, onTag] = useState("");
   const [color, onColor] = useState(0);
-  const [initialTag, setInitialTag] = useState(null);
   const UiStore = useContext(UiStoreContext);
   const NotesStore = useContext(NotesStoreContext);
 
   useEffect(() => {
     if (UiStore.showEditTagSheet) {
-      const initialTagResults = NotesStore.tags.find(
+      const initialTag = NotesStore.tags.find(
         (t) => t.tag_id === UiStore.currentTag
       );
-      setInitialTag(initialTagResults);
-      onTag(initialTagResults.tag_name);
-      onColor(initialTagResults.hue);
+      onTag(initialTag.tag_name);
+      onColor(initialTag.hue);
     }
   }, [UiStore.showEditTagSheet]);
-
-  // const handleAdd = () => {
-  //   UiStore.setShowAddSheet(true);
-  //   setTimeout(() => {
-  //     UiStore.addRef.current.snapTo(0);
-  //   }, 50);
-  // };
 
   const handleBack = () => {
     UiStore.setShowEditSheet(false);
