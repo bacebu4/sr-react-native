@@ -46,12 +46,6 @@ export const AuthPasswordScreen = observer(({ navigation }) => {
 });
 
 const styles = StyleSheet.create({
-  heading: {
-    fontSize: 20,
-    color: "#343434",
-    fontWeight: "700",
-    marginTop: 22,
-  },
   input: {
     height: 38,
     backgroundColor: "#eee",
@@ -62,11 +56,7 @@ const styles = StyleSheet.create({
     marginTop: 32,
     fontSize: 16,
   },
-  text: {
-    fontSize: 45,
-    fontFamily: "Cochin",
-    textAlign: "center",
-  },
+
   button: {
     marginTop: 74,
     width: 180,
