@@ -34,7 +34,18 @@ export const Card = observer(({ note }) => {
   };
 
   const onDelete = async () => {
-    NotesStore.deleteNote(note.note_id);
+    Alert.alert(
+      "Delete highlight",
+      "Are you sure you want to delete this highlight?",
+      [
+        {
+          text: "Cancel",
+
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => NotesStore.deleteNote(note.note_id) },
+      ]
+    );
   };
 
   const onEdit = () => {
