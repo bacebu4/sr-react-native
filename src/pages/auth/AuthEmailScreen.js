@@ -15,6 +15,7 @@ export const AuthEmailScreen = observer(({ navigation }) => {
   const handleSubmit = () => {
     // NotesStore.login(email, password);
     navigation.navigate("AuthPassword");
+    NotesStore.setEmail(email);
   };
 
   return (

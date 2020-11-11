@@ -14,6 +14,7 @@ export const AuthPasswordScreen = observer(({ navigation }) => {
 
   const handleSubmit = () => {
     // NotesStore.login(email, password);
+    NotesStore.register(password);
   };
   return (
     <MainContainer>
@@ -27,8 +28,8 @@ export const AuthPasswordScreen = observer(({ navigation }) => {
           style={styles.input}
           onChangeText={(text) => onPassword(text)}
           value={password}
+          secureTextEntry
           onSubmitEditing={handleSubmit}
-          textContentType="password"
         />
 
         <View style={styles.center}>

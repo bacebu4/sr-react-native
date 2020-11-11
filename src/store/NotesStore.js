@@ -88,19 +88,33 @@ class NotesStore {
     }
   }
 
-  *register() {
+  *register(password) {
     try {
+      this.setLoginLoading(true);
       const token = yield request(
         "http://192.168.1.70:3000/api/register",
         "POST",
         "",
-        { email: this.email, uid: this.uid }
+        { email: this.email, password }
       );
-      console.log("success register", token);
+
+      console.log("success register ", token);
       this.setToken(token);
+      const available = yield SecureStore.isAvailableAsync();
+      if (available) {
+        yield SecureStore.setItemAsync("token", token);
+      }
+
+      this.setLogged(true);
+      this.setLoading(true);
+
       yield this.fetchInitInfo();
+      yield this.fetchHighlights();
     } catch (error) {
-      console.log("error registering", error);
+      console.log("error register ", error);
+    } finally {
+      this.setLoginLoading(false);
+      this.setLoading(false);
     }
   }
 
