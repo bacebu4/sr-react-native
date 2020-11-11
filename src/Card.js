@@ -9,6 +9,7 @@ import {
   Alert,
   Modal,
   TextInput,
+  TouchableWithoutFeedback,
 } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import { observer } from "mobx-react-lite";
@@ -80,11 +81,14 @@ export const Card = observer(({ note }) => {
         visible={modalVisible}
         onRequestClose={() => {
           Alert.alert("Modal has been closed.");
+          setModalVisible(false);
         }}
+        onDismiss={() => setModalVisible(false)}
         presentationStyle="formSheet"
       >
         <TextSheet handleCancel={() => setModalVisible(false)}></TextSheet>
       </Modal>
+
       <View style={{ ...styles.wrapper, opacity: note.deleted ? 0.3 : 1 }}>
         <View style={styles.header}>
           <View style={styles.cover}>
