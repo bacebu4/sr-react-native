@@ -44,7 +44,7 @@ export const EditTagScreen = observer(() => {
 
   const handleSubmit = () => {
     let findResults = NotesStore.tags.find((t) => t.tag_name === tag.trim());
-    if (findResults.tag_id === UiStore.currentTag) {
+    if (findResults?.tag_id === UiStore.currentTag) {
       findResults = false;
     }
     try {

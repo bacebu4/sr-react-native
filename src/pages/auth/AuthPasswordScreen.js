@@ -13,7 +13,6 @@ export const AuthPasswordScreen = observer(({ navigation }) => {
   const NotesStore = useContext(NotesStoreContext);
 
   const handleSubmit = () => {
-    // NotesStore.login(email, password);
     NotesStore.register(password);
   };
   return (

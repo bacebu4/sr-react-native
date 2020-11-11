@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, View, TextInput } from "react-native";
-import { MainButton } from "../../MainButton";
+import { StyleSheet, TextInput } from "react-native";
 import { NavbarTop } from "../../components/NavbarTop";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";
