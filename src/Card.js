@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState } from "react";
+import React, { useRef, useContext, useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -18,6 +18,14 @@ import { Container } from "./components/grid/Container";
 import { NavbarTop } from "./components/NavbarTop";
 
 const TextSheet = ({ handleCancel }) => {
+  const input = useRef(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      input.current.focus();
+    }, 100);
+  }, []);
+
   return (
     <MainContainer>
       <Container>
@@ -32,7 +40,7 @@ const TextSheet = ({ handleCancel }) => {
       </Container>
       <Container border mt={16}></Container>
       <Container mt={16}>
-        <TextInput autoFocus multiline style={{ fontSize: 16 }}></TextInput>
+        <TextInput ref={input} multiline style={{ fontSize: 16 }}></TextInput>
       </Container>
     </MainContainer>
   );
