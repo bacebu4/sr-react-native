@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useRef } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -10,7 +10,6 @@ import { HomeStackScreen } from "./src/stacks/HomeStackScreen";
 import { AuthStackScreen } from "./src/stacks/AuthStackScreen";
 import { SearchScreen } from "./src/pages/SearchScreen";
 import { LoadingScreen } from "./src/pages/LoadingScreen";
-import { SettingsScreen } from "./src/pages/SettingsScreen";
 import { ChooseScreen } from "./src/pages/addTag/ChooseScreen";
 import { EditTagScreen } from "./src/pages/addTag/EditTagScreen";
 
@@ -34,24 +33,17 @@ const screenOptions = ({ route }) => ({
 export default observer(function App() {
   const NotesStore = useContext(NotesStoreContext);
   const UiStore = useContext(UiStoreContext);
-  const settingsRef = React.useRef(null);
-  const addRef = React.useRef(null);
-  const editRef = React.useRef(null);
+  const addRef = useRef(null);
+  const editRef = useRef(null);
 
   useEffect(() => {
     NotesStore.init();
-    UiStore.setSettingsRef(settingsRef);
     UiStore.setEditRef(editRef);
     UiStore.setAddRef(addRef);
   }, []);
 
   return (
     <>
-      <Sheet
-        refInit={settingsRef}
-        renderContent={() => <SettingsScreen />}
-      ></Sheet>
-
       <Sheet
         refInit={addRef}
         height={400}

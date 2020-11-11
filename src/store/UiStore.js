@@ -2,7 +2,6 @@ import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
 
 class UiStore {
-  settingsRef = null;
   addNavigationRef = null;
   addRef = null;
   editRef = null;
@@ -11,10 +10,6 @@ class UiStore {
   currentNote = 0;
   currentTag = null;
   showEditTagSheet = false;
-
-  setSettingsRef(value) {
-    this.settingsRef = value;
-  }
 
   setAddRef(value) {
     this.addRef = value;
