@@ -3,17 +3,37 @@ import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
 import Constants from "expo-constants";
 import { Title } from "../Title";
 
-export const NavbarTop = ({ title = "Default", handleClick, handleNext }) => {
+export const NavbarTop = ({
+  title = "Default",
+  handleClick,
+  handleNext,
+  titleRight = "Next",
+  titleLeft = null,
+  noMargin = false,
+}) => {
   return (
-    <View style={styles.navbar}>
+    <View
+      style={{
+        ...styles.navbar,
+        marginTop: noMargin ? 40 : Constants.statusBarHeight + 40,
+      }}
+    >
       <TouchableOpacity onPress={handleClick}>
-        <Image style={styles.icon} source={require("../back-arrow.png")} />
+        {titleLeft ? (
+          <>
+            <Text style={styles.link}>{titleLeft}</Text>
+          </>
+        ) : (
+          <>
+            <Image style={styles.icon} source={require("../back-arrow.png")} />
+          </>
+        )}
       </TouchableOpacity>
       <Title type="small" title={title} />
       {handleNext ? (
         <>
           <TouchableOpacity onPress={handleNext}>
-            <Text style={styles.link}>Next</Text>
+            <Text style={styles.link}>{titleRight}</Text>
           </TouchableOpacity>
         </>
       ) : (
@@ -28,7 +48,6 @@ export const NavbarTop = ({ title = "Default", handleClick, handleNext }) => {
 const styles = StyleSheet.create({
   navbar: {
     flexDirection: "row",
-    marginTop: Constants.statusBarHeight + 40,
     justifyContent: "space-between",
     alignItems: "center",
   },
