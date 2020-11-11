@@ -17,9 +17,19 @@ export const NavbarSecondary = ({
           <Text style={styles.text}>Exit</Text>
         </TouchableOpacity>
         <Text style={styles.title}>{title}</Text>
-        <TouchableOpacity onPress={handleNext}>
-          <Image style={styles.icon} source={require("./arrow.png")} />
-        </TouchableOpacity>
+        {index !== 0 ? (
+          <>
+            <TouchableOpacity onPress={handleNext}>
+              <Image style={styles.icon} source={require("./arrow.png")} />
+            </TouchableOpacity>
+          </>
+        ) : (
+          <>
+            <TouchableOpacity onPress={handleClick}>
+              <Image style={styles.icon} source={require("./arrow.png")} />
+            </TouchableOpacity>
+          </>
+        )}
       </View>
       <View style={styles.subbar}>
         <ProgressCircle
