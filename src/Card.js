@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState, useEffect } from "react";
+import React, { useRef, useContext, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -7,50 +7,17 @@ import {
   TouchableOpacity,
   Share,
   Alert,
-  Modal,
-  TextInput,
-  TouchableWithoutFeedback,
 } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "./store/NotesStore";
-import { MainContainer } from "./components/grid/MainContainer";
-import { Container } from "./components/grid/Container";
-import { NavbarTop } from "./components/NavbarTop";
-
-const TextSheet = ({ handleCancel }) => {
-  const input = useRef(null);
-
-  useEffect(() => {
-    setTimeout(() => {
-      input.current.focus();
-    }, 100);
-  }, []);
-
-  return (
-    <MainContainer>
-      <Container>
-        <NavbarTop
-          handleClick={handleCancel}
-          handleNext={handleCancel}
-          title="Edit note"
-          titleLeft="Cancel"
-          titleRight="Save"
-          noMargin
-        ></NavbarTop>
-      </Container>
-      <Container border mt={16}></Container>
-      <Container mt={16}>
-        <TextInput ref={input} multiline style={{ fontSize: 16 }}></TextInput>
-      </Container>
-    </MainContainer>
-  );
-};
+import { EditTextModal } from "./components/EditTextModal";
 
 export const Card = observer(({ note }) => {
   const actionSheetRef = useRef(null);
   const NotesStore = useContext(NotesStoreContext);
   const [modalVisible, setModalVisible] = useState(false);
+  const [text, onText] = useState(note.note_text);
 
   const showActionSheet = () => {
     actionSheetRef.current.show();
@@ -74,20 +41,21 @@ export const Card = observer(({ note }) => {
     setModalVisible(true);
   };
 
+  const handleSave = () => {
+    setModalVisible(false);
+    console.log("worked");
+  };
+
   return (
     <>
-      <Modal
-        animationType="slide"
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(false);
-        }}
-        onDismiss={() => setModalVisible(false)}
-        presentationStyle="formSheet"
-      >
-        <TextSheet handleCancel={() => setModalVisible(false)}></TextSheet>
-      </Modal>
+      <EditTextModal
+        modalState={modalVisible}
+        setModalState={setModalVisible}
+        title="Edit note"
+        text={text}
+        onText={onText}
+        handleSave={handleSave}
+      ></EditTextModal>
 
       <View style={{ ...styles.wrapper, opacity: note.deleted ? 0.3 : 1 }}>
         <View style={styles.header}>

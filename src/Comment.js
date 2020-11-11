@@ -1,40 +1,65 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import ActionSheet from "react-native-actionsheet";
+import { EditTextModal } from "./components/EditTextModal";
 
 export const Comment = ({ text, disabled = false }) => {
-  const actionSheetRef = React.useRef(null);
+  const actionSheetRef = useRef(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [textToModal, setTextToModal] = useState(text);
 
   const showActionSheet = () => {
     actionSheetRef.current.show();
   };
 
+  const onEdit = () => {
+    setModalVisible(true);
+  };
+
+  const handleSave = () => {
+    setModalVisible(false);
+    console.log("worked");
+  };
+
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.date}>2020-10-25</Text>
+    <>
+      <EditTextModal
+        modalState={modalVisible}
+        setModalState={setModalVisible}
+        title="Edit comment"
+        text={textToModal}
+        onText={setTextToModal}
+        handleSave={handleSave}
+      ></EditTextModal>
+      <View style={styles.wrapper}>
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.date}>2020-10-25</Text>
+          </View>
+          <View style={styles.more}>
+            <TouchableOpacity onPress={showActionSheet} disabled={disabled}>
+              <Image style={styles.moreIcon} source={require("./dots.png")} />
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.more}>
-          <TouchableOpacity onPress={showActionSheet} disabled={disabled}>
-            <Image style={styles.moreIcon} source={require("./dots.png")} />
-          </TouchableOpacity>
+        <View style={styles.note}>
+          <Text style={styles.noteText}>{text}</Text>
         </View>
+        <ActionSheet
+          style={styles}
+          ref={actionSheetRef}
+          options={["Delete", "Edit", "Share", "Сancel"]}
+          cancelButtonIndex={3}
+          destructiveButtonIndex={0}
+          onPress={(index) => {
+            /* do something */
+            if (index === 1) {
+              onEdit();
+            }
+          }}
+        />
       </View>
-      <View style={styles.note}>
-        <Text style={styles.noteText}>{text}</Text>
-      </View>
-      <ActionSheet
-        style={styles}
-        ref={actionSheetRef}
-        options={["Delete", "Edit", "Share", "Сancel"]}
-        cancelButtonIndex={3}
-        destructiveButtonIndex={0}
-        onPress={(index) => {
-          /* do something */
-        }}
-      />
-    </View>
+    </>
   );
 };
 
