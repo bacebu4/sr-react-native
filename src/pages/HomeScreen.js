@@ -53,7 +53,7 @@ export const HomeScreen = observer(({ navigation }) => {
 
               <Container mt={32} center>
                 <MainButton
-                  clickAction={() => navigation.navigate("Review")}
+                  clickAction={() => navigation.navigate("MyModal")}
                 ></MainButton>
               </Container>
             </>
