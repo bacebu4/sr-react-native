@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import Constants from "expo-constants";
 import { Title } from "../Title";
 
