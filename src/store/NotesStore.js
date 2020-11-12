@@ -220,6 +220,28 @@ class NotesStore {
     }
   }
 
+  *updateComment(comment_id, comment_text) {
+    this.highlights.forEach((h) => {
+      h.tags.forEach((t) => {
+        if (t.tag_id === tag_id) {
+          t.tag_name = tag_name;
+          t.hue = hue;
+        }
+      });
+    });
+
+    try {
+      yield request(
+        `http://192.168.1.70:3000/api/updateTag`,
+        "PUT",
+        this.token,
+        { tag_name, tag_id, hue }
+      );
+    } catch (error) {
+      throw new Error("Unable to proceed the action");
+    }
+  }
+
   *searchNotes(substring) {
     this.setSearching(true);
     try {
@@ -230,7 +252,6 @@ class NotesStore {
         { substring }
       );
       this.setSearchResults(results);
-      console.log(...results);
     } catch (error) {
       throw new Error(error.message);
     } finally {

@@ -57,16 +57,17 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
         </Container>
 
         <Container mt={16} style={{ opacity: note.deleted ? 0.3 : 1 }}>
-          {note.comment_text ? (
+          {note.comments.length ? (
             <>
               <View style={styles.mt}>
                 <Title title="Your comment:" type="small"></Title>
               </View>
-
-              <Comment
-                text={note.comment_text}
-                disabled={note.deleted}
-              ></Comment>
+              {note.comments.map((c) => {
+                <Comment
+                  text={c.comment_text}
+                  disabled={note.deleted}
+                ></Comment>;
+              })}
             </>
           ) : (
             <View></View>
