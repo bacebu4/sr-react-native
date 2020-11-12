@@ -220,6 +220,33 @@ class NotesStore {
     }
   }
 
+  *updateNote(note_id, note_text) {
+    this.highlights.forEach((h) => {
+      if (h.note_id === note_id) {
+        h.note_text = note_text;
+      }
+    });
+
+    this.searchResults.forEach((h) => {
+      if (h.note_id === note_id) {
+        h.note_text = note_text;
+      }
+    });
+
+    console.log(note_id, note_text);
+
+    try {
+      yield request(
+        `http://192.168.1.70:3000/api/updateNote`,
+        "PUT",
+        this.token,
+        { note_id, note_text }
+      );
+    } catch (error) {
+      throw new Error("Unable to proceed the action");
+    }
+  }
+
   *updateComment(comment_id, comment_text) {
     this.highlights.forEach((h) => {
       h.comments.forEach((c) => {

@@ -54,7 +54,7 @@ export const Card = observer(({ note }) => {
 
   const handleSave = () => {
     setModalVisible(false);
-    console.log("worked");
+    NotesStore.updateNote(note.note_id, text);
   };
 
   return (
