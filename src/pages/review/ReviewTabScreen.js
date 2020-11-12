@@ -4,6 +4,8 @@ import {
   StyleSheet,
   View,
   Image,
+  Text,
+  Alert,
   TouchableOpacity,
 } from "react-native";
 import { Card } from "../../Card";
@@ -42,7 +44,20 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
   };
 
   const handleDeleteTag = () => {
-    NotesStore.deleteTagFromNote(noteIndex - 1, tagId);
+    Alert.alert(
+      "Delete tag",
+      "Are you sure you want to delete this tag from highlight?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => NotesStore.deleteTagFromNote(noteIndex - 1, tagId),
+        },
+      ]
+    );
   };
 
   const handleEditTag = () => {
@@ -56,23 +71,34 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
           <Card note={note}></Card>
         </Container>
 
-        <Container mt={16} style={{ opacity: note.deleted ? 0.3 : 1 }}>
-          {note.comments.length ? (
-            <>
+        <Container
+          mt={16}
+          style={{ opacity: note.deleted ? 0.3 : 1 }}
+        ></Container>
+        {note.comments.length ? (
+          <>
+            <Container style={{ opacity: note.deleted ? 0.3 : 1 }}>
               <View style={styles.mt}>
                 <Title title="Your comment:" type="small"></Title>
               </View>
-              {note.comments.map((c) => {
-                <Comment
-                  text={c.comment_text}
-                  disabled={note.deleted}
-                ></Comment>;
-              })}
-            </>
-          ) : (
-            <View></View>
-          )}
-        </Container>
+            </Container>
+
+            {note.comments.map((comment) => {
+              return (
+                <Container
+                  style={{ opacity: note.deleted ? 0.3 : 1 }}
+                  mt={8}
+                  mb={8}
+                  key={comment.comment_id}
+                >
+                  <Comment text={comment.comment_text}></Comment>
+                </Container>
+              );
+            })}
+          </>
+        ) : (
+          <View></View>
+        )}
 
         <Container mt={32} mb={64} style={{ opacity: note.deleted ? 0.3 : 1 }}>
           {note.tags.length ? (
@@ -129,7 +155,6 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
       /> */}
       <ActionSheet
         ref={actionTagRef}
-        title="You sure you want to delete the tag from the highlight?"
         options={["Delete", "Edit", "Cancel"]}
         cancelButtonIndex={2}
         onPress={(index) => {
