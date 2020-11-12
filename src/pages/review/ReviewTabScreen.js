@@ -91,7 +91,10 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
                   mb={8}
                   key={comment.comment_id}
                 >
-                  <Comment text={comment.comment_text}></Comment>
+                  <Comment
+                    text={comment.comment_text}
+                    id={comment.comment_id}
+                  ></Comment>
                 </Container>
               );
             })}

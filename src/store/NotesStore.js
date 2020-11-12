@@ -222,20 +222,19 @@ class NotesStore {
 
   *updateComment(comment_id, comment_text) {
     this.highlights.forEach((h) => {
-      h.tags.forEach((t) => {
-        if (t.tag_id === tag_id) {
-          t.tag_name = tag_name;
-          t.hue = hue;
+      h.comments.forEach((c) => {
+        if (c.comment_id === comment_id) {
+          c.comment_text = comment_text;
         }
       });
     });
 
     try {
       yield request(
-        `http://192.168.1.70:3000/api/updateTag`,
+        `http://192.168.1.70:3000/api/updateComment`,
         "PUT",
         this.token,
-        { tag_name, tag_id, hue }
+        { comment_id, comment_text }
       );
     } catch (error) {
       throw new Error("Unable to proceed the action");

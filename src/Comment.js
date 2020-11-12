@@ -1,12 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import { EditTextModal } from "./components/EditTextModal";
+import { NotesStoreContext } from "./store/NotesStore";
 
-export const Comment = ({ text, disabled = false }) => {
+export const Comment = ({ text, disabled = false, id = null }) => {
   const actionSheetRef = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [textToModal, setTextToModal] = useState(text);
+  const NotesStore = useContext(NotesStoreContext);
 
   const showActionSheet = () => {
     actionSheetRef.current.show();
@@ -18,7 +20,7 @@ export const Comment = ({ text, disabled = false }) => {
 
   const handleSave = () => {
     setModalVisible(false);
-    console.log("worked");
+    NotesStore.updateComment(id, textToModal);
   };
 
   return (
