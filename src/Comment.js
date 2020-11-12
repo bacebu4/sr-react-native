@@ -98,17 +98,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 22.2,
   },
-  title: {
-    fontSize: 22,
-    color: "#343434",
-    fontWeight: "bold",
-    fontFamily: "Cochin",
-  },
-  author: {
-    fontSize: 18,
-    fontFamily: "Cochin",
-    color: "#B0AFAF",
-  },
   noteText: {
     textAlign: "justify",
     fontSize: 17,
