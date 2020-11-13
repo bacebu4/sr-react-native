@@ -50,8 +50,8 @@ export const Comment = ({ text, disabled = false, id = null }) => {
         <ActionSheet
           style={styles}
           ref={actionSheetRef}
-          options={["Delete", "Edit", "Share", "Сancel"]}
-          cancelButtonIndex={3}
+          options={["Delete", "Edit", "Сancel"]}
+          cancelButtonIndex={2}
           destructiveButtonIndex={0}
           onPress={(index) => {
             /* do something */
