@@ -27,12 +27,11 @@ export const Comment = ({ comment, disabled = false }) => {
 
   const onDelete = () => {
     Alert.alert(
-      "Delete highlight",
-      "Are you sure you want to delete this highlight?",
+      "Delete comment",
+      "Are you sure you want to delete this comment?",
       [
         {
           text: "Cancel",
-
           style: "cancel",
         },
         {

@@ -40,7 +40,6 @@ export const Card = observer(({ note }) => {
       [
         {
           text: "Cancel",
-
           style: "cancel",
         },
         { text: "OK", onPress: () => NotesStore.deleteNote(note.note_id) },
