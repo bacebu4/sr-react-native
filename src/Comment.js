@@ -18,6 +18,10 @@ export const Comment = ({ comment, disabled = false }) => {
     setModalVisible(true);
   };
 
+  const onDelete = () => {
+    NotesStore.deleteComment(comment.comment_id);
+  };
+
   const handleSave = () => {
     setModalVisible(false);
     NotesStore.updateComment(comment.comment_id, textToModal);
@@ -57,6 +61,8 @@ export const Comment = ({ comment, disabled = false }) => {
             /* do something */
             if (index === 1) {
               onEdit();
+            } else if (index === 0) {
+              onDelete();
             }
           }}
         />

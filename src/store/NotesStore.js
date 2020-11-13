@@ -323,6 +323,14 @@ class NotesStore {
     }
   }
 
+  deleteComment(comment_id) {
+    this.highlights.forEach((h) => {
+      h.comments = h.comments.filter((c) => {
+        return c.comment_id !== comment_id;
+      });
+    });
+  }
+
   setToken(value) {
     this.token = value;
   }
