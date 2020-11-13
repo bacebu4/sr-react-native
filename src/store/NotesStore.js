@@ -300,7 +300,7 @@ class NotesStore {
     }
   }
 
-  addComment(noteIndex, note_id, comment_text) {
+  *addComment(noteIndex, note_id, comment_text) {
     const newComment = {
       comment_text,
       comment_id: uuidv4(),
@@ -311,6 +311,16 @@ class NotesStore {
       ...newComment,
       createdat: dateFormat(now, "yyyy-mm-dd"),
     });
+    try {
+      yield request(
+        `http://192.168.1.70:3000/api/addComment`,
+        "POST",
+        this.token,
+        { ...newComment }
+      );
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
   setToken(value) {
