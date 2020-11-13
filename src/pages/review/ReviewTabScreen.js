@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -19,17 +19,17 @@ import ActionSheet from "react-native-actionsheet";
 import * as Haptics from "expo-haptics";
 import { Container } from "../../components/grid/Container";
 import { TagContainer } from "../../components/grid/TagContainer";
+import { EditTextModal } from "../../components/EditTextModal";
 
 export const ReviewTabScreen = observer(({ noteIndex }) => {
   const NotesStore = useContext(NotesStoreContext);
   const UiStore = useContext(UiStoreContext);
   const note = NotesStore.highlights[noteIndex - 1];
-  const actionTagRef = React.useRef(null);
-  const [tagId, setTagId] = React.useState(null);
-
-  // const showActionSheet = () => {
-  //   actionAddRef.current.show();
-  // };
+  const actionTagRef = useRef(null);
+  const actionAddRef = useRef(null);
+  const [tagId, setTagId] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [text, setText] = useState("");
 
   const showAddTagStack = () => {
     UiStore.addRef.current.snapTo(1);
@@ -64,8 +64,26 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
     UiStore.setShowEditSheet(true, tagId);
   };
 
+  const showAddCommentModal = () => {
+    setText("");
+    setModalVisible(true);
+  };
+
+  const handleSave = () => {
+    setModalVisible(false);
+  };
+
   return (
     <>
+      <EditTextModal
+        title="New comment"
+        modalState={modalVisible}
+        setModalState={setModalVisible}
+        text={text}
+        onText={setText}
+        handleSave={handleSave}
+      ></EditTextModal>
+
       <ScrollView showsVerticalScrollIndicator={false}>
         <Container mt={32}>
           <Card note={note}></Card>
@@ -132,10 +150,15 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
               </TagContainer>
             </>
           ) : (
+            <></>
+          )}
+          {note.tags.length && note.comments.length ? (
+            <></>
+          ) : (
             <>
               <Container center mt={32}>
                 <TouchableOpacity
-                  onPress={showAddTagStack}
+                  onPress={() => actionAddRef.current.show()}
                   disabled={note.deleted}
                 >
                   <Image
@@ -148,14 +171,21 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
           )}
         </Container>
       </ScrollView>
-      {/* TODO implement adding comments */}
-      {/* <ActionSheet
+
+      <ActionSheet
         ref={actionAddRef}
         title="What you want to add?"
         options={["Add comment", "Add tag", "Cancel"]}
         cancelButtonIndex={2}
-        onPress={}
-      /> */}
+        onPress={(index) => {
+          if (index === 1) {
+            showAddTagStack();
+          } else if (index === 0) {
+            showAddCommentModal();
+          }
+        }}
+      />
+
       <ActionSheet
         ref={actionTagRef}
         options={["Delete", "Edit", "Cancel"]}
