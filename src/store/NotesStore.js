@@ -4,6 +4,7 @@ import request from "../functions/request";
 import * as SecureStore from "expo-secure-store";
 import "react-native-get-random-values";
 const { v4: uuidv4 } = require("uuid");
+const dateFormat = require("dateformat");
 
 class NotesStore {
   highlights = [];
@@ -297,6 +298,19 @@ class NotesStore {
     } catch (error) {
       throw new Error(error.message);
     }
+  }
+
+  addComment(noteIndex, note_id, comment_text) {
+    const newComment = {
+      comment_text,
+      comment_id: uuidv4(),
+      note_id,
+    };
+    const now = new Date();
+    this.highlights[noteIndex].comments.push({
+      ...newComment,
+      createdat: dateFormat(now, "yyyy-mm-dd"),
+    });
   }
 
   setToken(value) {

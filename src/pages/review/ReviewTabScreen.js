@@ -71,6 +71,7 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
 
   const handleSave = () => {
     setModalVisible(false);
+    NotesStore.addComment(noteIndex - 1, note.note_id, text);
   };
 
   return (
