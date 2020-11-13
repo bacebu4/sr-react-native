@@ -1,5 +1,12 @@
 import React, { useState, useRef, useContext } from "react";
-import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import { EditTextModal } from "./components/EditTextModal";
 import { NotesStoreContext } from "./store/NotesStore";
@@ -19,7 +26,21 @@ export const Comment = ({ comment, disabled = false }) => {
   };
 
   const onDelete = () => {
-    NotesStore.deleteComment(comment.comment_id);
+    Alert.alert(
+      "Delete highlight",
+      "Are you sure you want to delete this highlight?",
+      [
+        {
+          text: "Cancel",
+
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => NotesStore.deleteComment(comment.comment_id),
+        },
+      ]
+    );
   };
 
   const handleSave = () => {

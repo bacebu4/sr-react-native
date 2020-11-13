@@ -271,6 +271,7 @@ class NotesStore {
 
   *searchNotes(substring) {
     this.setSearching(true);
+
     try {
       const results = yield request(
         `http://192.168.1.70:3000/api/searchNotes`,
@@ -288,6 +289,7 @@ class NotesStore {
 
   *deleteNote(noteId) {
     this.setDeleted(noteId);
+
     try {
       yield request(
         `http://192.168.1.70:3000/api/deleteNote`,
@@ -311,6 +313,7 @@ class NotesStore {
       ...newComment,
       createdat: dateFormat(now, "yyyy-mm-dd"),
     });
+
     try {
       yield request(
         `http://192.168.1.70:3000/api/addComment`,
@@ -323,12 +326,23 @@ class NotesStore {
     }
   }
 
-  deleteComment(comment_id) {
+  *deleteComment(comment_id) {
     this.highlights.forEach((h) => {
       h.comments = h.comments.filter((c) => {
         return c.comment_id !== comment_id;
       });
     });
+
+    try {
+      yield request(
+        `http://192.168.1.70:3000/api/deleteComment`,
+        "DELETE",
+        this.token,
+        { comment_id }
+      );
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
   setToken(value) {
