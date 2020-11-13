@@ -4,10 +4,10 @@ import ActionSheet from "react-native-actionsheet";
 import { EditTextModal } from "./components/EditTextModal";
 import { NotesStoreContext } from "./store/NotesStore";
 
-export const Comment = ({ text, disabled = false, id = null }) => {
+export const Comment = ({ comment, disabled = false }) => {
   const actionSheetRef = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [textToModal, setTextToModal] = useState(text);
+  const [textToModal, setTextToModal] = useState(comment.comment_text);
   const NotesStore = useContext(NotesStoreContext);
 
   const showActionSheet = () => {
@@ -20,7 +20,7 @@ export const Comment = ({ text, disabled = false, id = null }) => {
 
   const handleSave = () => {
     setModalVisible(false);
-    NotesStore.updateComment(id, textToModal);
+    NotesStore.updateComment(comment.comment_id, textToModal);
   };
 
   return (
@@ -36,7 +36,7 @@ export const Comment = ({ text, disabled = false, id = null }) => {
       <View style={styles.wrapper}>
         <View style={styles.header}>
           <View>
-            <Text style={styles.date}>2020-10-25</Text>
+            <Text style={styles.date}>{comment.createdat.slice(0, 10)}</Text>
           </View>
           <View style={styles.more}>
             <TouchableOpacity onPress={showActionSheet} disabled={disabled}>
@@ -45,7 +45,7 @@ export const Comment = ({ text, disabled = false, id = null }) => {
           </View>
         </View>
         <View style={styles.note}>
-          <Text style={styles.noteText}>{text}</Text>
+          <Text style={styles.noteText}>{comment.comment_text}</Text>
         </View>
         <ActionSheet
           style={styles}
