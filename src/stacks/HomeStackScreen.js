@@ -29,13 +29,14 @@ export const HomeStackScreen = () => {
         <HomeStack.Screen
           name="ByBook"
           component={ByBookScreen}
-          options={{
-            headerTitle: "Book name here",
+          options={({ route }) => ({
+            title: route.params.name,
+            headerTitle: route.params.name,
             headerTintColor: "#CCA9F9",
             headerTitleStyle: {
               color: "#343434",
             },
-          }}
+          })}
         />
       </HomeStack.Navigator>
     </>
