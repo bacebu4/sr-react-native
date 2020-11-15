@@ -1,9 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export const Book = ({ title = "title", author = "author" }) => {
+  const navigation = useNavigation();
+
   return (
-    <TouchableOpacity style={styles.wrapper}>
+    <TouchableOpacity
+      style={styles.wrapper}
+      onPress={() => navigation.navigate("ByBook")}
+    >
       <Image source={require("./book.png")} />
       <Text style={styles.title} numberOfLines={2}>
         {title}

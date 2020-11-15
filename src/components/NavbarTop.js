@@ -29,7 +29,9 @@ export const NavbarTop = ({
           </>
         )}
       </TouchableOpacity>
-      <Title type="small" title={title} />
+
+      <Title type="small" title={title} numberOfLines={1} />
+
       {handleNext ? (
         <>
           <TouchableOpacity onPress={handleNext}>

@@ -69,9 +69,7 @@ export const Card = observer(({ note }) => {
 
       <View style={{ ...styles.wrapper, opacity: note.deleted ? 0.3 : 1 }}>
         <View style={styles.header}>
-          <View style={styles.cover}>
-            <Image style={styles.icon} source={require("./cover.png")} />
-          </View>
+          <Image style={styles.cover} source={require("./cover.png")} />
           <View style={styles.info}>
             <View>
               <Text style={styles.title}>{note?.book_title}</Text>
@@ -169,5 +167,8 @@ const styles = StyleSheet.create({
   },
   menu: {
     marginLeft: 32,
+  },
+  cover: {
+    borderRadius: 5,
   },
 });

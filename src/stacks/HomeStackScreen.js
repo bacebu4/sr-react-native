@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "../pages/HomeScreen";
 import { ReviewScreen } from "../pages/ReviewScreen";
 import { TransitionPresets } from "@react-navigation/stack";
+import { ByBookScreen } from "../pages/ByBookScreen";
 
 const HomeStack = createStackNavigator();
 
@@ -23,6 +24,17 @@ export const HomeStackScreen = () => {
           options={{
             headerShown: false,
             ...TransitionPresets.ModalSlideFromBottomIOS,
+          }}
+        />
+        <HomeStack.Screen
+          name="ByBook"
+          component={ByBookScreen}
+          options={{
+            headerTitle: "Book name here",
+            headerTintColor: "#CCA9F9",
+            headerTitleStyle: {
+              color: "#343434",
+            },
           }}
         />
       </HomeStack.Navigator>
