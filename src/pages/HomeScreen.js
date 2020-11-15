@@ -101,9 +101,9 @@ export const HomeScreen = observer(({ navigation }) => {
 
               <Container mt={16} border></Container>
 
-              <Container mt={16}>
+              {/* <Container mt={16}>
                 <SeeAll></SeeAll>
-              </Container>
+              </Container> */}
             </>
           ) : (
             <>
@@ -114,7 +114,7 @@ export const HomeScreen = observer(({ navigation }) => {
           {/* Review by tags */}
           {NotesStore.tags.length ? (
             <>
-              <Container mt={44}>
+              <Container mt={44} mb={150}>
                 <Title title="Review by tags"></Title>
 
                 <TagContainer>
@@ -129,11 +129,11 @@ export const HomeScreen = observer(({ navigation }) => {
                 </TagContainer>
               </Container>
 
-              <Container mt={16} border></Container>
+              {/* <Container mt={16} mb={150} border></Container> */}
 
-              <Container mt={16} mb={150}>
+              {/* <Container mt={16} mb={150}>
                 <SeeAll></SeeAll>
-              </Container>
+              </Container> */}
             </>
           ) : (
             <>
