@@ -345,6 +345,25 @@ class NotesStore {
     }
   }
 
+  notesByBook = [];
+  notesByBookLoading = true;
+  *getNotesByBook(book_id) {
+    this.notesByBookLoading = true;
+    try {
+      const notes = yield request(
+        `http://192.168.1.70:3000/api/getNotesByBook`,
+        "POST",
+        this.token,
+        { book_id }
+      );
+      this.notesByBook = notes;
+    } catch (error) {
+      throw new Error(error.message);
+    } finally {
+      this.notesByBookLoading = false;
+    }
+  }
+
   setToken(value) {
     this.token = value;
   }
