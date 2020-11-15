@@ -6,8 +6,9 @@ import { Container } from "../components/grid/Container";
 import { Card } from "../Card";
 import { ScrollView } from "react-native";
 
-export const ByBookScreen = observer(({ navigation }) => {
+export const ByBookScreen = observer(({ route }) => {
   const NotesStore = useContext(NotesStoreContext);
+  const { book_id } = route.params;
 
   return (
     <MainContainer>

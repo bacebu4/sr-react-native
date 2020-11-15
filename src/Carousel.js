@@ -15,10 +15,7 @@ export const Carousel = ({ books }) => {
         {books.map((book) => {
           return (
             <View style={styles.item} key={book.book_id}>
-              <Book
-                title={book.book_title}
-                author={book.author_full_name}
-              ></Book>
+              <Book book={book}></Book>
             </View>
           );
         })}
