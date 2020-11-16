@@ -14,6 +14,7 @@ import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../../store/UiStore";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
+import { useMessage } from "../../hooks/message.hook";
 
 export const EditTagScreen = observer(() => {
   const [tag, onTag] = useState("");
@@ -21,6 +22,7 @@ export const EditTagScreen = observer(() => {
   const [initialTag, setInitialTag] = useState({});
   const UiStore = useContext(UiStoreContext);
   const NotesStore = useContext(NotesStoreContext);
+  const message = useMessage();
 
   useEffect(() => {
     if (UiStore.showEditTagSheet) {
@@ -59,7 +61,7 @@ export const EditTagScreen = observer(() => {
       refreshColor();
       UiStore.setShowEditSheet(false);
     } catch (error) {
-      Alert.alert("Error occurred", error.message);
+      message(error.message);
     }
   };
 

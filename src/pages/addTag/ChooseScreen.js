@@ -15,12 +15,14 @@ import { UiStoreContext } from "../../store/UiStore";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { TagContainer } from "../../components/grid/TagContainer";
+import { useMessage } from "../../hooks/message.hook";
 
 export const ChooseScreen = observer(() => {
   const [tag, onTag] = useState("");
   const [color, onColor] = useState(0);
   const UiStore = useContext(UiStoreContext);
   const NotesStore = useContext(NotesStoreContext);
+  const message = useMessage();
 
   useEffect(() => {
     refreshColor();
@@ -54,7 +56,7 @@ export const ChooseScreen = observer(() => {
       refreshColor();
       UiStore.addRef.current.snapTo(2);
     } catch (error) {
-      Alert.alert("Error occurred", error.message);
+      message(error.message);
     }
   };
 

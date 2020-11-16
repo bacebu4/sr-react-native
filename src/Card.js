@@ -13,6 +13,7 @@ import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "./store/NotesStore";
 import { EditTextModal } from "./components/EditTextModal";
 import { useConfirm } from "./hooks/confirm.hook";
+import { useMessage } from "./hooks/message.hook";
 
 export const Card = observer(({ note }) => {
   const actionSheetRef = useRef(null);
@@ -20,6 +21,7 @@ export const Card = observer(({ note }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [text, onText] = useState(note.note_text);
   const confirm = useConfirm();
+  const message = useMessage();
 
   const showActionSheet = () => {
     actionSheetRef.current.show();
@@ -31,7 +33,7 @@ export const Card = observer(({ note }) => {
         message: note.note_text.replace(/\&nbsp;/g, " "),
       });
     } catch (error) {
-      Alert.alert(error.message);
+      message(error.message);
     }
   };
 
