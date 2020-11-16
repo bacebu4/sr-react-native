@@ -35,7 +35,6 @@ export const ByBookScreen = observer(({ route }) => {
   }, []);
 
   useEffect(() => {
-    // NotesStore.getNotesByBook(book_id);
     fetchNotes();
   }, []);
 
