@@ -18,7 +18,6 @@ export const SettingsModal = ({ modalState, setModalState, handleDone }) => {
       animationType="slide"
       visible={modalState}
       onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
         setModalState(false);
       }}
       onDismiss={() => setModalState(false)}

@@ -12,12 +12,14 @@ import ActionSheet from "react-native-actionsheet";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "./store/NotesStore";
 import { EditTextModal } from "./components/EditTextModal";
+import { useConfirm } from "./hooks/confirm.hook";
 
 export const Card = observer(({ note }) => {
   const actionSheetRef = useRef(null);
   const NotesStore = useContext(NotesStoreContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [text, onText] = useState(note.note_text);
+  const confirm = useConfirm();
 
   const showActionSheet = () => {
     actionSheetRef.current.show();
@@ -34,16 +36,12 @@ export const Card = observer(({ note }) => {
   };
 
   const onDelete = async () => {
-    Alert.alert(
+    confirm(
+      () => {
+        NotesStore.deleteNote(note.note_id);
+      },
       "Delete highlight",
-      "Are you sure you want to delete this highlight?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        { text: "OK", onPress: () => NotesStore.deleteNote(note.note_id) },
-      ]
+      "Are you sure you want to delete this highlight?"
     );
   };
 

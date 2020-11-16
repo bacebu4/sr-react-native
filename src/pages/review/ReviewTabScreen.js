@@ -20,6 +20,7 @@ import * as Haptics from "expo-haptics";
 import { Container } from "../../components/grid/Container";
 import { TagContainer } from "../../components/grid/TagContainer";
 import { EditTextModal } from "../../components/EditTextModal";
+import { useConfirm } from "../../hooks/confirm.hook";
 
 export const ReviewTabScreen = observer(({ noteIndex }) => {
   const NotesStore = useContext(NotesStoreContext);
@@ -30,6 +31,7 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
   const [tagId, setTagId] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [text, setText] = useState("");
+  const confirm = useConfirm();
 
   const showAddTagStack = () => {
     UiStore.addRef.current.snapTo(1);
@@ -44,19 +46,12 @@ export const ReviewTabScreen = observer(({ noteIndex }) => {
   };
 
   const handleDeleteTag = () => {
-    Alert.alert(
+    confirm(
+      () => {
+        NotesStore.deleteTagFromNote(noteIndex - 1, tagId);
+      },
       "Delete tag",
-      "Are you sure you want to delete this tag from highlight?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: () => NotesStore.deleteTagFromNote(noteIndex - 1, tagId),
-        },
-      ]
+      "Are you sure you want to delete this tag from highlight?"
     );
   };
 

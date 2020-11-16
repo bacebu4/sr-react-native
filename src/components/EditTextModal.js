@@ -53,7 +53,6 @@ export const EditTextModal = ({
       animationType="slide"
       visible={modalState}
       onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
         setModalState(false);
       }}
       onDismiss={() => setModalState(false)}

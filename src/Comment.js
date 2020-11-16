@@ -10,12 +10,14 @@ import {
 import ActionSheet from "react-native-actionsheet";
 import { EditTextModal } from "./components/EditTextModal";
 import { NotesStoreContext } from "./store/NotesStore";
+import { useConfirm } from "./hooks/confirm.hook";
 
 export const Comment = ({ comment, disabled = false }) => {
   const actionSheetRef = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [textToModal, setTextToModal] = useState(comment.comment_text);
   const NotesStore = useContext(NotesStoreContext);
+  const confirm = useConfirm();
 
   const showActionSheet = () => {
     actionSheetRef.current.show();
@@ -26,19 +28,12 @@ export const Comment = ({ comment, disabled = false }) => {
   };
 
   const onDelete = () => {
-    Alert.alert(
+    confirm(
+      () => {
+        NotesStore.deleteComment(comment.comment_id);
+      },
       "Delete comment",
-      "Are you sure you want to delete this comment?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: () => NotesStore.deleteComment(comment.comment_id),
-        },
-      ]
+      "Are you sure you want to delete this comment?"
     );
   };
 
