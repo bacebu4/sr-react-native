@@ -20,179 +20,186 @@ import { TagContainer } from "../../components/grid/TagContainer";
 import { EditTextModal } from "../../components/EditTextModal";
 import { useConfirm } from "../../hooks/confirm.hook";
 
-export const ReviewTabScreen = observer(({ noteIndex }) => {
-  const NotesStore = useContext(NotesStoreContext);
-  const UiStore = useContext(UiStoreContext);
-  const note = NotesStore.highlights[noteIndex - 1];
-  const actionTagRef = useRef(null);
-  const actionAddRef = useRef(null);
-  const [tagId, setTagId] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [text, setText] = useState("");
-  const confirm = useConfirm();
+export const ReviewTabScreen = observer(
+  ({ noteIndex, noteReceived = null }) => {
+    const NotesStore = useContext(NotesStoreContext);
+    const UiStore = useContext(UiStoreContext);
+    const note =
+      NotesStore.highlights[noteIndex - 1] || NotesStore.highlights[0];
+    const actionTagRef = useRef(null);
+    const actionAddRef = useRef(null);
+    const [tagId, setTagId] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [text, setText] = useState("");
+    const confirm = useConfirm();
 
-  const showAddTagStack = () => {
-    UiStore.addRef.current.snapTo(1);
-    UiStore.setCurrentNote(noteIndex - 1);
-    UiStore.setShowChooseSheet(true);
-  };
+    const showAddTagStack = () => {
+      UiStore.addRef.current.snapTo(1);
+      UiStore.setCurrentNote(noteIndex - 1);
+      UiStore.setShowChooseSheet(true);
+    };
 
-  const handleLongAddPress = (tagId) => {
-    setTagId(tagId);
-    Haptics.selectionAsync();
-    actionTagRef.current.show();
-  };
+    const handleLongAddPress = (tagId) => {
+      setTagId(tagId);
+      Haptics.selectionAsync();
+      actionTagRef.current.show();
+    };
 
-  const handleDeleteTag = () => {
-    confirm(
-      () => {
-        NotesStore.deleteTagFromNote(noteIndex - 1, tagId);
-      },
-      "Delete tag",
-      "Are you sure you want to delete this tag from highlight?"
-    );
-  };
+    const handleDeleteTag = () => {
+      confirm(
+        () => {
+          NotesStore.deleteTagFromNote(noteIndex - 1, tagId);
+        },
+        "Delete tag",
+        "Are you sure you want to delete this tag from highlight?"
+      );
+    };
 
-  const handleEditTag = () => {
-    UiStore.setShowEditSheet(true, tagId);
-  };
+    const handleEditTag = () => {
+      UiStore.setShowEditSheet(true, tagId);
+    };
 
-  const showAddCommentModal = () => {
-    setText("");
-    setModalVisible(true);
-  };
+    const showAddCommentModal = () => {
+      setText("");
+      setModalVisible(true);
+    };
 
-  const handleSave = () => {
-    setModalVisible(false);
-    NotesStore.addComment(noteIndex - 1, note.note_id, text);
-  };
+    const handleSave = () => {
+      setModalVisible(false);
+      NotesStore.addComment(noteIndex - 1, note.note_id, text);
+    };
 
-  return (
-    <>
-      <EditTextModal
-        title="New comment"
-        modalState={modalVisible}
-        setModalState={setModalVisible}
-        text={text}
-        onText={setText}
-        handleSave={handleSave}
-      ></EditTextModal>
+    return (
+      <>
+        <EditTextModal
+          title="New comment"
+          modalState={modalVisible}
+          setModalState={setModalVisible}
+          text={text}
+          onText={setText}
+          handleSave={handleSave}
+        ></EditTextModal>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Container mt={32}>
-          <Card note={note}></Card>
-        </Container>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Container mt={32}>
+            <Card note={note}></Card>
+          </Container>
 
-        <Container
-          mt={16}
-          style={{ opacity: note.deleted ? 0.3 : 1 }}
-        ></Container>
-        {note.comments.length ? (
-          <>
-            <Container style={{ opacity: note.deleted ? 0.3 : 1 }}>
-              <View style={styles.mt}>
-                <Title title="Your comment:" type="small"></Title>
-              </View>
-            </Container>
-
-            {note.comments.map((comment) => {
-              return (
-                <Container
-                  style={{ opacity: note.deleted ? 0.3 : 1 }}
-                  mt={8}
-                  mb={8}
-                  key={comment.comment_id}
-                >
-                  <Comment comment={comment}></Comment>
-                </Container>
-              );
-            })}
-          </>
-        ) : (
-          <View></View>
-        )}
-
-        <Container mt={32} mb={64} style={{ opacity: note.deleted ? 0.3 : 1 }}>
-          {note.tags.length ? (
+          <Container
+            mt={16}
+            style={{ opacity: note.deleted ? 0.3 : 1 }}
+          ></Container>
+          {note.comments.length ? (
             <>
-              <View style={styles.line}>
-                <Title title="Your tags:" type="small"></Title>
-                <TouchableOpacity
-                  onPress={showAddTagStack}
-                  disabled={note.deleted}
-                >
-                  <Image
-                    style={styles.image}
-                    source={require("../../assets/plus.png")}
-                  ></Image>
-                </TouchableOpacity>
-              </View>
-
-              <TagContainer>
-                {note.tags.map((tag) => (
-                  <Tag
-                    hue={tag.hue}
-                    key={tag.tag_id}
-                    title={tag.tag_name}
-                    onLongPress={() => handleLongAddPress(tag.tag_id)}
-                    style={{ marginRight: 16, marginTop: 16 }}
-                  ></Tag>
-                ))}
-              </TagContainer>
-            </>
-          ) : (
-            <></>
-          )}
-          {note.tags.length && note.comments.length ? (
-            <></>
-          ) : (
-            <>
-              <Container center mt={32}>
-                <TouchableOpacity
-                  onPress={() => actionAddRef.current.show()}
-                  disabled={note.deleted}
-                >
-                  <Image
-                    style={styles.imageBigger}
-                    source={require("../../assets/bigPlus.png")}
-                  ></Image>
-                </TouchableOpacity>
+              <Container style={{ opacity: note.deleted ? 0.3 : 1 }}>
+                <View style={styles.mt}>
+                  <Title title="Your comment:" type="small"></Title>
+                </View>
               </Container>
+
+              {note.comments.map((comment) => {
+                return (
+                  <Container
+                    style={{ opacity: note.deleted ? 0.3 : 1 }}
+                    mt={8}
+                    mb={8}
+                    key={comment.comment_id}
+                  >
+                    <Comment comment={comment}></Comment>
+                  </Container>
+                );
+              })}
             </>
+          ) : (
+            <View></View>
           )}
-        </Container>
-      </ScrollView>
 
-      <ActionSheet
-        ref={actionAddRef}
-        title="What you want to add?"
-        options={["Add comment", "Add tag", "Cancel"]}
-        cancelButtonIndex={2}
-        onPress={(index) => {
-          if (index === 1) {
-            showAddTagStack();
-          } else if (index === 0) {
-            showAddCommentModal();
-          }
-        }}
-      />
+          <Container
+            mt={32}
+            mb={64}
+            style={{ opacity: note.deleted ? 0.3 : 1 }}
+          >
+            {note.tags.length ? (
+              <>
+                <View style={styles.line}>
+                  <Title title="Your tags:" type="small"></Title>
+                  <TouchableOpacity
+                    onPress={showAddTagStack}
+                    disabled={note.deleted}
+                  >
+                    <Image
+                      style={styles.image}
+                      source={require("../../assets/plus.png")}
+                    ></Image>
+                  </TouchableOpacity>
+                </View>
 
-      <ActionSheet
-        ref={actionTagRef}
-        options={["Delete", "Edit", "Cancel"]}
-        cancelButtonIndex={2}
-        onPress={(index) => {
-          if (index === 0) {
-            handleDeleteTag();
-          } else if (index === 1) {
-            handleEditTag();
-          }
-        }}
-        destructiveButtonIndex={0}
-      />
-    </>
-  );
-});
+                <TagContainer>
+                  {note.tags.map((tag) => (
+                    <Tag
+                      hue={tag.hue}
+                      key={tag.tag_id}
+                      title={tag.tag_name}
+                      onLongPress={() => handleLongAddPress(tag.tag_id)}
+                      style={{ marginRight: 16, marginTop: 16 }}
+                    ></Tag>
+                  ))}
+                </TagContainer>
+              </>
+            ) : (
+              <></>
+            )}
+            {note.tags.length && note.comments.length ? (
+              <></>
+            ) : (
+              <>
+                <Container center mt={32}>
+                  <TouchableOpacity
+                    onPress={() => actionAddRef.current.show()}
+                    disabled={note.deleted}
+                  >
+                    <Image
+                      style={styles.imageBigger}
+                      source={require("../../assets/bigPlus.png")}
+                    ></Image>
+                  </TouchableOpacity>
+                </Container>
+              </>
+            )}
+          </Container>
+        </ScrollView>
+
+        <ActionSheet
+          ref={actionAddRef}
+          title="What you want to add?"
+          options={["Add comment", "Add tag", "Cancel"]}
+          cancelButtonIndex={2}
+          onPress={(index) => {
+            if (index === 1) {
+              showAddTagStack();
+            } else if (index === 0) {
+              showAddCommentModal();
+            }
+          }}
+        />
+
+        <ActionSheet
+          ref={actionTagRef}
+          options={["Delete", "Edit", "Cancel"]}
+          cancelButtonIndex={2}
+          onPress={(index) => {
+            if (index === 0) {
+              handleDeleteTag();
+            } else if (index === 1) {
+              handleEditTag();
+            }
+          }}
+          destructiveButtonIndex={0}
+        />
+      </>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   mt: {

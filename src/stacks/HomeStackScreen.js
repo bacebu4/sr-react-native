@@ -4,6 +4,7 @@ import { HomeScreen } from "../pages/HomeScreen";
 import { ReviewScreen } from "../pages/ReviewScreen";
 import { TransitionPresets } from "@react-navigation/stack";
 import { ByBookScreen } from "../pages/ByBookScreen";
+import { HighlightScreen } from "../pages/HighlightScreen";
 
 const HomeStack = createStackNavigator();
 
@@ -29,6 +30,18 @@ export const HomeStackScreen = () => {
         <HomeStack.Screen
           name="ByBook"
           component={ByBookScreen}
+          options={({ route }) => ({
+            title: route.params.name,
+            headerTitle: route.params.name,
+            headerTintColor: "#CCA9F9",
+            headerTitleStyle: {
+              color: "#343434",
+            },
+          })}
+        />
+        <HomeStack.Screen
+          name="Highlight"
+          component={HighlightScreen}
           options={({ route }) => ({
             title: route.params.name,
             headerTitle: route.params.name,

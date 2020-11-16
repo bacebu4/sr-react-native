@@ -9,7 +9,7 @@ import { ActivityIndicator } from "react-native";
 import { useRequest } from "../hooks/request.hook";
 import { useMessage } from "../hooks/message.hook";
 
-export const ByBookScreen = observer(({ route }) => {
+export const ByBookScreen = observer(({ route, navigation }) => {
   const NotesStore = useContext(NotesStoreContext);
   const { book_id } = route.params;
   const { request, loading, error, clearError } = useRequest();
@@ -53,7 +53,14 @@ export const ByBookScreen = observer(({ route }) => {
             keyExtractor={(item) => item.note_id}
             renderItem={({ item }) => (
               <Container mt={16} mb={16} key={item.note_id}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Highlight", {
+                      name: "Highlight",
+                      note_id: item.note_id,
+                    })
+                  }
+                >
                   <Card note={item}></Card>
                 </TouchableOpacity>
               </Container>
