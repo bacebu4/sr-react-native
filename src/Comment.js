@@ -1,12 +1,5 @@
 import React, { useState, useRef, useContext } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import { EditTextModal } from "./components/EditTextModal";
 import { NotesStoreContext } from "./store/NotesStore";

@@ -4,8 +4,6 @@ import {
   StyleSheet,
   View,
   Image,
-  Text,
-  Alert,
   TouchableOpacity,
 } from "react-native";
 import { Card } from "../../Card";
