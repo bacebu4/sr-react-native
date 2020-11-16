@@ -7,12 +7,19 @@ import { Card } from "../Card";
 import { Alert, FlatList, TouchableOpacity } from "react-native";
 import { ActivityIndicator } from "react-native";
 import { useRequest } from "../hooks/request.hook";
+import { useMessage } from "../hooks/message.hook";
 
 export const ByBookScreen = observer(({ route }) => {
   const NotesStore = useContext(NotesStoreContext);
   const { book_id } = route.params;
-  const { request, loading } = useRequest();
+  const { request, loading, error, clearError } = useRequest();
   const [notes, setNotes] = useState([]);
+  const message = useMessage();
+
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
 
   const fetchNotes = useCallback(async () => {
     try {
@@ -24,9 +31,7 @@ export const ByBookScreen = observer(({ route }) => {
       );
       setNotes(fetched);
       console.log(notes);
-    } catch (error) {
-      Alert.alert(error.message);
-    }
+    } catch (error) {}
   }, []);
 
   useEffect(() => {
