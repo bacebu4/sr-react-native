@@ -24,7 +24,7 @@ export const ByBookScreen = observer(({ route }) => {
   const fetchNotes = useCallback(async () => {
     try {
       const fetched = await request(
-        `http://192.168.1.70:3000/api/getNotesByBook`,
+        `/api/getNotesByBook`,
         "POST",
         NotesStore.token,
         { book_id }

@@ -3,6 +3,7 @@ import { useState, useCallback } from "react";
 export const useRequest = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const baseUrl = "http://192.168.1.70:3000";
 
   const request = useCallback(
     async (url, method = "GET", token, data = null) => {
@@ -19,7 +20,7 @@ export const useRequest = () => {
           body = JSON.stringify(data);
         }
 
-        const response = await fetch(url, {
+        const response = await fetch(baseUrl + url, {
           method,
           headers,
           body,
