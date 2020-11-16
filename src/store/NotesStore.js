@@ -15,6 +15,7 @@ class NotesStore {
   email = null;
   uid = null;
   token = null;
+  currentNote = null;
 
   isLoginLoading = false;
   isLoading = false;
@@ -362,6 +363,10 @@ class NotesStore {
     } catch (error) {
       throw new Error(error.message);
     }
+  }
+
+  setCurrentNote(value) {
+    this.currentNote = value;
   }
 
   setToken(value) {

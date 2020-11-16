@@ -31,8 +31,9 @@ import { useRequest } from "../../hooks/request.hook";
 export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
   const NotesStore = useContext(NotesStoreContext);
   const UiStore = useContext(UiStoreContext);
-  const [noteFetched, setNoteFetched] = useState(null);
-  const note = noteIndex ? NotesStore.highlights[noteIndex - 1] : noteFetched;
+  const note = noteIndex
+    ? NotesStore.highlights[noteIndex - 1]
+    : NotesStore.currentNote;
   const actionTagRef = useRef(null);
   const actionAddRef = useRef(null);
   const [tagId, setTagId] = useState(null);
@@ -42,6 +43,7 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
   const { request } = useRequest();
 
   useEffect(() => {
+    NotesStore.setCurrentNote(null);
     if (noteId) {
       fetchNote();
     }
@@ -53,7 +55,7 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
       "GET",
       NotesStore.token
     );
-    setNoteFetched(fetched);
+    NotesStore.setCurrentNote(fetched);
   }, []);
 
   const showAddTagStack = () => {
