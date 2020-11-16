@@ -61,7 +61,7 @@ export const ByBookScreen = observer(({ route, navigation }) => {
                     })
                   }
                 >
-                  <Card note={item}></Card>
+                  <Card note={item} dense></Card>
                 </TouchableOpacity>
               </Container>
             )}

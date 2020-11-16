@@ -14,7 +14,7 @@ import { EditTextModal } from "./components/EditTextModal";
 import { useConfirm } from "./hooks/confirm.hook";
 import { useMessage } from "./hooks/message.hook";
 
-export const Card = observer(({ note }) => {
+export const Card = observer(({ note, dense = false }) => {
   const actionSheetRef = useRef(null);
   const NotesStore = useContext(NotesStoreContext);
   const [modalVisible, setModalVisible] = useState(false);
@@ -67,26 +67,35 @@ export const Card = observer(({ note }) => {
       ></EditTextModal>
 
       <View style={{ ...styles.wrapper, opacity: note.deleted ? 0.3 : 1 }}>
-        <View style={styles.header}>
-          <Image style={styles.cover} source={require("./cover.png")} />
-          <View style={styles.info}>
-            <View>
-              <Text style={styles.title}>{note?.book_title}</Text>
+        {dense ? (
+          <></>
+        ) : (
+          <>
+            <View style={styles.header}>
+              <Image style={styles.cover} source={require("./cover.png")} />
+              <View style={styles.info}>
+                <View>
+                  <Text style={styles.title}>{note?.book_title}</Text>
+                </View>
+                <View>
+                  <Text style={styles.author}>{note?.author_full_name}</Text>
+                </View>
+              </View>
+              <View style={styles.more}>
+                <TouchableOpacity
+                  onPress={() => showActionSheet()}
+                  disabled={note.deleted}
+                >
+                  <Image
+                    style={styles.moreIcon}
+                    source={require("./dots.png")}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
-            <View>
-              <Text style={styles.author}>{note?.author_full_name}</Text>
-            </View>
-          </View>
-          <View style={styles.more}>
-            <TouchableOpacity
-              onPress={() => showActionSheet()}
-              disabled={note.deleted}
-            >
-              <Image style={styles.moreIcon} source={require("./dots.png")} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.note}>
+          </>
+        )}
+        <View style={{ marginTop: dense ? 0 : 16 }}>
           <Text style={styles.noteText}>
             {/* // TODO how safe it is? */}
             {note?.note_text.replace(/\&nbsp;/g, " ")}
@@ -160,9 +169,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: "#343434",
     fontFamily: "Cochin",
-  },
-  note: {
-    marginTop: 16,
   },
   menu: {
     marginLeft: 32,
