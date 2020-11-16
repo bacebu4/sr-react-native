@@ -39,11 +39,10 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [text, setText] = useState("");
   const confirm = useConfirm();
-  const { request, loading } = useRequest();
+  const { request } = useRequest();
 
   useEffect(() => {
     if (noteId) {
-      //fetch and set here
       fetchNote();
     }
   }, []);
@@ -54,7 +53,6 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
       "GET",
       NotesStore.token
     );
-    console.log(JSON.stringify(fetched));
     setNoteFetched(fetched);
   }, []);
 
