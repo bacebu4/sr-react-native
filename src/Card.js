@@ -6,7 +6,6 @@ import {
   Image,
   TouchableOpacity,
   Share,
-  Alert,
 } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import { observer } from "mobx-react-lite";

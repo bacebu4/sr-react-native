@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Image,
   Text,
-  Alert,
 } from "react-native";
 import { Tag } from "../../Tag";
 import { Title } from "../../Title";
