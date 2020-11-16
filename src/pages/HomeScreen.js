@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   ScrollView,
   RefreshControl,
@@ -20,10 +20,19 @@ import { MainContainer } from "../components/grid/MainContainer";
 import { Container } from "../components/grid/Container";
 import { TagContainer } from "../components/grid/TagContainer";
 import { SettingsModal } from "../components/SettingsModal";
+import ActionSheet from "react-native-actionsheet";
+import * as Haptics from "expo-haptics";
+import { UiStoreContext } from "../store/UiStore";
+import { useConfirm } from "../hooks/confirm.hook";
 
 export const HomeScreen = observer(({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [modalSettings, setModalSettings] = useState(false);
+  const actionTagRef = useRef(null);
+  const [tagId, setTagId] = useState(null);
+  const UiStore = useContext(UiStoreContext);
+  const NotesStore = useContext(NotesStoreContext);
+  const confirm = useConfirm();
 
   const closeSettings = () => {
     setModalSettings(false);
@@ -38,7 +47,25 @@ export const HomeScreen = observer(({ navigation }) => {
     NotesStore.fetchHighlights().then(() => setRefreshing(false));
   }, []);
 
-  const NotesStore = useContext(NotesStoreContext);
+  const handleLongAddPress = (tagId) => {
+    setTagId(tagId);
+    Haptics.selectionAsync();
+    actionTagRef.current.show();
+  };
+
+  const handleEditTag = () => {
+    UiStore.setShowEditSheet(true, tagId);
+  };
+
+  const handleDeleteTag = () => {
+    confirm(
+      () => {
+        console.log("deleting here");
+      },
+      "Delete the tag globally?",
+      "Are you sure you want to delete the tag?"
+    );
+  };
 
   return (
     <>
@@ -124,6 +151,7 @@ export const HomeScreen = observer(({ navigation }) => {
                       key={tag.tag_id}
                       title={tag.tag_name}
                       style={{ marginRight: 16, marginTop: 16 }}
+                      onLongPress={() => handleLongAddPress(tag.tag_id)}
                     ></Tag>
                   ))}
                 </TagContainer>
@@ -141,6 +169,20 @@ export const HomeScreen = observer(({ navigation }) => {
             </>
           )}
         </ScrollView>
+
+        <ActionSheet
+          ref={actionTagRef}
+          options={["Delete", "Edit", "Cancel"]}
+          cancelButtonIndex={2}
+          onPress={(index) => {
+            if (index === 0) {
+              handleDeleteTag();
+            } else if (index === 1) {
+              handleEditTag();
+            }
+          }}
+          destructiveButtonIndex={0}
+        />
       </MainContainer>
     </>
   );
