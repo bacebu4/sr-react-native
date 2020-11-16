@@ -11,7 +11,7 @@ export const Book = ({ book }) => {
       style={styles.wrapper}
       onPress={() => navigation.navigate("ByBook", { book_id, name: title })}
     >
-      <Image source={require("./book.png")} />
+      <Image style={styles.cover} source={require("./book.png")} />
       <Text style={styles.title} numberOfLines={2}>
         {title}
       </Text>
@@ -36,5 +36,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Cochin",
     color: "#B0AFAF",
+  },
+  cover: {
+    borderRadius: 5,
   },
 });
