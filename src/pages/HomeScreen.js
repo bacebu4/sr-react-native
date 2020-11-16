@@ -60,7 +60,7 @@ export const HomeScreen = observer(({ navigation }) => {
   const handleDeleteTag = () => {
     confirm(
       () => {
-        console.log("deleting here");
+        NotesStore.deleteTag(tagId);
       },
       "Delete the tag globally?",
       "Are you sure you want to delete the tag?"

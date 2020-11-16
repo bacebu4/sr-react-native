@@ -190,6 +190,25 @@ class NotesStore {
     }
   }
 
+  *deleteTag(tag_id) {
+    this.highlights.forEach((h) => {
+      h.tags = h.tags.filter((t) => t.tag_id !== tag_id);
+    });
+
+    this.tags = this.tags.filter((t) => t.tag_id !== tag_id);
+
+    try {
+      yield request(
+        `http://192.168.1.70:3000/api/deleteTag`,
+        "DELETE",
+        this.token,
+        { tag_id }
+      );
+    } catch (error) {
+      throw new Error("Unable to proceed the action");
+    }
+  }
+
   *updateTag(tag_id, tag_name, hue) {
     this.highlights.forEach((h) => {
       if (h.tags.length) {
