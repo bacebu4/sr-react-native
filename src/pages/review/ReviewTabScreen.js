@@ -60,7 +60,7 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
 
   const showAddTagStack = () => {
     UiStore.addRef.current.snapTo(1);
-    UiStore.setCurrentNote(noteIndex - 1);
+    UiStore.setCurrentNote(note.note_id);
     UiStore.setShowChooseSheet(true);
   };
 
@@ -73,7 +73,7 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
   const handleDeleteTag = () => {
     confirm(
       () => {
-        NotesStore.deleteTagFromNote(noteIndex - 1, tagId);
+        NotesStore.deleteTagFromNote(note.note_id, tagId);
       },
       "Delete tag",
       "Are you sure you want to delete this tag from highlight?"

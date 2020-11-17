@@ -141,9 +141,9 @@ class NotesStore {
     yield SecureStore.deleteItemAsync("token");
   }
 
-  *addExistingTag(noteIndex, tagId) {
+  *addExistingTag(note_id, tagId) {
     // FIXME here?
-    const noteId = this.highlights[noteIndex].note_id;
+    const noteIndex = this.highlights.findIndex((h) => h.note_id === note_id);
     const { tag_id, hue, tag_name } = this.tags.find((t) => t.tag_id === tagId);
     this.setTag(noteIndex, { tag_id, hue, tag_name });
     try {
@@ -151,13 +151,13 @@ class NotesStore {
         `http://192.168.1.70:3000/api/addExistingTag`,
         "POST",
         this.token,
-        { tag_id: tagId, note_id: noteId }
+        { tag_id: tagId, note_id }
       );
     } catch (error) {}
   }
 
-  *addNewTag(noteIndex, tagName, hue) {
-    const noteId = this.highlights[noteIndex].note_id;
+  *addNewTag(note_id, tagName, hue) {
+    const noteIndex = this.highlights.findIndex((h) => h.note_id === note_id);
     const tagId = uuidv4();
     const newTag = { tag_id: tagId, hue, tag_name: tagName };
     this.setTag(noteIndex, newTag);
@@ -167,15 +167,15 @@ class NotesStore {
         `http://192.168.1.70:3000/api/addNewTag`,
         "POST",
         this.token,
-        { ...newTag, note_id: noteId }
+        { ...newTag, note_id }
       );
     } catch (error) {
       throw new Error("Unable to proceed the action");
     }
   }
 
-  *deleteTagFromNote(noteIndex, tagId) {
-    const noteId = this.highlights[noteIndex].note_id;
+  *deleteTagFromNote(note_id, tagId) {
+    const noteIndex = this.highlights.findIndex((h) => h.note_id === note_id);
     this.highlights[noteIndex].tags = this.highlights[noteIndex].tags.filter(
       (t) => t.tag_id !== tagId
     );
@@ -184,7 +184,7 @@ class NotesStore {
         `http://192.168.1.70:3000/api/deleteTagFromNote`,
         "DELETE",
         this.token,
-        { note_id: noteId, tag_id: tagId }
+        { note_id, tag_id: tagId }
       );
     } catch (error) {
       throw new Error("Unable to proceed the action");
