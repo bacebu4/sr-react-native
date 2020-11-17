@@ -142,10 +142,13 @@ class NotesStore {
   }
 
   *addExistingTag(note_id, tagId) {
-    // FIXME here?
     const noteIndex = this.highlights.findIndex((h) => h.note_id === note_id);
     const { tag_id, hue, tag_name } = this.tags.find((t) => t.tag_id === tagId);
-    this.setTag(noteIndex, { tag_id, hue, tag_name });
+    if (noteIndex > -1) {
+      this.setTag(noteIndex, { tag_id, hue, tag_name });
+    } else {
+      this.currentNote.tags.push({ tag_id, hue, tag_name });
+    }
     try {
       yield request(
         `http://192.168.1.70:3000/api/addExistingTag`,
