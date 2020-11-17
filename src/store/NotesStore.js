@@ -183,9 +183,15 @@ class NotesStore {
 
   *deleteTagFromNote(note_id, tagId) {
     const noteIndex = this.highlights.findIndex((h) => h.note_id === note_id);
-    this.highlights[noteIndex].tags = this.highlights[noteIndex].tags.filter(
-      (t) => t.tag_id !== tagId
-    );
+    if (noteIndex > 1) {
+      this.highlights[noteIndex].tags = this.highlights[noteIndex].tags.filter(
+        (t) => t.tag_id !== tagId
+      );
+    } else {
+      this.currentNote.tags = this.currentNote.tags.filter(
+        (t) => t.tag_id !== tagId
+      );
+    }
     try {
       yield request(
         `http://192.168.1.70:3000/api/deleteTagFromNote`,
