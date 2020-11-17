@@ -146,9 +146,12 @@ class NotesStore {
     const { tag_id, hue, tag_name } = this.tags.find((t) => t.tag_id === tagId);
     if (noteIndex > -1) {
       this.setTag(noteIndex, { tag_id, hue, tag_name });
-    } else {
+    }
+
+    if (this.currentNote && this.currentNote.note_id === note_id) {
       this.currentNote.tags.push({ tag_id, hue, tag_name });
     }
+
     try {
       yield request(
         `http://192.168.1.70:3000/api/addExistingTag`,
@@ -166,7 +169,9 @@ class NotesStore {
     this.setTags([...this.tags, newTag]);
     if (noteIndex > 1) {
       this.setTag(noteIndex, newTag);
-    } else {
+    }
+
+    if (this.currentNote && this.currentNote.note_id === note_id) {
       this.currentNote.tags.push(newTag);
     }
     try {
@@ -187,11 +192,14 @@ class NotesStore {
       this.highlights[noteIndex].tags = this.highlights[noteIndex].tags.filter(
         (t) => t.tag_id !== tagId
       );
-    } else {
+    }
+
+    if (this.currentNote && this.currentNote.note_id === note_id) {
       this.currentNote.tags = this.currentNote.tags.filter(
         (t) => t.tag_id !== tagId
       );
     }
+
     try {
       yield request(
         `http://192.168.1.70:3000/api/deleteTagFromNote`,
@@ -225,15 +233,22 @@ class NotesStore {
 
   *updateTag(tag_id, tag_name, hue) {
     this.highlights.forEach((h) => {
-      if (h.tags.length) {
-        h.tags.forEach((t) => {
-          if (t.tag_id === tag_id) {
-            t.tag_name = tag_name;
-            t.hue = hue;
-          }
-        });
-      }
+      h.tags.forEach((t) => {
+        if (t.tag_id === tag_id) {
+          t.tag_name = tag_name;
+          t.hue = hue;
+        }
+      });
     });
+
+    if (this.currentNote) {
+      this.currentNote.tags.forEach((t) => {
+        if (t.tag_id === tag_id) {
+          t.tag_name = tag_name;
+          t.hue = hue;
+        }
+      });
+    }
 
     this.tags.forEach((t) => {
       if (t.tag_id === tag_id) {
@@ -255,19 +270,20 @@ class NotesStore {
   }
 
   *updateNote(note_id, note_text) {
-    this.highlights.forEach((h) => {
-      if (h.note_id === note_id) {
-        h.note_text = note_text;
-      }
-    });
+    const noteIndex = this.highlights.findIndex((h) => h.note_id === note_id);
+    if (noteIndex > -1) {
+      this.highlights[noteIndex].note_text = note_text;
+    }
+
+    if (this.currentNote && this.currentNote.note_id === note_id) {
+      this.currentNote.note_text = note_text;
+    }
 
     this.searchResults.forEach((h) => {
       if (h.note_id === note_id) {
         h.note_text = note_text;
       }
     });
-
-    console.log(note_id, note_text);
 
     try {
       yield request(
@@ -289,6 +305,14 @@ class NotesStore {
         }
       });
     });
+
+    if (this.currentNote) {
+      this.currentNote.comments.forEach((c) => {
+        if (c.comment_id === comment_id) {
+          c.comment_text = comment_text;
+        }
+      });
+    }
 
     try {
       yield request(
@@ -336,17 +360,28 @@ class NotesStore {
   }
 
   *addComment(note_id, comment_text) {
+    const now = new Date();
+
     const newComment = {
       comment_text,
       comment_id: uuidv4(),
       note_id,
     };
-    const now = new Date();
+
     const noteIndex = this.highlights.findIndex((h) => h.note_id === note_id);
-    this.highlights[noteIndex].comments.push({
-      ...newComment,
-      createdat: dateFormat(now, "yyyy-mm-dd"),
-    });
+    if (noteIndex > -1) {
+      this.highlights[noteIndex].comments.push({
+        ...newComment,
+        createdat: dateFormat(now, "yyyy-mm-dd"),
+      });
+    }
+
+    if (this.currentNote && this.currentNote.note_id === note_id) {
+      this.currentNote.comments.push({
+        ...newComment,
+        createdat: dateFormat(now, "yyyy-mm-dd"),
+      });
+    }
 
     try {
       yield request(
@@ -366,6 +401,12 @@ class NotesStore {
         return c.comment_id !== comment_id;
       });
     });
+
+    if (this.currentNote) {
+      this.currentNote.comments = this.currentNote.comments.filter((c) => {
+        return c.comment_id !== comment_id;
+      });
+    }
 
     try {
       yield request(
@@ -443,6 +484,9 @@ class NotesStore {
     }
     if (noteIndexSearchResults > -1) {
       this.searchResults[noteIndexSearchResults].deleted = true;
+    }
+    if (this.currentNote && this.currentNote.note_id === noteId) {
+      this.currentNote.deleted = true;
     }
   }
 }
