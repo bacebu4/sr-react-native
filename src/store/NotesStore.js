@@ -163,8 +163,12 @@ class NotesStore {
     const noteIndex = this.highlights.findIndex((h) => h.note_id === note_id);
     const tagId = uuidv4();
     const newTag = { tag_id: tagId, hue, tag_name: tagName };
-    this.setTag(noteIndex, newTag);
     this.setTags([...this.tags, newTag]);
+    if (noteIndex > 1) {
+      this.setTag(noteIndex, newTag);
+    } else {
+      this.currentNote.tags.push(newTag);
+    }
     try {
       yield request(
         `http://192.168.1.70:3000/api/addNewTag`,
