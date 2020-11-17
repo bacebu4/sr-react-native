@@ -322,13 +322,14 @@ class NotesStore {
     }
   }
 
-  *addComment(noteIndex, note_id, comment_text) {
+  *addComment(note_id, comment_text) {
     const newComment = {
       comment_text,
       comment_id: uuidv4(),
       note_id,
     };
     const now = new Date();
+    const noteIndex = this.highlights.findIndex((h) => h.note_id === note_id);
     this.highlights[noteIndex].comments.push({
       ...newComment,
       createdat: dateFormat(now, "yyyy-mm-dd"),
