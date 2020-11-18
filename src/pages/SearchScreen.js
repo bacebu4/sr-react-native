@@ -17,7 +17,7 @@ import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../store/NotesStore";
 import { Card } from "../Card";
 
-export const SearchScreen = observer(() => {
+export const SearchScreen = observer(({ navigation }) => {
   const [search, setSearch] = useState("");
   const [history, setHistory] = useState([]);
   const [hasSearched, setSearched] = useState(false);
@@ -84,7 +84,14 @@ export const SearchScreen = observer(() => {
                 keyExtractor={(item) => item.note_id}
                 renderItem={({ item }) => (
                   <Container mt={16} mb={16} key={item.note_id}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("Highlight", {
+                          name: "Highlight",
+                          note_id: item.note_id,
+                        })
+                      }
+                    >
                       <Card note={item}></Card>
                     </TouchableOpacity>
                   </Container>

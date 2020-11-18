@@ -12,6 +12,7 @@ import { SearchScreen } from "./src/pages/SearchScreen";
 import { LoadingScreen } from "./src/pages/LoadingScreen";
 import { ChooseScreen } from "./src/pages/addTag/ChooseScreen";
 import { EditTagScreen } from "./src/pages/addTag/EditTagScreen";
+import { SearchStackScreen } from "./src/stacks/SearchStackScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -84,7 +85,7 @@ export default observer(function App() {
               ) : (
                 <>
                   <Tab.Screen name="Home" component={HomeStackScreen} />
-                  <Tab.Screen name="Search" component={SearchScreen} />
+                  <Tab.Screen name="Search" component={SearchStackScreen} />
                 </>
               )}
             </>
