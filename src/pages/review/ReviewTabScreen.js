@@ -259,5 +259,6 @@ const styles = StyleSheet.create({
   imageBigger: {
     width: 40,
     height: 40,
+    tintColor: "#B0AFAF",
   },
 });
