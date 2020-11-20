@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { MainButton } from "../../MainButton";
 import { Title } from "../../Title";
 import { useNavigation } from "@react-navigation/native";
+import { observer } from "mobx-react-lite";
+import { NotesStoreContext } from "../../store/NotesStore";
 
-export const ReviewFinalScreen = () => {
+export const ReviewFinalScreen = observer(() => {
   const navigation = useNavigation();
+  const NotesStore = useContext(NotesStoreContext);
 
   const handleHome = () => {
     navigation.navigate("Home");
@@ -18,11 +21,13 @@ export const ReviewFinalScreen = () => {
         source={require("../../assets/success.png")}
       ></Image>
       <Title title="Congratulations!"></Title>
-      <Text style={styles.sub}>You've been on the track for 5 days</Text>
+      <Text style={styles.sub}>
+        You've been on the track for {NotesStore.info.streak} days
+      </Text>
       <MainButton dark title="Go home" clickAction={handleHome}></MainButton>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   image: {
@@ -39,5 +44,8 @@ const styles = StyleSheet.create({
     color: "#B0AFAF",
     marginTop: 32,
     marginBottom: 32,
+  },
+  mt: {
+    marginTop: 32,
   },
 });

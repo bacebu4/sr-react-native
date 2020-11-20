@@ -128,7 +128,6 @@ class NotesStore {
         "GET",
         this.token
       );
-      console.log(initInfo);
       this.setTags(initInfo.tags);
       this.setLatestBooks(initInfo.latestBooks);
       this.setAmount(initInfo.accountInfo.review_amount);
@@ -431,8 +430,21 @@ class NotesStore {
     this.info.current = value;
   }
 
-  setReviewed(value) {
-    this.info.reviewed = value;
+  *setReviewed() {
+    if (!this.info.reviewed) {
+      this.info.reviewed = true;
+      this.info.streak = this.info.streak + 1;
+
+      try {
+        yield request(
+          `http://192.168.1.70:3000/api/setReviewed`,
+          "POST",
+          this.token
+        );
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    }
   }
 
   setToken(value) {

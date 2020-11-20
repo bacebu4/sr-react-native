@@ -50,8 +50,9 @@ export const ReviewScreen = observer(({ navigation }) => {
     if (index > maxIndex) {
       maxIndex = index;
       NotesStore.setCurrent(index);
+
       if (index === NotesStore.amount) {
-        NotesStore.setReviewed(true);
+        NotesStore.setReviewed();
       }
     }
   }, [index]);

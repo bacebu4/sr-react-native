@@ -30,7 +30,6 @@ export const ByBookScreen = observer(({ route, navigation }) => {
         { book_id }
       );
       setNotes(fetched);
-      console.log(notes);
     } catch (error) {}
   }, []);
 

@@ -11,12 +11,14 @@ export const MainButton = ({
   title = "Start review process",
   loading = false,
   dark = false,
+  style = {},
 }) => {
   return (
     <TouchableOpacity
       onPress={clickAction}
       style={{
         ...styles.wrapper,
+        ...style,
         backgroundColor: dark ? "#343434" : "#FE9CA4",
       }}
     >
