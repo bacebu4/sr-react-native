@@ -16,6 +16,7 @@ class NotesStore {
   uid = null;
   token = null;
   currentNote = null;
+  info = {};
 
   isLoginLoading = false;
   isLoading = false;
@@ -127,9 +128,11 @@ class NotesStore {
         "GET",
         this.token
       );
+      console.log(initInfo);
       this.setTags(initInfo.tags);
       this.setLatestBooks(initInfo.latestBooks);
       this.setAmount(initInfo.accountInfo.review_amount);
+      this.info = initInfo.accountInfo;
     } catch (error) {
       console.log("error fetching init", error);
     }
@@ -422,6 +425,14 @@ class NotesStore {
 
   setCurrentNote(value) {
     this.currentNote = value;
+  }
+
+  setCurrent(value) {
+    this.info.current = value;
+  }
+
+  setReviewed(value) {
+    this.info.reviewed = value;
   }
 
   setToken(value) {

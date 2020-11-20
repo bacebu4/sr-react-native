@@ -1,16 +1,17 @@
-import React, { useContext, useMemo, useEffect } from 'react';
-import { Dimensions } from 'react-native';
-import { NavbarSecondary } from '../NavbarSecondary';
-import { TabView } from 'react-native-tab-view';
-import { observer } from 'mobx-react-lite';
-import { NotesStoreContext } from '../store/NotesStore';
-import { ReviewTabScreen } from './review/ReviewTabScreen';
-import { ReviewFinalScreen } from './review/ReviewFinalScreen';
-import * as Haptics from 'expo-haptics';
-import { MainContainer } from '../components/grid/MainContainer';
-import { Container } from '../components/grid/Container';
+import React, { useContext, useMemo, useEffect } from "react";
+import { Dimensions } from "react-native";
+import { NavbarSecondary } from "../NavbarSecondary";
+import { TabView } from "react-native-tab-view";
+import { observer } from "mobx-react-lite";
+import { NotesStoreContext } from "../store/NotesStore";
+import { ReviewTabScreen } from "./review/ReviewTabScreen";
+import { ReviewFinalScreen } from "./review/ReviewFinalScreen";
+import * as Haptics from "expo-haptics";
+import { MainContainer } from "../components/grid/MainContainer";
+import { Container } from "../components/grid/Container";
 
 let AMOUNT = 1;
+let maxIndex = 0;
 
 const renderScene = ({ route, jumpTo }) => {
   if (Number(route.key <= AMOUNT)) {
@@ -19,7 +20,7 @@ const renderScene = ({ route, jumpTo }) => {
   return <ReviewFinalScreen jumpTo={jumpTo} />;
 };
 
-const initialLayout = { width: Dimensions.get('window').width };
+const initialLayout = { width: Dimensions.get("window").width };
 
 export const ReviewScreen = observer(({ navigation }) => {
   const NotesStore = useContext(NotesStoreContext);
@@ -44,7 +45,14 @@ export const ReviewScreen = observer(({ navigation }) => {
 
   useEffect(() => {
     if (index === NotesStore.amount) {
-      Haptics.notificationAsync('success');
+      Haptics.notificationAsync("success");
+    }
+    if (index > maxIndex) {
+      maxIndex = index;
+      NotesStore.setCurrent(index);
+      if (index === NotesStore.amount) {
+        NotesStore.setReviewed(true);
+      }
     }
   }, [index]);
 
@@ -60,7 +68,7 @@ export const ReviewScreen = observer(({ navigation }) => {
         <NavbarSecondary
           title="Review mode"
           handleNext={handleNextSlide}
-          handleClick={() => navigation.navigate('Home')}
+          handleClick={() => navigation.navigate("Home")}
           index={NotesStore.amount - index}
           amount={NotesStore.amount}
         ></NavbarSecondary>

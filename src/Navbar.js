@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
 import { Title } from "./Title";
+import { observer } from "mobx-react-lite";
+import { NotesStoreContext } from "./store/NotesStore";
 
-export const Navbar = ({ title, handleClick }) => {
+export const Navbar = observer(({ title, handleClick }) => {
+  const NotesStore = useContext(NotesStoreContext);
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.navbar}>
@@ -15,18 +19,27 @@ export const Navbar = ({ title, handleClick }) => {
       </View>
       <View style={styles.subbar}>
         <ProgressCircle
-          percent={90}
+          percent={(NotesStore.info.current / NotesStore.amount) * 100}
           radius={10}
           borderWidth={4}
           color="#CCA9F9"
           shadowColor="#d7d7d7"
           bgColor="#fff"
         ></ProgressCircle>
-        <Text style={styles.info}>Review Process Pending</Text>
+        {!NotesStore.info.reviewed ? (
+          <>
+            <Text style={styles.info}>Review Process Pending</Text>
+          </>
+        ) : (
+          <>
+            <Text style={styles.info}>Today's Review</Text>
+            <Text style={styles.gray}>Goal achieved</Text>
+          </>
+        )}
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -53,7 +66,11 @@ const styles = StyleSheet.create({
   info: {
     marginLeft: 16,
     fontWeight: "600",
-    alignItems: "center",
     color: "#CCA9F9",
+  },
+  gray: {
+    marginLeft: 16,
+    fontWeight: "400",
+    color: "#B0AFAF",
   },
 });
