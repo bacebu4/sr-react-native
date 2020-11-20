@@ -5,6 +5,7 @@ import * as SecureStore from "expo-secure-store";
 import "react-native-get-random-values";
 const { v4: uuidv4 } = require("uuid");
 const dateFormat = require("dateformat");
+import { URL } from "@env";
 
 class NotesStore {
   highlights = [];
@@ -30,7 +31,7 @@ class NotesStore {
   *fetchHighlights() {
     try {
       const notes = yield request(
-        `http://192.168.1.70:3000/api/getDailyNotes`,
+        `${URL}/api/getDailyNotes`,
         "GET",
         this.token
       );
@@ -64,12 +65,10 @@ class NotesStore {
     try {
       this.setLoginLoading(true);
       this.setEmail(email);
-      const token = yield request(
-        "http://192.168.1.70:3000/api/login",
-        "POST",
-        "",
-        { email, password }
-      );
+      const token = yield request(`${URL}/api/login`, "POST", "", {
+        email,
+        password,
+      });
 
       console.log("success login ", token);
       this.setToken(token);
@@ -94,12 +93,10 @@ class NotesStore {
   *register(password) {
     try {
       this.setLoginLoading(true);
-      const token = yield request(
-        "http://192.168.1.70:3000/api/register",
-        "POST",
-        "",
-        { email: this.email, password }
-      );
+      const token = yield request(`${URL}/api/register`, "POST", "", {
+        email: this.email,
+        password,
+      });
 
       console.log("success register ", token);
       this.setToken(token);
@@ -124,7 +121,7 @@ class NotesStore {
   *fetchInitInfo() {
     try {
       const initInfo = yield request(
-        `http://192.168.1.70:3000/api/getInitInfo?id=1`,
+        `${URL}/api/getInitInfo?id=1`,
         "GET",
         this.token
       );
@@ -155,12 +152,10 @@ class NotesStore {
     }
 
     try {
-      yield request(
-        `http://192.168.1.70:3000/api/addExistingTag`,
-        "POST",
-        this.token,
-        { tag_id: tagId, note_id }
-      );
+      yield request(`${URL}/api/addExistingTag`, "POST", this.token, {
+        tag_id: tagId,
+        note_id,
+      });
     } catch (error) {}
   }
 
@@ -177,12 +172,10 @@ class NotesStore {
       this.currentNote.tags.push(newTag);
     }
     try {
-      yield request(
-        `http://192.168.1.70:3000/api/addNewTag`,
-        "POST",
-        this.token,
-        { ...newTag, note_id }
-      );
+      yield request(`${URL}/api/addNewTag`, "POST", this.token, {
+        ...newTag,
+        note_id,
+      });
     } catch (error) {
       throw new Error("Unable to proceed the action");
     }
@@ -203,12 +196,10 @@ class NotesStore {
     }
 
     try {
-      yield request(
-        `http://192.168.1.70:3000/api/deleteTagFromNote`,
-        "DELETE",
-        this.token,
-        { note_id, tag_id: tagId }
-      );
+      yield request(`${URL}/api/deleteTagFromNote`, "DELETE", this.token, {
+        note_id,
+        tag_id: tagId,
+      });
     } catch (error) {
       throw new Error("Unable to proceed the action");
     }
@@ -222,12 +213,7 @@ class NotesStore {
     this.tags = this.tags.filter((t) => t.tag_id !== tag_id);
 
     try {
-      yield request(
-        `http://192.168.1.70:3000/api/deleteTag`,
-        "DELETE",
-        this.token,
-        { tag_id }
-      );
+      yield request(`${URL}/api/deleteTag`, "DELETE", this.token, { tag_id });
     } catch (error) {
       throw new Error("Unable to proceed the action");
     }
@@ -260,12 +246,11 @@ class NotesStore {
     });
 
     try {
-      yield request(
-        `http://192.168.1.70:3000/api/updateTag`,
-        "PUT",
-        this.token,
-        { tag_name, tag_id, hue }
-      );
+      yield request(`${URL}/api/updateTag`, "PUT", this.token, {
+        tag_name,
+        tag_id,
+        hue,
+      });
     } catch (error) {
       throw new Error("Unable to proceed the action");
     }
@@ -288,12 +273,10 @@ class NotesStore {
     });
 
     try {
-      yield request(
-        `http://192.168.1.70:3000/api/updateNote`,
-        "PUT",
-        this.token,
-        { note_id, note_text }
-      );
+      yield request(`${URL}/api/updateNote`, "PUT", this.token, {
+        note_id,
+        note_text,
+      });
     } catch (error) {
       throw new Error("Unable to proceed the action");
     }
@@ -317,12 +300,10 @@ class NotesStore {
     }
 
     try {
-      yield request(
-        `http://192.168.1.70:3000/api/updateComment`,
-        "PUT",
-        this.token,
-        { comment_id, comment_text }
-      );
+      yield request(`${URL}/api/updateComment`, "PUT", this.token, {
+        comment_id,
+        comment_text,
+      });
     } catch (error) {
       throw new Error("Unable to proceed the action");
     }
@@ -333,7 +314,7 @@ class NotesStore {
 
     try {
       const results = yield request(
-        `http://192.168.1.70:3000/api/searchNotes`,
+        `${URL}/api/searchNotes`,
         "POST",
         this.token,
         { substring }
@@ -350,12 +331,9 @@ class NotesStore {
     this.setDeleted(noteId);
 
     try {
-      yield request(
-        `http://192.168.1.70:3000/api/deleteNote`,
-        "DELETE",
-        this.token,
-        { id: noteId }
-      );
+      yield request(`${URL}/api/deleteNote`, "DELETE", this.token, {
+        id: noteId,
+      });
     } catch (error) {
       throw new Error(error.message);
     }
@@ -386,12 +364,9 @@ class NotesStore {
     }
 
     try {
-      yield request(
-        `http://192.168.1.70:3000/api/addComment`,
-        "POST",
-        this.token,
-        { ...newComment }
-      );
+      yield request(`${URL}/api/addComment`, "POST", this.token, {
+        ...newComment,
+      });
     } catch (error) {
       throw new Error(error.message);
     }
@@ -411,12 +386,9 @@ class NotesStore {
     }
 
     try {
-      yield request(
-        `http://192.168.1.70:3000/api/deleteComment`,
-        "DELETE",
-        this.token,
-        { comment_id }
-      );
+      yield request(`${URL}/api/deleteComment`, "DELETE", this.token, {
+        comment_id,
+      });
     } catch (error) {
       throw new Error(error.message);
     }
@@ -436,11 +408,7 @@ class NotesStore {
       this.info.streak = this.info.streak + 1;
 
       try {
-        yield request(
-          `http://192.168.1.70:3000/api/setReviewed`,
-          "POST",
-          this.token
-        );
+        yield request(`${URL}/api/setReviewed`, "POST", this.token);
       } catch (error) {
         throw new Error(error.message);
       }
