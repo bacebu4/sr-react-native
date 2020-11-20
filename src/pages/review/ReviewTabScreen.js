@@ -122,10 +122,21 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
             ></Container>
             {note.comments.length ? (
               <>
-                <Container style={{ opacity: note.deleted ? 0.3 : 1 }}>
-                  <View style={styles.mt}>
-                    <Title title="Your comment:" type="small"></Title>
-                  </View>
+                <Container
+                  row
+                  mt={32}
+                  style={{ opacity: note.deleted ? 0.3 : 1 }}
+                >
+                  <Title title="Your comment:" type="small"></Title>
+                  <TouchableOpacity
+                    onPress={showAddCommentModal}
+                    disabled={note.deleted}
+                  >
+                    <Image
+                      style={styles.image}
+                      source={require("../../assets/plus.png")}
+                    ></Image>
+                  </TouchableOpacity>
                 </Container>
 
                 {note.comments.map((comment) => {
