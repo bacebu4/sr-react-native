@@ -125,9 +125,7 @@ export const HomeScreen = observer(({ navigation }) => {
               </Container>
 
               <Carousel books={NotesStore.latestBooks.slice(0, 10)}></Carousel>
-
-              <Container mt={16} border></Container>
-
+              <Container mt={16}></Container>
               {/* <Container mt={16}>
                 <SeeAll></SeeAll>
               </Container> */}
@@ -141,6 +139,7 @@ export const HomeScreen = observer(({ navigation }) => {
           {/* Review by tags */}
           {NotesStore.tags.length ? (
             <>
+              <Container border></Container>
               <Container mt={44} mb={150}>
                 <Title title="Review by tags"></Title>
 

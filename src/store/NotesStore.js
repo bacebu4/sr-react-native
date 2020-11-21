@@ -5,7 +5,7 @@ import * as SecureStore from "expo-secure-store";
 import "react-native-get-random-values";
 const { v4: uuidv4 } = require("uuid");
 const dateFormat = require("dateformat");
-import { URL } from "@env";
+import { BACK_URL } from "@env";
 
 class NotesStore {
   highlights = [];
@@ -30,9 +30,9 @@ class NotesStore {
 
   *fetchHighlights() {
     try {
-      console.log(URL);
+      console.log(BACK_URL);
       const notes = yield request(
-        `${URL}/api/getDailyNotes`,
+        `${BACK_URL}/api/getDailyNotes`,
         "GET",
         this.token
       );
@@ -64,9 +64,10 @@ class NotesStore {
 
   *login(email, password) {
     try {
+      console.log(BACK_URL);
       this.setLoginLoading(true);
       this.setEmail(email);
-      const token = yield request(`${URL}/api/login`, "POST", "", {
+      const token = yield request(`${BACK_URL}/api/login`, "POST", "", {
         email,
         password,
       });
@@ -93,9 +94,9 @@ class NotesStore {
 
   *register(password) {
     try {
-      console.log(URL);
+      console.log(BACK_URL);
       this.setLoginLoading(true);
-      const token = yield request(`${URL}/api/register`, "POST", "", {
+      const token = yield request(`${BACK_URL}/api/register`, "POST", "", {
         email: this.email,
         password,
       });
@@ -123,11 +124,12 @@ class NotesStore {
   *fetchInitInfo() {
     try {
       const initInfo = yield request(
-        `${URL}/api/getInitInfo?id=1`,
+        `${BACK_URL}/api/getInitInfo?id=1`,
         "GET",
         this.token
       );
       this.setTags(initInfo.tags);
+      console.log(initInfo.tags.length);
       this.setLatestBooks(initInfo.latestBooks);
       this.setAmount(initInfo.accountInfo.review_amount);
       this.info = initInfo.accountInfo;
@@ -154,7 +156,7 @@ class NotesStore {
     }
 
     try {
-      yield request(`${URL}/api/addExistingTag`, "POST", this.token, {
+      yield request(`${BACK_URL}/api/addExistingTag`, "POST", this.token, {
         tag_id: tagId,
         note_id,
       });
@@ -166,7 +168,7 @@ class NotesStore {
     const tagId = uuidv4();
     const newTag = { tag_id: tagId, hue, tag_name: tagName };
     this.setTags([...this.tags, newTag]);
-    if (noteIndex > 1) {
+    if (noteIndex > -1) {
       this.setTag(noteIndex, newTag);
     }
 
@@ -174,7 +176,7 @@ class NotesStore {
       this.currentNote.tags.push(newTag);
     }
     try {
-      yield request(`${URL}/api/addNewTag`, "POST", this.token, {
+      yield request(`${BACK_URL}/api/addNewTag`, "POST", this.token, {
         ...newTag,
         note_id,
       });
@@ -185,7 +187,7 @@ class NotesStore {
 
   *deleteTagFromNote(note_id, tagId) {
     const noteIndex = this.highlights.findIndex((h) => h.note_id === note_id);
-    if (noteIndex > 1) {
+    if (noteIndex > -1) {
       this.highlights[noteIndex].tags = this.highlights[noteIndex].tags.filter(
         (t) => t.tag_id !== tagId
       );
@@ -198,7 +200,7 @@ class NotesStore {
     }
 
     try {
-      yield request(`${URL}/api/deleteTagFromNote`, "DELETE", this.token, {
+      yield request(`${BACK_URL}/api/deleteTagFromNote`, "DELETE", this.token, {
         note_id,
         tag_id: tagId,
       });
@@ -215,7 +217,9 @@ class NotesStore {
     this.tags = this.tags.filter((t) => t.tag_id !== tag_id);
 
     try {
-      yield request(`${URL}/api/deleteTag`, "DELETE", this.token, { tag_id });
+      yield request(`${BACK_URL}/api/deleteTag`, "DELETE", this.token, {
+        tag_id,
+      });
     } catch (error) {
       throw new Error("Unable to proceed the action");
     }
@@ -248,7 +252,7 @@ class NotesStore {
     });
 
     try {
-      yield request(`${URL}/api/updateTag`, "PUT", this.token, {
+      yield request(`${BACK_URL}/api/updateTag`, "PUT", this.token, {
         tag_name,
         tag_id,
         hue,
@@ -275,7 +279,7 @@ class NotesStore {
     });
 
     try {
-      yield request(`${URL}/api/updateNote`, "PUT", this.token, {
+      yield request(`${BACK_URL}/api/updateNote`, "PUT", this.token, {
         note_id,
         note_text,
       });
@@ -302,7 +306,7 @@ class NotesStore {
     }
 
     try {
-      yield request(`${URL}/api/updateComment`, "PUT", this.token, {
+      yield request(`${BACK_URL}/api/updateComment`, "PUT", this.token, {
         comment_id,
         comment_text,
       });
@@ -316,7 +320,7 @@ class NotesStore {
 
     try {
       const results = yield request(
-        `${URL}/api/searchNotes`,
+        `${BACK_URL}/api/searchNotes`,
         "POST",
         this.token,
         { substring }
@@ -333,7 +337,7 @@ class NotesStore {
     this.setDeleted(noteId);
 
     try {
-      yield request(`${URL}/api/deleteNote`, "DELETE", this.token, {
+      yield request(`${BACK_URL}/api/deleteNote`, "DELETE", this.token, {
         id: noteId,
       });
     } catch (error) {
@@ -366,7 +370,7 @@ class NotesStore {
     }
 
     try {
-      yield request(`${URL}/api/addComment`, "POST", this.token, {
+      yield request(`${BACK_URL}/api/addComment`, "POST", this.token, {
         ...newComment,
       });
     } catch (error) {
@@ -388,7 +392,7 @@ class NotesStore {
     }
 
     try {
-      yield request(`${URL}/api/deleteComment`, "DELETE", this.token, {
+      yield request(`${BACK_URL}/api/deleteComment`, "DELETE", this.token, {
         comment_id,
       });
     } catch (error) {
@@ -410,7 +414,7 @@ class NotesStore {
       this.info.streak = this.info.streak + 1;
 
       try {
-        yield request(`${URL}/api/setReviewed`, "POST", this.token);
+        yield request(`${BACK_URL}/api/setReviewed`, "POST", this.token);
       } catch (error) {
         throw new Error(error.message);
       }

@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { URL } from "@env";
+import { BACK_URL } from "@env";
 
 export const useRequest = () => {
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ export const useRequest = () => {
           body = JSON.stringify(data);
         }
 
-        const response = await fetch(URL + url, {
+        const response = await fetch(BACK_URL + url, {
           method,
           headers,
           body,

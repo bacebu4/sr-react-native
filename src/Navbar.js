@@ -19,7 +19,11 @@ export const Navbar = observer(({ title, handleClick }) => {
       </View>
       <View style={styles.subbar}>
         <ProgressCircle
-          percent={(NotesStore.info.current / NotesStore.amount) * 100}
+          percent={
+            NotesStore.info.reviewed
+              ? 100
+              : (NotesStore.info.current / NotesStore.amount) * 100
+          }
           radius={10}
           borderWidth={4}
           color="#CCA9F9"
