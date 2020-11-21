@@ -30,6 +30,7 @@ class NotesStore {
 
   *fetchHighlights() {
     try {
+      console.log(URL);
       const notes = yield request(
         `${URL}/api/getDailyNotes`,
         "GET",
@@ -83,7 +84,7 @@ class NotesStore {
       yield this.fetchInitInfo();
       yield this.fetchHighlights();
     } catch (error) {
-      console.log("error login ", error);
+      throw new Error(error.message);
     } finally {
       this.setLoginLoading(false);
       this.setLoading(false);
@@ -92,6 +93,7 @@ class NotesStore {
 
   *register(password) {
     try {
+      console.log(URL);
       this.setLoginLoading(true);
       const token = yield request(`${URL}/api/register`, "POST", "", {
         email: this.email,
@@ -111,7 +113,7 @@ class NotesStore {
       yield this.fetchInitInfo();
       yield this.fetchHighlights();
     } catch (error) {
-      console.log("error register ", error);
+      throw new Error(error.message);
     } finally {
       this.setLoginLoading(false);
       this.setLoading(false);

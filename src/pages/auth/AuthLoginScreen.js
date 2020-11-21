@@ -6,16 +6,23 @@ import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
+import { useMessage } from "../../hooks/message.hook";
 
 export const AuthLoginScreen = observer(({ navigation }) => {
   const [email, onEmail] = useState("v@mail.ru");
   const [password, onPassword] = useState("123456");
   const passwordInput = useRef(null);
+  const message = useMessage();
 
   const NotesStore = useContext(NotesStoreContext);
 
-  const handleSubmit = () => {
-    NotesStore.login(email, password);
+  const handleSubmit = async () => {
+    try {
+      await NotesStore.login(email, password);
+      console.log("logged");
+    } catch (error) {
+      message(error.message);
+    }
   };
   return (
     <MainContainer>

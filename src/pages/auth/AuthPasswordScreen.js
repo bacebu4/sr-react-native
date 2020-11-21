@@ -6,14 +6,20 @@ import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
+import { useMessage } from "../../hooks/message.hook";
 
 export const AuthPasswordScreen = observer(({ navigation }) => {
   const [password, onPassword] = useState("123456");
+  const message = useMessage();
 
   const NotesStore = useContext(NotesStoreContext);
 
-  const handleSubmit = () => {
-    NotesStore.register(password);
+  const handleSubmit = async () => {
+    try {
+      await NotesStore.register(password);
+    } catch (error) {
+      message(error.message);
+    }
   };
   return (
     <MainContainer>
