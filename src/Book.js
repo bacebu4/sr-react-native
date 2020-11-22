@@ -9,7 +9,9 @@ export const Book = ({ book }) => {
   return (
     <TouchableOpacity
       style={styles.wrapper}
-      onPress={() => navigation.navigate("ByBook", { book_id, name: title })}
+      onPress={() =>
+        navigation.navigate("By", { id: book_id, name: title, type: "Book" })
+      }
     >
       <Image style={styles.cover} source={require("./book.png")} />
       <Text style={styles.title} numberOfLines={2}>

@@ -151,6 +151,13 @@ export const HomeScreen = observer(({ navigation }) => {
                       title={tag.tag_name}
                       style={{ marginRight: 16, marginTop: 16 }}
                       onLongPress={() => handleLongAddPress(tag.tag_id)}
+                      clickAction={() =>
+                        navigation.navigate("By", {
+                          id: tag.tag_id,
+                          name: tag.tag_name,
+                          type: "Tag",
+                        })
+                      }
                     ></Tag>
                   ))}
                 </TagContainer>

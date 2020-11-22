@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "../pages/HomeScreen";
 import { ReviewScreen } from "../pages/ReviewScreen";
 import { TransitionPresets } from "@react-navigation/stack";
-import { ByBookScreen } from "../pages/ByBookScreen";
+import { ByScreen } from "../pages/ByScreen";
 import { HighlightScreen } from "../pages/HighlightScreen";
 
 const HomeStack = createStackNavigator();
@@ -28,8 +28,8 @@ export const HomeStackScreen = () => {
           }}
         />
         <HomeStack.Screen
-          name="ByBook"
-          component={ByBookScreen}
+          name="By"
+          component={ByScreen}
           options={({ route }) => ({
             title: route.params.name,
             headerTitle: route.params.name,

@@ -9,9 +9,9 @@ import { ActivityIndicator } from "react-native";
 import { useRequest } from "../hooks/request.hook";
 import { useMessage } from "../hooks/message.hook";
 
-export const ByBookScreen = observer(({ route, navigation }) => {
+export const ByScreen = observer(({ route, navigation }) => {
   const NotesStore = useContext(NotesStoreContext);
-  const { book_id } = route.params;
+  const { id, type } = route.params;
   const { request, loading, error, clearError } = useRequest();
   const [notes, setNotes] = useState([]);
   const message = useMessage();
@@ -24,10 +24,10 @@ export const ByBookScreen = observer(({ route, navigation }) => {
   const fetchNotes = useCallback(async () => {
     try {
       const fetched = await request(
-        `/api/getNotesByBook`,
+        `/api/getNotesBy${type}`,
         "POST",
         NotesStore.token,
-        { book_id }
+        { id }
       );
       setNotes(fetched);
     } catch (error) {}
@@ -60,7 +60,7 @@ export const ByBookScreen = observer(({ route, navigation }) => {
                     })
                   }
                 >
-                  <Card note={item} dense></Card>
+                  <Card note={item} dense={type === "Book"}></Card>
                 </TouchableOpacity>
               </Container>
             )}
