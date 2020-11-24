@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { Tag } from "../../Tag";
 import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../../store/UiStore";
