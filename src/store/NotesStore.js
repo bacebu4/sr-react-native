@@ -39,6 +39,8 @@ class NotesStore {
       this.highlights = [...notes];
     } catch (e) {
       console.log("error", e);
+    } finally {
+      this.setLoading(false);
     }
   }
 
@@ -57,8 +59,6 @@ class NotesStore {
       }
     } catch (error) {
       console.log("token was not found");
-    } finally {
-      this.setLoading(false);
     }
   }
 
@@ -135,6 +135,8 @@ class NotesStore {
       this.info = initInfo.accountInfo;
     } catch (error) {
       console.log("error fetching init", error);
+    } finally {
+      this.setLoading(false);
     }
   }
 

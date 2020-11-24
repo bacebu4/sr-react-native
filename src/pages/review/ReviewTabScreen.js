@@ -27,6 +27,7 @@ import { TagContainer } from "../../components/grid/TagContainer";
 import { EditTextModal } from "../../components/EditTextModal";
 import { useConfirm } from "../../hooks/confirm.hook";
 import { useRequest } from "../../hooks/request.hook";
+import { AddTagModal } from "../../components/AddTagModal";
 
 export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
   const NotesStore = useContext(NotesStoreContext);
@@ -38,6 +39,7 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
   const actionAddRef = useRef(null);
   const [tagId, setTagId] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalTagVisible, setModalTagVisible] = useState(false);
   const [text, setText] = useState("");
   const confirm = useConfirm();
   const { request } = useRequest();
@@ -59,7 +61,8 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
   }, []);
 
   const showAddTagStack = () => {
-    UiStore.addRef.current.snapTo(1);
+    // UiStore.addRef.current.snapTo(1);
+    setModalTagVisible(true);
     UiStore.setCurrentNote(note.note_id);
     UiStore.setShowChooseSheet(true);
   };
@@ -104,6 +107,11 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
         onText={setText}
         handleSave={handleSave}
       ></EditTextModal>
+
+      <AddTagModal
+        modalState={modalTagVisible}
+        setModalState={setModalTagVisible}
+      ></AddTagModal>
 
       <ScrollView showsVerticalScrollIndicator={false}>
         {!note ? (
