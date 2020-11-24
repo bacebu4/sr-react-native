@@ -29,7 +29,7 @@ import { useConfirm } from "../../hooks/confirm.hook";
 import { useRequest } from "../../hooks/request.hook";
 import { TagModal } from "../../components/TagModal";
 import { ChooseScreen } from "../addTag/ChooseScreen";
-import { EditTagScreen } from "../addTag/EditTagScreen";
+import { TagConstructor } from "../addTag/TagConstructor";
 
 export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
   const NotesStore = useContext(NotesStoreContext);
@@ -120,9 +120,10 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
         modalState={modalEditTagVisible}
         setModalState={setModalEditTagVisible}
       >
-        <EditTagScreen
-          handleBack={() => setModalEditTagVisible(false)}
-        ></EditTagScreen>
+        <TagConstructor
+          handleClose={() => setModalEditTagVisible(false)}
+          editMode
+        ></TagConstructor>
       </TagModal>
 
       <ScrollView showsVerticalScrollIndicator={false}>

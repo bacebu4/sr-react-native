@@ -15,6 +15,7 @@ import { Container } from "../../components/grid/Container";
 import { TagContainer } from "../../components/grid/TagContainer";
 import { useMessage } from "../../hooks/message.hook";
 import { NavbarTop } from "../../components/NavbarTop";
+import { TagConstructor } from "./TagConstructor";
 
 export const ChooseScreen = observer(({ handleCancel }) => {
   const [tag, onTag] = useState("");
@@ -39,21 +40,6 @@ export const ChooseScreen = observer(({ handleCancel }) => {
   const refreshColor = () => {
     const newColor = Math.floor(Math.random() * 361);
     onColor(newColor);
-  };
-
-  const handleSubmit = () => {
-    const findResults = NotesStore.tags.find((t) => t.tag_name === tag.trim());
-    try {
-      if (findResults) {
-        throw new Error("This tag name already exists");
-      }
-      NotesStore.addNewTag(UiStore.currentNote, tag.trim(), color);
-      onTag("");
-      refreshColor();
-      handleCancel();
-    } catch (error) {
-      message(error.message);
-    }
   };
 
   const handleSubmitFromExisting = (id) => {
@@ -126,37 +112,10 @@ export const ChooseScreen = observer(({ handleCancel }) => {
           </>
         ) : (
           // adding new tag
-          <>
-            <Container>
-              <NavbarTop
-                handleClick={handleBack}
-                handleNext={handleSubmit}
-                title="New tag"
-                titleLeft="Back"
-                titleRight="Save"
-                noMargin
-              ></NavbarTop>
-            </Container>
-            <Container border mt={16}></Container>
-
-            <Container center mt={44}>
-              <Container center>
-                <Tag hue={color} title={tag}></Tag>
-              </Container>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => onTag(text)}
-                value={tag}
-                autoFocus
-              />
-              <TouchableOpacity onPress={refreshColor}>
-                <Image
-                  style={{ ...styles.icon, ...styles.mt }}
-                  source={require("../../assets/refresh.png")}
-                ></Image>
-              </TouchableOpacity>
-            </Container>
-          </>
+          <TagConstructor
+            handleBack={handleBack}
+            handleClose={handleCancel}
+          ></TagConstructor>
         )}
       </>
     </View>
@@ -164,10 +123,6 @@ export const ChooseScreen = observer(({ handleCancel }) => {
 });
 
 const styles = StyleSheet.create({
-  button: {
-    marginTop: 74,
-    width: 180,
-  },
   icon: {
     width: 24,
     height: 24,
@@ -186,12 +141,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     textAlign: "center",
     width: 150,
-  },
-  link: {
-    color: "#CCA9F9",
-    fontSize: 16,
-    fontWeight: "600",
-    marginTop: 4,
   },
   image: {
     width: 153,

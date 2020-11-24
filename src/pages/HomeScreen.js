@@ -25,7 +25,7 @@ import * as Haptics from "expo-haptics";
 import { UiStoreContext } from "../store/UiStore";
 import { useConfirm } from "../hooks/confirm.hook";
 import { TagModal } from "../components/TagModal";
-import { EditTagScreen } from "./addTag/EditTagScreen";
+import { TagConstructor } from "./addTag/TagConstructor";
 
 export const HomeScreen = observer(({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -83,9 +83,10 @@ export const HomeScreen = observer(({ navigation }) => {
         modalState={modalEditTagVisible}
         setModalState={setModalEditTagVisible}
       >
-        <EditTagScreen
-          handleBack={() => setModalEditTagVisible(false)}
-        ></EditTagScreen>
+        <TagConstructor
+          handleClose={() => setModalEditTagVisible(false)}
+          editMode
+        ></TagConstructor>
       </TagModal>
 
       <MainContainer>
