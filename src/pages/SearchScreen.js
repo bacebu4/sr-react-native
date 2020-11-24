@@ -16,6 +16,7 @@ import { SearchBar } from "react-native-elements";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../store/NotesStore";
 import { Card } from "../Card";
+import { TextGray } from "../components/TextGray";
 
 export const SearchScreen = observer(({ navigation }) => {
   const [search, setSearch] = useState("");
@@ -107,7 +108,7 @@ export const SearchScreen = observer(({ navigation }) => {
                       style={styles.image}
                       source={require("../assets/empty_search.png")}
                     ></Image>
-                    <Text style={styles.text}>Nothing found</Text>
+                    <TextGray mt={32}>Nothing found</TextGray>
                   </Container>
                 </>
               ) : (
@@ -149,10 +150,6 @@ const styles = StyleSheet.create({
   image: {
     width: 190,
     height: 213,
-  },
-  text: {
-    color: "#B0AFAF",
-    marginTop: 32,
   },
   textGrayCapital: {
     color: "#B0AFAF",

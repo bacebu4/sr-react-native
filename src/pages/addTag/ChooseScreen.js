@@ -1,29 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Text,
-} from "react-native";
+import { StyleSheet, View, Image, Text } from "react-native";
 import { Tag } from "../../Tag";
 import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../../store/UiStore";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { TagContainer } from "../../components/grid/TagContainer";
-import { useMessage } from "../../hooks/message.hook";
 import { NavbarTop } from "../../components/NavbarTop";
 import { TagConstructor } from "./TagConstructor";
+import { TextGray } from "../../components/TextGray";
 
 export const ChooseScreen = observer(({ handleCancel }) => {
-  const [tag, onTag] = useState("");
-  const [color, onColor] = useState(0);
   const UiStore = useContext(UiStoreContext);
   const NotesStore = useContext(NotesStoreContext);
   const [showAddSheet, setShowAddSheet] = useState(true);
-  const message = useMessage();
 
   useEffect(() => {
     refreshColor();
@@ -105,7 +95,7 @@ export const ChooseScreen = observer(({ handleCancel }) => {
                     style={styles.image}
                     source={require("../../assets/empty_tags.png")}
                   ></Image>
-                  <Text style={styles.text}>No tags created yet</Text>
+                  <TextGray mt={16}>No tags created yet</TextGray>
                 </Container>
               </>
             )}
@@ -123,31 +113,8 @@ export const ChooseScreen = observer(({ handleCancel }) => {
 });
 
 const styles = StyleSheet.create({
-  icon: {
-    width: 24,
-    height: 24,
-  },
-  mt: {
-    marginTop: 32,
-  },
-  input: {
-    height: 40,
-    borderRadius: 4,
-    color: "#343434",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginTop: 16,
-    borderBottomColor: "#dbdbdb",
-    borderBottomWidth: 1,
-    textAlign: "center",
-    width: 150,
-  },
   image: {
     width: 153,
     height: 120,
-  },
-  text: {
-    color: "#B0AFAF",
-    marginTop: 16,
   },
 });

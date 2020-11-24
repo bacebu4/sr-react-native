@@ -5,6 +5,7 @@ import { Title } from "../../Title";
 import { useNavigation } from "@react-navigation/native";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";
+import { TextGray } from "../../components/TextGray";
 
 export const ReviewFinalScreen = observer(() => {
   const navigation = useNavigation();
@@ -21,10 +22,15 @@ export const ReviewFinalScreen = observer(() => {
         source={require("../../assets/success.png")}
       ></Image>
       <Title title="Congratulations!"></Title>
-      <Text style={styles.sub}>
+      <TextGray mt={32}>
         You've been on the track for {NotesStore.info.streak} days
-      </Text>
-      <MainButton dark title="Go home" clickAction={handleHome}></MainButton>
+      </TextGray>
+      <MainButton
+        dark
+        title="Go home"
+        clickAction={handleHome}
+        style={{ marginTop: 32 }}
+      ></MainButton>
     </View>
   );
 });
@@ -39,11 +45,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  sub: {
-    color: "#B0AFAF",
-    marginTop: 32,
-    marginBottom: 32,
   },
   mt: {
     marginTop: 32,

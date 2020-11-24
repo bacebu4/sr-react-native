@@ -5,6 +5,7 @@ import Constants from "expo-constants";
 import { Title } from "./Title";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "./store/NotesStore";
+import { TextGray } from "./components/TextGray";
 
 export const Navbar = observer(({ title, handleClick }) => {
   const NotesStore = useContext(NotesStoreContext);
@@ -37,7 +38,7 @@ export const Navbar = observer(({ title, handleClick }) => {
         ) : (
           <>
             <Text style={styles.info}>Today's Review</Text>
-            <Text style={styles.gray}>Goal achieved</Text>
+            <TextGray ml={16}>Goal achieved</TextGray>
           </>
         )}
       </View>
@@ -71,10 +72,5 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     fontWeight: "600",
     color: "#CCA9F9",
-  },
-  gray: {
-    marginLeft: 16,
-    fontWeight: "400",
-    color: "#B0AFAF",
   },
 });

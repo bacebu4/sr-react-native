@@ -26,6 +26,7 @@ import { UiStoreContext } from "../store/UiStore";
 import { useConfirm } from "../hooks/confirm.hook";
 import { TagModal } from "../components/TagModal";
 import { TagConstructor } from "./addTag/TagConstructor";
+import { TextGray } from "../components/TextGray";
 
 export const HomeScreen = observer(({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -118,7 +119,7 @@ export const HomeScreen = observer(({ navigation }) => {
                     source={require("../assets/empty_main.png")}
                   ></Image>
 
-                  <Text style={styles.text}>No highlights added yet</Text>
+                  <TextGray mt={32}>No highlights added yet</TextGray>
 
                   <Container mt={32}>
                     <MainButton
@@ -212,9 +213,5 @@ const styles = StyleSheet.create({
   image: {
     width: 186,
     height: 173,
-  },
-  text: {
-    color: "#B0AFAF",
-    marginTop: 32,
   },
 });

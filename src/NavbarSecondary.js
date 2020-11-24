@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
+import { TextGray } from "./components/TextGray";
 
 export const NavbarSecondary = ({
   title,
@@ -41,7 +42,7 @@ export const NavbarSecondary = ({
           bgColor="#fff"
         ></ProgressCircle>
         <Text style={styles.info}>Review Process</Text>
-        <Text style={styles.stat}>{index} more left</Text>
+        <TextGray ml={16}>{index} more left</TextGray>
       </View>
     </View>
   );
@@ -84,9 +85,5 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     alignItems: "center",
     color: "#CCA9F9",
-  },
-  stat: {
-    color: "#B0AFAF",
-    marginLeft: 16,
   },
 });
