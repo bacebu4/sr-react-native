@@ -43,6 +43,10 @@ class UiStore {
     this.currentNote = value;
   }
 
+  setCurrentTag(value) {
+    this.currentTag = value;
+  }
+
   constructor() {
     makeAutoObservable(this);
   }

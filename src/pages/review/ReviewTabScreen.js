@@ -27,7 +27,9 @@ import { TagContainer } from "../../components/grid/TagContainer";
 import { EditTextModal } from "../../components/EditTextModal";
 import { useConfirm } from "../../hooks/confirm.hook";
 import { useRequest } from "../../hooks/request.hook";
-import { AddTagModal } from "../../components/AddTagModal";
+import { TagModal } from "../../components/TagModal";
+import { ChooseScreen } from "../addTag/ChooseScreen";
+import { EditTagScreen } from "../addTag/EditTagScreen";
 
 export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
   const NotesStore = useContext(NotesStoreContext);
@@ -40,6 +42,7 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
   const [tagId, setTagId] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalTagVisible, setModalTagVisible] = useState(false);
+  const [modalEditTagVisible, setModalEditTagVisible] = useState(false);
   const [text, setText] = useState("");
   const confirm = useConfirm();
   const { request } = useRequest();
@@ -61,10 +64,8 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
   }, []);
 
   const showAddTagStack = () => {
-    // UiStore.addRef.current.snapTo(1);
     setModalTagVisible(true);
     UiStore.setCurrentNote(note.note_id);
-    UiStore.setShowChooseSheet(true);
   };
 
   const handleLongAddPress = (tagId) => {
@@ -84,7 +85,8 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
   };
 
   const handleEditTag = () => {
-    UiStore.setShowEditSheet(true, tagId);
+    UiStore.setCurrentTag(tagId);
+    setModalEditTagVisible(true);
   };
 
   const showAddCommentModal = () => {
@@ -108,10 +110,20 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
         handleSave={handleSave}
       ></EditTextModal>
 
-      <AddTagModal
-        modalState={modalTagVisible}
-        setModalState={setModalTagVisible}
-      ></AddTagModal>
+      <TagModal modalState={modalTagVisible} setModalState={setModalTagVisible}>
+        <ChooseScreen
+          handleCancel={() => setModalTagVisible(false)}
+        ></ChooseScreen>
+      </TagModal>
+
+      <TagModal
+        modalState={modalEditTagVisible}
+        setModalState={setModalEditTagVisible}
+      >
+        <EditTagScreen
+          handleBack={() => setModalEditTagVisible(false)}
+        ></EditTagScreen>
+      </TagModal>
 
       <ScrollView showsVerticalScrollIndicator={false}>
         {!note ? (

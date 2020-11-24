@@ -8,35 +8,32 @@ import {
   Text,
 } from "react-native";
 import { Tag } from "../../Tag";
-import { Title } from "../../Title";
 import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../../store/UiStore";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { TagContainer } from "../../components/grid/TagContainer";
 import { useMessage } from "../../hooks/message.hook";
+import { NavbarTop } from "../../components/NavbarTop";
 
-export const ChooseScreen = observer(() => {
+export const ChooseScreen = observer(({ handleCancel }) => {
   const [tag, onTag] = useState("");
   const [color, onColor] = useState(0);
   const UiStore = useContext(UiStoreContext);
   const NotesStore = useContext(NotesStoreContext);
+  const [showAddSheet, setShowAddSheet] = useState(true);
   const message = useMessage();
 
   useEffect(() => {
     refreshColor();
   }, []);
 
-  const handleAdd = () => {
-    UiStore.setShowAddSheet(true);
-    setTimeout(() => {
-      UiStore.addRef.current.snapTo(0);
-    }, 50);
+  const handleShowCreate = () => {
+    setShowAddSheet(false);
   };
 
   const handleBack = () => {
-    UiStore.setShowAddSheet(false);
-    UiStore.addRef.current.snapTo(1);
+    setShowAddSheet(true);
   };
 
   const refreshColor = () => {
@@ -53,7 +50,7 @@ export const ChooseScreen = observer(() => {
       NotesStore.addNewTag(UiStore.currentNote, tag.trim(), color);
       onTag("");
       refreshColor();
-      UiStore.addRef.current.snapTo(2);
+      handleCancel();
     } catch (error) {
       message(error.message);
     }
@@ -61,7 +58,7 @@ export const ChooseScreen = observer(() => {
 
   const handleSubmitFromExisting = (id) => {
     NotesStore.addExistingTag(UiStore.currentNote, id);
-    UiStore.addRef.current.snapTo(2);
+    handleCancel();
   };
 
   return (
@@ -71,106 +68,97 @@ export const ChooseScreen = observer(() => {
         height: 650,
       }}
     >
-      <View style={styles.center}>
-        <View style={styles.topBar}></View>
-      </View>
-      {UiStore.showChooseSheet ? (
-        <>
-          {!UiStore.showAddSheet ? (
-            <>
-              <Container mt={16} row border pb={16}>
-                <View></View>
-                <Title type="small" title={"Choose from existing"}></Title>
-                <TouchableOpacity onPress={handleAdd}>
-                  <Image
-                    style={styles.icon}
-                    source={require("../../assets/smallPlus.png")}
-                  ></Image>
-                </TouchableOpacity>
-              </Container>
+      <>
+        {showAddSheet ? (
+          <>
+            <Container>
+              <NavbarTop
+                handleClick={handleCancel}
+                handleNext={handleShowCreate}
+                title="Choose from existing"
+                titleLeft="Cancel"
+                titleRight="Create"
+                noMargin
+              ></NavbarTop>
+            </Container>
+            <Container border mt={16}></Container>
 
-              {NotesStore.tags.length ? (
-                <>
-                  <Container>
-                    <TagContainer>
-                      {NotesStore.tags.map((tag) => {
-                        const findResults = NotesStore?.highlights[
-                          UiStore?.currentNote
-                        ]?.tags.find((t) => t.tag_id === tag.tag_id);
+            {NotesStore.tags.length ? (
+              <>
+                <Container>
+                  <TagContainer>
+                    {NotesStore.tags.map((tag) => {
+                      const findResults = NotesStore?.highlights[
+                        UiStore?.currentNote
+                      ]?.tags.find((t) => t.tag_id === tag.tag_id);
 
-                        if (!findResults) {
-                          return (
-                            <Tag
-                              title={tag.tag_name}
-                              hue={tag.hue}
-                              key={tag.tag_id}
-                              style={{ marginRight: 16, marginTop: 24 }}
-                              clickAction={() =>
-                                handleSubmitFromExisting(tag.tag_id)
-                              }
-                            ></Tag>
-                          );
-                        }
+                      if (!findResults) {
+                        return (
+                          <Tag
+                            title={tag.tag_name}
+                            hue={tag.hue}
+                            key={tag.tag_id}
+                            style={{ marginRight: 16, marginTop: 24 }}
+                            clickAction={() =>
+                              handleSubmitFromExisting(tag.tag_id)
+                            }
+                          ></Tag>
+                        );
+                      }
 
-                        return <View key={tag.tag_id}></View>;
-                      })}
-                    </TagContainer>
-                  </Container>
-                </>
-              ) : (
-                // empty state
-                <>
-                  <Container center mt={44}>
-                    <Image
-                      style={styles.image}
-                      source={require("../../assets/empty_tags.png")}
-                    ></Image>
-                    <Text style={styles.text}>No tags created yet</Text>
-                  </Container>
-                </>
-              )}
-            </>
-          ) : (
-            // adding new tag
-            <>
-              <Container mt={16} row border pb={16}>
-                <TouchableOpacity onPress={handleBack}>
-                  <Image
-                    style={styles.icon}
-                    source={require("../../assets/left.png")}
-                  ></Image>
-                </TouchableOpacity>
-                <Title type="small" title={"New tag"}></Title>
-                <TouchableOpacity onPress={handleSubmit}>
-                  <Text style={styles.link}>Save</Text>
-                </TouchableOpacity>
-              </Container>
-
-              <Container center mt={44}>
-                <Container center>
-                  <Tag hue={color} title={tag}></Tag>
+                      return <View key={tag.tag_id}></View>;
+                    })}
+                  </TagContainer>
                 </Container>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={(text) => onTag(text)}
-                  value={tag}
-                  autoFocus
-                />
-                <TouchableOpacity onPress={refreshColor}>
+              </>
+            ) : (
+              // empty state
+              <>
+                <Container center mt={44}>
                   <Image
-                    style={{ ...styles.icon, ...styles.mt }}
-                    source={require("../../assets/refresh.png")}
+                    style={styles.image}
+                    source={require("../../assets/empty_tags.png")}
                   ></Image>
-                </TouchableOpacity>
+                  <Text style={styles.text}>No tags created yet</Text>
+                </Container>
+              </>
+            )}
+          </>
+        ) : (
+          // adding new tag
+          <>
+            <Container>
+              <NavbarTop
+                handleClick={handleBack}
+                handleNext={handleSubmit}
+                title="New tag"
+                titleLeft="Back"
+                titleRight="Save"
+                noMargin
+              ></NavbarTop>
+            </Container>
+            <Container border mt={16}></Container>
+
+            <Container center mt={44}>
+              <Container center>
+                <Tag hue={color} title={tag}></Tag>
               </Container>
-            </>
-          )}
-        </>
-      ) : (
-        <>
-          <View></View>
-        </>
-      )}
+              <TextInput
+                style={styles.input}
+                onChangeText={(text) => onTag(text)}
+                value={tag}
+                autoFocus
+              />
+              <TouchableOpacity onPress={refreshColor}>
+                <Image
+                  style={{ ...styles.icon, ...styles.mt }}
+                  source={require("../../assets/refresh.png")}
+                ></Image>
+              </TouchableOpacity>
+            </Container>
+          </>
+        )}
+      </>
     </View>
   );
 });
@@ -180,22 +168,12 @@ const styles = StyleSheet.create({
     marginTop: 74,
     width: 180,
   },
-  topBar: {
-    marginTop: 24,
-    width: 32,
-    height: 5,
-    backgroundColor: "#dbdbdb",
-    borderRadius: 100,
-  },
   icon: {
     width: 24,
     height: 24,
   },
   mt: {
     marginTop: 32,
-  },
-  center: {
-    alignItems: "center",
   },
   input: {
     height: 40,

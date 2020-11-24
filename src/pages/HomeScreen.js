@@ -24,10 +24,13 @@ import ActionSheet from "react-native-actionsheet";
 import * as Haptics from "expo-haptics";
 import { UiStoreContext } from "../store/UiStore";
 import { useConfirm } from "../hooks/confirm.hook";
+import { TagModal } from "../components/TagModal";
+import { EditTagScreen } from "./addTag/EditTagScreen";
 
 export const HomeScreen = observer(({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [modalSettings, setModalSettings] = useState(false);
+  const [modalEditTagVisible, setModalEditTagVisible] = useState(false);
   const actionTagRef = useRef(null);
   const [tagId, setTagId] = useState(null);
   const UiStore = useContext(UiStoreContext);
@@ -54,7 +57,8 @@ export const HomeScreen = observer(({ navigation }) => {
   };
 
   const handleEditTag = () => {
-    UiStore.setShowEditSheet(true, tagId);
+    UiStore.setCurrentTag(tagId);
+    setModalEditTagVisible(true);
   };
 
   const handleDeleteTag = () => {
@@ -74,6 +78,15 @@ export const HomeScreen = observer(({ navigation }) => {
         setModalState={setModalSettings}
         handleDone={closeSettings}
       ></SettingsModal>
+
+      <TagModal
+        modalState={modalEditTagVisible}
+        setModalState={setModalEditTagVisible}
+      >
+        <EditTagScreen
+          handleBack={() => setModalEditTagVisible(false)}
+        ></EditTagScreen>
+      </TagModal>
 
       <MainContainer>
         <ScrollView

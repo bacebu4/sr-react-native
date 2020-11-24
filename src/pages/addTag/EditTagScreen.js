@@ -5,17 +5,16 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  Text,
 } from "react-native";
 import { Tag } from "../../Tag";
-import { Title } from "../../Title";
 import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../../store/UiStore";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { useMessage } from "../../hooks/message.hook";
+import { NavbarTop } from "../../components/NavbarTop";
 
-export const EditTagScreen = observer(() => {
+export const EditTagScreen = observer(({ handleBack }) => {
   const [tag, onTag] = useState("");
   const [color, onColor] = useState(0);
   const [initialTag, setInitialTag] = useState({});
@@ -24,19 +23,13 @@ export const EditTagScreen = observer(() => {
   const message = useMessage();
 
   useEffect(() => {
-    if (UiStore.showEditTagSheet) {
-      const initialTagResults = NotesStore.tags.find(
-        (t) => t.tag_id === UiStore.currentTag
-      );
-      setInitialTag(initialTagResults);
-      onTag(initialTagResults.tag_name);
-      onColor(initialTagResults.hue);
-    }
-  }, [UiStore.showEditTagSheet]);
-
-  const handleBack = () => {
-    UiStore.setShowEditSheet(false);
-  };
+    const initialTagResults = NotesStore.tags.find(
+      (t) => t.tag_id === UiStore.currentTag
+    );
+    setInitialTag(initialTagResults);
+    onTag(initialTagResults.tag_name);
+    onColor(initialTagResults.hue);
+  }, []);
 
   const refreshColor = () => {
     const newColor = Math.floor(Math.random() * 361);
@@ -58,7 +51,7 @@ export const EditTagScreen = observer(() => {
       NotesStore.updateTag(UiStore.currentTag, tag.trim(), color);
       onTag("");
       refreshColor();
-      UiStore.setShowEditSheet(false);
+      handleBack();
     } catch (error) {
       message(error.message);
     }
@@ -71,74 +64,49 @@ export const EditTagScreen = observer(() => {
         height: 650,
       }}
     >
-      <View style={styles.center}>
-        <View style={styles.topBar}></View>
-      </View>
-      {UiStore.showEditTagSheet ? (
-        <>
-          <>
-            <Container mt={16} row border pb={16}>
-              <TouchableOpacity onPress={handleBack}>
-                <Text style={styles.link}>Cancel</Text>
-              </TouchableOpacity>
+      <>
+        <Container>
+          <NavbarTop
+            handleClick={handleBack}
+            handleNext={handleSubmit}
+            title="Editing tag"
+            titleLeft="Cancel"
+            titleRight="Save"
+            noMargin
+          ></NavbarTop>
+        </Container>
+        <Container border mt={16}></Container>
 
-              <Title type="small" title={"Editing tag"}></Title>
-
-              <TouchableOpacity onPress={handleSubmit}>
-                <Text style={styles.link}>Save</Text>
-              </TouchableOpacity>
-            </Container>
-
-            <Container center mt={44}>
-              <Container center>
-                <Tag hue={color} title={tag}></Tag>
-              </Container>
-              <TextInput
-                style={styles.input}
-                onChangeText={(text) => onTag(text)}
-                value={tag}
-                autoFocus
-                onSubmitEditing={handleSubmit}
-              />
-              <TouchableOpacity onPress={refreshColor}>
-                <Image
-                  style={{ ...styles.icon, ...styles.mt }}
-                  source={require("../../assets/refresh.png")}
-                ></Image>
-              </TouchableOpacity>
-            </Container>
-          </>
-        </>
-      ) : (
-        <>
-          <View></View>
-        </>
-      )}
+        <Container center mt={44}>
+          <Container center>
+            <Tag hue={color} title={tag}></Tag>
+          </Container>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => onTag(text)}
+            value={tag}
+            autoFocus
+            onSubmitEditing={handleSubmit}
+          />
+          <TouchableOpacity onPress={refreshColor}>
+            <Image
+              style={{ ...styles.icon, ...styles.mt }}
+              source={require("../../assets/refresh.png")}
+            ></Image>
+          </TouchableOpacity>
+        </Container>
+      </>
     </View>
   );
 });
 
 const styles = StyleSheet.create({
-  button: {
-    marginTop: 74,
-    width: 180,
-  },
-  topBar: {
-    marginTop: 24,
-    width: 32,
-    height: 5,
-    backgroundColor: "#dbdbdb",
-    borderRadius: 100,
-  },
   icon: {
     width: 24,
     height: 24,
   },
   mt: {
     marginTop: 32,
-  },
-  center: {
-    alignItems: "center",
   },
   input: {
     height: 40,
@@ -151,19 +119,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     textAlign: "center",
     width: 150,
-  },
-  link: {
-    color: "#CCA9F9",
-    fontSize: 16,
-    fontWeight: "600",
-    marginTop: 4,
-  },
-  image: {
-    width: 153,
-    height: 120,
-  },
-  text: {
-    color: "#B0AFAF",
-    marginTop: 16,
   },
 });
