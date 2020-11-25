@@ -18,15 +18,11 @@ export const NavbarTopSecondary = ({
     >
       <Title title={title} />
       {handleNext ? (
-        <>
-          <TouchableOpacity onPress={handleNext}>
-            <Text style={styles.link}>{titleRight}</Text>
-          </TouchableOpacity>
-        </>
+        <TouchableOpacity onPress={handleNext}>
+          <Text style={styles.link}>{titleRight}</Text>
+        </TouchableOpacity>
       ) : (
-        <>
-          <View></View>
-        </>
+        <View />
       )}
     </View>
   );

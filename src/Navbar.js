@@ -32,9 +32,7 @@ export const Navbar = observer(({ title, handleClick }) => {
           bgColor="#fff"
         ></ProgressCircle>
         {!NotesStore.info.reviewed ? (
-          <>
-            <Text style={styles.info}>Review Process Pending</Text>
-          </>
+          <Text style={styles.info}>Review Process Pending</Text>
         ) : (
           <>
             <Text style={styles.info}>Today's Review</Text>

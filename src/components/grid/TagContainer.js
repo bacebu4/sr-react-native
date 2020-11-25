@@ -10,8 +10,4 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
   },
-  // tag: {
-  //   marginRight: 16,
-  //   marginTop: 24,
-  // },
 });

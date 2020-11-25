@@ -79,38 +79,34 @@ export const SearchScreen = observer(({ navigation }) => {
       ) : (
         <>
           {NotesStore.searchResults.length ? (
-            <>
-              <FlatList
-                data={NotesStore.searchResults}
-                keyExtractor={(item) => item.note_id}
-                renderItem={({ item }) => (
-                  <Container mt={16} mb={16} key={item.note_id}>
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate("Highlight", {
-                          name: "Highlight",
-                          note_id: item.note_id,
-                        })
-                      }
-                    >
-                      <Card note={item}></Card>
-                    </TouchableOpacity>
-                  </Container>
-                )}
-              ></FlatList>
-            </>
+            <FlatList
+              data={NotesStore.searchResults}
+              keyExtractor={(item) => item.note_id}
+              renderItem={({ item }) => (
+                <Container mt={16} mb={16} key={item.note_id}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("Highlight", {
+                        name: "Highlight",
+                        note_id: item.note_id,
+                      })
+                    }
+                  >
+                    <Card note={item}></Card>
+                  </TouchableOpacity>
+                </Container>
+              )}
+            ></FlatList>
           ) : (
             <>
               {hasSearched ? (
-                <>
-                  <Container center mt={150}>
-                    <Image
-                      style={styles.image}
-                      source={require("../assets/empty_search.png")}
-                    ></Image>
-                    <TextGray mt={32}>Nothing found</TextGray>
-                  </Container>
-                </>
+                <Container center mt={150}>
+                  <Image
+                    style={styles.image}
+                    source={require("../assets/empty_search.png")}
+                  ></Image>
+                  <TextGray mt={32}>Nothing found</TextGray>
+                </Container>
               ) : (
                 <>
                   {history.length ? (
@@ -133,7 +129,7 @@ export const SearchScreen = observer(({ navigation }) => {
                     </>
                   ) : (
                     <>
-                      <View></View>
+                      <View />
                     </>
                   )}
                 </>

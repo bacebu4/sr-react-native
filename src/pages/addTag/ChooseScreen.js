@@ -63,6 +63,7 @@ export const ChooseScreen = observer(({ handleCancel }) => {
               <>
                 <Container>
                   <TagContainer>
+                    // TODO getter for note tags
                     {NotesStore.tags.map((tag) => {
                       const findResults = NotesStore?.highlights[
                         UiStore?.currentNote

@@ -1,29 +1,14 @@
 import React from "react";
-import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
+import { ActivityIndicator } from "react-native";
+import { Container } from "../components/grid/Container";
+import { MainContainer } from "../components/grid/MainContainer";
 
 export const LoadingScreen = () => {
   return (
-    <View style={styles.main}>
-      <View style={styles.center}>
-        <ActivityIndicator size="large"></ActivityIndicator>
-      </View>
-    </View>
+    <MainContainer>
+      <Container center centerY style={{ flex: 1 }}>
+        <ActivityIndicator size="large" />
+      </Container>
+    </MainContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  main: {
-    flex: 1,
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "white",
-  },
-  center: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-  },
-});

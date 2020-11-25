@@ -128,9 +128,7 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         {!note ? (
-          <>
-            <ActivityIndicator size="large"></ActivityIndicator>
-          </>
+          <ActivityIndicator size="large" />
         ) : (
           <>
             <Container mt={32}>
@@ -174,7 +172,7 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
                 })}
               </>
             ) : (
-              <View></View>
+              <View />
             )}
 
             <Container
@@ -215,19 +213,17 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
               {note.tags.length && note.comments.length ? (
                 <></>
               ) : (
-                <>
-                  <Container center mt={32}>
-                    <TouchableOpacity
-                      onPress={() => actionAddRef.current.show()}
-                      disabled={note.deleted}
-                    >
-                      <Image
-                        style={styles.imageBigger}
-                        source={require("../../assets/bigPlus.png")}
-                      ></Image>
-                    </TouchableOpacity>
-                  </Container>
-                </>
+                <Container center mt={32}>
+                  <TouchableOpacity
+                    onPress={() => actionAddRef.current.show()}
+                    disabled={note.deleted}
+                  >
+                    <Image
+                      style={styles.imageBigger}
+                      source={require("../../assets/bigPlus.png")}
+                    ></Image>
+                  </TouchableOpacity>
+                </Container>
               )}
             </Container>
           </>

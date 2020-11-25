@@ -27,11 +27,6 @@ export const Carousel = ({ books }) => {
 };
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 32,
-    fontFamily: "Cochin-Bold",
-    color: "#343434",
-  },
   wrapper: {
     overflow: "scroll",
     marginTop: 24,

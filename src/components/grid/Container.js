@@ -19,7 +19,7 @@ export const Container = ({
         marginTop: mt,
         marginBottom: mb,
         alignItems: center ? "center" : "stretch",
-        justifyContent: center ? "centerY" : "flex-start",
+        justifyContent: centerY ? "center" : "flex-start",
         borderBottomWidth: border ? 1 : 0,
         borderBottomColor: border ? "#d7d7d7" : "white",
         ...style,

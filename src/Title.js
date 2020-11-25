@@ -5,28 +5,24 @@ export const Title = ({ title, type, numberOfLines = null }) => {
   return (
     <View>
       {numberOfLines ? (
-        <>
-          <Text
-            style={{
-              ...styles.text,
-              fontSize: type === "small" ? 24 : type === "big" ? 46 : 32,
-            }}
-            numberOfLines={numberOfLines}
-          >
-            {title}
-          </Text>
-        </>
+        <Text
+          style={{
+            ...styles.text,
+            fontSize: type === "small" ? 24 : type === "big" ? 46 : 32,
+          }}
+          numberOfLines={numberOfLines}
+        >
+          {title}
+        </Text>
       ) : (
-        <>
-          <Text
-            style={{
-              ...styles.text,
-              fontSize: type === "small" ? 24 : type === "big" ? 46 : 32,
-            }}
-          >
-            {title}
-          </Text>
-        </>
+        <Text
+          style={{
+            ...styles.text,
+            fontSize: type === "small" ? 24 : type === "big" ? 46 : 32,
+          }}
+        >
+          {title}
+        </Text>
       )}
     </View>
   );

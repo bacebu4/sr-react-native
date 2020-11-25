@@ -20,28 +20,20 @@ export const NavbarTop = ({
     >
       <TouchableOpacity onPress={handleClick}>
         {titleLeft ? (
-          <>
-            <Text style={styles.link}>{titleLeft}</Text>
-          </>
+          <Text style={styles.link}>{titleLeft}</Text>
         ) : (
-          <>
-            <Image style={styles.icon} source={require("../back-arrow.png")} />
-          </>
+          <Image style={styles.icon} source={require("../back-arrow.png")} />
         )}
       </TouchableOpacity>
 
       <Title type="small" title={title} numberOfLines={1} />
 
       {handleNext ? (
-        <>
-          <TouchableOpacity onPress={handleNext}>
-            <Text style={styles.link}>{titleRight}</Text>
-          </TouchableOpacity>
-        </>
+        <TouchableOpacity onPress={handleNext}>
+          <Text style={styles.link}>{titleRight}</Text>
+        </TouchableOpacity>
       ) : (
-        <>
-          <View></View>
-        </>
+        <View />
       )}
     </View>
   );

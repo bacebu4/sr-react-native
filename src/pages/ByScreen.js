@@ -4,7 +4,7 @@ import { NotesStoreContext } from "../store/NotesStore";
 import { MainContainer } from "../components/grid/MainContainer";
 import { Container } from "../components/grid/Container";
 import { Card } from "../Card";
-import { Alert, FlatList, TouchableOpacity } from "react-native";
+import { FlatList, TouchableOpacity } from "react-native";
 import { ActivityIndicator } from "react-native";
 import { useRequest } from "../hooks/request.hook";
 import { useMessage } from "../hooks/message.hook";
@@ -40,32 +40,28 @@ export const ByScreen = observer(({ route, navigation }) => {
   return (
     <MainContainer>
       {loading ? (
-        <>
-          <Container center centerY style={{ flex: 1 }}>
-            <ActivityIndicator size="large"></ActivityIndicator>
-          </Container>
-        </>
+        <Container center centerY style={{ flex: 1 }}>
+          <ActivityIndicator size="large" />
+        </Container>
       ) : (
-        <>
-          <FlatList
-            data={notes}
-            keyExtractor={(item) => item.note_id}
-            renderItem={({ item }) => (
-              <Container mt={16} mb={16} key={item.note_id}>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("Highlight", {
-                      name: "Highlight",
-                      note_id: item.note_id,
-                    })
-                  }
-                >
-                  <Card note={item} dense={type === "Book"}></Card>
-                </TouchableOpacity>
-              </Container>
-            )}
-          ></FlatList>
-        </>
+        <FlatList
+          data={notes}
+          keyExtractor={(item) => item.note_id}
+          renderItem={({ item }) => (
+            <Container mt={16} mb={16} key={item.note_id}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("Highlight", {
+                    name: "Highlight",
+                    note_id: item.note_id,
+                  })
+                }
+              >
+                <Card note={item} dense={type === "Book"}></Card>
+              </TouchableOpacity>
+            </Container>
+          )}
+        ></FlatList>
       )}
     </MainContainer>
   );

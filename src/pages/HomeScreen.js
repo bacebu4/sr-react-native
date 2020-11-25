@@ -112,23 +112,21 @@ export const HomeScreen = observer(({ navigation }) => {
                 </Container>
               </>
             ) : (
-              <>
-                <Container mt={32} center>
-                  <Image
-                    style={styles.image}
-                    source={require("../assets/empty_main.png")}
-                  ></Image>
+              <Container mt={32} center>
+                <Image
+                  style={styles.image}
+                  source={require("../assets/empty_main.png")}
+                ></Image>
 
-                  <TextGray mt={32}>No highlights added yet</TextGray>
+                <TextGray mt={32}>No highlights added yet</TextGray>
 
-                  <Container mt={32}>
-                    <MainButton
-                      clickAction={() => navigation.navigate("Review")}
-                      title="Learn how to add"
-                    ></MainButton>
-                  </Container>
+                <Container mt={32}>
+                  <MainButton
+                    clickAction={() => navigation.navigate("Review")}
+                    title="Learn how to add"
+                  ></MainButton>
                 </Container>
-              </>
+              </Container>
             )}
           </Container>
 
@@ -146,9 +144,7 @@ export const HomeScreen = observer(({ navigation }) => {
               </Container> */}
             </>
           ) : (
-            <>
-              <View></View>
-            </>
+            <View />
           )}
 
           {/* Review by tags */}
@@ -185,9 +181,7 @@ export const HomeScreen = observer(({ navigation }) => {
               </Container> */}
             </>
           ) : (
-            <>
-              <View></View>
-            </>
+            <View />
           )}
         </ScrollView>
 
