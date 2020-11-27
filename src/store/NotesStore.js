@@ -402,6 +402,18 @@ class NotesStore {
     }
   }
 
+  *deleteBook(book_id) {
+    this.latestBooks = this.latestBooks.filter((b) => b.book_id !== book_id);
+
+    try {
+      yield request(`${BACK_URL}/api/deleteBook`, "DELETE", this.token, {
+        book_id,
+      });
+    } catch (error) {
+      throw new Error("Unable to proceed the action");
+    }
+  }
+
   setCurrentNote(value) {
     this.currentNote = value;
   }
