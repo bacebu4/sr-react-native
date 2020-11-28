@@ -15,21 +15,12 @@ export const ChooseScreen = observer(({ handleCancel }) => {
   const NotesStore = useContext(NotesStoreContext);
   const [showAddSheet, setShowAddSheet] = useState(true);
 
-  useEffect(() => {
-    refreshColor();
-  }, []);
-
   const handleShowCreate = () => {
     setShowAddSheet(false);
   };
 
   const handleBack = () => {
     setShowAddSheet(true);
-  };
-
-  const refreshColor = () => {
-    const newColor = Math.floor(Math.random() * 361);
-    onColor(newColor);
   };
 
   const handleSubmitFromExisting = (id) => {
@@ -63,7 +54,7 @@ export const ChooseScreen = observer(({ handleCancel }) => {
               <>
                 <Container>
                   <TagContainer>
-                    // TODO getter for note tags
+                    {/* TODO getter for note tags */}
                     {NotesStore.tags.map((tag) => {
                       const findResults = NotesStore?.highlights[
                         UiStore?.currentNote

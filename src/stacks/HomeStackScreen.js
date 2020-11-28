@@ -1,10 +1,12 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+
 import { HomeScreen } from "../pages/HomeScreen";
 import { ReviewScreen } from "../pages/ReviewScreen";
 import { TransitionPresets } from "@react-navigation/stack";
 import { ByScreen } from "../pages/ByScreen";
 import { HighlightScreen } from "../pages/HighlightScreen";
+import { MoreButton } from "../components/MoreButton";
 
 const HomeStack = createStackNavigator();
 
@@ -37,6 +39,7 @@ export const HomeStackScreen = () => {
             headerTitleStyle: {
               color: "#343434",
             },
+            headerRight: () => <MoreButton route={route}></MoreButton>,
           })}
         />
         <HomeStack.Screen

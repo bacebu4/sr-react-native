@@ -28,7 +28,7 @@ export const useRequest = () => {
 
         return await response.json();
       } catch (error) {
-        setError(e.message);
+        setError(error.message);
         throw error;
       } finally {
         setLoading(false);

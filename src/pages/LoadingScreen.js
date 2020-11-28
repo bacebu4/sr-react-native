@@ -6,7 +6,7 @@ import { MainContainer } from "../components/grid/MainContainer";
 export const LoadingScreen = () => {
   return (
     <MainContainer>
-      <Container center centerY style={{ flex: 1 }}>
+      <Container center mt={400}>
         <ActivityIndicator size="large" />
       </Container>
     </MainContainer>

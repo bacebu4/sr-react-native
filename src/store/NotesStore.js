@@ -30,7 +30,7 @@ class NotesStore {
 
   *fetchHighlights() {
     try {
-      console.log(BACK_URL);
+      console.log(BACK_URL, "hey");
       const notes = yield request(
         `${BACK_URL}/api/getDailyNotes`,
         "GET",
@@ -51,13 +51,19 @@ class NotesStore {
       if (available) {
         const token = yield SecureStore.getItemAsync("token");
         if (token) {
+          console.log("avail token");
+
           this.setToken(token);
           this.setLogged(true);
           yield this.fetchInitInfo();
           yield this.fetchHighlights();
+        } else {
+          throw new Error();
         }
       }
     } catch (error) {
+      this.setLogged(false);
+      this.setLoading(false);
       console.log("token was not found");
     }
   }
@@ -399,6 +405,18 @@ class NotesStore {
       });
     } catch (error) {
       throw new Error(error.message);
+    }
+  }
+
+  *deleteBook(book_id) {
+    this.latestBooks = this.latestBooks.filter((b) => b.book_id !== book_id);
+
+    try {
+      yield request(`${BACK_URL}/api/deleteBook`, "DELETE", this.token, {
+        book_id,
+      });
+    } catch (error) {
+      throw new Error("Unable to proceed the action");
     }
   }
 
