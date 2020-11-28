@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { StyleSheet, View, Image } from "react-native";
 import { Tag } from "../../Tag";
 import { observer } from "mobx-react-lite";
-import { UiStoreContext } from "../../store/UiStore";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { TagContainer } from "../../components/grid/TagContainer";
@@ -11,7 +10,6 @@ import { TagConstructor } from "./TagConstructor";
 import { TextGray } from "../../components/TextGray";
 
 export const ChooseScreen = observer(({ handleCancel, note }) => {
-  const UiStore = useContext(UiStoreContext);
   const NotesStore = useContext(NotesStoreContext);
   const [showAddSheet, setShowAddSheet] = useState(true);
 
@@ -24,7 +22,7 @@ export const ChooseScreen = observer(({ handleCancel, note }) => {
   };
 
   const handleSubmitFromExisting = (id) => {
-    NotesStore.addExistingTag(UiStore.currentNote, id);
+    NotesStore.addExistingTag(note.note_id, id);
     handleCancel();
   };
 
