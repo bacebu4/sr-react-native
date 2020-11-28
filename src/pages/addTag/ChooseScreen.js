@@ -56,10 +56,10 @@ export const ChooseScreen = observer(({ handleCancel, note }) => {
                   <TagContainer>
                     {/* TODO getter for note tags */}
                     {NotesStore.tags.map((tag) => {
-                      console.log(tag);
                       const findResults = note.tags.find(
                         (t) => t.tag_id === tag.tag_id
                       );
+
                       if (!findResults) {
                         return (
                           <Tag
