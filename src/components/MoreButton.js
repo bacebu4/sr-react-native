@@ -14,15 +14,15 @@ export const MoreButton = observer(({ route }) => {
 
   const handleDelete = () => {
     switch (type) {
-      case "book":
+      case "Book":
         confirm(
           () => {
             console.log("id", id);
             NotesStore.deleteBook(id);
             navigation.navigate("Home");
           },
-          `Delete the book?`,
-          "After deleting this book all notes associated with it will be deleted too"
+          "Delete the book?",
+          "After deleting this book all its notes will be deleted too."
         );
         break;
 
@@ -38,9 +38,10 @@ export const MoreButton = observer(({ route }) => {
   return (
     <Ionicons
       onPress={handleDelete}
-      name="trash-outline"
+      name="ios-trash"
       size={24}
       color="#CCA9F9"
+      style={{ marginRight: 16 }}
     />
   );
 });
