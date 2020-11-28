@@ -10,7 +10,7 @@ import { NavbarTop } from "../../components/NavbarTop";
 import { TagConstructor } from "./TagConstructor";
 import { TextGray } from "../../components/TextGray";
 
-export const ChooseScreen = observer(({ handleCancel }) => {
+export const ChooseScreen = observer(({ handleCancel, note }) => {
   const UiStore = useContext(UiStoreContext);
   const NotesStore = useContext(NotesStoreContext);
   const [showAddSheet, setShowAddSheet] = useState(true);
@@ -56,10 +56,10 @@ export const ChooseScreen = observer(({ handleCancel }) => {
                   <TagContainer>
                     {/* TODO getter for note tags */}
                     {NotesStore.tags.map((tag) => {
-                      const findResults = NotesStore?.highlights[
-                        UiStore?.currentNote
-                      ]?.tags.find((t) => t.tag_id === tag.tag_id);
-
+                      console.log(tag);
+                      const findResults = note.tags.find(
+                        (t) => t.tag_id === tag.tag_id
+                      );
                       if (!findResults) {
                         return (
                           <Tag
@@ -73,8 +73,6 @@ export const ChooseScreen = observer(({ handleCancel }) => {
                           ></Tag>
                         );
                       }
-
-                      return <View key={tag.tag_id}></View>;
                     })}
                   </TagContainer>
                 </Container>

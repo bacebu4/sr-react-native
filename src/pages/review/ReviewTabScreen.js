@@ -110,12 +110,6 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
         handleSave={handleSave}
       ></EditTextModal>
 
-      <TagModal modalState={modalTagVisible} setModalState={setModalTagVisible}>
-        <ChooseScreen
-          handleCancel={() => setModalTagVisible(false)}
-        ></ChooseScreen>
-      </TagModal>
-
       <TagModal
         modalState={modalEditTagVisible}
         setModalState={setModalEditTagVisible}
@@ -131,6 +125,16 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
           <ActivityIndicator size="large" />
         ) : (
           <>
+            <TagModal
+              modalState={modalTagVisible}
+              setModalState={setModalTagVisible}
+            >
+              <ChooseScreen
+                handleCancel={() => setModalTagVisible(false)}
+                note={note}
+              ></ChooseScreen>
+            </TagModal>
+
             <Container mt={32}>
               <Card note={note}></Card>
             </Container>
