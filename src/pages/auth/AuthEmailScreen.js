@@ -26,6 +26,7 @@ export const AuthEmailScreen = observer(({ navigation }) => {
         ></NavbarTop>
         <TextInput
           autoFocus
+          autoCompleteType="email"
           style={styles.input}
           onChangeText={(text) => onEmail(text)}
           value={email}

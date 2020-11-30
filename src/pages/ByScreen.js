@@ -23,14 +23,12 @@ export const ByScreen = observer(({ route, navigation }) => {
 
   const fetchNotes = useCallback(async () => {
     try {
-      console.log(id, type);
       const fetched = await request(
         `/api/getNotesBy${type}`,
         "POST",
         NotesStore.token,
         { id }
       );
-      console.log("fetched");
       setNotes(fetched);
     } catch (error) {
       console.log(error.message);

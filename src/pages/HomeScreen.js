@@ -121,10 +121,7 @@ export const HomeScreen = observer(({ navigation }) => {
                 <TextGray mt={32}>No highlights added yet</TextGray>
 
                 <Container mt={32}>
-                  <MainButton
-                    clickAction={() => navigation.navigate("Review")}
-                    title="Learn how to add"
-                  ></MainButton>
+                  <MainButton title="Learn how to add"></MainButton>
                 </Container>
               </Container>
             )}

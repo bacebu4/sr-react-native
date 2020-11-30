@@ -30,7 +30,7 @@ class NotesStore {
 
   *fetchHighlights() {
     try {
-      console.log(BACK_URL, "hey");
+      console.log(BACK_URL, "heyy");
       const notes = yield request(
         `${BACK_URL}/api/getDailyNotes`,
         "GET",
