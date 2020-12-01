@@ -9,8 +9,8 @@ import { MainContainer } from "../../components/grid/MainContainer";
 import { useMessage } from "../../hooks/message.hook";
 
 export const AuthLoginScreen = observer(({ navigation }) => {
-  const [email, onEmail] = useState("v@mail.ru");
-  const [password, onPassword] = useState("123456");
+  const [email, onEmail] = useState("");
+  const [password, onPassword] = useState("");
   const passwordInput = useRef(null);
   const message = useMessage();
 
