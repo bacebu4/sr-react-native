@@ -7,9 +7,9 @@ import {
   TouchableOpacityProps,
 } from "react-native";
 
-export const SeeAll: React.FC<TouchableOpacityProps> = ({ onPress }) => {
+export const SeeAll: React.FC<TouchableOpacityProps> = (props) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.wrapper}>
+    <TouchableOpacity {...props} style={styles.wrapper}>
       <Text style={styles.title}>See All</Text>
       <Image style={styles.icon} source={require("../arrow.png")} />
     </TouchableOpacity>
