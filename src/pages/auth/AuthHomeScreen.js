@@ -7,7 +7,7 @@ import { MainLink } from "../../MainLink";
 
 export const AuthHomeScreen = ({ navigation }) => {
   return (
-    <MainContainer center>
+    <MainContainer isCentered>
       <Container center>
         <Image style={styles.image} source={require("../../login.png")} />
         <Text style={{ ...styles.mtx, ...styles.text }}>
