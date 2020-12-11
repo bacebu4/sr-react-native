@@ -1,7 +1,13 @@
 import React from "react";
-import { Text, StyleSheet, TouchableOpacity, Image, TouchableOpacityProps } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  TouchableOpacityProps,
+} from "react-native";
 
-export const SeeAll: React.FC<TouchableOpacityProps> = ({ onPress  }) => {
+export const SeeAll: React.FC<TouchableOpacityProps> = ({ onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.wrapper}>
       <Text style={styles.title}>See All</Text>

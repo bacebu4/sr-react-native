@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { BookType } from "../types";
 
 interface Props {
-  book: BookType
+  book: BookType;
 }
 
 export const Book: React.FC<Props> = ({ book }) => {
@@ -14,7 +14,11 @@ export const Book: React.FC<Props> = ({ book }) => {
     <TouchableOpacity
       style={styles.wrapper}
       onPress={() =>
-        navigation.navigate("By", { id: book.id, name: book.title, type: "Book" })
+        navigation.navigate("By", {
+          id: book.id,
+          name: book.title,
+          type: "Book",
+        })
       }
     >
       <Image style={styles.cover} source={require("../book.png")} />
