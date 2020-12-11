@@ -12,7 +12,6 @@ import { Navbar } from "../Navbar";
 import { MainButton } from "../MainButton";
 import { Title } from "../Title";
 import { Carousel } from "../Carousel";
-import { SeeAll } from "../SeeAll";
 import { Tag } from "../Tag";
 import { NotesStoreContext } from "../store/NotesStore";
 import { observer } from "mobx-react-lite";
@@ -27,6 +26,7 @@ import { useConfirm } from "../hooks/confirm.hook";
 import { TagModal } from "../components/TagModal";
 import { TagConstructor } from "./addTag/TagConstructor";
 import { TextGray } from "../components/TextGray";
+import { SeeAll } from "../components/SeeAll";
 
 export const HomeScreen = observer(({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -135,10 +135,10 @@ export const HomeScreen = observer(({ navigation }) => {
               </Container>
 
               <Carousel books={NotesStore.latestBooks.slice(0, 10)}></Carousel>
-              <Container mt={16}></Container>
-              {/* <Container mt={16}>
-                <SeeAll></SeeAll>
-              </Container> */}
+              <Container mt={16} border></Container>
+              <Container mt={16}>
+                <SeeAll onPress={() => navigation.navigate("AllBooks")} />
+              </Container>
             </>
           ) : (
             <View />
@@ -147,7 +147,7 @@ export const HomeScreen = observer(({ navigation }) => {
           {/* Review by tags */}
           {NotesStore.tags.length ? (
             <>
-              <Container border></Container>
+              {/* <Container border></Container> */}
               <Container mt={44} mb={150}>
                 <Title title="Review by tags"></Title>
 

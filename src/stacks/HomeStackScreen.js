@@ -7,6 +7,7 @@ import { TransitionPresets } from "@react-navigation/stack";
 import { ByScreen } from "../pages/ByScreen";
 import { HighlightScreen } from "../pages/HighlightScreen";
 import { MoreButton } from "../components/MoreButton";
+import { AllBooksScreen } from "../pages/AllBooks";
 
 const HomeStack = createStackNavigator();
 
@@ -27,6 +28,18 @@ export const HomeStackScreen = () => {
           options={{
             headerShown: false,
             ...TransitionPresets.ModalSlideFromBottomIOS,
+          }}
+        />
+        <HomeStack.Screen
+          name="AllBooks"
+          component={AllBooksScreen}
+          options={{
+            title: "All books",
+            headerTitle: "All books",
+            headerTintColor: "#CCA9F9",
+            headerTitleStyle: {
+              color: "#343434",
+            },
           }}
         />
         <HomeStack.Screen

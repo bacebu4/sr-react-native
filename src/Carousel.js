@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import { Book } from "./Book";
+import { Book } from "./components/Book";
 
 export const Carousel = ({ books }) => {
   return (
@@ -15,7 +15,13 @@ export const Carousel = ({ books }) => {
         {books.map((book) => {
           return (
             <View style={styles.item} key={book.book_id}>
-              <Book book={book}></Book>
+              <Book
+                book={{
+                  title: book.book_title,
+                  author: book.author_full_name,
+                  id: book.book_id,
+                }}
+              ></Book>
             </View>
           );
         })}

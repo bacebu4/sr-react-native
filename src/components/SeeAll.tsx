@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { Text, StyleSheet, TouchableOpacity, Image, TouchableOpacityProps } from "react-native";
 
-export const SeeAll = ({ clickAction }) => {
+export const SeeAll: React.FC<TouchableOpacityProps> = ({ onPress  }) => {
   return (
-    <TouchableOpacity onPress={clickAction} style={styles.wrapper}>
+    <TouchableOpacity onPress={onPress} style={styles.wrapper}>
       <Text style={styles.title}>See All</Text>
-      <Image style={styles.icon} source={require("./arrow.png")} />
+      <Image style={styles.icon} source={require("../arrow.png")} />
     </TouchableOpacity>
   );
 };

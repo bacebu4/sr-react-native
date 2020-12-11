@@ -5,9 +5,11 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "gen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.5",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.10.0",
     "@react-navigation/native": "^5.8.0",
@@ -17,6 +19,7 @@
     "expo-haptics": "~8.3.0",
     "expo-secure-store": "~9.2.0",
     "expo-status-bar": "~1.0.2",
+    "graphql": "^15.4.0",
     "mobx": "^6.0.1",
     "mobx-react-lite": "^3.0.1",
     "react": "16.13.1",
@@ -37,10 +40,19 @@
     "react-native-tab-view": "^2.15.2",
     "react-native-web": "~0.13.12",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
+    "tsconfig.json": "^1.0.7",
     "uuid": "^8.3.1"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0"
+    "@babel/core": "~7.9.0",
+    "@graphql-codegen/cli": "1.19.4",
+    "@graphql-codegen/introspection": "1.18.1",
+    "@graphql-codegen/typescript": "1.19.0",
+    "@graphql-codegen/typescript-operations": "^1.17.12",
+    "@graphql-codegen/typescript-react-apollo": "2.2.1",
+    "@types/react": "^17.0.0",
+    "@types/react-native": "^0.63.37",
+    "typescript": "^4.1.2"
   },
   "private": true
 }

@@ -1,24 +1,28 @@
 import React from "react";
 import { Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { BookType } from "../types";
 
-export const Book = ({ book }) => {
+interface Props {
+  book: BookType
+}
+
+export const Book: React.FC<Props> = ({ book }) => {
   const navigation = useNavigation();
-  const { book_title: title, author_full_name: author, book_id } = book;
 
   return (
     <TouchableOpacity
       style={styles.wrapper}
       onPress={() =>
-        navigation.navigate("By", { id: book_id, name: title, type: "Book" })
+        navigation.navigate("By", { id: book.id, name: book.title, type: "Book" })
       }
     >
-      <Image style={styles.cover} source={require("./book.png")} />
+      <Image style={styles.cover} source={require("../book.png")} />
       <Text style={styles.title} numberOfLines={2}>
-        {title}
+        {book.title}
       </Text>
       <Text style={styles.author} numberOfLines={2}>
-        {author}
+        {book.author}
       </Text>
     </TouchableOpacity>
   );
