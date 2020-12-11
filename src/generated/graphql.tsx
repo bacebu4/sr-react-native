@@ -1,9 +1,10 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import gql from 'graphql-tag';
+import * as Urql from 'urql';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -116,27 +117,6 @@ export const BooksDocument = gql`
 }
     `;
 
-/**
- * __useBooksQuery__
- *
- * To run a query within a React component, call `useBooksQuery` and pass it any options that fit your needs.
- * When your component renders, `useBooksQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useBooksQuery({
- *   variables: {
- *   },
- * });
- */
-export function useBooksQuery(baseOptions?: Apollo.QueryHookOptions<BooksQuery, BooksQueryVariables>) {
-        return Apollo.useQuery<BooksQuery, BooksQueryVariables>(BooksDocument, baseOptions);
-      }
-export function useBooksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BooksQuery, BooksQueryVariables>) {
-          return Apollo.useLazyQuery<BooksQuery, BooksQueryVariables>(BooksDocument, baseOptions);
-        }
-export type BooksQueryHookResult = ReturnType<typeof useBooksQuery>;
-export type BooksLazyQueryHookResult = ReturnType<typeof useBooksLazyQuery>;
-export type BooksQueryResult = Apollo.QueryResult<BooksQuery, BooksQueryVariables>;
+export function useBooksQuery(options: Omit<Urql.UseQueryArgs<BooksQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<BooksQuery>({ query: BooksDocument, ...options });
+};

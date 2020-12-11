@@ -8,6 +8,11 @@ import { HomeStackScreen } from "./src/stacks/HomeStackScreen";
 import { AuthStackScreen } from "./src/stacks/AuthStackScreen";
 import { LoadingScreen } from "./src/pages/LoadingScreen";
 import { SearchStackScreen } from "./src/stacks/SearchStackScreen";
+import { createClient, Provider } from "urql";
+
+const client = createClient({
+  url: "http://192.168.1.67:3000/graphql",
+});
 
 const Tab = createBottomTabNavigator();
 
@@ -34,7 +39,7 @@ export default observer(function App() {
   }, []);
 
   return (
-    <>
+    <Provider value={client}>
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={screenOptions}
@@ -74,6 +79,6 @@ export default observer(function App() {
           )}
         </Tab.Navigator>
       </NavigationContainer>
-    </>
+    </Provider>
   );
 });
