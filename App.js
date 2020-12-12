@@ -9,9 +9,33 @@ import { AuthStackScreen } from "./src/stacks/AuthStackScreen";
 import { LoadingScreen } from "./src/pages/LoadingScreen";
 import { SearchStackScreen } from "./src/stacks/SearchStackScreen";
 import { createClient, Provider } from "urql";
+import * as SecureStore from "expo-secure-store";
+
+let TOKEN;
+
+const getToken = async () => {
+  try {
+    const available = await SecureStore.isAvailableAsync();
+    if (!available) {
+      throw new Error();
+    }
+    const token = await SecureStore.getItemAsync("token");
+    if (!token) {
+      throw new Error();
+    }
+    return token;
+  } catch (error) {
+    return "";
+  }
+};
 
 const client = createClient({
-  url: "http://192.168.1.67:3000/graphql",
+  url: "http://192.168.1.71:3000/graphql",
+  fetchOptions: () => {
+    return {
+      headers: { authorization: TOKEN },
+    };
+  },
 });
 
 const Tab = createBottomTabNavigator();
@@ -35,6 +59,10 @@ export default observer(function App() {
   const NotesStore = useContext(NotesStoreContext);
 
   useEffect(() => {
+    async function fetchToken() {
+      TOKEN = await getToken();
+    }
+    fetchToken();
     NotesStore.init();
   }, []);
 
