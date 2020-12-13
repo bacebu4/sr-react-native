@@ -41,8 +41,8 @@ export const AuthPasswordScreen = observer(({ navigation }) => {
           <View style={styles.button}>
             <MainButton
               title="Register"
-              clickAction={handleSubmit}
-              loading={NotesStore.isLoginLoading}
+              onPress={handleSubmit}
+              isLoading={NotesStore.isLoginLoading}
             ></MainButton>
           </View>
         </View>

@@ -16,7 +16,7 @@ export const AuthHomeScreen = ({ navigation }) => {
         <View style={styles.button}>
           <MainButton
             title="Sign up free"
-            clickAction={() => navigation.navigate("AuthEmail")}
+            onPress={() => navigation.navigate("AuthEmail")}
           ></MainButton>
         </View>
         <View style={styles.mts}>

@@ -26,9 +26,9 @@ export const ReviewFinalScreen = observer(() => {
         You've been on the track for {NotesStore.info.streak} days
       </TextGray>
       <MainButton
-        dark
+        isDark
         title="Go home"
-        clickAction={handleHome}
+        onPress={handleHome}
         style={{ marginTop: 32 }}
       ></MainButton>
     </View>

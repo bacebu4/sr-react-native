@@ -33,7 +33,7 @@ export const SettingsModal = ({ modalState, setModalState, handleDone }) => {
           ></NavbarTopSecondary>
         </Container>
         <Container mt={32} isCentered>
-          <MainButton clickAction={handleLogout} title="Log out"></MainButton>
+          <MainButton onPress={handleLogout} title="Log out"></MainButton>
         </Container>
       </MainContainer>
     </Modal>

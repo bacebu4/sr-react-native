@@ -107,7 +107,7 @@ export const HomeScreen = observer(({ navigation }) => {
 
                 <Container mt={32} isCentered>
                   <MainButton
-                    clickAction={() => navigation.navigate("Review")}
+                    onPress={() => navigation.navigate("Review")}
                   ></MainButton>
                 </Container>
               </>
