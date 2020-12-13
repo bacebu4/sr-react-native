@@ -105,14 +105,14 @@ export const HomeScreen = observer(({ navigation }) => {
               <>
                 <Card note={NotesStore.highlights[0]} />
 
-                <Container mt={32} center>
+                <Container mt={32} isCentered>
                   <MainButton
                     clickAction={() => navigation.navigate("Review")}
                   ></MainButton>
                 </Container>
               </>
             ) : (
-              <Container mt={32} center>
+              <Container mt={32} isCentered>
                 <Image
                   style={styles.image}
                   source={require("../assets/empty_main.png")}
@@ -135,7 +135,7 @@ export const HomeScreen = observer(({ navigation }) => {
               </Container>
 
               <Carousel books={NotesStore.latestBooks.slice(0, 10)}></Carousel>
-              <Container mt={16} border></Container>
+              <Container mt={16} hasBorder></Container>
               <Container mt={16}>
                 <SeeAll onPress={() => navigation.navigate("AllBooks")} />
               </Container>

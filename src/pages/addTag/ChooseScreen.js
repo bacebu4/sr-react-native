@@ -46,7 +46,7 @@ export const ChooseScreen = observer(({ handleCancel, note }) => {
                 noMargin
               ></NavbarTop>
             </Container>
-            <Container border mt={16}></Container>
+            <Container hasBorder mt={16}></Container>
 
             {NotesStore.tags.length ? (
               <>
@@ -78,7 +78,7 @@ export const ChooseScreen = observer(({ handleCancel, note }) => {
             ) : (
               // empty state
               <>
-                <Container center mt={44}>
+                <Container isCentered mt={44}>
                   <Image
                     style={styles.image}
                     source={require("../../assets/empty_tags.png")}

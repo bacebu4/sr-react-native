@@ -146,7 +146,7 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
             {note.comments.length ? (
               <>
                 <Container
-                  row
+                  isRow
                   mt={32}
                   style={{ opacity: note.deleted ? 0.3 : 1 }}
                 >
@@ -217,7 +217,7 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
               {note.tags.length && note.comments.length ? (
                 <></>
               ) : (
-                <Container center mt={32}>
+                <Container isCentered mt={32}>
                   <TouchableOpacity
                     onPress={() => actionAddRef.current.show()}
                     disabled={note.deleted}

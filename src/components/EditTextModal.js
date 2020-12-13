@@ -25,7 +25,7 @@ const TextSheet = ({ handleCancel, title, text, onText, handleSave }) => {
           noMargin
         ></NavbarTop>
       </Container>
-      <Container border mt={16}></Container>
+      <Container hasBorder mt={16}></Container>
       <Container mt={16}>
         <TextInput
           ref={input}

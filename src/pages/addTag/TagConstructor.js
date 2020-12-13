@@ -104,10 +104,10 @@ export const TagConstructor = observer(
               noMargin
             ></NavbarTop>
           </Container>
-          <Container border mt={16}></Container>
+          <Container hasBorder mt={16}></Container>
 
-          <Container center mt={44}>
-            <Container center>
+          <Container isCentered mt={44}>
+            <Container isCentered>
               <Tag hue={color} title={tagName}></Tag>
             </Container>
             <TextInput

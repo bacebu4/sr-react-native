@@ -42,7 +42,7 @@ export const ByScreen = observer(({ route, navigation }) => {
   return (
     <MainContainer>
       {loading ? (
-        <Container center centerY style={{ flex: 1 }}>
+        <Container isCentered isCenteredY style={{ flex: 1 }}>
           <ActivityIndicator size="large" />
         </Container>
       ) : (

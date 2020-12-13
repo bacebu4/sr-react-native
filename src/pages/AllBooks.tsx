@@ -12,7 +12,7 @@ export const AllBooksScreen: React.FC = () => {
   if (error) {
     return (
       <MainContainer>
-        <Container center mt={400}>
+        <Container isCentered mt={400}>
           <Text>{error.message}</Text>
         </Container>
       </MainContainer>
@@ -22,7 +22,7 @@ export const AllBooksScreen: React.FC = () => {
   if (fetching) {
     return (
       <MainContainer>
-        <Container center mt={400}>
+        <Container isCentered mt={400}>
           <Text>Loading...</Text>
         </Container>
       </MainContainer>
@@ -32,7 +32,7 @@ export const AllBooksScreen: React.FC = () => {
   if (!data?.books) {
     return (
       <MainContainer>
-        <Container center mt={400}>
+        <Container isCentered mt={400}>
           <Text>No books</Text>
         </Container>
       </MainContainer>
@@ -41,7 +41,7 @@ export const AllBooksScreen: React.FC = () => {
 
   return (
     <MainContainer>
-      <Container center mt={400}>
+      <Container isCentered mt={400}>
         <Text>{data?.books?.map((b) => b?.title)}</Text>
       </Container>
     </MainContainer>

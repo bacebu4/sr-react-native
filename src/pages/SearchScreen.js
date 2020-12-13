@@ -72,7 +72,7 @@ export const SearchScreen = observer(({ navigation }) => {
 
       {NotesStore.isSearching ? (
         <>
-          <Container center mt={200}>
+          <Container isCentered mt={200}>
             <ActivityIndicator size="large" />
           </Container>
         </>
@@ -100,7 +100,7 @@ export const SearchScreen = observer(({ navigation }) => {
           ) : (
             <>
               {hasSearched ? (
-                <Container center mt={150}>
+                <Container isCentered mt={150}>
                   <Image
                     style={styles.image}
                     source={require("../assets/empty_search.png")}
@@ -111,7 +111,7 @@ export const SearchScreen = observer(({ navigation }) => {
                 <>
                   {history.length ? (
                     <>
-                      <Container row>
+                      <Container isRow>
                         <Text style={styles.textGrayCapital}>RECENT</Text>
                         <TouchableOpacity onPress={() => setHistory([])}>
                           <Text style={styles.textBlackCapital}>CLEAR</Text>
