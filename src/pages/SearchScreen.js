@@ -11,7 +11,7 @@ import {
 import { Container } from "../components/grid/Container";
 import { MainContainer } from "../components/grid/MainContainer";
 import Constants from "expo-constants";
-import { Title } from "../Title";
+import { Title } from "../components/Title";
 import { SearchBar } from "react-native-elements";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../store/NotesStore";

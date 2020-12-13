@@ -1,21 +1,37 @@
 import React from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Text,
+  GestureResponderEvent,
+} from "react-native";
 import Constants from "expo-constants";
-import { Title } from "../Title";
+import { Title } from "./Title";
 
-export const NavbarTop = ({
-  title = "Default",
+interface Props {
+  handleClick?: ((event: GestureResponderEvent) => void) | undefined;
+  handleNext?: ((event: GestureResponderEvent) => void) | undefined;
+  titleRight?: string;
+  titleLeft?: string;
+  hasNoMargin?: boolean;
+  title?: string;
+}
+
+export const NavbarTop: React.FC<Props> = ({
   handleClick,
   handleNext,
   titleRight = "Next",
   titleLeft = null,
-  noMargin = false,
+  hasNoMargin = false,
+  title = "Default",
 }) => {
   return (
     <View
       style={{
         ...styles.navbar,
-        marginTop: noMargin ? 40 : Constants.statusBarHeight + 40,
+        marginTop: hasNoMargin ? 40 : Constants.statusBarHeight + 40,
       }}
     >
       <TouchableOpacity onPress={handleClick}>

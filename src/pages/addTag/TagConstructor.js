@@ -101,7 +101,7 @@ export const TagConstructor = observer(
               title="Editing tag"
               titleLeft="Cancel"
               titleRight="Save"
-              noMargin
+              hasNoMargin
             ></NavbarTop>
           </Container>
           <Container hasBorder mt={16}></Container>

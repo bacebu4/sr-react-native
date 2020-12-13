@@ -43,7 +43,7 @@ export const ChooseScreen = observer(({ handleCancel, note }) => {
                 title="Choose from existing"
                 titleLeft="Cancel"
                 titleRight="Create"
-                noMargin
+                hasNoMargin
               ></NavbarTop>
             </Container>
             <Container hasBorder mt={16}></Container>

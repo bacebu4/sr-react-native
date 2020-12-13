@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
-import { Title } from "./Title";
+import { Title } from "./components/Title";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "./store/NotesStore";
 import { TextGray } from "./components/TextGray";

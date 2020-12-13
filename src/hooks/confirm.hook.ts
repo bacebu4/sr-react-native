@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { Alert } from "react-native";
 
 export const useConfirm = () => {
-  return useCallback((cb, title, text) => {
+  return useCallback((cb, title, text = "") => {
     if (cb) {
       Alert.alert(title, text, [
         {

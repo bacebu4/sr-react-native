@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { MainButton } from "../../MainButton";
-import { Title } from "../../Title";
+import { Title } from "../../components/Title";
 import { useNavigation } from "@react-navigation/native";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";

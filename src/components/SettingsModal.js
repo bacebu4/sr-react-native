@@ -29,7 +29,7 @@ export const SettingsModal = ({ modalState, setModalState, handleDone }) => {
             title="Account Preferences"
             handleNext={handleDone}
             titleRight="Done"
-            noMargin
+            hasNoMargin
           ></NavbarTopSecondary>
         </Container>
         <Container mt={32} isCentered>

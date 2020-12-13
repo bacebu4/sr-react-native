@@ -1,7 +1,17 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-export const Title = ({ title, type, numberOfLines = null }) => {
+interface Props {
+  numberOfLines?: number | undefined;
+  title: string;
+  type?: "small" | "big";
+}
+
+export const Title: React.FC<Props> = ({
+  title,
+  type,
+  numberOfLines = undefined,
+}) => {
   return (
     <View>
       {numberOfLines ? (

@@ -14,7 +14,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Card } from "../../Card";
-import { Title } from "../../Title";
+import { Title } from "../../components/Title";
 import { Tag } from "../../Tag";
 import { Comment } from "../../Comment";
 import { observer } from "mobx-react-lite";

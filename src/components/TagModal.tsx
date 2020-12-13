@@ -1,7 +1,17 @@
 import React from "react";
 import { Modal } from "react-native";
 
-export const TagModal = ({ modalState, setModalState, children }) => {
+interface Props {
+  modalState: boolean | undefined;
+  setModalState: (arg0: boolean) => void;
+  children: React.ReactNode;
+}
+
+export const TagModal: React.FC<Props> = ({
+  modalState,
+  setModalState,
+  children,
+}) => {
   return (
     <Modal
       animationType="slide"
