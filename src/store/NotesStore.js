@@ -30,7 +30,6 @@ class NotesStore {
 
   *fetchHighlights() {
     try {
-      console.log(BACK_URL, "heyy");
       const notes = yield request(
         `${BACK_URL}/api/getDailyNotes`,
         "GET",
@@ -46,6 +45,7 @@ class NotesStore {
 
   *init() {
     this.setLoading(true);
+    console.log(BACK_URL, "hey");
     try {
       const available = yield SecureStore.isAvailableAsync();
       if (available) {
@@ -134,6 +134,7 @@ class NotesStore {
         "GET",
         this.token
       );
+      console.log(initInfo);
       this.setTags(initInfo.tags);
       console.log(initInfo.tags.length);
       this.setLatestBooks(initInfo.latestBooks);

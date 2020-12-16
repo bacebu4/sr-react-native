@@ -21,7 +21,7 @@ export const AuthHomeScreen = ({ navigation }) => {
         </View>
         <View style={styles.mts}>
           <MainLink
-            title="Log in"
+            title="Already have an account?"
             clickAction={() => navigation.navigate("AuthLogin")}
           ></MainLink>
         </View>
