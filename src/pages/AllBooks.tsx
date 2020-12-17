@@ -1,6 +1,5 @@
 import React from "react";
 import { Text } from "react-native";
-//@ts-ignore
 import { Container } from "../components/grid/Container";
 import { MainContainer } from "../components/grid/MainContainer";
 import { useBooksQuery } from "../generated/graphql";

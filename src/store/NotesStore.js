@@ -5,8 +5,8 @@ import * as SecureStore from "expo-secure-store";
 import "react-native-get-random-values";
 const { v4: uuidv4 } = require("uuid");
 const dateFormat = require("dateformat");
-import { BACK_URL } from "@env";
 import { differenceInCalendarDays } from "date-fns/esm";
+import { BACKEND_URL } from "../variables";
 
 class NotesStore {
   highlights = [];
@@ -30,8 +30,9 @@ class NotesStore {
 
   *fetchHighlights() {
     try {
+      console.log("work work work bitch");
       const notes = yield request(
-        `${BACK_URL}/api/getDailyNotes`,
+        `${BACKEND_URL}/api/getDailyNotes`,
         "GET",
         this.token
       );
@@ -45,7 +46,7 @@ class NotesStore {
 
   *init() {
     this.setLoading(true);
-    console.log(BACK_URL, "hey");
+    console.log(BACKEND_URL, "hey");
     try {
       const available = yield SecureStore.isAvailableAsync();
       if (available) {
@@ -64,16 +65,16 @@ class NotesStore {
     } catch (error) {
       this.setLogged(false);
       this.setLoading(false);
-      console.log("token was not found");
+      console.log("token was not foundd");
     }
   }
 
   *login(email, password) {
     try {
-      console.log(BACK_URL);
+      console.log(BACKEND_URL);
       this.setLoginLoading(true);
       this.setEmail(email);
-      const token = yield request(`${BACK_URL}/api/login`, "POST", "", {
+      const token = yield request(`${BACKEND_URL}/api/login`, "POST", "", {
         email,
         password,
       });
@@ -100,9 +101,9 @@ class NotesStore {
 
   *register(password) {
     try {
-      console.log(BACK_URL);
+      console.log(BACKEND_URL);
       this.setLoginLoading(true);
-      const token = yield request(`${BACK_URL}/api/register`, "POST", "", {
+      const token = yield request(`${BACKEND_URL}/api/register`, "POST", "", {
         email: this.email,
         password,
       });
@@ -130,7 +131,7 @@ class NotesStore {
   *fetchInitInfo() {
     try {
       const initInfo = yield request(
-        `${BACK_URL}/api/getInitInfo?id=1`,
+        `${BACKEND_URL}/api/getInitInfo?id=1`,
         "GET",
         this.token
       );
@@ -194,7 +195,7 @@ class NotesStore {
     }
 
     try {
-      yield request(`${BACK_URL}/api/addExistingTag`, "POST", this.token, {
+      yield request(`${BACKEND_URL}/api/addExistingTag`, "POST", this.token, {
         tag_id: tagId,
         note_id,
       });
@@ -214,7 +215,7 @@ class NotesStore {
       this.currentNote.tags.push(newTag);
     }
     try {
-      yield request(`${BACK_URL}/api/addNewTag`, "POST", this.token, {
+      yield request(`${BACKEND_URL}/api/addNewTag`, "POST", this.token, {
         ...newTag,
         note_id,
       });
@@ -238,10 +239,15 @@ class NotesStore {
     }
 
     try {
-      yield request(`${BACK_URL}/api/deleteTagFromNote`, "DELETE", this.token, {
-        note_id,
-        tag_id: tagId,
-      });
+      yield request(
+        `${BACKEND_URL}/api/deleteTagFromNote`,
+        "DELETE",
+        this.token,
+        {
+          note_id,
+          tag_id: tagId,
+        }
+      );
     } catch (error) {
       throw new Error("Unable to proceed the action");
     }
@@ -255,7 +261,7 @@ class NotesStore {
     this.tags = this.tags.filter((t) => t.tag_id !== tag_id);
 
     try {
-      yield request(`${BACK_URL}/api/deleteTag`, "DELETE", this.token, {
+      yield request(`${BACKEND_URL}/api/deleteTag`, "DELETE", this.token, {
         tag_id,
       });
     } catch (error) {
@@ -290,7 +296,7 @@ class NotesStore {
     });
 
     try {
-      yield request(`${BACK_URL}/api/updateTag`, "PUT", this.token, {
+      yield request(`${BACKEND_URL}/api/updateTag`, "PUT", this.token, {
         tag_name,
         tag_id,
         hue,
@@ -317,7 +323,7 @@ class NotesStore {
     });
 
     try {
-      yield request(`${BACK_URL}/api/updateNote`, "PUT", this.token, {
+      yield request(`${BACKEND_URL}/api/updateNote`, "PUT", this.token, {
         note_id,
         note_text,
       });
@@ -344,7 +350,7 @@ class NotesStore {
     }
 
     try {
-      yield request(`${BACK_URL}/api/updateComment`, "PUT", this.token, {
+      yield request(`${BACKEND_URL}/api/updateComment`, "PUT", this.token, {
         comment_id,
         comment_text,
       });
@@ -358,7 +364,7 @@ class NotesStore {
 
     try {
       const results = yield request(
-        `${BACK_URL}/api/searchNotes`,
+        `${BACKEND_URL}/api/searchNotes`,
         "POST",
         this.token,
         { substring }
@@ -375,7 +381,7 @@ class NotesStore {
     this.setDeleted(noteId);
 
     try {
-      yield request(`${BACK_URL}/api/deleteNote`, "DELETE", this.token, {
+      yield request(`${BACKEND_URL}/api/deleteNote`, "DELETE", this.token, {
         id: noteId,
       });
     } catch (error) {
@@ -408,7 +414,7 @@ class NotesStore {
     }
 
     try {
-      yield request(`${BACK_URL}/api/addComment`, "POST", this.token, {
+      yield request(`${BACKEND_URL}/api/addComment`, "POST", this.token, {
         ...newComment,
       });
     } catch (error) {
@@ -430,7 +436,7 @@ class NotesStore {
     }
 
     try {
-      yield request(`${BACK_URL}/api/deleteComment`, "DELETE", this.token, {
+      yield request(`${BACKEND_URL}/api/deleteComment`, "DELETE", this.token, {
         comment_id,
       });
     } catch (error) {
@@ -442,7 +448,7 @@ class NotesStore {
     this.latestBooks = this.latestBooks.filter((b) => b.book_id !== book_id);
 
     try {
-      yield request(`${BACK_URL}/api/deleteBook`, "DELETE", this.token, {
+      yield request(`${BACKEND_URL}/api/deleteBook`, "DELETE", this.token, {
         book_id,
       });
     } catch (error) {

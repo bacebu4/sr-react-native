@@ -10,7 +10,7 @@ import { LoadingScreen } from "./src/pages/LoadingScreen";
 import { SearchStackScreen } from "./src/stacks/SearchStackScreen";
 import { createClient, Provider } from "urql";
 import * as SecureStore from "expo-secure-store";
-import { BACK_URL } from "@env";
+import { BACKEND_URL } from "./src/variables";
 
 let TOKEN;
 
@@ -24,7 +24,6 @@ const getToken = async () => {
     if (!token) {
       throw new Error();
     }
-    console.log(token);
     return token;
   } catch (error) {
     return "";
@@ -32,7 +31,7 @@ const getToken = async () => {
 };
 
 const client = createClient({
-  url: `${BACK_URL}/graphql`,
+  url: `${BACKEND_URL}/graphql`,
   fetchOptions: () => {
     return {
       headers: { authorization: TOKEN },

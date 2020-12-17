@@ -41,7 +41,7 @@ export const AuthEmailScreen = observer(({ navigation }) => {
 const styles = StyleSheet.create({
   input: {
     height: 38,
-    backgroundColor: "#eee",
+    backgroundColor: "#eeeeee",
     borderRadius: 10,
     color: "#343434",
     paddingVertical: 8,

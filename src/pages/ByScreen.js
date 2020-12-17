@@ -23,6 +23,7 @@ export const ByScreen = observer(({ route, navigation }) => {
 
   const fetchNotes = useCallback(async () => {
     try {
+      console.log(type, id, NotesStore.token);
       const fetched = await request(
         `/api/getNotesBy${type}`,
         "POST",
