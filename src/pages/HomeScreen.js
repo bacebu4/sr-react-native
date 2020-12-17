@@ -85,7 +85,7 @@ export const HomeScreen = observer(({ navigation }) => {
         setModalState={setModalEditTagVisible}
       >
         <TagConstructor
-          handleClose={() => setModalEditTagVisible(false)}
+          handleBack={() => setModalEditTagVisible(false)}
           editMode
         ></TagConstructor>
       </TagModal>

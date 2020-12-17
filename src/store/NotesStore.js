@@ -148,6 +148,7 @@ class NotesStore {
       );
 
       initInfo.accountInfo.missed = 0;
+      initInfo.accountInfo.current = 0;
       initInfo.accountInfo.streak = streak;
       console.log("daysPast", daysPast);
       console.log("streak", streak);

@@ -115,7 +115,7 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
         setModalState={setModalEditTagVisible}
       >
         <TagConstructor
-          handleClose={() => setModalEditTagVisible(false)}
+          handleBack={() => setModalEditTagVisible(false)}
           editMode
         ></TagConstructor>
       </TagModal>

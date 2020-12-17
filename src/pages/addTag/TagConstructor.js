@@ -63,7 +63,7 @@ export const TagConstructor = observer(
           NotesStore.updateTag(UiStore.currentTag, tagName.trim(), color);
           onTagName("");
           refreshColor();
-          handleClose();
+          handleBack();
         } catch (error) {
           message(error.message);
         }
