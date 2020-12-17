@@ -15,7 +15,6 @@ class NotesStore {
   latestBooks = [];
   amount = 3;
   email = null;
-  uid = null;
   token = null;
   currentNote = null;
   info = {};
@@ -141,16 +140,24 @@ class NotesStore {
         Date.now(),
         new Date(initInfo.latestReviewDate).getTime()
       );
+
+      const streak = differenceInCalendarDays(
+        new Date(initInfo.latestReviewDate).getTime(),
+        new Date(initInfo.streakBeginningDate).getTime()
+      );
+
+      initInfo.accountInfo.missed = 0;
+      initInfo.accountInfo.streak = streak;
       console.log("daysPast", daysPast);
+      console.log("streak", streak);
+
       switch (daysPast) {
         case 0:
           initInfo.accountInfo.reviewed = true;
-          initInfo.accountInfo.missed = 0;
           break;
 
         case 1:
           initInfo.accountInfo.reviewed = false;
-          initInfo.accountInfo.missed = 0;
           break;
 
         default:
@@ -451,19 +458,6 @@ class NotesStore {
     this.info.current = value;
   }
 
-  *setReviewed() {
-    if (!this.info.reviewed) {
-      this.info.reviewed = true;
-      this.info.streak = this.info.streak + 1;
-
-      try {
-        yield request(`${BACK_URL}/api/setReviewed`, "POST", this.token);
-      } catch (error) {
-        throw new Error(error.message);
-      }
-    }
-  }
-
   setToken(value) {
     this.token = value;
   }
@@ -478,10 +472,6 @@ class NotesStore {
 
   setLogged(value) {
     this.isLogged = value;
-  }
-
-  setUid(value) {
-    this.uid = value;
   }
 
   setEmail(value) {

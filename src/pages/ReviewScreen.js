@@ -55,11 +55,9 @@ export const ReviewScreen = observer(({ navigation }) => {
       NotesStore.setCurrent(index);
 
       if (index === NotesStore.amount) {
-        // NotesStore.setReviewed();
         updateReviewHistory({
           date: format(Date.now(), "yyyy-MM-dd"),
         });
-        console.log("end");
       }
     }
   }, [index]);
