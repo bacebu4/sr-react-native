@@ -6,6 +6,7 @@ import "react-native-get-random-values";
 const { v4: uuidv4 } = require("uuid");
 const dateFormat = require("dateformat");
 import { BACK_URL } from "@env";
+import { differenceInCalendarDays } from "date-fns/esm";
 
 class NotesStore {
   highlights = [];
@@ -134,9 +135,30 @@ class NotesStore {
         "GET",
         this.token
       );
-      console.log(initInfo);
+      console.log("latestReviewDate", initInfo.latestReviewDate);
+
+      const daysPast = differenceInCalendarDays(
+        Date.now(),
+        new Date(initInfo.latestReviewDate).getTime()
+      );
+      console.log("daysPast", daysPast);
+      switch (daysPast) {
+        case 0:
+          initInfo.accountInfo.reviewed = true;
+          initInfo.accountInfo.missed = 0;
+          break;
+
+        case 1:
+          initInfo.accountInfo.reviewed = false;
+          initInfo.accountInfo.missed = 0;
+          break;
+
+        default:
+          initInfo.accountInfo.reviewed = false;
+          initInfo.accountInfo.missed = daysPast - 1;
+          break;
+      }
       this.setTags(initInfo.tags);
-      console.log(initInfo.tags.length);
       this.setLatestBooks(initInfo.latestBooks);
       this.setAmount(initInfo.accountInfo.review_amount);
       this.info = initInfo.accountInfo;

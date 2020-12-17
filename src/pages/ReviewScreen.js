@@ -9,6 +9,8 @@ import { ReviewFinalScreen } from "./review/ReviewFinalScreen";
 import * as Haptics from "expo-haptics";
 import { MainContainer } from "../components/grid/MainContainer";
 import { Container } from "../components/grid/Container";
+import { useUpdateReviewHistoryMutation } from "../generated/graphql";
+import { format } from "date-fns";
 
 let AMOUNT = 1;
 let maxIndex = 0;
@@ -24,6 +26,7 @@ const initialLayout = { width: Dimensions.get("window").width };
 
 export const ReviewScreen = observer(({ navigation }) => {
   const NotesStore = useContext(NotesStoreContext);
+  const [, updateReviewHistory] = useUpdateReviewHistoryMutation();
 
   useEffect(() => {
     AMOUNT = NotesStore.amount;
@@ -52,7 +55,11 @@ export const ReviewScreen = observer(({ navigation }) => {
       NotesStore.setCurrent(index);
 
       if (index === NotesStore.amount) {
-        NotesStore.setReviewed();
+        // NotesStore.setReviewed();
+        updateReviewHistory({
+          date: format(Date.now(), "yyyy-MM-dd"),
+        });
+        console.log("end");
       }
     }
   }, [index]);

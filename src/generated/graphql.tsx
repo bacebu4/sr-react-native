@@ -79,6 +79,7 @@ export type QueryNoteArgs = {
 export type Mutation = {
   __typename?: 'Mutation';
   addNewTag?: Maybe<Scalars['Boolean']>;
+  updateReviewHistory?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -89,11 +90,26 @@ export type MutationAddNewTagArgs = {
   noteId?: Maybe<Scalars['String']>;
 };
 
+
+export type MutationUpdateReviewHistoryArgs = {
+  date?: Maybe<Scalars['String']>;
+};
+
 export enum CacheControlScope {
   Public = 'PUBLIC',
   Private = 'PRIVATE'
 }
 
+
+export type UpdateReviewHistoryMutationVariables = Exact<{
+  date: Scalars['String'];
+}>;
+
+
+export type UpdateReviewHistoryMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'updateReviewHistory'>
+);
 
 export type BooksQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -107,6 +123,15 @@ export type BooksQuery = (
 );
 
 
+export const UpdateReviewHistoryDocument = gql`
+    mutation UpdateReviewHistory($date: String!) {
+  updateReviewHistory(date: $date)
+}
+    `;
+
+export function useUpdateReviewHistoryMutation() {
+  return Urql.useMutation<UpdateReviewHistoryMutation, UpdateReviewHistoryMutationVariables>(UpdateReviewHistoryDocument);
+};
 export const BooksDocument = gql`
     query Books {
   books {

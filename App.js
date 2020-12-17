@@ -24,6 +24,7 @@ const getToken = async () => {
     if (!token) {
       throw new Error();
     }
+    console.log(token);
     return token;
   } catch (error) {
     return "";
