@@ -53,6 +53,8 @@ export type AccountInfo = {
   reviewAmount: Scalars['Int'];
   streak: Scalars['Int'];
   missed: Scalars['Int'];
+  current: Scalars['Int'];
+  createdAt: Scalars['String'];
   reviewed: Scalars['Boolean'];
 };
 
@@ -122,6 +124,24 @@ export type BooksQuery = (
   )>>> }
 );
 
+export type DailyNotesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DailyNotesQuery = (
+  { __typename?: 'Query' }
+  & { dailyNotes?: Maybe<Array<Maybe<(
+    { __typename?: 'Note' }
+    & Pick<Note, 'text' | 'id' | 'title' | 'author' | 'deleted'>
+    & { tags?: Maybe<Array<Maybe<(
+      { __typename?: 'Tag' }
+      & Pick<Tag, 'id' | 'name' | 'hue'>
+    )>>>, comments: Array<Maybe<(
+      { __typename?: 'Comment' }
+      & Pick<Comment, 'id' | 'text' | 'createdAt'>
+    )>> }
+  )>>> }
+);
+
 
 export const UpdateReviewHistoryDocument = gql`
     mutation UpdateReviewHistory($date: String!) {
@@ -144,4 +164,29 @@ export const BooksDocument = gql`
 
 export function useBooksQuery(options: Omit<Urql.UseQueryArgs<BooksQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<BooksQuery>({ query: BooksDocument, ...options });
+};
+export const DailyNotesDocument = gql`
+    query DailyNotes {
+  dailyNotes {
+    text
+    id
+    title
+    author
+    tags {
+      id
+      name
+      hue
+    }
+    deleted
+    comments {
+      id
+      text
+      createdAt
+    }
+  }
+}
+    `;
+
+export function useDailyNotesQuery(options: Omit<Urql.UseQueryArgs<DailyNotesQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<DailyNotesQuery>({ query: DailyNotesDocument, ...options });
 };

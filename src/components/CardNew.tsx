@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -8,28 +8,49 @@ import {
   Share,
 } from "react-native";
 import ActionSheet from "react-native-actionsheet";
-import { observer } from "mobx-react-lite";
-import { NotesStoreContext } from "./store/NotesStore";
-import { EditTextModal } from "./components/EditTextModal";
-import { useConfirm } from "./hooks/confirm.hook";
-import { useMessage } from "./hooks/message.hook";
+import { Maybe, Note } from "src/generated/graphql";
+// import { useConfirm } from "../hooks/confirm.hook";
+// @ts-ignore
+import { useMessage } from "../hooks/message.hook";
+import { EditTextModal } from "./EditTextModal";
 
-export const Card = observer(({ note, dense = false, noteNew = null }) => {
-  const actionSheetRef = useRef(null);
-  const NotesStore = useContext(NotesStoreContext);
+declare module "react-native-actionsheet" {
+  interface Props {
+    options: (string | React.ReactNode)[];
+    onPress: (index: number) => void;
+    title?: string;
+    message?: string;
+    tintColor?: string;
+    cancelButtonIndex?: number;
+    destructiveButtonIndex?: number;
+    styles?: object;
+  }
+
+  class ActionSheet extends React.Component<Props> {
+    public show: () => void;
+  }
+}
+
+interface Props {
+  note: Maybe<Note>;
+  dense?: boolean;
+}
+
+export const Card: React.FC<Props> = ({ note, dense = false }) => {
+  const actionSheetRef = useRef<ActionSheet | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [text, onText] = useState(note.note_text);
-  const confirm = useConfirm();
+  const [text, onText] = useState(note?.text);
+  // const confirm = useConfirm();
   const message = useMessage();
 
   const showActionSheet = () => {
-    actionSheetRef.current.show();
+    actionSheetRef!.current!.show();
   };
 
   const onShare = async () => {
     try {
       await Share.share({
-        message: note.note_text.replace(/\&nbsp;/g, " "),
+        message: note!.text.replace(/\&nbsp;/g, " "),
       });
     } catch (error) {
       message(error.message);
@@ -37,13 +58,13 @@ export const Card = observer(({ note, dense = false, noteNew = null }) => {
   };
 
   const onDelete = async () => {
-    confirm(
-      () => {
-        NotesStore.deleteNote(note.note_id);
-      },
-      "Delete highlight",
-      "Are you sure you want to delete this highlight?"
-    );
+    // confirm(
+    //   () => {
+    //     NotesStore.deleteNote(note.note_id);
+    //   },
+    //   "Delete highlight",
+    //   "Are you sure you want to delete this highlight?"
+    // );
   };
 
   const onEdit = () => {
@@ -52,7 +73,7 @@ export const Card = observer(({ note, dense = false, noteNew = null }) => {
 
   const handleSave = () => {
     setModalVisible(false);
-    NotesStore.updateNote(note.note_id, text);
+    // NotesStore.updateNote(note.note_id, text);
   };
 
   return (
@@ -66,29 +87,37 @@ export const Card = observer(({ note, dense = false, noteNew = null }) => {
         handleSave={handleSave}
       ></EditTextModal>
 
-      <View style={{ ...styles.wrapper, opacity: note.deleted ? 0.3 : 1 }}>
+      <View style={{ ...styles.wrapper, opacity: note?.deleted ? 0.3 : 1 }}>
         {dense ? (
           <></>
         ) : (
           <>
             <View style={styles.header}>
-              <Image style={styles.cover} source={require("./cover.png")} />
+              <Image
+                style={{
+                  borderRadius: 5,
+                }}
+                source={require("../cover.png")}
+              />
               <View style={styles.info}>
                 <View>
-                  <Text style={styles.title}>{note?.book_title}</Text>
+                  <Text style={styles.title}>{note?.title}</Text>
                 </View>
                 <View>
-                  <Text style={styles.author}>{note?.author_full_name}</Text>
+                  <Text style={styles.author}>{note?.author}</Text>
                 </View>
               </View>
               <View style={styles.more}>
                 <TouchableOpacity
                   onPress={() => showActionSheet()}
-                  disabled={note.deleted}
+                  disabled={note?.deleted}
                 >
                   <Image
-                    style={styles.moreIcon}
-                    source={require("./dots.png")}
+                    style={{
+                      width: 24,
+                      height: 22.2,
+                    }}
+                    source={require("../dots.png")}
                   />
                 </TouchableOpacity>
               </View>
@@ -97,8 +126,8 @@ export const Card = observer(({ note, dense = false, noteNew = null }) => {
         )}
         <View style={{ marginTop: dense ? 0 : 16 }}>
           <Text style={styles.noteText}>
-            {/* // TODO how safe it is? */}
-            {note?.note_text.replace(/\&nbsp;/g, " ")}
+            {/* TODO how safe it is? */}
+            {note?.text.replace(/\&nbsp;/g, " ")}
           </Text>
         </View>
         <ActionSheet
@@ -119,7 +148,7 @@ export const Card = observer(({ note, dense = false, noteNew = null }) => {
       </View>
     </>
   );
-});
+};
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -131,6 +160,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     elevation: 10,
     shadowColor: "#B0AFAF",
+    //@ts-ignore
     shadowOffset: { height: 8 },
     shadowOpacity: 0.25,
     shadowRadius: 5,
@@ -146,10 +176,6 @@ const styles = StyleSheet.create({
   },
   more: {
     marginLeft: "auto",
-  },
-  moreIcon: {
-    width: 24,
-    height: 22.2,
   },
   title: {
     fontSize: 22,
@@ -172,8 +198,5 @@ const styles = StyleSheet.create({
   },
   menu: {
     marginLeft: 32,
-  },
-  cover: {
-    borderRadius: 5,
   },
 });

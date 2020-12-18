@@ -9,11 +9,11 @@ import {
 } from "react-native";
 
 interface Props {
-  onPress: ((event: GestureResponderEvent) => void) | undefined;
-  title: string;
-  isLoading: boolean;
-  isDark: boolean;
-  style: ViewStyle;
+  onPress?: ((event: GestureResponderEvent) => void) | undefined;
+  title?: string;
+  isLoading?: boolean;
+  isDark?: boolean;
+  style?: ViewStyle;
 }
 
 export const MainButton: React.FC<Props> = ({

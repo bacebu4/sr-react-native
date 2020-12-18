@@ -7,7 +7,7 @@ import { NavbarTop } from "./NavbarTop";
 interface Props {
   handleCancel: ((event: GestureResponderEvent) => void) | undefined;
   title: string;
-  text: string;
+  text: string | undefined;
   onText: (text: string) => void;
   handleSave: (<T>(e: T) => void) | undefined;
 }
@@ -59,7 +59,7 @@ interface PropsMain {
   modalState: boolean | undefined;
   setModalState: (arg0: boolean) => void;
   title: string;
-  text: string;
+  text: string | undefined;
   onText: (text: string) => void;
   handleSave: (<T>(e: T) => void) | undefined;
 }

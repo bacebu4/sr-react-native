@@ -27,6 +27,8 @@ import { TagModal } from "../components/TagModal";
 import { TagConstructor } from "./addTag/TagConstructor";
 import { TextGray } from "../components/TextGray";
 import { SeeAll } from "../components/SeeAll";
+import { useDailyNotesQuery } from "../generated/graphql";
+import { MainHighlight } from "../components/MainHighlight";
 
 export const HomeScreen = observer(({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -101,30 +103,7 @@ export const HomeScreen = observer(({ navigation }) => {
           </Container>
 
           <Container mt={32}>
-            {NotesStore.highlights.length ? (
-              <>
-                <Card note={NotesStore.highlights[0]} />
-
-                <Container mt={32} isCentered>
-                  <MainButton
-                    onPress={() => navigation.navigate("Review")}
-                  ></MainButton>
-                </Container>
-              </>
-            ) : (
-              <Container mt={32} isCentered>
-                <Image
-                  style={styles.image}
-                  source={require("../assets/empty_main.png")}
-                ></Image>
-
-                <TextGray mt={32}>No highlights added yet</TextGray>
-
-                <Container mt={32}>
-                  <MainButton title="Learn how to add"></MainButton>
-                </Container>
-              </Container>
-            )}
+            <MainHighlight />
           </Container>
 
           {/* Latest reads */}
