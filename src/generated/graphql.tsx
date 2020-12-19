@@ -83,6 +83,7 @@ export type Mutation = {
   addNewTag?: Maybe<Scalars['Boolean']>;
   updateReviewHistory?: Maybe<Scalars['Boolean']>;
   deleteNote?: Maybe<Scalars['Boolean']>;
+  updateNote?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -103,6 +104,12 @@ export type MutationDeleteNoteArgs = {
   noteId?: Maybe<Scalars['String']>;
 };
 
+
+export type MutationUpdateNoteArgs = {
+  noteId?: Maybe<Scalars['String']>;
+  text?: Maybe<Scalars['String']>;
+};
+
 export enum CacheControlScope {
   Public = 'PUBLIC',
   Private = 'PRIVATE'
@@ -117,6 +124,17 @@ export type DeleteNoteMutationVariables = Exact<{
 export type DeleteNoteMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'deleteNote'>
+);
+
+export type UpdateNoteMutationVariables = Exact<{
+  noteId: Scalars['String'];
+  text: Scalars['String'];
+}>;
+
+
+export type UpdateNoteMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'updateNote'>
 );
 
 export type UpdateReviewHistoryMutationVariables = Exact<{
@@ -167,6 +185,15 @@ export const DeleteNoteDocument = gql`
 
 export function useDeleteNoteMutation() {
   return Urql.useMutation<DeleteNoteMutation, DeleteNoteMutationVariables>(DeleteNoteDocument);
+};
+export const UpdateNoteDocument = gql`
+    mutation UpdateNote($noteId: String!, $text: String!) {
+  updateNote(noteId: $noteId, text: $text)
+}
+    `;
+
+export function useUpdateNoteMutation() {
+  return Urql.useMutation<UpdateNoteMutation, UpdateNoteMutationVariables>(UpdateNoteDocument);
 };
 export const UpdateReviewHistoryDocument = gql`
     mutation UpdateReviewHistory($date: String!) {

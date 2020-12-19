@@ -13,6 +13,7 @@ import { useConfirm } from "../hooks/confirm.hook";
 import { useMessage } from "../hooks/message.hook";
 import { EditTextModal } from "./EditTextModal";
 import { useDeleteNoteMutation } from "../generated/graphql";
+import { useUpdateNoteMutation } from "../generated/graphql";
 
 declare module "react-native-actionsheet" {
   interface Props {
@@ -40,6 +41,7 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
   const actionSheetRef = useRef<ActionSheet | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [, deleteNote] = useDeleteNoteMutation();
+  const [, updateNote] = useUpdateNoteMutation();
   const [text, onText] = useState(note?.text);
   const confirm = useConfirm();
   const message = useMessage();
@@ -61,7 +63,6 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
   const onDelete = async () => {
     confirm(
       () => {
-        // NotesStore.deleteNote(note.note_id);
         deleteNote({
           noteId: note!.id,
         });
@@ -78,7 +79,11 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
 
   const handleSave = () => {
     setModalVisible(false);
-    // NotesStore.updateNote(note.note_id, text);
+    updateNote({
+      noteId: note!.id,
+      text: text!,
+    });
+    note!.text = text!;
   };
 
   return (
