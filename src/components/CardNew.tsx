@@ -9,10 +9,10 @@ import {
 } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import { Maybe, Note } from "src/generated/graphql";
-// import { useConfirm } from "../hooks/confirm.hook";
-// @ts-ignore
+import { useConfirm } from "../hooks/confirm.hook";
 import { useMessage } from "../hooks/message.hook";
 import { EditTextModal } from "./EditTextModal";
+import { useDeleteNoteMutation } from "../generated/graphql";
 
 declare module "react-native-actionsheet" {
   interface Props {
@@ -39,8 +39,9 @@ interface Props {
 export const Card: React.FC<Props> = ({ note, dense = false }) => {
   const actionSheetRef = useRef<ActionSheet | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [, deleteNote] = useDeleteNoteMutation();
   const [text, onText] = useState(note?.text);
-  // const confirm = useConfirm();
+  const confirm = useConfirm();
   const message = useMessage();
 
   const showActionSheet = () => {
@@ -58,13 +59,17 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
   };
 
   const onDelete = async () => {
-    // confirm(
-    //   () => {
-    //     NotesStore.deleteNote(note.note_id);
-    //   },
-    //   "Delete highlight",
-    //   "Are you sure you want to delete this highlight?"
-    // );
+    confirm(
+      () => {
+        // NotesStore.deleteNote(note.note_id);
+        deleteNote({
+          noteId: note!.id,
+        });
+        note!.deleted = true;
+      },
+      "Delete highlight",
+      "Are you sure you want to delete this highlight?"
+    );
   };
 
   const onEdit = () => {
