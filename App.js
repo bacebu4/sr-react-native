@@ -11,6 +11,8 @@ import { SearchStackScreen } from "./src/stacks/SearchStackScreen";
 import { createClient, Provider } from "urql";
 import * as SecureStore from "expo-secure-store";
 import { BACKEND_URL } from "./src/variables";
+import i18n from "./src/i18n";
+const initI18n = i18n;
 
 let TOKEN;
 

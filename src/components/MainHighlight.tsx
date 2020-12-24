@@ -7,11 +7,13 @@ import { useNavigation } from "@react-navigation/native";
 import { Card } from "./CardNew";
 import { useDailyNotesQuery } from "../generated/graphql";
 import { MainButton } from "../MainButton";
+import { useTranslation } from "react-i18next";
 
 export const MainHighlight: React.FC = () => {
   const [result] = useDailyNotesQuery();
   const { data, fetching, error } = result;
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   if (error) {
     return (
@@ -51,7 +53,10 @@ export const MainHighlight: React.FC = () => {
       <Card note={data.dailyNotes[0]}></Card>
 
       <Container mt={32} isCentered>
-        <MainButton onPress={() => navigation.navigate("Review")}></MainButton>
+        <MainButton
+          onPress={() => navigation.navigate("Review")}
+          title={t("Start review")}
+        ></MainButton>
       </Container>
     </>
   );

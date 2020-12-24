@@ -11,6 +11,7 @@ import { MainContainer } from "../components/grid/MainContainer";
 import { Container } from "../components/grid/Container";
 import { useUpdateReviewHistoryMutation } from "../generated/graphql";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 let AMOUNT = 1;
 let maxIndex = 0;
@@ -27,6 +28,7 @@ const initialLayout = { width: Dimensions.get("window").width };
 export const ReviewScreen = observer(({ navigation }) => {
   const NotesStore = useContext(NotesStoreContext);
   const [, updateReviewHistory] = useUpdateReviewHistoryMutation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     AMOUNT = NotesStore.amount;
@@ -72,7 +74,7 @@ export const ReviewScreen = observer(({ navigation }) => {
     <MainContainer>
       <Container>
         <NavbarSecondary
-          title="Review mode"
+          title={"Review mode"}
           handleNext={handleNextSlide}
           handleClick={() => navigation.navigate("Home")}
           index={NotesStore.amount - index}

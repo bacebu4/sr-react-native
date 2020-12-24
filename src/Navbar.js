@@ -6,6 +6,7 @@ import { Title } from "./components/Title";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "./store/NotesStore";
 import { TextGray } from "./components/TextGray";
+import { TText } from "./components/TText";
 
 export const Navbar = observer(({ title, handleClick }) => {
   const NotesStore = useContext(NotesStoreContext);
@@ -32,7 +33,7 @@ export const Navbar = observer(({ title, handleClick }) => {
           bgColor="#fff"
         ></ProgressCircle>
         {!NotesStore.info.reviewed ? (
-          <Text style={styles.info}>Review Process Pending</Text>
+          <TText style={styles.info}>Review Process Pending</TText>
         ) : (
           <>
             <Text style={styles.info}>Today's Review</Text>

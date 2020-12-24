@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
 import { TextGray } from "./components/TextGray";
+import { TText } from "./components/TText";
 
 export const NavbarSecondary = ({
   title,
@@ -15,9 +16,9 @@ export const NavbarSecondary = ({
     <View style={styles.wrapper}>
       <View style={styles.navbar}>
         <TouchableOpacity onPress={handleClick}>
-          <Text style={styles.text}>Exit</Text>
+          <TText style={styles.text}>Exit</TText>
         </TouchableOpacity>
-        <Text style={styles.title}>{title}</Text>
+        <TText style={styles.title}>{title}</TText>
         {index !== 0 ? (
           <>
             <TouchableOpacity onPress={handleNext}>
@@ -41,8 +42,11 @@ export const NavbarSecondary = ({
           shadowColor="#d7d7d7"
           bgColor="#fff"
         ></ProgressCircle>
-        <Text style={styles.info}>Review Process</Text>
-        <TextGray ml={16}>{index} more left</TextGray>
+        <TText style={styles.info}>Review Process</TText>
+        <TextGray ml={16}>{index}</TextGray>
+        <TextGray ml={4}>
+          <TText>more left</TText>
+        </TextGray>
       </View>
     </View>
   );
