@@ -55,7 +55,7 @@ export const MainHighlight: React.FC = () => {
       <Container mt={32} isCentered>
         <MainButton
           onPress={() => navigation.navigate("Review")}
-          title={t("Start review")}
+          title="Start review"
         ></MainButton>
       </Container>
     </>

@@ -1,6 +1,6 @@
 import React from "react";
+import { TText } from "./TText";
 import {
-  Text,
   StyleSheet,
   TouchableOpacity,
   Image,
@@ -10,7 +10,7 @@ import {
 export const SeeAll: React.FC<TouchableOpacityProps> = (props) => {
   return (
     <TouchableOpacity {...props} style={styles.wrapper}>
-      <Text style={styles.title}>See All</Text>
+      <TText style={styles.title}>See All</TText>
       <Image style={styles.icon} source={require("../arrow.png")} />
     </TouchableOpacity>
   );

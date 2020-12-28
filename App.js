@@ -12,6 +12,7 @@ import { createClient, Provider } from "urql";
 import * as SecureStore from "expo-secure-store";
 import { BACKEND_URL } from "./src/variables";
 import i18n from "./src/i18n";
+import { useTranslation } from "react-i18next";
 const initI18n = i18n;
 
 let TOKEN;
@@ -47,10 +48,11 @@ const Tab = createBottomTabNavigator();
 const screenOptions = ({ route }) => ({
   tabBarIcon: ({ _, color, size }) => {
     let iconName;
+    const { t } = useTranslation();
 
-    if (route.name === "Home") {
+    if (route.name === t("Home")) {
       iconName = "ios-home";
-    } else if (route.name === "Search") {
+    } else if (route.name === t("Search")) {
       iconName = "ios-search";
     }
 
@@ -60,6 +62,7 @@ const screenOptions = ({ route }) => ({
 
 export default observer(function App() {
   const NotesStore = useContext(NotesStoreContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     async function fetchToken() {
@@ -102,8 +105,11 @@ export default observer(function App() {
                 />
               ) : (
                 <>
-                  <Tab.Screen name="Home" component={HomeStackScreen} />
-                  <Tab.Screen name="Search" component={SearchStackScreen} />
+                  <Tab.Screen name={t("Home")} component={HomeStackScreen} />
+                  <Tab.Screen
+                    name={t("Search")}
+                    component={SearchStackScreen}
+                  />
                 </>
               )}
             </>

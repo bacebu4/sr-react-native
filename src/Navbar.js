@@ -36,8 +36,10 @@ export const Navbar = observer(({ title, handleClick }) => {
           <TText style={styles.info}>Review Process Pending</TText>
         ) : (
           <>
-            <Text style={styles.info}>Today's Review</Text>
-            <TextGray ml={16}>Goal achieved</TextGray>
+            <TText style={styles.info}>Today's Review</TText>
+            <TextGray ml={8}>
+              <TText>Goal achieved</TText>
+            </TextGray>
           </>
         )}
       </View>

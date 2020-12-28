@@ -1,6 +1,6 @@
 import React from "react";
+import { TText } from "./components/TText";
 import {
-  Text,
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
@@ -33,7 +33,7 @@ export const MainButton: React.FC<Props> = ({
       }}
     >
       {!isLoading ? (
-        <Text style={styles.title}>{title}</Text>
+        <TText style={styles.title}>{title}</TText>
       ) : (
         <ActivityIndicator></ActivityIndicator>
       )}
