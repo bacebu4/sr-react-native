@@ -1,3 +1,6 @@
 mutation UpdateNote($noteId: String!, $text: String!) {
-  updateNote(noteId: $noteId, text: $text)
+  updateNote(noteId: $noteId, text: $text) {
+    id
+    text
+  }
 }

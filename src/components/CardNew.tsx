@@ -83,7 +83,7 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
       noteId: note!.id,
       text: text!,
     });
-    note!.text = text!;
+    // note!.text = text!;
   };
 
   return (

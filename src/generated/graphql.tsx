@@ -78,12 +78,18 @@ export type QueryNoteArgs = {
   id?: Maybe<Scalars['String']>;
 };
 
+export type UpdatedNote = {
+  __typename?: 'UpdatedNote';
+  id: Scalars['ID'];
+  text: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addNewTag?: Maybe<Scalars['Boolean']>;
   updateReviewHistory?: Maybe<Scalars['Boolean']>;
   deleteNote?: Maybe<Scalars['Boolean']>;
-  updateNote?: Maybe<Scalars['Boolean']>;
+  updateNote?: Maybe<UpdatedNote>;
 };
 
 
@@ -134,7 +140,10 @@ export type UpdateNoteMutationVariables = Exact<{
 
 export type UpdateNoteMutation = (
   { __typename?: 'Mutation' }
-  & Pick<Mutation, 'updateNote'>
+  & { updateNote?: Maybe<(
+    { __typename?: 'UpdatedNote' }
+    & Pick<UpdatedNote, 'id' | 'text'>
+  )> }
 );
 
 export type UpdateReviewHistoryMutationVariables = Exact<{
@@ -188,7 +197,10 @@ export function useDeleteNoteMutation() {
 };
 export const UpdateNoteDocument = gql`
     mutation UpdateNote($noteId: String!, $text: String!) {
-  updateNote(noteId: $noteId, text: $text)
+  updateNote(noteId: $noteId, text: $text) {
+    id
+    text
+  }
 }
     `;
 
