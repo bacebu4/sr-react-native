@@ -7,13 +7,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Card } from "./CardNew";
 import { useDailyNotesQuery } from "../generated/graphql";
 import { MainButton } from "../MainButton";
-import { useTranslation } from "react-i18next";
 
 export const MainHighlight: React.FC = () => {
   const [result] = useDailyNotesQuery();
   const { data, fetching, error } = result;
   const navigation = useNavigation();
-  const { t } = useTranslation();
 
   if (error) {
     return (

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 interface Props {
   children: string;
-  style: StyleProp<TextStyle>;
+  style?: StyleProp<TextStyle>;
 }
 
 export const TText: React.FC<Props> = ({ children, style }) => {

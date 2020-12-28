@@ -4,7 +4,7 @@ import { NavbarSecondary } from "../NavbarSecondary";
 import { TabView } from "react-native-tab-view";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../store/NotesStore";
-import { ReviewTabScreen } from "./review/ReviewTabScreen";
+import { ReviewTabScreen } from "./review/ReviewTabScreenNew";
 import { ReviewFinalScreen } from "./review/ReviewFinalScreen";
 import * as Haptics from "expo-haptics";
 import { MainContainer } from "../components/grid/MainContainer";

@@ -10,7 +10,7 @@ interface Props {
   isCenteredY?: boolean;
   hasBorder?: boolean;
   style?: ViewStyle;
-  isRow?: false;
+  isRow?: boolean;
 }
 
 export const Container: React.FC<Props> = ({
