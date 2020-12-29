@@ -14,6 +14,7 @@ import { useMessage } from "../hooks/message.hook";
 import { EditTextModal } from "./EditTextModal";
 import { useDeleteNoteMutation } from "../generated/graphql";
 import { useUpdateNoteMutation } from "../generated/graphql";
+import { useTranslation } from "react-i18next";
 
 declare module "react-native-actionsheet" {
   interface Props {
@@ -45,6 +46,7 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
   const [text, onText] = useState(note?.text);
   const confirm = useConfirm();
   const message = useMessage();
+  const { t } = useTranslation();
 
   const showActionSheet = () => {
     actionSheetRef!.current!.show();
@@ -142,7 +144,7 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
         </View>
         <ActionSheet
           ref={actionSheetRef}
-          options={["Delete", "Edit", "Share", "Сancel"]}
+          options={[t("Delete"), t("Edit"), t("Share"), t("Cancel")]}
           cancelButtonIndex={3}
           destructiveButtonIndex={0}
           onPress={(index) => {

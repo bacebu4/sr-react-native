@@ -39,7 +39,7 @@ export const Card = observer(({ note, dense = false, noteNew = null }) => {
   const onDelete = async () => {
     confirm(
       () => {
-        NotesStore.deleteNote(note.note_id);
+        // NotesStore.deleteNote(note.note_id);
       },
       "Delete highlight",
       "Are you sure you want to delete this highlight?"
@@ -52,7 +52,7 @@ export const Card = observer(({ note, dense = false, noteNew = null }) => {
 
   const handleSave = () => {
     setModalVisible(false);
-    NotesStore.updateNote(note.note_id, text);
+    // NotesStore.updateNote(note.note_id, text);
   };
 
   return (

@@ -60,7 +60,7 @@ export const TagConstructor = observer(
           if (findResults) {
             throw new Error("This tag name already exists");
           }
-          NotesStore.updateTag(UiStore.currentTag, tagName.trim(), color);
+          // NotesStore.updateTag(UiStore.currentTag, tagName.trim(), color);
           onTagName("");
           refreshColor();
           handleBack();
@@ -76,7 +76,7 @@ export const TagConstructor = observer(
           if (findResults) {
             throw new Error("This tag name already exists");
           }
-          NotesStore.addNewTag(UiStore.currentNote, tagName.trim(), color);
+          // NotesStore.addNewTag(UiStore.currentNote, tagName.trim(), color);
           onTagName("");
           refreshColor();
           handleClose();

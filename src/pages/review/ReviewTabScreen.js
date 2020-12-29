@@ -77,7 +77,7 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
   const handleDeleteTag = () => {
     confirm(
       () => {
-        NotesStore.deleteTagFromNote(note.note_id, tagId);
+        // NotesStore.deleteTagFromNote(note.note_id, tagId);
       },
       "Delete tag",
       "Are you sure you want to delete this tag from highlight?"
@@ -96,7 +96,7 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
 
   const handleSave = () => {
     setModalVisible(false);
-    NotesStore.addComment(note.note_id, text);
+    // NotesStore.addComment(note.note_id, text);
   };
 
   return (

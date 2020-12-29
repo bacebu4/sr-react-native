@@ -22,7 +22,7 @@ export const ChooseScreen = observer(({ handleCancel, note }) => {
   };
 
   const handleSubmitFromExisting = (id) => {
-    NotesStore.addExistingTag(note.note_id, id);
+    // NotesStore.addExistingTag(note.note_id, id);
     handleCancel();
   };
 

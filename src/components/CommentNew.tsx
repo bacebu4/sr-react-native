@@ -1,17 +1,26 @@
 import React, { useState, useRef } from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import ActionSheet from "react-native-actionsheet";
-import { EditTextModal } from "./components/EditTextModal";
-import { useConfirm } from "./hooks/confirm.hook";
+import { Comment as CommentType, Maybe } from "src/generated/graphql";
+import { useConfirm } from "../hooks/confirm.hook";
+import { EditTextModal } from "./EditTextModal";
+import { useTranslation } from "react-i18next";
 
-export const Comment = ({ comment, disabled = false }) => {
+interface Props {
+  comment: Maybe<CommentType>;
+  disabled?: boolean;
+}
+
+export const Comment: React.FC<Props> = ({ comment, disabled = false }) => {
   const actionSheetRef = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [textToModal, setTextToModal] = useState(comment.comment_text);
+  const [textToModal, setTextToModal] = useState(comment?.text);
   const confirm = useConfirm();
+  const { t } = useTranslation();
 
   const showActionSheet = () => {
-    actionSheetRef.current.show();
+    // @ts-ignore
+    actionSheetRef!.current.show();
   };
 
   const onEdit = () => {
@@ -46,21 +55,23 @@ export const Comment = ({ comment, disabled = false }) => {
       <View style={styles.wrapper}>
         <View style={styles.header}>
           <View>
-            <Text style={styles.date}>{comment.createdat.slice(0, 10)}</Text>
+            <Text style={styles.date}>{comment?.createdAt.slice(0, 10)}</Text>
           </View>
           <View style={styles.more}>
             <TouchableOpacity onPress={showActionSheet} disabled={disabled}>
-              <Image style={styles.moreIcon} source={require("./dots.png")} />
+              <Image
+                style={{ width: 24, height: 22.2 }}
+                source={require("../dots.png")}
+              />
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.note}>
-          <Text style={styles.noteText}>{comment.comment_text}</Text>
+          <Text style={styles.noteText}>{comment?.text}</Text>
         </View>
         <ActionSheet
-          style={styles}
           ref={actionSheetRef}
-          options={["Delete", "Edit", "Сancel"]}
+          options={[t("Delete"), t("Edit"), t("Сancel")]}
           cancelButtonIndex={2}
           destructiveButtonIndex={0}
           onPress={(index) => {
@@ -87,6 +98,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     elevation: 10,
     shadowColor: "#B0AFAF",
+    // @ts-ignore
     shadowOffset: { height: 8 },
     shadowOpacity: 0.25,
     shadowRadius: 5,
@@ -94,9 +106,6 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-  },
-  info: {
-    marginLeft: 16,
   },
   date: {
     fontFamily: "Cochin-Bold",
@@ -106,10 +115,6 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     marginTop: 4,
   },
-  moreIcon: {
-    width: 24,
-    height: 22.2,
-  },
   noteText: {
     textAlign: "justify",
     fontSize: 17,
@@ -118,8 +123,5 @@ const styles = StyleSheet.create({
   },
   note: {
     marginTop: 16,
-  },
-  menu: {
-    marginLeft: 32,
   },
 });

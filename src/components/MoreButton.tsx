@@ -1,13 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
+// @ts-ignore
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 
 import { useConfirm } from "../hooks/confirm.hook";
-import { observer } from "mobx-react-lite";
-import { NotesStoreContext } from "../store/NotesStore";
 
-export const MoreButton = observer(({ route }) => {
-  const NotesStore = useContext(NotesStoreContext);
+interface Props {
+  route: any;
+}
+
+export const MoreButton: React.FC<Props> = ({ route }) => {
   const { id, type } = route.params;
   const confirm = useConfirm();
   const navigation = useNavigation();
@@ -18,7 +20,7 @@ export const MoreButton = observer(({ route }) => {
         confirm(
           () => {
             console.log("id", id);
-            NotesStore.deleteBook(id);
+            // NotesStore.deleteBook(id);
             navigation.navigate("Home");
           },
           "Delete the book?",
@@ -44,4 +46,4 @@ export const MoreButton = observer(({ route }) => {
       style={{ marginRight: 16 }}
     />
   );
-});
+};

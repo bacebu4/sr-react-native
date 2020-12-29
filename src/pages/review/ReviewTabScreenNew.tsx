@@ -10,8 +10,6 @@ import {
 import { Title } from "../../components/Title";
 // @ts-ignore
 import { Tag } from "../../Tag";
-// @ts-ignore
-import { Comment } from "../../Comment";
 import { observer } from "mobx-react-lite";
 // @ts-ignore
 import { NotesStoreContext } from "../../store/NotesStore";
@@ -33,6 +31,7 @@ import { EditTextModal } from "../../components/EditTextModal";
 import { useDailyNotesQuery } from "../../generated/graphql";
 import { TText } from "../../components/TText";
 import { Card } from "../../components/CardNew";
+import { Comment } from "../../components/CommentNew";
 
 interface Props {
   noteIndex: number;
