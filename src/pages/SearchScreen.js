@@ -88,7 +88,7 @@ export const SearchScreen = observer(({ navigation }) => {
                     onPress={() =>
                       navigation.navigate("Highlight", {
                         name: "Highlight",
-                        note_id: item.note_id,
+                        noteId: item.note_id,
                       })
                     }
                   >
