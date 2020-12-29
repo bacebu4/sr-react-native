@@ -1,17 +1,29 @@
 import React, { useContext } from "react";
-import { Modal } from "react-native";
+import { GestureResponderEvent, Modal } from "react-native";
 import { MainContainer } from "./grid/MainContainer";
 import { Container } from "./grid/Container";
 import { NavbarTopSecondary } from "./NavbarTopSecondary";
+// @ts-ignore
 import { NotesStoreContext } from "../store/NotesStore";
 import { MainButton } from "../MainButton";
 import { useTranslation } from "react-i18next";
 
-export const SettingsModal = ({ modalState, setModalState, handleDone }) => {
+interface Props {
+  modalState: boolean;
+  setModalState: (arg0: boolean) => void;
+  handleDone: (event: GestureResponderEvent) => void;
+}
+
+export const SettingsModal: React.FC<Props> = ({
+  modalState,
+  setModalState,
+  handleDone,
+}) => {
   const NotesStore = useContext(NotesStoreContext);
   const { t, i18n } = useTranslation();
 
   const handleLogout = () => {
+    // @ts-ignore
     NotesStore.logout();
   };
 
