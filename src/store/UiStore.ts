@@ -2,14 +2,14 @@ import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
 
 class UiStore {
-  currentNote = 0;
-  currentTag = null;
+  currentNote: string | null = null;
+  currentTag: string | null = null;
 
-  setCurrentNote(value) {
+  setCurrentNoteId(value: string) {
     this.currentNote = value;
   }
 
-  setCurrentTag(value) {
+  setCurrentTagId(value: string) {
     this.currentTag = value;
   }
 

@@ -14,13 +14,21 @@ import Constants from "expo-constants";
 import { Title } from "../components/Title";
 import { SearchBar } from "react-native-elements";
 import { observer } from "mobx-react-lite";
+// @ts-ignore
 import { NotesStoreContext } from "../store/NotesStore";
+// @ts-ignore
 import { Card } from "../Card";
 import { TextGray } from "../components/TextGray";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { SearchStackParamList } from "src/stacks/SearchStackScreen";
 
-export const SearchScreen = observer(({ navigation }) => {
+type Props = {
+  navigation: StackNavigationProp<SearchStackParamList, "Search">;
+};
+
+export const SearchScreen: React.FC<Props> = observer(({ navigation }) => {
   const [search, setSearch] = useState("");
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState<string[]>([]);
   const [hasSearched, setSearched] = useState(false);
   const NotesStore = useContext(NotesStoreContext);
 
@@ -31,17 +39,20 @@ export const SearchScreen = observer(({ navigation }) => {
       if (history.length > 8) {
         setHistory(history.slice(0, 8));
       }
+      // @ts-ignore
       NotesStore.searchNotes(search);
     }
   };
 
   const handleClear = () => {
     setSearched(false);
+    // @ts-ignore
     NotesStore.setSearchResults([]);
   };
 
-  const handleHistory = (pastSearch) => {
+  const handleHistory = (pastSearch: string) => {
     setSearch(pastSearch);
+    // @ts-ignore
     NotesStore.searchNotes(pastSearch);
   };
 
@@ -70,6 +81,7 @@ export const SearchScreen = observer(({ navigation }) => {
         />
       </Container>
 
+      {/* @ts-ignore */}
       {NotesStore.isSearching ? (
         <>
           <Container isCentered mt={200}>
@@ -78,6 +90,7 @@ export const SearchScreen = observer(({ navigation }) => {
         </>
       ) : (
         <>
+          {/* @ts-ignore */}
           {NotesStore.searchResults.length ? (
             <FlatList
               data={NotesStore.searchResults}

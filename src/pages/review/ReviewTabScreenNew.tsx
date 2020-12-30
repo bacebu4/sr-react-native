@@ -13,7 +13,6 @@ import { Tag } from "../../Tag";
 import { observer } from "mobx-react-lite";
 // @ts-ignore
 import { NotesStoreContext } from "../../store/NotesStore";
-// @ts-ignore
 import { UiStoreContext } from "../../store/UiStore";
 import ActionSheet from "react-native-actionsheet";
 import * as Haptics from "expo-haptics";
@@ -35,7 +34,7 @@ import { Comment } from "../../components/CommentNew";
 
 interface Props {
   noteIndex: number;
-  noteId: String | null;
+  noteId: string | null;
 }
 
 export const ReviewTabScreen: React.FC<Props> = observer(
@@ -43,7 +42,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(
     const UiStore = useContext(UiStoreContext);
     const actionTagRef = useRef(null);
     const actionAddRef = useRef(null);
-    const [tagId, setTagId] = useState<String | null>(null);
+    const [tagId, setTagId] = useState<string | null>(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalTagVisible, setModalTagVisible] = useState(false);
     const [modalEditTagVisible, setModalEditTagVisible] = useState(false);
@@ -54,11 +53,10 @@ export const ReviewTabScreen: React.FC<Props> = observer(
 
     const showAddTagStack = () => {
       setModalTagVisible(true);
-      // @ts-ignore
-      // UiStore.setCurrentNote(note.note_id);
+      UiStore.setCurrentNoteId(data!.dailyNotes![noteIndex - 1]!.id);
     };
 
-    const handleLongAddPress = (tagId: String) => {
+    const handleLongAddPress = (tagId: string) => {
       setTagId(tagId);
       Haptics.selectionAsync();
       // @ts-ignore
@@ -76,8 +74,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(
     };
 
     const handleEditTag = () => {
-      // @ts-ignore
-      UiStore.setCurrentTag(tagId);
+      UiStore.setCurrentTagId(tagId!);
       setModalEditTagVisible(true);
     };
 
@@ -286,9 +283,6 @@ export const ReviewTabScreen: React.FC<Props> = observer(
 );
 
 const styles = StyleSheet.create({
-  mt: {
-    marginTop: 32,
-  },
   line: {
     flexDirection: "row",
     justifyContent: "space-between",
