@@ -71,6 +71,7 @@ export type Query = {
   note?: Maybe<Note>;
   initInfo?: Maybe<InitInfo>;
   books?: Maybe<Array<Maybe<Book>>>;
+  latestBooks?: Maybe<Array<Maybe<Book>>>;
 };
 
 
@@ -89,7 +90,7 @@ export type Mutation = {
   addNewTag?: Maybe<Scalars['Boolean']>;
   updateReviewHistory?: Maybe<Scalars['Boolean']>;
   deleteNote?: Maybe<Scalars['Boolean']>;
-  updateNote?: Maybe<UpdatedNote>;
+  updateNote?: Maybe<Note>;
 };
 
 
@@ -141,8 +142,8 @@ export type UpdateNoteMutationVariables = Exact<{
 export type UpdateNoteMutation = (
   { __typename?: 'Mutation' }
   & { updateNote?: Maybe<(
-    { __typename?: 'UpdatedNote' }
-    & Pick<UpdatedNote, 'id' | 'text'>
+    { __typename?: 'Note' }
+    & Pick<Note, 'id' | 'text'>
   )> }
 );
 
@@ -182,6 +183,17 @@ export type DailyNotesQuery = (
       { __typename?: 'Comment' }
       & Pick<Comment, 'id' | 'text' | 'createdAt'>
     )>> }
+  )>>> }
+);
+
+export type LatestBooksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LatestBooksQuery = (
+  { __typename?: 'Query' }
+  & { latestBooks?: Maybe<Array<Maybe<(
+    { __typename?: 'Book' }
+    & Pick<Book, 'id' | 'title' | 'author'>
   )>>> }
 );
 
@@ -253,4 +265,17 @@ export const DailyNotesDocument = gql`
 
 export function useDailyNotesQuery(options: Omit<Urql.UseQueryArgs<DailyNotesQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<DailyNotesQuery>({ query: DailyNotesDocument, ...options });
+};
+export const LatestBooksDocument = gql`
+    query LatestBooks {
+  latestBooks {
+    id
+    title
+    author
+  }
+}
+    `;
+
+export function useLatestBooksQuery(options: Omit<Urql.UseQueryArgs<LatestBooksQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<LatestBooksQuery>({ query: LatestBooksDocument, ...options });
 };
