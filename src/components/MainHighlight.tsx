@@ -2,7 +2,6 @@ import React from "react";
 import { ActivityIndicator, Image, Text } from "react-native";
 import { Container } from "./grid/Container";
 import { TextGray } from "./TextGray";
-// @ts-ignore
 import { useNavigation } from "@react-navigation/native";
 import { Card } from "./CardNew";
 import { useDailyNotesQuery } from "../generated/graphql";
@@ -47,7 +46,7 @@ export const MainHighlight: React.FC = () => {
   }
 
   return (
-    <>
+    <Container mt={32}>
       <Card note={data.dailyNotes[0]}></Card>
 
       <Container mt={32} isCentered>
@@ -56,6 +55,6 @@ export const MainHighlight: React.FC = () => {
           title="Start review"
         ></MainButton>
       </Container>
-    </>
+    </Container>
   );
 };

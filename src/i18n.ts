@@ -48,6 +48,7 @@ i18n.use(initReactI18next).init({
         Edit: "Редактировать",
         Cancel: "Отменить",
         Share: "Поделиться",
+        "Latest books": "Недавние книги",
       },
     },
   },

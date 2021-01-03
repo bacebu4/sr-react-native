@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { TText } from "./TText";
 
 interface Props {
   numberOfLines?: number | undefined;

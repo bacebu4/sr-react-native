@@ -1,15 +1,6 @@
 import React, { useContext, useRef, useState } from "react";
-import {
-  ScrollView,
-  RefreshControl,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-} from "react-native";
-import { Card } from "../Card";
+import { ScrollView, RefreshControl, StyleSheet, View } from "react-native";
 import { Navbar } from "../Navbar";
-import { MainButton } from "../MainButton";
 import { Title } from "../components/Title";
 import { Carousel } from "../Carousel";
 import { Tag } from "../Tag";
@@ -25,10 +16,9 @@ import { UiStoreContext } from "../store/UiStore";
 import { useConfirm } from "../hooks/confirm.hook";
 import { TagModal } from "../components/TagModal";
 import { TagConstructor } from "./addTag/TagConstructor";
-import { TextGray } from "../components/TextGray";
 import { SeeAll } from "../components/SeeAll";
-import { useDailyNotesQuery } from "../generated/graphql";
 import { MainHighlight } from "../components/MainHighlight";
+import { LatestBooks } from "../components/LatestBooks";
 
 export const HomeScreen = observer(({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -102,26 +92,9 @@ export const HomeScreen = observer(({ navigation }) => {
             <Navbar title="Book stash" handleClick={openSettings}></Navbar>
           </Container>
 
-          <Container mt={32}>
-            <MainHighlight />
-          </Container>
+          <MainHighlight />
 
-          {/* Latest reads */}
-          {NotesStore.latestBooks.length ? (
-            <>
-              <Container mt={32}>
-                <Title title="Latest reads"></Title>
-              </Container>
-
-              <Carousel books={NotesStore.latestBooks.slice(0, 10)}></Carousel>
-              <Container mt={16} hasBorder></Container>
-              <Container mt={16}>
-                <SeeAll onPress={() => navigation.navigate("AllBooks")} />
-              </Container>
-            </>
-          ) : (
-            <View />
-          )}
+          <LatestBooks />
 
           {/* Review by tags */}
           {NotesStore.tags.length ? (
