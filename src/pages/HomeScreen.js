@@ -1,8 +1,7 @@
 import React, { useContext, useRef, useState } from "react";
-import { ScrollView, RefreshControl, StyleSheet, View } from "react-native";
+import { ScrollView, RefreshControl, View } from "react-native";
 import { Navbar } from "../Navbar";
 import { Title } from "../components/Title";
-import { Carousel } from "../Carousel";
 import { Tag } from "../Tag";
 import { NotesStoreContext } from "../store/NotesStore";
 import { observer } from "mobx-react-lite";
@@ -16,7 +15,6 @@ import { UiStoreContext } from "../store/UiStore";
 import { useConfirm } from "../hooks/confirm.hook";
 import { TagModal } from "../components/TagModal";
 import { TagConstructor } from "./addTag/TagConstructor";
-import { SeeAll } from "../components/SeeAll";
 import { MainHighlight } from "../components/MainHighlight";
 import { LatestBooks } from "../components/LatestBooks";
 
@@ -100,7 +98,7 @@ export const HomeScreen = observer(({ navigation }) => {
           {NotesStore.tags.length ? (
             <>
               <Container mt={44} mb={150}>
-                <Title title="Review by tags"></Title>
+                <Title title="View by tags"></Title>
 
                 <TagContainer>
                   {NotesStore.tags.slice(0, 10).map((tag) => (
@@ -143,11 +141,4 @@ export const HomeScreen = observer(({ navigation }) => {
       </MainContainer>
     </>
   );
-});
-
-const styles = StyleSheet.create({
-  image: {
-    width: 186,
-    height: 173,
-  },
 });

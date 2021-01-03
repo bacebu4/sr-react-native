@@ -46,9 +46,5 @@ export const LatestBooks: React.FC = () => {
     );
   }
 
-  return (
-    <>
-      <View />
-    </>
-  );
+  return <View />;
 };
