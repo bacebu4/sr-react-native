@@ -49,6 +49,7 @@ i18n.use(initReactI18next).init({
         Cancel: "Отменить",
         Share: "Поделиться",
         "Latest books": "Недавние книги",
+        "View by tags": "Обзор по тегам",
       },
     },
   },

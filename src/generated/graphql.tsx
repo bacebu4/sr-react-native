@@ -72,6 +72,7 @@ export type Query = {
   initInfo?: Maybe<InitInfo>;
   books?: Maybe<Array<Maybe<Book>>>;
   latestBooks?: Maybe<Array<Maybe<Book>>>;
+  latestTags?: Maybe<Array<Maybe<Tag>>>;
 };
 
 
@@ -197,6 +198,17 @@ export type LatestBooksQuery = (
   )>>> }
 );
 
+export type LatestTagsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LatestTagsQuery = (
+  { __typename?: 'Query' }
+  & { latestTags?: Maybe<Array<Maybe<(
+    { __typename?: 'Tag' }
+    & Pick<Tag, 'id' | 'name' | 'hue'>
+  )>>> }
+);
+
 
 export const DeleteNoteDocument = gql`
     mutation DeleteNote($noteId: String!) {
@@ -278,4 +290,17 @@ export const LatestBooksDocument = gql`
 
 export function useLatestBooksQuery(options: Omit<Urql.UseQueryArgs<LatestBooksQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<LatestBooksQuery>({ query: LatestBooksDocument, ...options });
+};
+export const LatestTagsDocument = gql`
+    query LatestTags {
+  latestTags {
+    id
+    name
+    hue
+  }
+}
+    `;
+
+export function useLatestTagsQuery(options: Omit<Urql.UseQueryArgs<LatestTagsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<LatestTagsQuery>({ query: LatestTagsDocument, ...options });
 };

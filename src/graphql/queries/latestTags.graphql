@@ -1,0 +1,7 @@
+query LatestTags {
+  latestTags {
+    id
+    name
+    hue
+  }
+}

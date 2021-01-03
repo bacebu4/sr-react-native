@@ -1,0 +1,121 @@
+import React, { useContext, useRef, useState } from "react";
+import { ActivityIndicator, Text } from "react-native";
+import { Container } from "./grid/Container";
+import { useNavigation } from "@react-navigation/native";
+import { Title } from "./Title";
+import { useTranslation } from "react-i18next";
+import { useLatestTagsQuery } from "../generated/graphql";
+import { TagContainer } from "./grid/TagContainer";
+// @ts-ignore
+import { Tag } from "../Tag";
+import * as Haptics from "expo-haptics";
+import ActionSheet from "react-native-actionsheet";
+import { observer } from "mobx-react-lite";
+import { UiStoreContext } from "../store/UiStore";
+import { TagModal } from "./TagModal";
+// @ts-ignore
+import { TagConstructor } from "../pages/addTag/TagConstructor";
+import { useConfirm } from "../hooks/confirm.hook";
+
+export const LatestTags: React.FC = observer(() => {
+  const actionTagRef = useRef(null);
+  const [result] = useLatestTagsQuery();
+  const { data, fetching, error } = result;
+  const navigation = useNavigation();
+  const { t } = useTranslation();
+  const [tagId, setTagId] = useState<string | null>(null);
+  const UiStore = useContext(UiStoreContext);
+  const [modalEditTagVisible, setModalEditTagVisible] = useState(false);
+  const confirm = useConfirm();
+
+  const handleLongAddPress = (tagIdPayload: string) => {
+    setTagId(tagIdPayload);
+    Haptics.selectionAsync();
+    // @ts-ignore
+    actionTagRef.current.show();
+  };
+
+  const handleEditTag = () => {
+    UiStore.setCurrentTagId(tagId!);
+    setModalEditTagVisible(true);
+  };
+
+  const handleDeleteTag = () => {
+    confirm(
+      () => {
+        // NotesStore.deleteTag(tagId);
+        console.log("some");
+      },
+      "Delete the tag globally?",
+      "Are you sure you want to delete the tag?"
+    );
+  };
+
+  if (error) {
+    return (
+      <Container isCentered mt={400}>
+        <Text>{error.message}</Text>
+      </Container>
+    );
+  }
+
+  if (fetching) {
+    return (
+      <Container isCentered mt={400}>
+        <ActivityIndicator size="large" />
+      </Container>
+    );
+  }
+
+  return (
+    <>
+      <TagModal
+        modalState={modalEditTagVisible}
+        setModalState={setModalEditTagVisible}
+      >
+        <TagConstructor
+          handleBack={() => setModalEditTagVisible(false)}
+          editMode
+        ></TagConstructor>
+      </TagModal>
+
+      <Container mt={44} mb={100}>
+        <Title title={t("View by tags")}></Title>
+
+        <TagContainer>
+          {data?.latestTags?.map((tag) => (
+            <Tag
+              hue={tag?.hue}
+              key={tag?.id}
+              title={tag?.name}
+              style={{ marginRight: 16, marginTop: 16 }}
+              onLongPress={() => handleLongAddPress(tag!.id)}
+              clickAction={() =>
+                navigation.navigate("By", {
+                  id: tag?.id,
+                  name: tag?.name,
+                  type: "Tag",
+                })
+              }
+            ></Tag>
+          ))}
+        </TagContainer>
+      </Container>
+
+      <ActionSheet
+        ref={actionTagRef}
+        title="What you want to add?"
+        options={["Delete", "Edit", "Cancel"]}
+        cancelButtonIndex={2}
+        onPress={(index) => {
+          if (index === 0) {
+            handleDeleteTag();
+          } else if (index === 1) {
+            handleEditTag();
+          }
+        }}
+        destructiveButtonIndex={0}
+      />
+    </>
+  );
+});

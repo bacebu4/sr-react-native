@@ -30,7 +30,7 @@ export const LatestBooks: React.FC = () => {
     );
   }
 
-  if (data?.latestBooks) {
+  if (data?.latestBooks?.length) {
     return (
       <>
         <Container mt={32}>
