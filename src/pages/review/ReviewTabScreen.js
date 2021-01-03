@@ -207,7 +207,7 @@ export const ReviewTabScreen = observer(({ noteIndex, noteId = null }) => {
                         title={tag.tag_name}
                         onLongPress={() => handleLongAddPress(tag.tag_id)}
                         style={{ marginRight: 16, marginTop: 16 }}
-                      ></Tag>
+                      />
                     ))}
                   </TagContainer>
                 </>

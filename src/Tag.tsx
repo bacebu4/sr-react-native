@@ -1,8 +1,23 @@
 import React from "react";
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  GestureResponderEvent,
+  ViewStyle,
+  StyleProp,
+} from "react-native";
 
-export const Tag = ({
-  clickAction,
+interface Props {
+  onPress?: (event: GestureResponderEvent) => void;
+  hue?: number;
+  title?: string;
+  onLongPress?: (event: GestureResponderEvent) => void;
+  style?: StyleProp<ViewStyle>;
+}
+
+export const Tag: React.FC<Props> = ({
+  onPress,
   hue = 100,
   title = "Tag",
   onLongPress,
@@ -10,11 +25,12 @@ export const Tag = ({
 }) => {
   return (
     <TouchableOpacity
-      onPress={clickAction}
+      onPress={onPress}
       onLongPress={onLongPress}
       style={{
         ...styles.wrapper,
         backgroundColor: `hsl(${hue}, 86%, 93%)`,
+        // @ts-ignore
         ...style,
       }}
     >

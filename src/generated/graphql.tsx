@@ -31,7 +31,7 @@ export type Tag = {
   __typename?: 'Tag';
   id: Scalars['ID'];
   name: Scalars['String'];
-  hue: Scalars['String'];
+  hue: Scalars['Int'];
 };
 
 export type Comment = {

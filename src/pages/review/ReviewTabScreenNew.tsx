@@ -221,7 +221,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(
                         title={tag?.name}
                         onLongPress={() => handleLongAddPress(tag!.id)}
                         style={{ marginRight: 16, marginTop: 16 }}
-                      ></Tag>
+                      />
                     ))}
                   </TagContainer>
                 </>

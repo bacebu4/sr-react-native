@@ -64,9 +64,7 @@ export const ChooseScreen = observer(({ handleCancel, note }) => {
                           hue={tag.hue}
                           key={tag.tag_id}
                           style={{ marginRight: 16, marginTop: 24 }}
-                          clickAction={() =>
-                            handleSubmitFromExisting(tag.tag_id)
-                          }
+                          onPress={() => handleSubmitFromExisting(tag.tag_id)}
                         />
                       );
                     }

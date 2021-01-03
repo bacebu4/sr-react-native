@@ -6,7 +6,6 @@ import { Title } from "./Title";
 import { useTranslation } from "react-i18next";
 import { useLatestTagsQuery } from "../generated/graphql";
 import { TagContainer } from "./grid/TagContainer";
-// @ts-ignore
 import { Tag } from "../Tag";
 import * as Haptics from "expo-haptics";
 import ActionSheet from "react-native-actionsheet";
@@ -90,14 +89,14 @@ export const LatestTags: React.FC = observer(() => {
               title={tag?.name}
               style={{ marginRight: 16, marginTop: 16 }}
               onLongPress={() => handleLongAddPress(tag!.id)}
-              clickAction={() =>
+              onPress={() =>
                 navigation.navigate("By", {
                   id: tag?.id,
                   name: tag?.name,
                   type: "Tag",
                 })
               }
-            ></Tag>
+            />
           ))}
         </TagContainer>
       </Container>

@@ -108,7 +108,7 @@ export const TagConstructor = observer(
 
           <Container isCentered mt={44}>
             <Container isCentered>
-              <Tag hue={color} title={tagName}></Tag>
+              <Tag hue={color} title={tagName} />
             </Container>
             <TextInput
               style={styles.input}
