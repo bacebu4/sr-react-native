@@ -217,6 +217,20 @@ export type LatestTagsQuery = (
   )>>> }
 );
 
+export type NotesByQueryVariables = Exact<{
+  type: Scalars['String'];
+  id: Scalars['String'];
+}>;
+
+
+export type NotesByQuery = (
+  { __typename?: 'Query' }
+  & { notesBy?: Maybe<Array<Maybe<(
+    { __typename?: 'Note' }
+    & Pick<Note, 'text' | 'id' | 'title' | 'author'>
+  )>>> }
+);
+
 export type NotesByBookQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -348,6 +362,20 @@ export const LatestTagsDocument = gql`
 
 export function useLatestTagsQuery(options: Omit<Urql.UseQueryArgs<LatestTagsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<LatestTagsQuery>({ query: LatestTagsDocument, ...options });
+};
+export const NotesByDocument = gql`
+    query NotesBy($type: String!, $id: String!) {
+  notesBy(type: $type, id: $id) {
+    text
+    id
+    title
+    author
+  }
+}
+    `;
+
+export function useNotesByQuery(options: Omit<Urql.UseQueryArgs<NotesByQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<NotesByQuery>({ query: NotesByDocument, ...options });
 };
 export const NotesByBookDocument = gql`
     query NotesByBook($id: String!) {
