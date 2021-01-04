@@ -68,12 +68,19 @@ export type InitInfo = {
 export type Query = {
   __typename?: 'Query';
   dailyNotes?: Maybe<Array<Maybe<Note>>>;
+  notesBy?: Maybe<Array<Maybe<Note>>>;
   note?: Maybe<Note>;
   initInfo?: Maybe<InitInfo>;
   books?: Maybe<Array<Maybe<Book>>>;
   latestBooks?: Maybe<Array<Maybe<Book>>>;
   tags?: Maybe<Array<Maybe<Tag>>>;
   latestTags?: Maybe<Array<Maybe<Tag>>>;
+};
+
+
+export type QueryNotesByArgs = {
+  id?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 
@@ -210,6 +217,19 @@ export type LatestTagsQuery = (
   )>>> }
 );
 
+export type NotesByBookQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type NotesByBookQuery = (
+  { __typename?: 'Query' }
+  & { notesBy?: Maybe<Array<Maybe<(
+    { __typename?: 'Note' }
+    & Pick<Note, 'text' | 'id'>
+  )>>> }
+);
+
 export type TagsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -315,6 +335,18 @@ export const LatestTagsDocument = gql`
 
 export function useLatestTagsQuery(options: Omit<Urql.UseQueryArgs<LatestTagsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<LatestTagsQuery>({ query: LatestTagsDocument, ...options });
+};
+export const NotesByBookDocument = gql`
+    query NotesByBook($id: String!) {
+  notesBy(type: "book", id: $id) {
+    text
+    id
+  }
+}
+    `;
+
+export function useNotesByBookQuery(options: Omit<Urql.UseQueryArgs<NotesByBookQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<NotesByBookQuery>({ query: NotesByBookDocument, ...options });
 };
 export const TagsDocument = gql`
     query Tags {
