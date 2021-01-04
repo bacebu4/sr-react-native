@@ -1,18 +1,28 @@
+import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
+import { AuthStackParamList } from "src/stacks/AuthStackScreen";
 import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
 import { MainButton } from "../../MainButton";
 import { MainLink } from "../../MainLink";
+import { TText } from "../../components/TText";
+import { useTranslation } from "react-i18next";
 
-export const AuthHomeScreen = ({ navigation }) => {
+interface Props {
+  navigation: StackNavigationProp<AuthStackParamList, "AuthHome">;
+}
+
+export const AuthHomeScreen: React.FC<Props> = ({ navigation }) => {
+  const { t } = useTranslation();
+
   return (
     <MainContainer isCentered>
       <Container isCentered>
         <Image style={styles.image} source={require("../../login.png")} />
-        <Text style={{ ...styles.mtx, ...styles.text }}>
+        <TText style={{ ...styles.mtx, ...styles.text }}>
           Remember what you read
-        </Text>
+        </TText>
         <View style={styles.button}>
           <MainButton
             title="Sign up free"
@@ -21,8 +31,8 @@ export const AuthHomeScreen = ({ navigation }) => {
         </View>
         <View style={styles.mts}>
           <MainLink
-            title="Already have an account?"
-            clickAction={() => navigation.navigate("AuthLogin")}
+            title={t("Already have an account?")}
+            onPress={() => navigation.navigate("AuthLogin")}
           ></MainLink>
         </View>
       </Container>
