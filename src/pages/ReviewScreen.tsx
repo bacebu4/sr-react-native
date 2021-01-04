@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useEffect } from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, Text } from "react-native";
 // @ts-ignore
 import { NavbarSecondary } from "../NavbarSecondary";
 import { SceneRendererProps, TabView } from "react-native-tab-view";
@@ -11,7 +11,10 @@ import { ReviewFinalScreen } from "./review/ReviewFinalScreen";
 import * as Haptics from "expo-haptics";
 import { MainContainer } from "../components/grid/MainContainer";
 import { Container } from "../components/grid/Container";
-import { useUpdateReviewHistoryMutation } from "../generated/graphql";
+import {
+  useDailyNotesQuery,
+  useUpdateReviewHistoryMutation,
+} from "../generated/graphql";
 import { format } from "date-fns";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { HomeStackParamList } from "src/stacks/HomeStackScreen";
@@ -24,14 +27,15 @@ const renderScene: React.FC<
     route: {
       key: any;
       title: any;
+      noteId: string;
     };
   }
 > = ({ route, jumpTo }) => {
-  if (Number(route.key <= AMOUNT)) {
-    // TODO здесь получить с помощью квери ноуты и передать от них айди
-    return <ReviewTabScreen jumpTo={jumpTo} noteIndex={Number(route.key)} />;
+  if (Number(route.key) > AMOUNT) {
+    return <ReviewFinalScreen jumpTo={jumpTo} />;
   }
-  return <ReviewFinalScreen jumpTo={jumpTo} />;
+
+  return <ReviewTabScreen jumpTo={jumpTo} noteId={route.noteId} />;
 };
 
 const initialLayout = { width: Dimensions.get("window").width };
@@ -43,6 +47,18 @@ type Props = {
 export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
   const NotesStore = useContext(NotesStoreContext);
   const [, updateReviewHistory] = useUpdateReviewHistoryMutation();
+  const [result] = useDailyNotesQuery();
+  const { data, fetching } = result;
+
+  if (fetching) {
+    return (
+      <MainContainer>
+        <Container isCentered mt={400}>
+          <Text>Loading...</Text>
+        </Container>
+      </MainContainer>
+    );
+  }
 
   useEffect(() => {
     // @ts-ignore
@@ -53,17 +69,24 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
     const initialRoutes = [];
     // @ts-ignore
     for (let i = 1; i <= NotesStore.amount; i++) {
-      initialRoutes.push({ key: i, title: i });
+      initialRoutes.push({
+        key: i,
+        title: i,
+        noteId: data?.dailyNotes![i - 1]?.id
+          ? (data!.dailyNotes![i - 1]!.id! as string)
+          : "",
+      });
     }
     initialRoutes.push({
       // @ts-ignore
       key: NotesStore.amount + 1,
       // @ts-ignore
       title: NotesStore.amount + 1,
+      noteId: "",
     });
     return initialRoutes;
     // @ts-ignore
-  }, [NotesStore.amount]);
+  }, [NotesStore.amount, fetching]);
 
   const [index, setIndex] = React.useState(0);
 
