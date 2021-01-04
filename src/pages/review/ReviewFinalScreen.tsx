@@ -1,14 +1,19 @@
 import React, { useContext } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { MainButton } from "../../MainButton";
 import { Title } from "../../components/Title";
 import { useNavigation } from "@react-navigation/native";
 import { observer } from "mobx-react-lite";
+// @ts-ignore
 import { NotesStoreContext } from "../../store/NotesStore";
 import { TextGray } from "../../components/TextGray";
 import { useTranslation } from "react-i18next";
 
-export const ReviewFinalScreen = observer(() => {
+interface Props {
+  jumpTo?: (key: string) => void;
+}
+
+export const ReviewFinalScreen: React.FC<Props> = observer(() => {
   const navigation = useNavigation();
   const NotesStore = useContext(NotesStoreContext);
   const { t } = useTranslation();
@@ -25,6 +30,7 @@ export const ReviewFinalScreen = observer(() => {
       ></Image>
       <Title title={t("Congrats")}></Title>
       <TextGray mt={32}>
+        {/* @ts-ignore */}
         You've been on the track for {NotesStore.info.streak} days
       </TextGray>
       <MainButton

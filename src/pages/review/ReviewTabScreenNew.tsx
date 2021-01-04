@@ -28,8 +28,9 @@ import { Card } from "../../components/CardNew";
 import { Comment } from "../../components/CommentNew";
 
 interface Props {
-  noteIndex: number;
-  noteId: string | null;
+  noteIndex?: number;
+  noteId?: string | null;
+  jumpTo?: (key: string) => void;
 }
 
 export const ReviewTabScreen: React.FC<Props> = observer(
