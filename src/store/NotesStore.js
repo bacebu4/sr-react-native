@@ -128,9 +128,9 @@ class NotesStore {
 
       initInfo.accountInfo.missed = 0;
       initInfo.accountInfo.current = 0;
-      initInfo.accountInfo.streak = streak;
+      initInfo.accountInfo.streak = streak + 1;
       console.log("daysPast", daysPast);
-      console.log("streak", streak);
+      console.log("streak", streak + 1);
 
       switch (daysPast) {
         case 0:
