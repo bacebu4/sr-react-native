@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ScrollView, RefreshControl } from "react-native";
+// @ts-ignore
 import { Navbar } from "../Navbar";
 import { MainContainer } from "../components/grid/MainContainer";
 import { Container } from "../components/grid/Container";

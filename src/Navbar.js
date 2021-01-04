@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
 import { Title } from "./components/Title";
@@ -31,7 +31,7 @@ export const Navbar = observer(({ title, handleClick }) => {
           color="#CCA9F9"
           shadowColor="#d7d7d7"
           bgColor="#fff"
-        ></ProgressCircle>
+        />
         {!NotesStore.info.reviewed ? (
           <TText style={styles.info}>Review Process Pending</TText>
         ) : (
