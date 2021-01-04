@@ -8,19 +8,14 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Title } from "../../components/Title";
-// @ts-ignore
 import { Tag } from "../../Tag";
 import { observer } from "mobx-react-lite";
-// @ts-ignore
-import { NotesStoreContext } from "../../store/NotesStore";
 import { UiStoreContext } from "../../store/UiStore";
 import ActionSheet from "react-native-actionsheet";
 import * as Haptics from "expo-haptics";
 import { Container } from "../../components/grid/Container";
 import { TagContainer } from "../../components/grid/TagContainer";
 import { useConfirm } from "../../hooks/confirm.hook";
-// @ts-ignore
-import { useRequest } from "../../hooks/request.hook";
 import { TagModal } from "../../components/TagModal";
 // @ts-ignore
 import { ChooseScreen } from "../addTag/ChooseScreen";
