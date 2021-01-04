@@ -4,9 +4,16 @@ import { Container } from "../components/grid/Container";
 import { FlatList, Text, TouchableOpacity } from "react-native";
 import { useNotesByQuery } from "../generated/graphql";
 import { Card } from "../components/CardNew";
+import { HomeStackParamList } from "src/stacks/HomeStackScreen";
+import { RouteProp } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
-// @ts-ignore
-export const ByScreen = ({ route, navigation }) => {
+type Props = {
+  route: RouteProp<HomeStackParamList, "By">;
+  navigation: StackNavigationProp<HomeStackParamList, "By">;
+};
+
+export const ByScreen: React.FC<Props> = ({ route, navigation }) => {
   const { id, type } = route.params;
   const [result] = useNotesByQuery({ variables: { id, type } });
   const { data, fetching, error } = result;
@@ -42,7 +49,7 @@ export const ByScreen = ({ route, navigation }) => {
               onPress={() =>
                 navigation.navigate("Highlight", {
                   name: "Highlight",
-                  noteId: item?.id,
+                  noteId: item!.id,
                 })
               }
             >
