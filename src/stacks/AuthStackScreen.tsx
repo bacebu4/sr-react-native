@@ -1,8 +1,11 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AuthHomeScreen } from "../pages/auth/AuthHomeScreen";
+// @ts-ignore
 import { AuthLoginScreen } from "../pages/auth/AuthLoginScreen";
+// @ts-ignore
 import { AuthEmailScreen } from "../pages/auth/AuthEmailScreen";
+// @ts-ignore
 import { AuthPasswordScreen } from "../pages/auth/AuthPasswordScreen";
 
 export type AuthStackParamList = {

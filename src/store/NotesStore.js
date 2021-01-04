@@ -71,7 +71,6 @@ class NotesStore {
       this.setLoading(true);
 
       yield this.fetchInitInfo();
-      yield this.fetchHighlights();
     } catch (error) {
       throw new Error(error.message);
     } finally {
@@ -100,7 +99,6 @@ class NotesStore {
       this.setLoading(true);
 
       yield this.fetchInitInfo();
-      yield this.fetchHighlights();
     } catch (error) {
       throw new Error(error.message);
     } finally {
