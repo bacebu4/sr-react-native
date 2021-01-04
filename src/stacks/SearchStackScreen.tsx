@@ -1,6 +1,5 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-// @ts-ignore
 import { SearchScreen } from "../pages/SearchScreen";
 import { HighlightScreen } from "../pages/HighlightScreen";
 

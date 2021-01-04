@@ -1,9 +1,8 @@
 import React from "react";
 import { MainContainer } from "../components/grid/MainContainer";
-// @ts-ignore
-import { ReviewTabScreen } from "./review/ReviewTabScreen";
 import { RouteProp } from "@react-navigation/native";
 import { SearchStackParamList } from "src/stacks/SearchStackScreen";
+import { ReviewTabScreen } from "./review/ReviewTabScreenNew";
 
 type HighlightScreenRouteProp = RouteProp<SearchStackParamList, "Highlight">;
 
