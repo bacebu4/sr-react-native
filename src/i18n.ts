@@ -53,6 +53,8 @@ i18n.use(initReactI18next).init({
         "Remember what you read": "Помните, что вы читаете",
         "Sign up free": "Регистрация",
         "Already have an account?": "Уже есть аккаунт?",
+        "All books": "Все книги",
+        "All tags": "Все теги",
       },
     },
   },

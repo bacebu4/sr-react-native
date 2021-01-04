@@ -101,8 +101,8 @@ export const LatestTags: React.FC = observer(() => {
           ))}
         </TagContainer>
       </Container>
-      <Container mt={16} mb={96} hasBorder />
-      <Container mt={16}>
+      <Container mt={16} hasBorder />
+      <Container mt={16} mb={96}>
         <SeeAll onPress={() => navigation.navigate("AllTags")} />
       </Container>
 

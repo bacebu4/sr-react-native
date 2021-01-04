@@ -9,10 +9,13 @@ import { HighlightScreen } from "../pages/HighlightScreen";
 import { MoreButton } from "../components/MoreButton";
 import { AllBooksScreen } from "../pages/AllBooks";
 import { AllTagsScreen } from "../pages/AllTags";
+import { useTranslation } from "react-i18next";
 
 const HomeStack = createStackNavigator();
 
 export const HomeStackScreen = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <HomeStack.Navigator>
@@ -35,8 +38,8 @@ export const HomeStackScreen = () => {
           name="AllBooks"
           component={AllBooksScreen}
           options={{
-            title: "All books",
-            headerTitle: "All books",
+            title: t("All books"),
+            headerTitle: t("All books"),
             headerTintColor: "#CCA9F9",
             headerTitleStyle: {
               color: "#343434",
@@ -47,8 +50,8 @@ export const HomeStackScreen = () => {
           name="AllTags"
           component={AllTagsScreen}
           options={{
-            title: "All tags",
-            headerTitle: "All tags",
+            title: t("All tags"),
+            headerTitle: t("All tags"),
             headerTintColor: "#CCA9F9",
             headerTitleStyle: {
               color: "#343434",
