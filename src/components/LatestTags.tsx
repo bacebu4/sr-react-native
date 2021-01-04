@@ -15,6 +15,7 @@ import { TagModal } from "./TagModal";
 // @ts-ignore
 import { TagConstructor } from "../pages/addTag/TagConstructor";
 import { useConfirm } from "../hooks/confirm.hook";
+import { SeeAll } from "./SeeAll";
 
 export const LatestTags: React.FC = observer(() => {
   const actionTagRef = useRef(null);
@@ -78,7 +79,7 @@ export const LatestTags: React.FC = observer(() => {
         ></TagConstructor>
       </TagModal>
 
-      <Container mt={44} mb={100}>
+      <Container mt={44}>
         <Title title={t("View by tags")}></Title>
 
         <TagContainer>
@@ -99,6 +100,10 @@ export const LatestTags: React.FC = observer(() => {
             />
           ))}
         </TagContainer>
+      </Container>
+      <Container mt={16} mb={96} hasBorder />
+      <Container mt={16}>
+        <SeeAll onPress={() => navigation.navigate("AllTags")} />
       </Container>
 
       <ActionSheet

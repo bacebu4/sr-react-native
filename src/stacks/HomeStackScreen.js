@@ -8,6 +8,7 @@ import { ByScreen } from "../pages/ByScreen";
 import { HighlightScreen } from "../pages/HighlightScreen";
 import { MoreButton } from "../components/MoreButton";
 import { AllBooksScreen } from "../pages/AllBooks";
+import { AllTagsScreen } from "../pages/AllTags";
 
 const HomeStack = createStackNavigator();
 
@@ -36,6 +37,18 @@ export const HomeStackScreen = () => {
           options={{
             title: "All books",
             headerTitle: "All books",
+            headerTintColor: "#CCA9F9",
+            headerTitleStyle: {
+              color: "#343434",
+            },
+          }}
+        />
+        <HomeStack.Screen
+          name="AllTags"
+          component={AllTagsScreen}
+          options={{
+            title: "All tags",
+            headerTitle: "All tags",
             headerTintColor: "#CCA9F9",
             headerTitleStyle: {
               color: "#343434",
