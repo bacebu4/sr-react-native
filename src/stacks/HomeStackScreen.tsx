@@ -1,9 +1,10 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-
 import { HomeScreen } from "../pages/HomeScreen";
+// @ts-ignore
 import { ReviewScreen } from "../pages/ReviewScreen";
 import { TransitionPresets } from "@react-navigation/stack";
+// @ts-ignore
 import { ByScreen } from "../pages/ByScreen";
 import { HighlightScreen } from "../pages/HighlightScreen";
 import { MoreButton } from "../components/MoreButton";
@@ -11,7 +12,17 @@ import { AllBooksScreen } from "../pages/AllBooks";
 import { AllTagsScreen } from "../pages/AllTags";
 import { useTranslation } from "react-i18next";
 
-const HomeStack = createStackNavigator();
+export type HomeStackParamList = {
+  Home: undefined;
+  Review: undefined;
+  AllBooks: undefined;
+  AllTags: undefined;
+  Highlight: { name: string; noteId: string };
+  Search: undefined;
+  By: { id: string; type: string; name: string };
+};
+
+const HomeStack = createStackNavigator<HomeStackParamList>();
 
 export const HomeStackScreen = () => {
   const { t } = useTranslation();

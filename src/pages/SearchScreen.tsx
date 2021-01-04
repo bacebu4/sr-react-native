@@ -93,6 +93,7 @@ export const SearchScreen: React.FC<Props> = observer(({ navigation }) => {
           {/* @ts-ignore */}
           {NotesStore.searchResults.length ? (
             <FlatList
+              // @ts-ignore
               data={NotesStore.searchResults}
               keyExtractor={(item) => item.note_id}
               renderItem={({ item }) => (
