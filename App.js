@@ -38,7 +38,10 @@ const getToken = async () => {
 const NotesQuery = gql`
   query {
     dailyNotes {
+      __typename
+      id
       comments {
+        __typename
         id
         text
         createdAt
@@ -64,6 +67,7 @@ const client = createClient({
               const updatedIndex = data.dailyNotes.findIndex(
                 (n) => n.id === args.noteId
               );
+              console.log("data", data);
               console.log("args", args);
               console.log("updatedIndex", updatedIndex);
               data.dailyNotes[updatedIndex].comments.push(result.addComment);

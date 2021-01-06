@@ -5,6 +5,7 @@ import { Comment as CommentType, Maybe } from "src/generated/graphql";
 import { useConfirm } from "../hooks/confirm.hook";
 import { EditTextModal } from "./EditTextModal";
 import { useTranslation } from "react-i18next";
+import { format } from "date-fns";
 
 interface Props {
   comment: Maybe<CommentType>;
@@ -55,7 +56,9 @@ export const Comment: React.FC<Props> = ({ comment, disabled = false }) => {
       <View style={styles.wrapper}>
         <View style={styles.header}>
           <View>
-            <Text style={styles.date}>{comment?.createdAt.slice(0, 10)}</Text>
+            <Text style={styles.date}>
+              {format(Number(comment!.createdAt), "yyyy-MM-dd")}
+            </Text>
           </View>
           <View style={styles.more}>
             <TouchableOpacity onPress={showActionSheet} disabled={disabled}>
