@@ -8,11 +8,13 @@ import { HomeStackScreen } from "./src/stacks/HomeStackScreen";
 import { AuthStackScreen } from "./src/stacks/AuthStackScreen";
 import { LoadingScreen } from "./src/pages/LoadingScreen";
 import { SearchStackScreen } from "./src/stacks/SearchStackScreen";
-import { createClient, Provider } from "urql";
+import { createClient, Provider, dedupExchange, fetchExchange } from "urql";
+import { cacheExchange } from "@urql/exchange-graphcache";
 import * as SecureStore from "expo-secure-store";
 import { BACKEND_URL } from "./src/variables";
 import i18n from "./src/i18n";
 import { useTranslation } from "react-i18next";
+import gql from "graphql-tag";
 const initI18n = i18n;
 
 let TOKEN;
@@ -33,6 +35,18 @@ const getToken = async () => {
   }
 };
 
+const NotesQuery = gql`
+  query {
+    dailyNotes {
+      comments {
+        id
+        text
+        createdAt
+      }
+    }
+  }
+`;
+
 const client = createClient({
   url: `${BACKEND_URL}/graphql`,
   fetchOptions: () => {
@@ -40,6 +54,25 @@ const client = createClient({
       headers: { authorization: TOKEN },
     };
   },
+  exchanges: [
+    dedupExchange,
+    cacheExchange({
+      updates: {
+        Mutation: {
+          addComment: (result, args, cache, _) => {
+            cache.updateQuery({ query: NotesQuery }, (data) => {
+              const updatedIndex = data.dailyNotes.findIndex(
+                (n) => n.id === args.noteId
+              );
+              data.dailyNotes[updatedIndex].comments.push(result.addComment);
+              return data;
+            });
+          },
+        },
+      },
+    }),
+    fetchExchange,
+  ],
 });
 
 const Tab = createBottomTabNavigator();
