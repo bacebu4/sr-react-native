@@ -1,0 +1,3 @@
+mutation AddComment($noteId: ID!, $commentId: ID!, $text: String!) {
+  addComment(noteId: $noteId, commentId: $commentId, text: $text)
+}
