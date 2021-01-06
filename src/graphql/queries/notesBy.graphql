@@ -1,4 +1,4 @@
-query NotesBy($type: String!, $id: String!) {
+query NotesBy($type: String!, $id: ID!) {
   notesBy(type: $type, id: $id) {
     text
     id

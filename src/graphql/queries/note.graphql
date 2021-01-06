@@ -1,4 +1,4 @@
-query Note($id: String!) {
+query Note($id: ID!) {
   note(id: $id) {
     text
     id

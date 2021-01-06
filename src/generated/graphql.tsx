@@ -79,13 +79,13 @@ export type Query = {
 
 
 export type QueryNotesByArgs = {
-  id?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
   type?: Maybe<Scalars['String']>;
 };
 
 
 export type QueryNoteArgs = {
-  id?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
 };
 
 export type UpdatedNote = {
@@ -218,7 +218,7 @@ export type LatestTagsQuery = (
 );
 
 export type NoteQueryVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars['ID'];
 }>;
 
 
@@ -239,7 +239,7 @@ export type NoteQuery = (
 
 export type NotesByQueryVariables = Exact<{
   type: Scalars['String'];
-  id: Scalars['String'];
+  id: Scalars['ID'];
 }>;
 
 
@@ -252,7 +252,7 @@ export type NotesByQuery = (
 );
 
 export type NotesByBookQueryVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars['ID'];
 }>;
 
 
@@ -265,7 +265,7 @@ export type NotesByBookQuery = (
 );
 
 export type NotesByTagQueryVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars['ID'];
 }>;
 
 
@@ -384,7 +384,7 @@ export function useLatestTagsQuery(options: Omit<Urql.UseQueryArgs<LatestTagsQue
   return Urql.useQuery<LatestTagsQuery>({ query: LatestTagsDocument, ...options });
 };
 export const NoteDocument = gql`
-    query Note($id: String!) {
+    query Note($id: ID!) {
   note(id: $id) {
     text
     id
@@ -409,7 +409,7 @@ export function useNoteQuery(options: Omit<Urql.UseQueryArgs<NoteQueryVariables>
   return Urql.useQuery<NoteQuery>({ query: NoteDocument, ...options });
 };
 export const NotesByDocument = gql`
-    query NotesBy($type: String!, $id: String!) {
+    query NotesBy($type: String!, $id: ID!) {
   notesBy(type: $type, id: $id) {
     text
     id
@@ -423,7 +423,7 @@ export function useNotesByQuery(options: Omit<Urql.UseQueryArgs<NotesByQueryVari
   return Urql.useQuery<NotesByQuery>({ query: NotesByDocument, ...options });
 };
 export const NotesByBookDocument = gql`
-    query NotesByBook($id: String!) {
+    query NotesByBook($id: ID!) {
   notesBy(type: "book", id: $id) {
     text
     id
@@ -435,7 +435,7 @@ export function useNotesByBookQuery(options: Omit<Urql.UseQueryArgs<NotesByBookQ
   return Urql.useQuery<NotesByBookQuery>({ query: NotesByBookDocument, ...options });
 };
 export const NotesByTagDocument = gql`
-    query NotesByTag($id: String!) {
+    query NotesByTag($id: ID!) {
   notesBy(type: "tag", id: $id) {
     text
     id
