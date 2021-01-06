@@ -22,10 +22,11 @@ import { ChooseScreen } from "../addTag/ChooseScreen";
 // @ts-ignore
 import { TagConstructor } from "../addTag/TagConstructor";
 import { EditTextModal } from "../../components/EditTextModal";
-import { useNoteQuery } from "../../generated/graphql";
+import { useNoteQuery, useAddCommentMutation } from "../../generated/graphql";
 import { TText } from "../../components/TText";
 import { Card } from "../../components/CardNew";
 import { Comment } from "../../components/CommentNew";
+const { v4: uuidv4 } = require("uuid");
 
 interface Props {
   noteId?: string;
@@ -42,6 +43,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
   const [modalEditTagVisible, setModalEditTagVisible] = useState(false);
   const [text, setText] = useState("");
   const confirm = useConfirm();
+  const [, addComment] = useAddCommentMutation();
   const [result] = useNoteQuery({ variables: { id: noteId } });
   const { data, fetching, error } = result;
 
@@ -79,7 +81,14 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
 
   const handleSave = () => {
     setModalVisible(false);
-    // NotesStore.addComment(note.note_id, text);
+    const commentId = uuidv4();
+    if (text) {
+      addComment({
+        noteId: data!.note!.id!,
+        commentId,
+        text,
+      });
+    }
   };
 
   if (fetching) {

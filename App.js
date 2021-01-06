@@ -64,6 +64,8 @@ const client = createClient({
               const updatedIndex = data.dailyNotes.findIndex(
                 (n) => n.id === args.noteId
               );
+              console.log("args", args);
+              console.log("updatedIndex", updatedIndex);
               data.dailyNotes[updatedIndex].comments.push(result.addComment);
               return data;
             });
