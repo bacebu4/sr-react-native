@@ -1,3 +1,10 @@
 mutation AddComment($noteId: ID!, $commentId: ID!, $text: String!) {
-  addComment(noteId: $noteId, commentId: $commentId, text: $text)
+  addComment(noteId: $noteId, commentId: $commentId, text: $text) {
+    id
+    comments {
+      id
+      text
+      createdAt
+    }
+  }
 }

@@ -35,13 +35,11 @@ const getToken = async () => {
   }
 };
 
-const NotesQuery = gql`
-  query {
-    dailyNotes {
-      __typename
+const NoteQuery = gql`
+  query Note($id: ID!) {
+    note(id: $id) {
       id
       comments {
-        __typename
         id
         text
         createdAt
@@ -60,21 +58,22 @@ const client = createClient({
   exchanges: [
     dedupExchange,
     cacheExchange({
-      updates: {
-        Mutation: {
-          addComment: (result, args, cache, _) => {
-            cache.updateQuery({ query: NotesQuery }, (data) => {
-              const updatedIndex = data.dailyNotes.findIndex(
-                (n) => n.id === args.noteId
-              );
-              console.log("data", data);
-              console.log("args", args);
-              console.log("updatedIndex", updatedIndex);
-              data.dailyNotes[updatedIndex].comments.push(result.addComment);
+      optimistic: {
+        addComment: (variables, cache, _) => ({
+          id: variables.noteId,
+          comments: cache.updateQuery(
+            { query: NoteQuery, variables: { id: variables.noteId } },
+            (data) => {
+              data.note.comments.push({
+                __typename: "Comment",
+                id: variables.commentId,
+                text: variables.text,
+                createdAt: Date.now(),
+              });
               return data;
-            });
-          },
-        },
+            }
+          ),
+        }),
       },
     }),
     fetchExchange,
