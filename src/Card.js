@@ -72,7 +72,10 @@ export const Card = observer(({ note, dense = false, noteNew = null }) => {
         ) : (
           <>
             <View style={styles.header}>
-              <Image style={styles.cover} source={require("./cover.png")} />
+              <Image
+                style={styles.cover}
+                source={require("./assets/cover.png")}
+              />
               <View style={styles.info}>
                 <View>
                   <Text style={styles.title}>{note?.book_title}</Text>
@@ -88,7 +91,7 @@ export const Card = observer(({ note, dense = false, noteNew = null }) => {
                 >
                   <Image
                     style={styles.moreIcon}
-                    source={require("./dots.png")}
+                    source={require("./assets/dots.png")}
                   />
                 </TouchableOpacity>
               </View>

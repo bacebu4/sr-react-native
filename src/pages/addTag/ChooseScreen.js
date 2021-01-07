@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { View, Image } from "react-native";
-import { Tag } from "../../Tag";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
@@ -8,6 +7,7 @@ import { TagContainer } from "../../components/grid/TagContainer";
 import { NavbarTop } from "../../components/NavbarTop";
 import { TagConstructor } from "./TagConstructor";
 import { TextGray } from "../../components/TextGray";
+import { Tag } from "../../components/Tag";
 
 export const ChooseScreen = observer(({ handleCancel, note }) => {
   const NotesStore = useContext(NotesStoreContext);

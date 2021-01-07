@@ -109,7 +109,7 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
                 style={{
                   borderRadius: 5,
                 }}
-                source={require("../cover.png")}
+                source={require("../assets/cover.png")}
               />
               <View style={styles.info}>
                 <View>
@@ -129,7 +129,7 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
                       width: 24,
                       height: 22.2,
                     }}
-                    source={require("../dots.png")}
+                    source={require("../assets/dots.png")}
                   />
                 </TouchableOpacity>
               </View>

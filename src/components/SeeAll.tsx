@@ -11,7 +11,7 @@ export const SeeAll: React.FC<TouchableOpacityProps> = (props) => {
   return (
     <TouchableOpacity {...props} style={styles.wrapper}>
       <TText style={styles.title}>See All</TText>
-      <Image style={styles.icon} source={require("../arrow.png")} />
+      <Image style={styles.icon} source={require("../assets/arrow.png")} />
     </TouchableOpacity>
   );
 };

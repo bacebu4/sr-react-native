@@ -5,7 +5,7 @@ import { TextGray } from "./TextGray";
 import { useNavigation } from "@react-navigation/native";
 import { Card } from "./CardNew";
 import { useDailyNotesQuery } from "../generated/graphql";
-import { MainButton } from "../MainButton";
+import { MainButton } from "./MainButton";
 
 export const MainHighlight: React.FC = () => {
   const [result] = useDailyNotesQuery();

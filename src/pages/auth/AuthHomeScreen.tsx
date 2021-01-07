@@ -4,8 +4,8 @@ import { StyleSheet, View, Image } from "react-native";
 import { AuthStackParamList } from "src/stacks/AuthStackScreen";
 import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
-import { MainButton } from "../../MainButton";
-import { MainLink } from "../../MainLink";
+import { MainButton } from "../../components/MainButton";
+import { MainLink } from "../../components/MainLink";
 import { TText } from "../../components/TText";
 import { useTranslation } from "react-i18next";
 
@@ -19,7 +19,10 @@ export const AuthHomeScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <MainContainer isCentered>
       <Container isCentered>
-        <Image style={styles.image} source={require("../../login.png")} />
+        <Image
+          style={styles.image}
+          source={require("../../assets/login.png")}
+        />
         <TText style={{ ...styles.mtx, ...styles.text }}>
           Remember what you read
         </TText>

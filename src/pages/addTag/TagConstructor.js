@@ -6,13 +6,13 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { Tag } from "../../Tag";
 import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../../store/UiStore";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { useMessage } from "../../hooks/message.hook";
 import { NavbarTop } from "../../components/NavbarTop";
+import { Tag } from "../../components/Tag";
 
 export const TagConstructor = observer(
   ({ handleBack, editMode = false, handleClose }) => {

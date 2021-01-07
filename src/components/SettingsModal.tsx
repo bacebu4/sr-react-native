@@ -5,7 +5,7 @@ import { Container } from "./grid/Container";
 import { NavbarTopSecondary } from "./NavbarTopSecondary";
 // @ts-ignore
 import { NotesStoreContext } from "../store/NotesStore";
-import { MainButton } from "../MainButton";
+import { MainButton } from "./MainButton";
 import { useTranslation } from "react-i18next";
 
 interface Props {

@@ -6,7 +6,7 @@ import { Title } from "./Title";
 import { useTranslation } from "react-i18next";
 import { useLatestTagsQuery } from "../generated/graphql";
 import { TagContainer } from "./grid/TagContainer";
-import { Tag } from "../Tag";
+import { Tag } from "./Tag";
 import * as Haptics from "expo-haptics";
 import ActionSheet from "react-native-actionsheet";
 import { observer } from "mobx-react-lite";

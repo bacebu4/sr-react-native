@@ -21,7 +21,7 @@ export const Book: React.FC<Props> = ({ book }) => {
         })
       }
     >
-      <Image style={styles.cover} source={require("../book.png")} />
+      <Image style={styles.cover} source={require("../assets/book.png")} />
       <Text style={styles.title} numberOfLines={2}>
         {book.title}
       </Text>

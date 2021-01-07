@@ -1,5 +1,5 @@
 import React from "react";
-import { TText } from "./components/TText";
+import { TText } from "./TText";
 import {
   StyleSheet,
   TouchableOpacity,

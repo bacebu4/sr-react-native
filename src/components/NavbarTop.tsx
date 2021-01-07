@@ -38,7 +38,10 @@ export const NavbarTop: React.FC<Props> = ({
         {titleLeft ? (
           <Text style={styles.link}>{titleLeft}</Text>
         ) : (
-          <Image style={styles.icon} source={require("../back-arrow.png")} />
+          <Image
+            style={styles.icon}
+            source={require("../assets/back-arrow.png")}
+          />
         )}
       </TouchableOpacity>
 

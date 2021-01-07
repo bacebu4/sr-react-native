@@ -22,13 +22,19 @@ export const NavbarSecondary = ({
         {index !== 0 ? (
           <>
             <TouchableOpacity onPress={handleNext}>
-              <Image style={styles.icon} source={require("./arrow.png")} />
+              <Image
+                style={styles.icon}
+                source={require("./assets/arrow.png")}
+              />
             </TouchableOpacity>
           </>
         ) : (
           <>
             <TouchableOpacity onPress={handleClick}>
-              <Image style={styles.icon} source={require("./arrow.png")} />
+              <Image
+                style={styles.icon}
+                source={require("./assets/arrow.png")}
+              />
             </TouchableOpacity>
           </>
         )}

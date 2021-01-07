@@ -64,7 +64,7 @@ export const Comment: React.FC<Props> = ({ comment, disabled = false }) => {
             <TouchableOpacity onPress={showActionSheet} disabled={disabled}>
               <Image
                 style={{ width: 24, height: 22.2 }}
-                source={require("../dots.png")}
+                source={require("../assets/dots.png")}
               />
             </TouchableOpacity>
           </View>

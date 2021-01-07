@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { StyleSheet, View, Image } from "react-native";
-import { MainButton } from "../../MainButton";
+import { MainButton } from "../../components/MainButton";
 import { Title } from "../../components/Title";
 import { useNavigation } from "@react-navigation/native";
 import { observer } from "mobx-react-lite";

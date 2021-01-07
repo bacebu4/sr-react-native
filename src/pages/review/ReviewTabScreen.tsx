@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Title } from "../../components/Title";
-import { Tag } from "../../Tag";
+import { Tag } from "../../components/Tag";
 import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../../store/UiStore";
 import ActionSheet from "react-native-actionsheet";

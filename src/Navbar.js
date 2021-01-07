@@ -16,7 +16,7 @@ export const Navbar = observer(({ title, handleClick }) => {
       <View style={styles.navbar}>
         <Title type="big" title={title} />
         <TouchableOpacity onPress={handleClick}>
-          <Image style={styles.icon} source={require("./avatar.png")} />
+          <Image style={styles.icon} source={require("./assets/avatar.png")} />
         </TouchableOpacity>
       </View>
       <View style={styles.subbar}>
