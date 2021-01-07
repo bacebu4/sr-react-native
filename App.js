@@ -8,6 +8,78 @@ import { HomeStackScreen } from "./src/stacks/HomeStackScreen";
 import { AuthStackScreen } from "./src/stacks/AuthStackScreen";
 import { LoadingScreen } from "./src/pages/LoadingScreen";
 import { SearchStackScreen } from "./src/stacks/SearchStackScreen";
+import { createClient, Provider, dedupExchange, fetchExchange } from "urql";
+import { cacheExchange } from "@urql/exchange-graphcache";
+import * as SecureStore from "expo-secure-store";
+import { BACKEND_URL } from "./src/variables";
+import i18n from "./src/i18n";
+import { useTranslation } from "react-i18next";
+import gql from "graphql-tag";
+const initI18n = i18n;
+
+let TOKEN;
+
+const getToken = async () => {
+  try {
+    const available = await SecureStore.isAvailableAsync();
+    if (!available) {
+      throw new Error();
+    }
+    const token = await SecureStore.getItemAsync("token");
+    if (!token) {
+      throw new Error();
+    }
+    return token;
+  } catch (error) {
+    return "";
+  }
+};
+
+const NoteQuery = gql`
+  query Note($id: ID!) {
+    note(id: $id) {
+      id
+      comments {
+        id
+        text
+        createdAt
+      }
+    }
+  }
+`;
+
+const client = createClient({
+  url: `${BACKEND_URL}/graphql`,
+  fetchOptions: () => {
+    return {
+      headers: { authorization: TOKEN },
+    };
+  },
+  exchanges: [
+    dedupExchange,
+    cacheExchange({
+      optimistic: {
+        addComment: (variables, cache, _) => ({
+          __typename: "Note",
+          id: variables.noteId,
+          comments: cache.updateQuery(
+            { query: NoteQuery, variables: { id: variables.noteId } },
+            (data) => {
+              data.note.comments.push({
+                __typename: "Comment",
+                id: variables.commentId,
+                text: variables.text,
+                createdAt: Date.now(),
+              });
+              return data;
+            }
+          ),
+        }),
+      },
+    }),
+    fetchExchange,
+  ],
+});
 
 const Tab = createBottomTabNavigator();
 
@@ -15,10 +87,11 @@ const Tab = createBottomTabNavigator();
 const screenOptions = ({ route }) => ({
   tabBarIcon: ({ _, color, size }) => {
     let iconName;
+    const { t } = useTranslation();
 
-    if (route.name === "Home") {
+    if (route.name === t("Home")) {
       iconName = "ios-home";
-    } else if (route.name === "Search") {
+    } else if (route.name === t("Search")) {
       iconName = "ios-search";
     }
 
@@ -28,13 +101,18 @@ const screenOptions = ({ route }) => ({
 
 export default observer(function App() {
   const NotesStore = useContext(NotesStoreContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
+    async function fetchToken() {
+      TOKEN = await getToken();
+    }
+    fetchToken();
     NotesStore.init();
   }, []);
 
   return (
-    <>
+    <Provider value={client}>
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={screenOptions}
@@ -66,14 +144,17 @@ export default observer(function App() {
                 />
               ) : (
                 <>
-                  <Tab.Screen name="Home" component={HomeStackScreen} />
-                  <Tab.Screen name="Search" component={SearchStackScreen} />
+                  <Tab.Screen name={t("Home")} component={HomeStackScreen} />
+                  <Tab.Screen
+                    name={t("Search")}
+                    component={SearchStackScreen}
+                  />
                 </>
               )}
             </>
           )}
         </Tab.Navigator>
       </NavigationContainer>
-    </>
+    </Provider>
   );
 });

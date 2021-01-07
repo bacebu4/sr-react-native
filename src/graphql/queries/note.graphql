@@ -1,0 +1,19 @@
+query Note($id: ID!) {
+  note(id: $id) {
+    text
+    id
+    title
+    author
+    tags {
+      id
+      name
+      hue
+    }
+    deleted
+    comments {
+      id
+      text
+      createdAt
+    }
+  }
+}

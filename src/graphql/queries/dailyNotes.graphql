@@ -1,0 +1,19 @@
+query DailyNotes {
+  dailyNotes {
+    text
+    id
+    title
+    author
+    tags {
+      id
+      name
+      hue
+    }
+    deleted
+    comments {
+      id
+      text
+      createdAt
+    }
+  }
+}

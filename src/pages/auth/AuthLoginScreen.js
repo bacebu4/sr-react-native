@@ -1,12 +1,12 @@
 import React, { useContext, useState, useRef } from "react";
 import { StyleSheet, View, Text, TextInput } from "react-native";
-import { MainButton } from "../../MainButton";
 import { NavbarTop } from "../../components/NavbarTop";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
 import { useMessage } from "../../hooks/message.hook";
+import { MainButton } from "../../components/MainButton";
 
 export const AuthLoginScreen = observer(({ navigation }) => {
   const [email, onEmail] = useState("");
@@ -53,8 +53,8 @@ export const AuthLoginScreen = observer(({ navigation }) => {
           <View style={styles.button}>
             <MainButton
               title="Log In"
-              clickAction={handleSubmit}
-              loading={NotesStore.isLoginLoading}
+              onPress={handleSubmit}
+              isLoading={NotesStore.isLoginLoading}
             ></MainButton>
           </View>
         </View>

@@ -6,13 +6,13 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { Tag } from "../../Tag";
 import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../../store/UiStore";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { useMessage } from "../../hooks/message.hook";
 import { NavbarTop } from "../../components/NavbarTop";
+import { Tag } from "../../components/Tag";
 
 export const TagConstructor = observer(
   ({ handleBack, editMode = false, handleClose }) => {
@@ -60,10 +60,10 @@ export const TagConstructor = observer(
           if (findResults) {
             throw new Error("This tag name already exists");
           }
-          NotesStore.updateTag(UiStore.currentTag, tagName.trim(), color);
+          // NotesStore.updateTag(UiStore.currentTag, tagName.trim(), color);
           onTagName("");
           refreshColor();
-          handleClose();
+          handleBack();
         } catch (error) {
           message(error.message);
         }
@@ -76,7 +76,7 @@ export const TagConstructor = observer(
           if (findResults) {
             throw new Error("This tag name already exists");
           }
-          NotesStore.addNewTag(UiStore.currentNote, tagName.trim(), color);
+          // NotesStore.addNewTag(UiStore.currentNote, tagName.trim(), color);
           onTagName("");
           refreshColor();
           handleClose();
@@ -101,14 +101,14 @@ export const TagConstructor = observer(
               title="Editing tag"
               titleLeft="Cancel"
               titleRight="Save"
-              noMargin
+              hasNoMargin
             ></NavbarTop>
           </Container>
-          <Container border mt={16}></Container>
+          <Container hasBorder mt={16}></Container>
 
-          <Container center mt={44}>
-            <Container center>
-              <Tag hue={color} title={tagName}></Tag>
+          <Container isCentered mt={44}>
+            <Container isCentered>
+              <Tag hue={color} title={tagName} />
             </Container>
             <TextInput
               style={styles.input}

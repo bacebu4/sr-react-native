@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
-import { Title } from "./Title";
+import { Title } from "./components/Title";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "./store/NotesStore";
 import { TextGray } from "./components/TextGray";
+import { TText } from "./components/TText";
 
 export const Navbar = observer(({ title, handleClick }) => {
   const NotesStore = useContext(NotesStoreContext);
@@ -15,7 +16,7 @@ export const Navbar = observer(({ title, handleClick }) => {
       <View style={styles.navbar}>
         <Title type="big" title={title} />
         <TouchableOpacity onPress={handleClick}>
-          <Image style={styles.icon} source={require("./avatar.png")} />
+          <Image style={styles.icon} source={require("./assets/avatar.png")} />
         </TouchableOpacity>
       </View>
       <View style={styles.subbar}>
@@ -30,13 +31,15 @@ export const Navbar = observer(({ title, handleClick }) => {
           color="#CCA9F9"
           shadowColor="#d7d7d7"
           bgColor="#fff"
-        ></ProgressCircle>
+        />
         {!NotesStore.info.reviewed ? (
-          <Text style={styles.info}>Review Process Pending</Text>
+          <TText style={styles.info}>Review Process Pending</TText>
         ) : (
           <>
-            <Text style={styles.info}>Today's Review</Text>
-            <TextGray ml={16}>Goal achieved</TextGray>
+            <TText style={styles.info}>Today's Review</TText>
+            <TextGray ml={8}>
+              <TText>Goal achieved</TText>
+            </TextGray>
           </>
         )}
       </View>
