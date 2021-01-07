@@ -60,6 +60,7 @@ const client = createClient({
     cacheExchange({
       optimistic: {
         addComment: (variables, cache, _) => ({
+          __typename: "Note",
           id: variables.noteId,
           comments: cache.updateQuery(
             { query: NoteQuery, variables: { id: variables.noteId } },
