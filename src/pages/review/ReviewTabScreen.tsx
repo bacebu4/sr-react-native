@@ -25,7 +25,7 @@ import { EditTextModal } from "../../components/EditTextModal";
 import { useNoteQuery, useAddCommentMutation } from "../../generated/graphql";
 import { TText } from "../../components/TText";
 import { Card } from "../../components/CardNew";
-import { Comment } from "../../components/CommentNew";
+import { Comment } from "../../components/Comment";
 const { v4: uuidv4 } = require("uuid");
 
 interface Props {

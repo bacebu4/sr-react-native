@@ -6,7 +6,7 @@ import { SceneRendererProps, TabView } from "react-native-tab-view";
 import { observer } from "mobx-react-lite";
 // @ts-ignore
 import { NotesStoreContext } from "../store/NotesStore";
-import { ReviewTabScreen } from "./review/ReviewTabScreenNew";
+import { ReviewTabScreen } from "./review/ReviewTabScreen";
 import { ReviewFinalScreen } from "./review/ReviewFinalScreen";
 import * as Haptics from "expo-haptics";
 import { MainContainer } from "../components/grid/MainContainer";

@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useLatestBooksQuery } from "../generated/graphql";
 import { Title } from "./Title";
 import { SeeAll } from "./SeeAll";
-import { Carousel } from "./CarouselNew";
+import { Carousel } from "./Carousel";
 import { useTranslation } from "react-i18next";
 
 export const LatestBooks: React.FC = () => {
