@@ -15,14 +15,9 @@ import { format } from "date-fns";
 interface Props {
   comment: Maybe<CommentType>;
   disabled?: boolean;
-  noteId: string;
 }
 
-export const Comment: React.FC<Props> = ({
-  comment,
-  disabled = false,
-  noteId,
-}) => {
+export const Comment: React.FC<Props> = ({ comment, disabled = false }) => {
   const actionSheetRef = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [textToModal, setTextToModal] = useState(comment?.text);
@@ -42,10 +37,10 @@ export const Comment: React.FC<Props> = ({
 
   const onDelete = () => {
     console.log("c.id", comment!.id);
-    console.log("n.id", noteId);
+    console.log("n.id", comment!.noteId);
     confirm(
       () => {
-        deleteComment({ commentId: comment!.id, noteId });
+        deleteComment({ commentId: comment!.id, noteId: comment!.noteId });
       },
       "Delete comment",
       "Are you sure you want to delete this comment?"

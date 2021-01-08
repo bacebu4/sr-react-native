@@ -5,6 +5,7 @@ mutation DeleteComment($commentId: ID!, $noteId: ID!) {
       id
       text
       createdAt
+      noteId
     }
   }
 }

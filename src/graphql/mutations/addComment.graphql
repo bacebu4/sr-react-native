@@ -5,6 +5,7 @@ mutation AddComment($noteId: ID!, $commentId: ID!, $text: String!) {
       id
       text
       createdAt
+      noteId
     }
   }
 }

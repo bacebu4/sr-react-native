@@ -39,6 +39,7 @@ export type Comment = {
   id: Scalars['ID'];
   text: Scalars['String'];
   createdAt: Scalars['String'];
+  noteId: Scalars['String'];
 };
 
 export type Book = {
@@ -168,7 +169,7 @@ export type AddCommentMutation = (
     & Pick<Note, 'id'>
     & { comments: Array<Maybe<(
       { __typename?: 'Comment' }
-      & Pick<Comment, 'id' | 'text' | 'createdAt'>
+      & Pick<Comment, 'id' | 'text' | 'createdAt' | 'noteId'>
     )>> }
   )> }
 );
@@ -186,7 +187,7 @@ export type DeleteCommentMutation = (
     & Pick<Note, 'id'>
     & { comments: Array<Maybe<(
       { __typename?: 'Comment' }
-      & Pick<Comment, 'id' | 'text' | 'createdAt'>
+      & Pick<Comment, 'id' | 'text' | 'createdAt' | 'noteId'>
     )>> }
   )> }
 );
@@ -305,7 +306,7 @@ export type NoteQuery = (
       & Pick<Tag, 'id' | 'name' | 'hue'>
     )>>>, comments: Array<Maybe<(
       { __typename?: 'Comment' }
-      & Pick<Comment, 'id' | 'text' | 'createdAt'>
+      & Pick<Comment, 'id' | 'text' | 'createdAt' | 'noteId'>
     )>> }
   )> }
 );
@@ -370,6 +371,7 @@ export const AddCommentDocument = gql`
       id
       text
       createdAt
+      noteId
     }
   }
 }
@@ -386,6 +388,7 @@ export const DeleteCommentDocument = gql`
       id
       text
       createdAt
+      noteId
     }
   }
 }
@@ -517,6 +520,7 @@ export const NoteDocument = gql`
       id
       text
       createdAt
+      noteId
     }
   }
 }

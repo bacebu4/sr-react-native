@@ -59,22 +59,43 @@ const client = createClient({
     dedupExchange,
     cacheExchange({
       optimistic: {
-        addComment: (variables, cache, _) => ({
-          __typename: "Note",
-          id: variables.noteId,
-          comments: cache.updateQuery(
-            { query: NoteQuery, variables: { id: variables.noteId } },
-            (data) => {
-              data.note.comments.push({
-                __typename: "Comment",
-                id: variables.commentId,
-                text: variables.text,
-                createdAt: Date.now(),
-              });
-              return data;
-            }
-          ),
-        }),
+        // addComment: (variables, cache, _) => ({
+        //   __typename: "Note",
+        //   id: variables.noteId,
+        //   comments: cache.updateQuery(
+        //     { query: NoteQuery, variables: { id: variables.noteId } },
+        //     (data) => {
+        //       data.note.comments.push({
+        //         __typename: "Comment",
+        // id: variables.commentId,
+        // text: variables.text,
+        // createdAt: Date.now(),
+        //       });
+        //       return data;
+        //     }
+        //   ),
+        // }),
+        addComment: (variables, cache, _) => {
+          const cachedComments = cache.readQuery({
+            query: NoteQuery,
+            variables: { id: variables.noteId },
+          }).note.comments;
+
+          const addedComment = {
+            id: variables.commentId,
+            noteId: variables.noteId,
+            text: variables.text,
+            createdAt: Date.now(),
+            __typename: "Comment",
+          };
+
+          console.log(cachedComments);
+          return {
+            __typename: "Note",
+            id: variables.noteId,
+            comments: [...cachedComments, addedComment],
+          };
+        },
         deleteComment: (variables, cache, _) => ({
           __typename: "Note",
           id: variables.noteId,
