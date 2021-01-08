@@ -75,6 +75,11 @@ const client = createClient({
             }
           ),
         }),
+        updateNote: (variables, cache, _) => ({
+          __typename: "Note",
+          id: variables.noteId,
+          text: variables.text,
+        }),
       },
     }),
     fetchExchange,
