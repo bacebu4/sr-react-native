@@ -5,6 +5,7 @@ import {
   Comment as CommentType,
   Maybe,
   useUpdateCommentMutation,
+  useDeleteCommentMutation,
 } from "../generated/graphql";
 import { useConfirm } from "../hooks/confirm.hook";
 import { EditTextModal } from "./EditTextModal";
@@ -14,13 +15,19 @@ import { format } from "date-fns";
 interface Props {
   comment: Maybe<CommentType>;
   disabled?: boolean;
+  noteId: string;
 }
 
-export const Comment: React.FC<Props> = ({ comment, disabled = false }) => {
+export const Comment: React.FC<Props> = ({
+  comment,
+  disabled = false,
+  noteId,
+}) => {
   const actionSheetRef = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [textToModal, setTextToModal] = useState(comment?.text);
   const [, updateComment] = useUpdateCommentMutation();
+  const [, deleteComment] = useDeleteCommentMutation();
   const confirm = useConfirm();
   const { t } = useTranslation();
 
@@ -34,9 +41,11 @@ export const Comment: React.FC<Props> = ({ comment, disabled = false }) => {
   };
 
   const onDelete = () => {
+    console.log("c.id", comment!.id);
+    console.log("n.id", noteId);
     confirm(
       () => {
-        // NotesStore.deleteComment(comment.comment_id);
+        deleteComment({ commentId: comment!.id, noteId });
       },
       "Delete comment",
       "Are you sure you want to delete this comment?"
@@ -48,7 +57,6 @@ export const Comment: React.FC<Props> = ({ comment, disabled = false }) => {
     if (textToModal) {
       updateComment({ commentId: comment!.id, text: textToModal });
     }
-    // NotesStore.updateComment(comment.comment_id, textToModal);
   };
 
   return (

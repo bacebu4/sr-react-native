@@ -181,7 +181,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
                     mb={8}
                     key={comment?.id}
                   >
-                    <Comment comment={comment} />
+                    <Comment comment={comment} noteId={data.note!.id} />
                   </Container>
                 );
               })}
