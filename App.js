@@ -75,9 +75,14 @@ const client = createClient({
             }
           ),
         }),
-        updateNote: (variables, cache, _) => ({
+        updateNote: (variables, _, __) => ({
           __typename: "Note",
           id: variables.noteId,
+          text: variables.text,
+        }),
+        updateComment: (variables, _, __) => ({
+          __typename: "Comment",
+          id: variables.commentId,
           text: variables.text,
         }),
       },

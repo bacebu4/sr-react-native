@@ -1,7 +1,11 @@
 import React, { useState, useRef } from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import ActionSheet from "react-native-actionsheet";
-import { Comment as CommentType, Maybe } from "src/generated/graphql";
+import {
+  Comment as CommentType,
+  Maybe,
+  useUpdateCommentMutation,
+} from "../generated/graphql";
 import { useConfirm } from "../hooks/confirm.hook";
 import { EditTextModal } from "./EditTextModal";
 import { useTranslation } from "react-i18next";
@@ -16,6 +20,7 @@ export const Comment: React.FC<Props> = ({ comment, disabled = false }) => {
   const actionSheetRef = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [textToModal, setTextToModal] = useState(comment?.text);
+  const [, updateComment] = useUpdateCommentMutation();
   const confirm = useConfirm();
   const { t } = useTranslation();
 
@@ -40,6 +45,9 @@ export const Comment: React.FC<Props> = ({ comment, disabled = false }) => {
 
   const handleSave = () => {
     setModalVisible(false);
+    if (textToModal) {
+      updateComment({ commentId: comment!.id, text: textToModal });
+    }
     // NotesStore.updateComment(comment.comment_id, textToModal);
   };
 
