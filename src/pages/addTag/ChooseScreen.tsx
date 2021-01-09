@@ -1,17 +1,29 @@
-import React, { useState, useContext } from "react";
-import { View, Image } from "react-native";
-import { observer } from "mobx-react-lite";
-import { NotesStoreContext } from "../../store/NotesStore";
+import React, { useState } from "react";
+import {
+  View,
+  Image,
+  GestureResponderEvent,
+  Text,
+  ActivityIndicator,
+} from "react-native";
 import { Container } from "../../components/grid/Container";
 import { TagContainer } from "../../components/grid/TagContainer";
 import { NavbarTop } from "../../components/NavbarTop";
+// @ts-ignore
 import { TagConstructor } from "./TagConstructor";
 import { TextGray } from "../../components/TextGray";
 import { Tag } from "../../components/Tag";
+import { Note, useTagsQuery, Maybe } from "../../generated/graphql";
 
-export const ChooseScreen = observer(({ handleCancel, note }) => {
-  const NotesStore = useContext(NotesStoreContext);
+interface Props {
+  handleCancel: (event: GestureResponderEvent) => void;
+  note: Maybe<Note>;
+}
+
+export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
   const [showAddSheet, setShowAddSheet] = useState(true);
+  const [result] = useTagsQuery();
+  const { data, fetching, error } = result;
 
   const handleShowCreate = () => {
     setShowAddSheet(false);
@@ -21,10 +33,28 @@ export const ChooseScreen = observer(({ handleCancel, note }) => {
     setShowAddSheet(true);
   };
 
+  // @ts-ignore
   const handleSubmitFromExisting = (id) => {
     // NotesStore.addExistingTag(note.note_id, id);
+    // @ts-ignore
     handleCancel();
   };
+
+  if (error) {
+    return (
+      <Container isCentered mt={400}>
+        <Text>{error.message}</Text>
+      </Container>
+    );
+  }
+
+  if (fetching) {
+    return (
+      <Container isCentered mt={400}>
+        <ActivityIndicator size="large" />
+      </Container>
+    );
+  }
 
   return (
     <View
@@ -47,24 +77,25 @@ export const ChooseScreen = observer(({ handleCancel, note }) => {
           </Container>
           <Container hasBorder mt={16} />
 
-          {NotesStore.tags.length ? (
+          {data?.tags?.length ? (
             <>
               <Container>
                 <TagContainer>
                   {/* TODO getter for note tags */}
-                  {NotesStore.tags.map((tag) => {
-                    const findResults = note.tags.find(
-                      (t) => t.tag_id === tag.tag_id
+                  {/* @ts-ignore */}
+                  {data!.tags.map((tag) => {
+                    const findResults = note?.tags?.find(
+                      (t) => t?.id === tag?.id
                     );
 
                     if (!findResults) {
                       return (
                         <Tag
-                          title={tag.tag_name}
-                          hue={tag.hue}
-                          key={tag.tag_id}
+                          title={tag?.name}
+                          hue={tag?.hue}
+                          key={tag?.id}
                           style={{ marginRight: 16, marginTop: 24 }}
-                          onPress={() => handleSubmitFromExisting(tag.tag_id)}
+                          onPress={() => handleSubmitFromExisting(tag?.id)}
                         />
                       );
                     }
@@ -92,4 +123,4 @@ export const ChooseScreen = observer(({ handleCancel, note }) => {
       )}
     </View>
   );
-});
+};
