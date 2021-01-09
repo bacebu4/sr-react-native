@@ -14,7 +14,6 @@ import * as SecureStore from "expo-secure-store";
 import { BACKEND_URL } from "./src/variables";
 import i18n from "./src/i18n";
 import { useTranslation } from "react-i18next";
-import gql from "graphql-tag";
 import { NoteDocument, TagsDocument } from "./src/generated/graphql";
 const initI18n = i18n;
 
@@ -78,7 +77,6 @@ const client = createClient({
           }).tags;
 
           const addedTag = allCachedTags.find((t) => t.id === variables.tagId);
-          console.log("addedTag", addedTag);
 
           return {
             __typename: "Note",
