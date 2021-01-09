@@ -59,22 +59,6 @@ const client = createClient({
     dedupExchange,
     cacheExchange({
       optimistic: {
-        // addComment: (variables, cache, _) => ({
-        //   __typename: "Note",
-        //   id: variables.noteId,
-        //   comments: cache.updateQuery(
-        //     { query: NoteQuery, variables: { id: variables.noteId } },
-        //     (data) => {
-        //       data.note.comments.push({
-        //         __typename: "Comment",
-        // id: variables.commentId,
-        // text: variables.text,
-        // createdAt: Date.now(),
-        //       });
-        //       return data;
-        //     }
-        //   ),
-        // }),
         addComment: (variables, cache, _) => {
           const cachedComments = cache.readQuery({
             query: NoteQuery,
@@ -89,26 +73,39 @@ const client = createClient({
             __typename: "Comment",
           };
 
-          console.log(cachedComments);
           return {
             __typename: "Note",
             id: variables.noteId,
             comments: [...cachedComments, addedComment],
           };
         },
-        deleteComment: (variables, cache, _) => ({
-          __typename: "Note",
-          id: variables.noteId,
-          comments: cache.updateQuery(
-            { query: NoteQuery, variables: { id: variables.noteId } },
-            (data) => {
-              data.note.comments = data.note.comments.filter(
-                (c) => c.id !== variables.commentId
-              );
-              return data;
-            }
-          ),
-        }),
+        deleteComment: (variables, cache, _) => {
+          const cachedComments = cache.readQuery({
+            query: NoteQuery,
+            variables: { id: variables.noteId },
+          }).note.comments;
+
+          return {
+            __typename: "Note",
+            id: variables.noteId,
+            comments: cachedComments.filter(
+              (c) => c.id !== variables.commentId
+            ),
+          };
+        },
+        // deleteComment: (variables, cache, _) => ({
+        //   __typename: "Note",
+        //   id: variables.noteId,
+        //   comments: cache.updateQuery(
+        //     { query: NoteQuery, variables: { id: variables.noteId } },
+        //     (data) => {
+        //       data.note.comments = data.note.comments.filter(
+        //         (c) => c.id !== variables.commentId
+        //       );
+        //       return data;
+        //     }
+        //   ),
+        // }),
         updateNote: (variables, _, __) => ({
           __typename: "Note",
           id: variables.noteId,
