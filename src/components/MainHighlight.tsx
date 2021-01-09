@@ -4,11 +4,15 @@ import { Container } from "./grid/Container";
 import { TextGray } from "./TextGray";
 import { useNavigation } from "@react-navigation/native";
 import { Card } from "./CardNew";
-import { useDailyNotesQuery } from "../generated/graphql";
 import { MainButton } from "./MainButton";
+import { useNoteQuery } from "../generated/graphql";
 
-export const MainHighlight: React.FC = () => {
-  const [result] = useDailyNotesQuery();
+interface Props {
+  noteId: string;
+}
+
+export const MainHighlight: React.FC<Props> = ({ noteId }) => {
+  const [result] = useNoteQuery({ variables: { id: noteId } });
   const { data, fetching, error } = result;
   const navigation = useNavigation();
 
@@ -28,7 +32,7 @@ export const MainHighlight: React.FC = () => {
     );
   }
 
-  if (!data?.dailyNotes) {
+  if (!data?.note) {
     return (
       <Container mt={32} isCentered>
         <Image
@@ -47,7 +51,7 @@ export const MainHighlight: React.FC = () => {
 
   return (
     <Container mt={32}>
-      <Card note={data.dailyNotes[0]}></Card>
+      <Card note={data.note}></Card>
 
       <Container mt={32} isCentered>
         <MainButton

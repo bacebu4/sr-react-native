@@ -68,7 +68,7 @@ export type InitInfo = {
 
 export type Query = {
   __typename?: 'Query';
-  dailyNotes?: Maybe<Array<Maybe<Note>>>;
+  dailyNotesIds?: Maybe<Array<Maybe<Scalars['String']>>>;
   notesBy?: Maybe<Array<Maybe<Note>>>;
   note?: Maybe<Note>;
   initInfo?: Maybe<InitInfo>;
@@ -251,22 +251,12 @@ export type BooksQuery = (
   )>>> }
 );
 
-export type DailyNotesQueryVariables = Exact<{ [key: string]: never; }>;
+export type DailyNotesIdsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type DailyNotesQuery = (
+export type DailyNotesIdsQuery = (
   { __typename?: 'Query' }
-  & { dailyNotes?: Maybe<Array<Maybe<(
-    { __typename?: 'Note' }
-    & Pick<Note, 'text' | 'id' | 'title' | 'author' | 'deleted'>
-    & { tags?: Maybe<Array<Maybe<(
-      { __typename?: 'Tag' }
-      & Pick<Tag, 'id' | 'name' | 'hue'>
-    )>>>, comments: Array<Maybe<(
-      { __typename?: 'Comment' }
-      & Pick<Comment, 'id' | 'text' | 'createdAt'>
-    )>> }
-  )>>> }
+  & Pick<Query, 'dailyNotesIds'>
 );
 
 export type LatestBooksQueryVariables = Exact<{ [key: string]: never; }>;
@@ -452,30 +442,14 @@ export const BooksDocument = gql`
 export function useBooksQuery(options: Omit<Urql.UseQueryArgs<BooksQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<BooksQuery>({ query: BooksDocument, ...options });
 };
-export const DailyNotesDocument = gql`
-    query DailyNotes {
-  dailyNotes {
-    text
-    id
-    title
-    author
-    tags {
-      id
-      name
-      hue
-    }
-    deleted
-    comments {
-      id
-      text
-      createdAt
-    }
-  }
+export const DailyNotesIdsDocument = gql`
+    query DailyNotesIds {
+  dailyNotesIds
 }
     `;
 
-export function useDailyNotesQuery(options: Omit<Urql.UseQueryArgs<DailyNotesQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<DailyNotesQuery>({ query: DailyNotesDocument, ...options });
+export function useDailyNotesIdsQuery(options: Omit<Urql.UseQueryArgs<DailyNotesIdsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<DailyNotesIdsQuery>({ query: DailyNotesIdsDocument, ...options });
 };
 export const LatestBooksDocument = gql`
     query LatestBooks {

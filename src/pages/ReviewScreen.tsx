@@ -12,7 +12,7 @@ import * as Haptics from "expo-haptics";
 import { MainContainer } from "../components/grid/MainContainer";
 import { Container } from "../components/grid/Container";
 import {
-  useDailyNotesQuery,
+  useDailyNotesIdsQuery,
   useUpdateReviewHistoryMutation,
 } from "../generated/graphql";
 import { format } from "date-fns";
@@ -47,7 +47,7 @@ type Props = {
 export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
   const NotesStore = useContext(NotesStoreContext);
   const [, updateReviewHistory] = useUpdateReviewHistoryMutation();
-  const [result] = useDailyNotesQuery();
+  const [result] = useDailyNotesIdsQuery();
   const { data, fetching } = result;
 
   if (fetching) {
@@ -72,8 +72,8 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
       initialRoutes.push({
         key: i,
         title: i,
-        noteId: data?.dailyNotes![i - 1]?.id
-          ? (data!.dailyNotes![i - 1]!.id! as string)
+        noteId: data?.dailyNotesIds![i - 1]
+          ? (data!.dailyNotesIds![i - 1]! as string)
           : "",
       });
     }
