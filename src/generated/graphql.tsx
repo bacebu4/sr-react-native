@@ -99,6 +99,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addNewTag?: Maybe<Scalars['Boolean']>;
   addComment?: Maybe<Note>;
+  addExistingTag?: Maybe<Note>;
   deleteComment?: Maybe<Note>;
   updateReviewHistory?: Maybe<Scalars['Boolean']>;
   deleteNote?: Maybe<Scalars['Boolean']>;
@@ -119,6 +120,12 @@ export type MutationAddCommentArgs = {
   noteId?: Maybe<Scalars['ID']>;
   commentId?: Maybe<Scalars['ID']>;
   text?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationAddExistingTagArgs = {
+  noteId?: Maybe<Scalars['ID']>;
+  tagId?: Maybe<Scalars['ID']>;
 };
 
 
@@ -171,6 +178,24 @@ export type AddCommentMutation = (
       { __typename?: 'Comment' }
       & Pick<Comment, 'id' | 'text' | 'createdAt' | 'noteId'>
     )>> }
+  )> }
+);
+
+export type AddExistingTagMutationVariables = Exact<{
+  noteId: Scalars['ID'];
+  tagId: Scalars['ID'];
+}>;
+
+
+export type AddExistingTagMutation = (
+  { __typename?: 'Mutation' }
+  & { addExistingTag?: Maybe<(
+    { __typename?: 'Note' }
+    & Pick<Note, 'id'>
+    & { tags?: Maybe<Array<Maybe<(
+      { __typename?: 'Tag' }
+      & Pick<Tag, 'id' | 'name' | 'hue'>
+    )>>> }
   )> }
 );
 
@@ -369,6 +394,22 @@ export const AddCommentDocument = gql`
 
 export function useAddCommentMutation() {
   return Urql.useMutation<AddCommentMutation, AddCommentMutationVariables>(AddCommentDocument);
+};
+export const AddExistingTagDocument = gql`
+    mutation AddExistingTag($noteId: ID!, $tagId: ID!) {
+  addExistingTag(noteId: $noteId, tagId: $tagId) {
+    id
+    tags {
+      id
+      name
+      hue
+    }
+  }
+}
+    `;
+
+export function useAddExistingTagMutation() {
+  return Urql.useMutation<AddExistingTagMutation, AddExistingTagMutationVariables>(AddExistingTagDocument);
 };
 export const DeleteCommentDocument = gql`
     mutation DeleteComment($commentId: ID!, $noteId: ID!) {

@@ -13,7 +13,12 @@ import { NavbarTop } from "../../components/NavbarTop";
 import { TagConstructor } from "./TagConstructor";
 import { TextGray } from "../../components/TextGray";
 import { Tag } from "../../components/Tag";
-import { Note, useTagsQuery, Maybe } from "../../generated/graphql";
+import {
+  Note,
+  useTagsQuery,
+  Maybe,
+  useAddExistingTagMutation,
+} from "../../generated/graphql";
 
 interface Props {
   handleCancel: (event: GestureResponderEvent) => void;
@@ -22,6 +27,7 @@ interface Props {
 
 export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
   const [showAddSheet, setShowAddSheet] = useState(true);
+  const [, addExistingTag] = useAddExistingTagMutation();
   const [result] = useTagsQuery();
   const { data, fetching, error } = result;
 
@@ -34,8 +40,9 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
   };
 
   // @ts-ignore
-  const handleSubmitFromExisting = (id) => {
+  const handleSubmitFromExisting = (tagId) => {
     // NotesStore.addExistingTag(note.note_id, id);
+    addExistingTag({ noteId: note!.id, tagId });
     // @ts-ignore
     handleCancel();
   };
