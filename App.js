@@ -127,19 +127,6 @@ const client = createClient({
             ),
           };
         },
-        // deleteComment: (variables, cache, _) => ({
-        //   __typename: "Note",
-        //   id: variables.noteId,
-        //   comments: cache.updateQuery(
-        //     { query: NoteQuery, variables: { id: variables.noteId } },
-        //     (data) => {
-        //       data.note.comments = data.note.comments.filter(
-        //         (c) => c.id !== variables.commentId
-        //       );
-        //       return data;
-        //     }
-        //   ),
-        // }),
         updateNote: (variables, _, __) => ({
           __typename: "Note",
           id: variables.noteId,
