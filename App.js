@@ -44,6 +44,21 @@ const NoteQuery = gql`
         text
         createdAt
       }
+      tags {
+        id
+        name
+        hue
+      }
+    }
+  }
+`;
+
+const TagsQuery = gql`
+  query Tags {
+    tags {
+      id
+      name
+      hue
     }
   }
 `;
@@ -77,6 +92,25 @@ const client = createClient({
             __typename: "Note",
             id: variables.noteId,
             comments: [...cachedComments, addedComment],
+          };
+        },
+        addExistingTag: (variables, cache, _) => {
+          const cachedTagsFromNote = cache.readQuery({
+            query: NoteQuery,
+            variables: { id: variables.noteId },
+          }).note.tags;
+
+          const allCachedTags = cache.readQuery({
+            query: TagsQuery,
+          }).tags;
+
+          const addedTag = allCachedTags.find((t) => t.id === variables.tagId);
+          console.log("addedTag", addedTag);
+
+          return {
+            __typename: "Note",
+            id: variables.noteId,
+            tags: [...cachedTagsFromNote, addedTag],
           };
         },
         deleteComment: (variables, cache, _) => {
