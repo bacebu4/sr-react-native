@@ -15,6 +15,7 @@ import { BACKEND_URL } from "./src/variables";
 import i18n from "./src/i18n";
 import { useTranslation } from "react-i18next";
 import gql from "graphql-tag";
+import { NoteDocument, TagsDocument } from "./src/generated/graphql";
 const initI18n = i18n;
 
 let TOKEN;
@@ -35,34 +36,6 @@ const getToken = async () => {
   }
 };
 
-const NoteQuery = gql`
-  query Note($id: ID!) {
-    note(id: $id) {
-      id
-      comments {
-        id
-        text
-        createdAt
-      }
-      tags {
-        id
-        name
-        hue
-      }
-    }
-  }
-`;
-
-const TagsQuery = gql`
-  query Tags {
-    tags {
-      id
-      name
-      hue
-    }
-  }
-`;
-
 const client = createClient({
   url: `${BACKEND_URL}/graphql`,
   fetchOptions: () => {
@@ -76,7 +49,7 @@ const client = createClient({
       optimistic: {
         addComment: (variables, cache, _) => {
           const cachedComments = cache.readQuery({
-            query: NoteQuery,
+            query: NoteDocument,
             variables: { id: variables.noteId },
           }).note.comments;
 
@@ -96,12 +69,12 @@ const client = createClient({
         },
         addExistingTag: (variables, cache, _) => {
           const cachedTagsFromNote = cache.readQuery({
-            query: NoteQuery,
+            query: NoteDocument,
             variables: { id: variables.noteId },
           }).note.tags;
 
           const allCachedTags = cache.readQuery({
-            query: TagsQuery,
+            query: TagsDocument,
           }).tags;
 
           const addedTag = allCachedTags.find((t) => t.id === variables.tagId);
@@ -115,7 +88,7 @@ const client = createClient({
         },
         deleteComment: (variables, cache, _) => {
           const cachedComments = cache.readQuery({
-            query: NoteQuery,
+            query: NoteDocument,
             variables: { id: variables.noteId },
           }).note.comments;
 
