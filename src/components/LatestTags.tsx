@@ -4,7 +4,7 @@ import { Container } from "./grid/Container";
 import { useNavigation } from "@react-navigation/native";
 import { Title } from "./Title";
 import { useTranslation } from "react-i18next";
-import { useLatestTagsQuery } from "../generated/graphql";
+import { useLatestTagsQuery, useDeleteTagMutation } from "../generated/graphql";
 import { TagContainer } from "./grid/TagContainer";
 import { Tag } from "./Tag";
 import * as Haptics from "expo-haptics";
@@ -27,6 +27,7 @@ export const LatestTags: React.FC = observer(() => {
   const UiStore = useContext(UiStoreContext);
   const [modalEditTagVisible, setModalEditTagVisible] = useState(false);
   const confirm = useConfirm();
+  const [, deleteTag] = useDeleteTagMutation();
 
   const handleLongAddPress = (tagIdPayload: string) => {
     setTagId(tagIdPayload);
@@ -43,8 +44,9 @@ export const LatestTags: React.FC = observer(() => {
   const handleDeleteTag = () => {
     confirm(
       () => {
-        // NotesStore.deleteTag(tagId);
-        console.log("some");
+        if (tagId) {
+          deleteTag({ tagId });
+        }
       },
       "Delete the tag globally?",
       "Are you sure you want to delete the tag?"

@@ -14,7 +14,11 @@ import * as SecureStore from "expo-secure-store";
 import { BACKEND_URL } from "./src/variables";
 import i18n from "./src/i18n";
 import { useTranslation } from "react-i18next";
-import { NoteDocument, TagsDocument } from "./src/generated/graphql";
+import {
+  LatestTagsDocument,
+  NoteDocument,
+  TagsDocument,
+} from "./src/generated/graphql";
 const initI18n = i18n;
 
 let TOKEN;
@@ -103,6 +107,19 @@ const client = createClient({
                 return data;
               }
             );
+          });
+        },
+        deleteTag: (_, args, cache, __) => {
+          const { tagId } = args;
+
+          cache.updateQuery({ query: LatestTagsDocument }, (data) => {
+            data.latestTags = data.latestTags.filter((t) => t.id !== tagId);
+            return data;
+          });
+
+          cache.updateQuery({ query: TagsDocument }, (data) => {
+            data.latestTags = data.latestTags.filter((t) => t.id !== tagId);
+            return data;
           });
         },
         addNewTag: (variables, cache, _) => {
@@ -202,6 +219,34 @@ const client = createClient({
                   return data;
                 }
               );
+            });
+          },
+          deleteTag: (_, args, cache, __) => {
+            const { tagId } = args;
+
+            const allFields = cache.inspectFields("Query");
+
+            const noteQueries = allFields.filter((x) => x.fieldName === "note");
+
+            noteQueries.forEach((q) => {
+              const noteId = q.arguments.id;
+              cache.updateQuery(
+                { query: NoteDocument, variables: { id: noteId } },
+                (data) => {
+                  data.note.tags = data.note.tags.filter((t) => t.id !== tagId);
+                  return data;
+                }
+              );
+            });
+
+            cache.updateQuery({ query: LatestTagsDocument }, (data) => {
+              data.latestTags = data.latestTags.filter((t) => t.id !== tagId);
+              return data;
+            });
+
+            cache.updateQuery({ query: TagsDocument }, (data) => {
+              data.latestTags = data.latestTags.filter((t) => t.id !== tagId);
+              return data;
             });
           },
         },
