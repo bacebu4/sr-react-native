@@ -84,6 +84,27 @@ const client = createClient({
             tags: [...cachedTagsFromNote, addedTag],
           };
         },
+        addNewTag: (variables, cache, _) => {
+          const { name, hue, noteId, tagId } = variables;
+
+          const cachedTagsFromNote = cache.readQuery({
+            query: NoteDocument,
+            variables: { id: noteId },
+          }).note.tags;
+
+          const addedTag = {
+            __typename: "Tag",
+            name,
+            hue,
+            id: tagId,
+          };
+
+          return {
+            __typename: "Note",
+            id: variables.noteId,
+            tags: [...cachedTagsFromNote, addedTag],
+          };
+        },
         deleteTagFromNote: (variables, cache, _) => {
           const cachedTagsFromNote = cache.readQuery({
             query: NoteDocument,
@@ -120,6 +141,25 @@ const client = createClient({
           id: variables.commentId,
           text: variables.text,
         }),
+      },
+      updates: {
+        Mutation: {
+          addNewTag: (_, args, cache, __) => {
+            const { name, hue, tagId } = args;
+
+            const addedTag = {
+              __typename: "Tag",
+              name,
+              hue,
+              id: tagId,
+            };
+
+            cache.updateQuery({ query: TagsDocument }, (data) => {
+              data.tags.push(addedTag);
+              return data;
+            });
+          },
+        },
       },
     }),
     fetchExchange,
