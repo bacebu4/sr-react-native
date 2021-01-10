@@ -109,16 +109,21 @@ const client = createClient({
             );
           });
         },
-        deleteTag: (_, args, cache, __) => {
-          const { tagId } = args;
+        deleteTag: (variables, cache, _) => {
+          const { tagId } = variables;
+          console.log("tagId", tagId);
 
           cache.updateQuery({ query: LatestTagsDocument }, (data) => {
+            console.log("data", data);
             data.latestTags = data.latestTags.filter((t) => t.id !== tagId);
+            console.log("data", data);
             return data;
           });
 
           cache.updateQuery({ query: TagsDocument }, (data) => {
-            data.latestTags = data.latestTags.filter((t) => t.id !== tagId);
+            if (data && data.tags) {
+              data.tags = data.tags.filter((t) => t.id !== tagId);
+            }
             return data;
           });
         },
@@ -242,7 +247,9 @@ const client = createClient({
             });
 
             cache.updateQuery({ query: TagsDocument }, (data) => {
-              data.latestTags = data.latestTags.filter((t) => t.id !== tagId);
+              if (data && data.tags) {
+                data.tags = data.tags.filter((t) => t.id !== tagId);
+              }
               return data;
             });
           },
