@@ -202,16 +202,13 @@ const client = createClient({
 
             const allFields = cache.inspectFields("Query");
             const noteQueries = allFields.filter((x) => x.fieldName === "note");
-            console.log(noteQueries);
             noteQueries.forEach((q) => {
               const noteId = q.arguments.id;
-              console.log(noteId);
               cache.updateQuery(
                 { query: NoteDocument, variables: { id: noteId } },
                 (data) => {
                   data.note.tags.forEach((t) => {
                     if (t.id === tagId) {
-                      console.log("updating");
                       t.name = name;
                       t.hue = hue;
                     }
