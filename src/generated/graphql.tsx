@@ -97,23 +97,15 @@ export type UpdatedNote = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addNewTag?: Maybe<Scalars['Boolean']>;
   addComment?: Maybe<Note>;
   addExistingTag?: Maybe<Note>;
+  addNewTag?: Maybe<Note>;
   deleteTagFromNote?: Maybe<Note>;
   deleteComment?: Maybe<Note>;
   updateReviewHistory?: Maybe<Scalars['Boolean']>;
   deleteNote?: Maybe<Scalars['Boolean']>;
   updateNote?: Maybe<Note>;
   updateComment?: Maybe<Comment>;
-};
-
-
-export type MutationAddNewTagArgs = {
-  name?: Maybe<Scalars['String']>;
-  hue?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['String']>;
-  noteId?: Maybe<Scalars['String']>;
 };
 
 
@@ -127,6 +119,14 @@ export type MutationAddCommentArgs = {
 export type MutationAddExistingTagArgs = {
   noteId?: Maybe<Scalars['ID']>;
   tagId?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationAddNewTagArgs = {
+  noteId?: Maybe<Scalars['ID']>;
+  tagId?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  hue?: Maybe<Scalars['Int']>;
 };
 
 
@@ -197,6 +197,26 @@ export type AddExistingTagMutationVariables = Exact<{
 export type AddExistingTagMutation = (
   { __typename?: 'Mutation' }
   & { addExistingTag?: Maybe<(
+    { __typename?: 'Note' }
+    & Pick<Note, 'id'>
+    & { tags?: Maybe<Array<Maybe<(
+      { __typename?: 'Tag' }
+      & Pick<Tag, 'id' | 'name' | 'hue'>
+    )>>> }
+  )> }
+);
+
+export type AddNewTagMutationVariables = Exact<{
+  noteId: Scalars['ID'];
+  tagId: Scalars['ID'];
+  name: Scalars['String'];
+  hue: Scalars['Int'];
+}>;
+
+
+export type AddNewTagMutation = (
+  { __typename?: 'Mutation' }
+  & { addNewTag?: Maybe<(
     { __typename?: 'Note' }
     & Pick<Note, 'id'>
     & { tags?: Maybe<Array<Maybe<(
@@ -435,6 +455,22 @@ export const AddExistingTagDocument = gql`
 
 export function useAddExistingTagMutation() {
   return Urql.useMutation<AddExistingTagMutation, AddExistingTagMutationVariables>(AddExistingTagDocument);
+};
+export const AddNewTagDocument = gql`
+    mutation AddNewTag($noteId: ID!, $tagId: ID!, $name: String!, $hue: Int!) {
+  addNewTag(noteId: $noteId, tagId: $tagId, name: $name, hue: $hue) {
+    id
+    tags {
+      id
+      name
+      hue
+    }
+  }
+}
+    `;
+
+export function useAddNewTagMutation() {
+  return Urql.useMutation<AddNewTagMutation, AddNewTagMutationVariables>(AddNewTagDocument);
 };
 export const DeleteCommentDocument = gql`
     mutation DeleteComment($commentId: ID!, $noteId: ID!) {

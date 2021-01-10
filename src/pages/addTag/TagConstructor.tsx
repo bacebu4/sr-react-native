@@ -11,7 +11,12 @@ import { Container } from "../../components/grid/Container";
 import { useMessage } from "../../hooks/message.hook";
 import { NavbarTop } from "../../components/NavbarTop";
 import { Tag } from "../../components/Tag";
-import { Tag as TagType, useTagsQuery } from "../../generated/graphql";
+import {
+  Tag as TagType,
+  useAddNewTagMutation,
+  useTagsQuery,
+} from "../../generated/graphql";
+const { v4: uuidv4 } = require("uuid");
 
 interface Props {
   handleBack: ((event: GestureResponderEvent) => void) | undefined;
@@ -27,11 +32,12 @@ export const TagConstructor: React.FC<Props> = ({
   noteId,
 }) => {
   const [tagName, onTagName] = useState("");
-  const [color, onColor] = useState(0);
+  const [hue, onHue] = useState(0);
   const [initialTag, setInitialTag] = useState<TagType | null>(null);
   const message = useMessage();
   const [result] = useTagsQuery();
   const { data, fetching, error } = result;
+  const [, addNewTag] = useAddNewTagMutation();
 
   useEffect(() => {
     if (editMode) {
@@ -43,13 +49,13 @@ export const TagConstructor: React.FC<Props> = ({
       // onColor(initialTagResults.hue);
     } else {
       onTagName("");
-      refreshColor();
+      refreshHue();
     }
   }, []);
 
-  const refreshColor = () => {
+  const refreshHue = () => {
     const newColor = Math.floor(Math.random() * 361);
-    onColor(newColor);
+    onHue(newColor);
   };
 
   const handleSubmit = () => {
@@ -83,11 +89,14 @@ export const TagConstructor: React.FC<Props> = ({
         if (findResults) {
           throw new Error("This tag name already exists");
         }
-        // NotesStore.addNewTag(UiStore.currentNoteId, tagName.trim(), color);
-        onTagName("");
-        refreshColor();
-        // @ts-ignore
-        handleClose();
+        if (noteId) {
+          const tagId = uuidv4();
+          addNewTag({ noteId, tagId, name: tagName, hue });
+          onTagName("");
+          refreshHue();
+          // @ts-ignore
+          handleClose();
+        }
       } catch (error) {
         message(error.message);
       }
@@ -116,7 +125,7 @@ export const TagConstructor: React.FC<Props> = ({
 
         <Container isCentered mt={44}>
           <Container isCentered>
-            <Tag hue={color} title={tagName} />
+            <Tag hue={hue} title={tagName} />
           </Container>
           <TextInput
             style={styles.input}
@@ -125,7 +134,7 @@ export const TagConstructor: React.FC<Props> = ({
             autoFocus
             onSubmitEditing={handleSubmit}
           />
-          <TouchableOpacity onPress={refreshColor}>
+          <TouchableOpacity onPress={refreshHue}>
             <Image
               style={{ ...styles.icon, ...styles.mt }}
               source={require("../../assets/refresh.png")}
