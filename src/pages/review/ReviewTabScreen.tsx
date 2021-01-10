@@ -132,7 +132,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
         <TagConstructor
           handleBack={() => setModalEditTagVisible(false)}
           editMode
-        ></TagConstructor>
+        />
       </TagModal>
 
       <ScrollView showsVerticalScrollIndicator={false}>
