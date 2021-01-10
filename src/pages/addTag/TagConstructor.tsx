@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   View,
@@ -6,16 +6,19 @@ import {
   TouchableOpacity,
   Image,
   GestureResponderEvent,
+  ActivityIndicator,
 } from "react-native";
 import { Container } from "../../components/grid/Container";
 import { useMessage } from "../../hooks/message.hook";
 import { NavbarTop } from "../../components/NavbarTop";
 import { Tag } from "../../components/Tag";
+import { UiStoreContext } from "../../store/UiStore";
 import {
   Tag as TagType,
   useAddNewTagMutation,
   useTagsQuery,
 } from "../../generated/graphql";
+import { TText } from "../../components/TText";
 const { v4: uuidv4 } = require("uuid");
 
 interface Props {
@@ -31,6 +34,7 @@ export const TagConstructor: React.FC<Props> = ({
   handleClose,
   noteId,
 }) => {
+  const UiStore = useContext(UiStoreContext);
   const [tagName, onTagName] = useState("");
   const [hue, onHue] = useState(0);
   const [initialTag, setInitialTag] = useState<TagType | null>(null);
@@ -41,12 +45,14 @@ export const TagConstructor: React.FC<Props> = ({
 
   useEffect(() => {
     if (editMode) {
-      // const initialTagResults = NotesStore.tags.find(
-      //   (t) => t.tag_id === UiStore.currentTag
-      // );
-      // setInitialTag(initialTagResults);
-      // onTagName(initialTagResults.tag_name);
-      // onColor(initialTagResults.hue);
+      const initialTagResults = data?.tags?.find(
+        (t) => t?.id === UiStore.currentTag
+      );
+      if (initialTagResults) {
+        setInitialTag(initialTagResults);
+        onTagName(initialTagResults.name);
+        onHue(initialTagResults.hue);
+      }
     } else {
       onTagName("");
       refreshHue();
@@ -60,29 +66,25 @@ export const TagConstructor: React.FC<Props> = ({
 
   const handleSubmit = () => {
     if (editMode) {
-      // let findResults = NotesStore.tags.find(
-      //   (t) => t.tag_name === tagName.trim()
-      // );
-      // if (findResults?.tag_id === UiStore.currentTag) {
-      //   findResults = false;
-      // }
-      // try {
-      //   if (
-      //     tagName.trim() === initialTag.tag_name &&
-      //     color === initialTag.hue
-      //   ) {
-      //     throw new Error("You haven't changed the tag");
-      //   }
-      //   if (findResults) {
-      //     throw new Error("This tag name already exists");
-      //   }
-      //   // NotesStore.updateTag(UiStore.currentTag, tagName.trim(), color);
-      //   onTagName("");
-      //   refreshColor();
-      //   handleBack();
-      // } catch (error) {
-      //   message(error.message);
-      // }
+      let findResults = data?.tags?.find((t) => t?.name === tagName.trim());
+      if (findResults?.id === UiStore.currentTag) {
+        findResults = undefined;
+      }
+      try {
+        if (tagName.trim() === initialTag?.name && hue === initialTag.hue) {
+          throw new Error("You haven't changed the tag");
+        }
+        if (findResults) {
+          throw new Error("This tag name already exists");
+        }
+        // NotesStore.updateTag(UiStore.currentTag, tagName.trim(), color);
+        onTagName("");
+        refreshHue();
+        // @ts-ignore
+        handleBack();
+      } catch (error) {
+        message(error.message);
+      }
     } else {
       const findResults = data?.tags?.find((t) => t?.name === tagName.trim());
       try {
@@ -103,6 +105,22 @@ export const TagConstructor: React.FC<Props> = ({
     }
   };
 
+  if (fetching) {
+    return (
+      <Container isCentered mt={400}>
+        <ActivityIndicator size="large" />
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container isCentered mt={400}>
+        <TText>{error.message}</TText>
+      </Container>
+    );
+  }
+
   return (
     <View
       style={{
@@ -119,9 +137,9 @@ export const TagConstructor: React.FC<Props> = ({
             titleLeft="Cancel"
             titleRight="Save"
             hasNoMargin
-          ></NavbarTop>
+          />
         </Container>
-        <Container hasBorder mt={16}></Container>
+        <Container hasBorder mt={16} />
 
         <Container isCentered mt={44}>
           <Container isCentered>
@@ -138,7 +156,7 @@ export const TagConstructor: React.FC<Props> = ({
             <Image
               style={{ ...styles.icon, ...styles.mt }}
               source={require("../../assets/refresh.png")}
-            ></Image>
+            />
           </TouchableOpacity>
         </Container>
       </>
