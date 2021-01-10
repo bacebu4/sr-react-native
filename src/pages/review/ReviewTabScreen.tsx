@@ -67,7 +67,6 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
   const handleDeleteTag = () => {
     confirm(
       () => {
-        // NotesStore.deleteTagFromNote(note.note_id, tagId);
         if (tagId) {
           deleteTagFromNote({ noteId: data?.note?.id!, tagId });
         }
