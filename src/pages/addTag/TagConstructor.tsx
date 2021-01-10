@@ -16,6 +16,7 @@ import { UiStoreContext } from "../../store/UiStore";
 import {
   Tag as TagType,
   useAddNewTagMutation,
+  useUpdateTagMutation,
   useTagsQuery,
 } from "../../generated/graphql";
 import { TText } from "../../components/TText";
@@ -42,6 +43,7 @@ export const TagConstructor: React.FC<Props> = ({
   const [result] = useTagsQuery();
   const { data, fetching, error } = result;
   const [, addNewTag] = useAddNewTagMutation();
+  const [, updateTag] = useUpdateTagMutation();
 
   useEffect(() => {
     if (editMode) {
@@ -57,7 +59,7 @@ export const TagConstructor: React.FC<Props> = ({
       onTagName("");
       refreshHue();
     }
-  }, []);
+  }, [fetching]);
 
   const refreshHue = () => {
     const newColor = Math.floor(Math.random() * 361);
@@ -77,7 +79,7 @@ export const TagConstructor: React.FC<Props> = ({
         if (findResults) {
           throw new Error("This tag name already exists");
         }
-        // NotesStore.updateTag(UiStore.currentTag, tagName.trim(), color);
+        updateTag({ tagId: UiStore.currentTag!, name: tagName, hue });
         onTagName("");
         refreshHue();
         // @ts-ignore
@@ -128,38 +130,36 @@ export const TagConstructor: React.FC<Props> = ({
         height: 650,
       }}
     >
-      <>
-        <Container>
-          <NavbarTop
-            handleClick={handleBack}
-            handleNext={handleSubmit}
-            title={editMode ? "Editing tag" : "Creating tag"}
-            titleLeft="Cancel"
-            titleRight="Save"
-            hasNoMargin
-          />
-        </Container>
-        <Container hasBorder mt={16} />
+      <Container>
+        <NavbarTop
+          handleClick={handleBack}
+          handleNext={handleSubmit}
+          title={editMode ? "Editing tag" : "Creating tag"}
+          titleLeft="Cancel"
+          titleRight="Save"
+          hasNoMargin
+        />
+      </Container>
+      <Container hasBorder mt={16} />
 
-        <Container isCentered mt={44}>
-          <Container isCentered>
-            <Tag hue={hue} title={tagName} />
-          </Container>
-          <TextInput
-            style={styles.input}
-            onChangeText={(text) => onTagName(text)}
-            value={tagName}
-            autoFocus
-            onSubmitEditing={handleSubmit}
-          />
-          <TouchableOpacity onPress={refreshHue}>
-            <Image
-              style={{ ...styles.icon, ...styles.mt }}
-              source={require("../../assets/refresh.png")}
-            />
-          </TouchableOpacity>
+      <Container isCentered mt={44}>
+        <Container isCentered>
+          <Tag hue={hue} title={tagName} />
         </Container>
-      </>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => onTagName(text)}
+          value={tagName}
+          autoFocus
+          onSubmitEditing={handleSubmit}
+        />
+        <TouchableOpacity onPress={refreshHue}>
+          <Image
+            style={{ ...styles.icon, ...styles.mt }}
+            source={require("../../assets/refresh.png")}
+          />
+        </TouchableOpacity>
+      </Container>
     </View>
   );
 };

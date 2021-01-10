@@ -100,6 +100,7 @@ export type Mutation = {
   addComment?: Maybe<Note>;
   addExistingTag?: Maybe<Note>;
   addNewTag?: Maybe<Note>;
+  updateTag?: Maybe<Scalars['Boolean']>;
   deleteTagFromNote?: Maybe<Note>;
   deleteComment?: Maybe<Note>;
   updateReviewHistory?: Maybe<Scalars['Boolean']>;
@@ -124,6 +125,13 @@ export type MutationAddExistingTagArgs = {
 
 export type MutationAddNewTagArgs = {
   noteId?: Maybe<Scalars['ID']>;
+  tagId?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  hue?: Maybe<Scalars['Int']>;
+};
+
+
+export type MutationUpdateTagArgs = {
   tagId?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   hue?: Maybe<Scalars['Int']>;
@@ -308,6 +316,18 @@ export type UpdateReviewHistoryMutationVariables = Exact<{
 export type UpdateReviewHistoryMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'updateReviewHistory'>
+);
+
+export type UpdateTagMutationVariables = Exact<{
+  tagId: Scalars['ID'];
+  name: Scalars['String'];
+  hue: Scalars['Int'];
+}>;
+
+
+export type UpdateTagMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'updateTag'>
 );
 
 export type BooksQueryVariables = Exact<{ [key: string]: never; }>;
@@ -546,6 +566,15 @@ export const UpdateReviewHistoryDocument = gql`
 
 export function useUpdateReviewHistoryMutation() {
   return Urql.useMutation<UpdateReviewHistoryMutation, UpdateReviewHistoryMutationVariables>(UpdateReviewHistoryDocument);
+};
+export const UpdateTagDocument = gql`
+    mutation UpdateTag($tagId: ID!, $name: String!, $hue: Int!) {
+  updateTag(tagId: $tagId, name: $name, hue: $hue)
+}
+    `;
+
+export function useUpdateTagMutation() {
+  return Urql.useMutation<UpdateTagMutation, UpdateTagMutationVariables>(UpdateTagDocument);
 };
 export const BooksDocument = gql`
     query Books {
