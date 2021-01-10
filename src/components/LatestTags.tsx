@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { ActivityIndicator, Text } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 import { Container } from "./grid/Container";
 import { useNavigation } from "@react-navigation/native";
 import { Title } from "./Title";
@@ -67,6 +67,10 @@ export const LatestTags: React.FC = observer(() => {
         <ActivityIndicator size="large" />
       </Container>
     );
+  }
+
+  if (!data?.latestTags?.length) {
+    return <View />;
   }
 
   return (
