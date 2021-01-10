@@ -84,6 +84,27 @@ const client = createClient({
             tags: [...cachedTagsFromNote, addedTag],
           };
         },
+        updateTag: (variables, cache, _) => {
+          const { name, hue, tagId } = variables;
+
+          const allFields = cache.inspectFields("Query");
+          const noteQueries = allFields.filter((x) => x.fieldName === "note");
+          noteQueries.forEach((q) => {
+            const noteId = q.arguments.id;
+            cache.updateQuery(
+              { query: NoteDocument, variables: { id: noteId } },
+              (data) => {
+                data.note.tags.forEach((t) => {
+                  if (t.id === tagId) {
+                    t.name = name;
+                    t.hue = hue;
+                  }
+                });
+                return data;
+              }
+            );
+          });
+        },
         addNewTag: (variables, cache, _) => {
           const { name, hue, noteId, tagId } = variables;
 
@@ -157,6 +178,30 @@ const client = createClient({
             cache.updateQuery({ query: TagsDocument }, (data) => {
               data.tags.push(addedTag);
               return data;
+            });
+          },
+          updateTag: (_, args, cache, __) => {
+            const { name, hue, tagId } = args;
+
+            const allFields = cache.inspectFields("Query");
+            const noteQueries = allFields.filter((x) => x.fieldName === "note");
+            console.log(noteQueries);
+            noteQueries.forEach((q) => {
+              const noteId = q.arguments.id;
+              console.log(noteId);
+              cache.updateQuery(
+                { query: NoteDocument, variables: { id: noteId } },
+                (data) => {
+                  data.note.tags.forEach((t) => {
+                    if (t.id === tagId) {
+                      console.log("updating");
+                      t.name = name;
+                      t.hue = hue;
+                    }
+                  });
+                  return data;
+                }
+              );
             });
           },
         },
