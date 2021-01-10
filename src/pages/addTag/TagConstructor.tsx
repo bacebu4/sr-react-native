@@ -17,12 +17,14 @@ interface Props {
   handleBack: ((event: GestureResponderEvent) => void) | undefined;
   editMode?: boolean;
   handleClose?: ((event: GestureResponderEvent) => void) | undefined;
+  noteId?: string;
 }
 
 export const TagConstructor: React.FC<Props> = ({
   handleBack,
   editMode = false,
   handleClose,
+  noteId,
 }) => {
   const [tagName, onTagName] = useState("");
   const [color, onColor] = useState(0);
@@ -76,16 +78,12 @@ export const TagConstructor: React.FC<Props> = ({
       //   message(error.message);
       // }
     } else {
-      // adding new tag
-      // const findResults = NotesStore.tags.find(
-      //   (t) => t.tag_name === tagName.trim()
-      // );
       const findResults = data?.tags?.find((t) => t?.name === tagName.trim());
       try {
         if (findResults) {
           throw new Error("This tag name already exists");
         }
-        // NotesStore.addNewTag(UiStore.currentNote, tagName.trim(), color);
+        // NotesStore.addNewTag(UiStore.currentNoteId, tagName.trim(), color);
         onTagName("");
         refreshColor();
         // @ts-ignore

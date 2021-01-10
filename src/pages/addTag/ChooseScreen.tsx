@@ -126,7 +126,11 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
         </>
       ) : (
         // adding new tag
-        <TagConstructor handleBack={handleBack} handleClose={handleCancel} />
+        <TagConstructor
+          handleBack={handleBack}
+          handleClose={handleCancel}
+          noteId={note?.id}
+        />
       )}
     </View>
   );
