@@ -9,10 +9,10 @@ import {
 import { Container } from "../../components/grid/Container";
 import { TagContainer } from "../../components/grid/TagContainer";
 import { NavbarTop } from "../../components/NavbarTop";
-// @ts-ignore
 import { TagConstructor } from "./TagConstructor";
 import { TextGray } from "../../components/TextGray";
 import { Tag } from "../../components/Tag";
+import { MainContainer } from "../../components/grid/MainContainer";
 import {
   Note,
   useTagsQuery,
@@ -64,12 +64,7 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
   }
 
   return (
-    <View
-      style={{
-        backgroundColor: "white",
-        height: 650,
-      }}
-    >
+    <MainContainer>
       {showAddSheet ? (
         <>
           <Container>
@@ -132,6 +127,6 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
           noteId={note?.id}
         />
       )}
-    </View>
+    </MainContainer>
   );
 };

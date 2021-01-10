@@ -20,6 +20,7 @@ import {
   useTagsQuery,
 } from "../../generated/graphql";
 import { TText } from "../../components/TText";
+import { MainContainer } from "../../components/grid/MainContainer";
 const { v4: uuidv4 } = require("uuid");
 
 interface Props {
@@ -124,12 +125,7 @@ export const TagConstructor: React.FC<Props> = ({
   }
 
   return (
-    <View
-      style={{
-        backgroundColor: "white",
-        height: 650,
-      }}
-    >
+    <MainContainer>
       <Container>
         <NavbarTop
           handleClick={handleBack}
@@ -160,7 +156,7 @@ export const TagConstructor: React.FC<Props> = ({
           />
         </TouchableOpacity>
       </Container>
-    </View>
+    </MainContainer>
   );
 };
 
