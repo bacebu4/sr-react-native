@@ -22,7 +22,11 @@ import { ChooseScreen } from "../addTag/ChooseScreen";
 // @ts-ignore
 import { TagConstructor } from "../addTag/TagConstructor";
 import { EditTextModal } from "../../components/EditTextModal";
-import { useNoteQuery, useAddCommentMutation } from "../../generated/graphql";
+import {
+  useNoteQuery,
+  useAddCommentMutation,
+  useDeleteTagFromNoteMutation,
+} from "../../generated/graphql";
 import { TText } from "../../components/TText";
 import { Card } from "../../components/CardNew";
 import { Comment } from "../../components/Comment";
@@ -44,6 +48,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
   const [text, setText] = useState("");
   const confirm = useConfirm();
   const [, addComment] = useAddCommentMutation();
+  const [, deleteTagFromNote] = useDeleteTagFromNoteMutation();
   const [result] = useNoteQuery({ variables: { id: noteId } });
   const { data, fetching, error } = result;
 
@@ -63,6 +68,9 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
     confirm(
       () => {
         // NotesStore.deleteTagFromNote(note.note_id, tagId);
+        if (tagId) {
+          deleteTagFromNote({ noteId: data?.note?.id!, tagId });
+        }
       },
       "Delete tag",
       "Are you sure you want to delete this tag from highlight?"
@@ -136,7 +144,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
           >
             <ChooseScreen
               handleCancel={() => setModalTagVisible(false)}
-              note={data?.note}
+              note={data!.note!}
             ></ChooseScreen>
           </TagModal>
 

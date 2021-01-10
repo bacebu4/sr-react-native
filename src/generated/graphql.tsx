@@ -100,6 +100,7 @@ export type Mutation = {
   addNewTag?: Maybe<Scalars['Boolean']>;
   addComment?: Maybe<Note>;
   addExistingTag?: Maybe<Note>;
+  deleteTagFromNote?: Maybe<Note>;
   deleteComment?: Maybe<Note>;
   updateReviewHistory?: Maybe<Scalars['Boolean']>;
   deleteNote?: Maybe<Scalars['Boolean']>;
@@ -124,6 +125,12 @@ export type MutationAddCommentArgs = {
 
 
 export type MutationAddExistingTagArgs = {
+  noteId?: Maybe<Scalars['ID']>;
+  tagId?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationDeleteTagFromNoteArgs = {
   noteId?: Maybe<Scalars['ID']>;
   tagId?: Maybe<Scalars['ID']>;
 };
@@ -225,6 +232,24 @@ export type DeleteNoteMutationVariables = Exact<{
 export type DeleteNoteMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'deleteNote'>
+);
+
+export type DeleteTagFromNoteMutationVariables = Exact<{
+  noteId: Scalars['ID'];
+  tagId: Scalars['ID'];
+}>;
+
+
+export type DeleteTagFromNoteMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteTagFromNote?: Maybe<(
+    { __typename?: 'Note' }
+    & Pick<Note, 'id'>
+    & { tags?: Maybe<Array<Maybe<(
+      { __typename?: 'Tag' }
+      & Pick<Tag, 'id' | 'name' | 'hue'>
+    )>>> }
+  )> }
 );
 
 export type UpdateCommentMutationVariables = Exact<{
@@ -436,6 +461,22 @@ export const DeleteNoteDocument = gql`
 
 export function useDeleteNoteMutation() {
   return Urql.useMutation<DeleteNoteMutation, DeleteNoteMutationVariables>(DeleteNoteDocument);
+};
+export const DeleteTagFromNoteDocument = gql`
+    mutation DeleteTagFromNote($noteId: ID!, $tagId: ID!) {
+  deleteTagFromNote(noteId: $noteId, tagId: $tagId) {
+    id
+    tags {
+      id
+      name
+      hue
+    }
+  }
+}
+    `;
+
+export function useDeleteTagFromNoteMutation() {
+  return Urql.useMutation<DeleteTagFromNoteMutation, DeleteTagFromNoteMutationVariables>(DeleteTagFromNoteDocument);
 };
 export const UpdateCommentDocument = gql`
     mutation UpdateComment($commentId: ID!, $text: String!) {

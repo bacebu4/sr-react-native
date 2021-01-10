@@ -84,6 +84,18 @@ const client = createClient({
             tags: [...cachedTagsFromNote, addedTag],
           };
         },
+        deleteTagFromNote: (variables, cache, _) => {
+          const cachedTagsFromNote = cache.readQuery({
+            query: NoteDocument,
+            variables: { id: variables.noteId },
+          }).note.tags;
+
+          return {
+            __typename: "Note",
+            id: variables.noteId,
+            tags: cachedTagsFromNote.filter((t) => t.id !== variables.tagId),
+          };
+        },
         deleteComment: (variables, cache, _) => {
           const cachedComments = cache.readQuery({
             query: NoteDocument,
