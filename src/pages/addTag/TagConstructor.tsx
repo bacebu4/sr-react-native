@@ -21,6 +21,7 @@ import {
 } from "../../generated/graphql";
 import { TText } from "../../components/TText";
 import { MainContainer } from "../../components/grid/MainContainer";
+import { ColorPicker } from "../../components/ColorPicker";
 const { v4: uuidv4 } = require("uuid");
 
 interface Props {
@@ -155,6 +156,10 @@ export const TagConstructor: React.FC<Props> = ({
             source={require("../../assets/refresh.png")}
           />
         </TouchableOpacity>
+      </Container>
+
+      <Container mt={32} isCentered>
+        <ColorPicker onHue={onHue} selectedHue={hue} />
       </Container>
     </MainContainer>
   );
