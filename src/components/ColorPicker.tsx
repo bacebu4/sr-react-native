@@ -10,19 +10,19 @@ interface Props {
 }
 
 const firstRowOfColors = [
-  { hue: 100 },
-  { hue: 200 },
-  { hue: 300 },
-  { hue: 400 },
-  { hue: 500 },
+  { hue: 0 },
+  { hue: 40 },
+  { hue: 80 },
+  { hue: 120 },
+  { hue: 160 },
 ];
 
 const secondRowOfColors = [
-  { hue: 150 },
-  { hue: 250 },
-  { hue: 350 },
-  { hue: 450 },
-  { hue: 550 },
+  { hue: 200 },
+  { hue: 240 },
+  { hue: 280 },
+  { hue: 320 },
+  { hue: 360 },
 ];
 
 export const ColorPicker: React.FC<Props> = ({ selectedHue, onHue }) => {
