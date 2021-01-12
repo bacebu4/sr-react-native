@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
-  View,
   TextInput,
   TouchableOpacity,
   Image,
@@ -109,35 +108,49 @@ export const TagConstructor: React.FC<Props> = ({
     }
   };
 
-  if (fetching) {
+  const Header: React.FC = () => {
     return (
-      <Container isCentered mt={400}>
-        <ActivityIndicator size="large" />
-      </Container>
+      <>
+        <Container>
+          <NavbarTop
+            handleClick={handleBack}
+            handleNext={handleSubmit}
+            title={editMode ? "Editing tag" : "Creating tag"}
+            titleLeft="Cancel"
+            titleRight="Save"
+            hasNoMargin
+          />
+        </Container>
+        <Container hasBorder mt={16} />
+      </>
     );
-  }
+  };
 
   if (error) {
     return (
-      <Container isCentered mt={400}>
-        <TText>{error.message}</TText>
-      </Container>
+      <MainContainer>
+        <Header />
+        <Container isCentered mt={400}>
+          <TText>{error.message}</TText>
+        </Container>
+      </MainContainer>
+    );
+  }
+
+  if (fetching) {
+    return (
+      <MainContainer>
+        <Header />
+        <Container isCentered mt={400}>
+          <ActivityIndicator size="large" />
+        </Container>
+      </MainContainer>
     );
   }
 
   return (
     <MainContainer>
-      <Container>
-        <NavbarTop
-          handleClick={handleBack}
-          handleNext={handleSubmit}
-          title={editMode ? "Editing tag" : "Creating tag"}
-          titleLeft="Cancel"
-          titleRight="Save"
-          hasNoMargin
-        />
-      </Container>
-      <Container hasBorder mt={16} />
+      <Header />
 
       <Container isCentered mt={44}>
         <Container isCentered>

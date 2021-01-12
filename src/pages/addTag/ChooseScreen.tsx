@@ -39,46 +39,63 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
     setShowAddSheet(true);
   };
 
-  // @ts-ignore
-  const handleSubmitFromExisting = (tagId) => {
-    // NotesStore.addExistingTag(note.note_id, id);
+  const handleSubmitFromExisting = (tagId: string) => {
     addExistingTag({ noteId: note!.id, tagId });
     // @ts-ignore
     handleCancel();
   };
 
+  const Header: React.FC = () => {
+    return (
+      <>
+        {showAddSheet ? (
+          <>
+            <Container>
+              <NavbarTop
+                handleClick={handleCancel}
+                handleNext={handleShowCreate}
+                title="Choose from existing"
+                titleLeft="Cancel"
+                titleRight="Create"
+                hasNoMargin
+              />
+            </Container>
+            <Container hasBorder mt={16} />
+          </>
+        ) : (
+          <View />
+        )}
+      </>
+    );
+  };
+
   if (error) {
     return (
-      <Container isCentered mt={400}>
-        <Text>{error.message}</Text>
-      </Container>
+      <MainContainer>
+        <Header />
+        <Container isCentered mt={400}>
+          <Text>{error.message}</Text>
+        </Container>
+      </MainContainer>
     );
   }
 
   if (fetching) {
     return (
-      <Container isCentered mt={400}>
-        <ActivityIndicator size="large" />
-      </Container>
+      <MainContainer>
+        <Header />
+        <Container isCentered mt={400}>
+          <ActivityIndicator size="large" />
+        </Container>
+      </MainContainer>
     );
   }
 
   return (
     <MainContainer>
+      <Header />
       {showAddSheet ? (
         <>
-          <Container>
-            <NavbarTop
-              handleClick={handleCancel}
-              handleNext={handleShowCreate}
-              title="Choose from existing"
-              titleLeft="Cancel"
-              titleRight="Create"
-              hasNoMargin
-            />
-          </Container>
-          <Container hasBorder mt={16} />
-
           {data?.tags?.length ? (
             <>
               <Container>
@@ -97,7 +114,7 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
                           hue={tag?.hue}
                           key={tag?.id}
                           style={{ marginRight: 16, marginTop: 24 }}
-                          onPress={() => handleSubmitFromExisting(tag?.id)}
+                          onPress={() => handleSubmitFromExisting(tag!.id)}
                         />
                       );
                     }
