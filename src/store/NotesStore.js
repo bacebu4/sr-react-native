@@ -109,47 +109,57 @@ class NotesStore {
 
   *fetchInitInfo() {
     try {
-      const initInfo = yield request(
-        `${BACKEND_URL}/api/getInitInfo?id=1`,
-        "GET",
-        this.token
-      );
-      console.log("latestReviewDate", initInfo.latestReviewDate);
+      // const initInfo = yield request(
+      //   `${BACKEND_URL}/api/getInitInfo?id=1`,
+      //   "GET",
+      //   this.token
+      // );
+      // console.log("latestReviewDate", initInfo.latestReviewDate);
 
-      const daysPast = differenceInCalendarDays(
-        Date.now(),
-        new Date(initInfo.latestReviewDate).getTime()
-      );
+      // const daysPast = differenceInCalendarDays(
+      //   Date.now(),
+      //   new Date(initInfo.latestReviewDate).getTime()
+      // );
 
-      const streak = differenceInCalendarDays(
-        new Date(initInfo.latestReviewDate).getTime(),
-        new Date(initInfo.streakBeginningDate).getTime()
-      );
+      const daysPast = 1;
 
-      initInfo.accountInfo.missed = 0;
-      initInfo.accountInfo.current = 0;
-      initInfo.accountInfo.streak = streak + 1;
+      // const streak = differenceInCalendarDays(
+      //   new Date(initInfo.latestReviewDate).getTime(),
+      //   new Date(initInfo.streakBeginningDate).getTime()
+      // );
+
+      let streak = 0;
+
+      let missed = 0;
+      const current = 0;
+      streak = streak + 1;
       console.log("daysPast", daysPast);
       console.log("streak", streak + 1);
+      let reviewed;
 
       switch (daysPast) {
         case 0:
-          initInfo.accountInfo.reviewed = true;
+          reviewed = true;
           break;
 
         case 1:
-          initInfo.accountInfo.reviewed = false;
+          reviewed = false;
           break;
 
         default:
-          initInfo.accountInfo.reviewed = false;
-          initInfo.accountInfo.missed = daysPast - 1;
+          reviewed = false;
+          missed = daysPast - 1;
           break;
       }
-      this.setTags(initInfo.tags);
-      this.setLatestBooks(initInfo.latestBooks);
-      this.setAmount(initInfo.accountInfo.review_amount);
-      this.info = initInfo.accountInfo;
+      // this.setTags(initInfo.tags);
+      // this.setLatestBooks(initInfo.latestBooks);
+      this.setAmount(3);
+      this.info = {
+        missed,
+        current,
+        reviewed,
+        streak,
+      };
     } catch (error) {
       console.log("error fetching init", error);
     } finally {

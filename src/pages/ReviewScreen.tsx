@@ -98,6 +98,7 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
     }
     if (index > maxIndex) {
       maxIndex = index;
+      // TODO change here
       // @ts-ignore
       NotesStore.setCurrent(index);
 

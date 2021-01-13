@@ -14,6 +14,10 @@ class UiStore {
     this.currentTag = value;
   }
 
+  setCurrentReviewIndex(value: number) {
+    this.currentReviewIndex = value;
+  }
+
   constructor() {
     makeAutoObservable(this);
   }
