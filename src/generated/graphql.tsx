@@ -54,6 +54,9 @@ export type Info = {
   reviewAmount: Scalars['Int'];
   latestReviewDate: Scalars['String'];
   streakBeginningDate: Scalars['String'];
+  streak: Scalars['Int'];
+  missed: Scalars['Int'];
+  reviewed: Scalars['Boolean'];
 };
 
 export type Query = {

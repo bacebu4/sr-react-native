@@ -4,6 +4,7 @@ import { createContext } from "react";
 class UiStore {
   currentNote: string | null = null;
   currentTag: string | null = null;
+  currentReviewIndex: number = 0;
 
   setCurrentNoteId(value: string) {
     this.currentNote = value;
