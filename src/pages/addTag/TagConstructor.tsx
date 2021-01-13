@@ -108,28 +108,26 @@ export const TagConstructor: React.FC<Props> = ({
     }
   };
 
-  const Header: React.FC = () => {
-    return (
-      <>
-        <Container>
-          <NavbarTop
-            handleClick={handleBack}
-            handleNext={handleSubmit}
-            title={editMode ? "Editing tag" : "Creating tag"}
-            titleLeft="Cancel"
-            titleRight="Save"
-            hasNoMargin
-          />
-        </Container>
-        <Container hasBorder mt={16} />
-      </>
-    );
-  };
+  const Header = (
+    <>
+      <Container>
+        <NavbarTop
+          handleClick={handleBack}
+          handleNext={handleSubmit}
+          title={editMode ? "Editing tag" : "Creating tag"}
+          titleLeft="Cancel"
+          titleRight="Save"
+          hasNoMargin
+        />
+      </Container>
+      <Container hasBorder mt={16} />
+    </>
+  );
 
   if (error) {
     return (
       <MainContainer>
-        <Header />
+        {Header}
         <Container isCentered mt={400}>
           <TText>{error.message}</TText>
         </Container>
@@ -140,7 +138,7 @@ export const TagConstructor: React.FC<Props> = ({
   if (fetching) {
     return (
       <MainContainer>
-        <Header />
+        {Header}
         <Container isCentered mt={400}>
           <ActivityIndicator size="large" />
         </Container>
@@ -150,7 +148,7 @@ export const TagConstructor: React.FC<Props> = ({
 
   return (
     <MainContainer>
-      <Header />
+      {Header}
 
       <Container isCentered mt={44}>
         <Container isCentered>

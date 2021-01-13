@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  View,
   Image,
   GestureResponderEvent,
   Text,
@@ -45,57 +44,53 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
     handleCancel();
   };
 
-  const Header: React.FC = () => {
-    return (
-      <>
-        {showAddSheet ? (
-          <>
-            <Container>
-              <NavbarTop
-                handleClick={handleCancel}
-                handleNext={handleShowCreate}
-                title="Choose from existing"
-                titleLeft="Cancel"
-                titleRight="Create"
-                hasNoMargin
-              />
-            </Container>
-            <Container hasBorder mt={16} />
-          </>
-        ) : (
-          <View />
-        )}
-      </>
-    );
-  };
+  const Header = (
+    <>
+      <Container>
+        <NavbarTop
+          handleClick={handleCancel}
+          handleNext={handleShowCreate}
+          title="Choose from existing"
+          titleLeft="Cancel"
+          titleRight="Create"
+          hasNoMargin
+        />
+      </Container>
+      <Container hasBorder mt={16} />
+    </>
+  );
 
   if (error) {
-    return (
-      <MainContainer>
-        <Header />
-        <Container isCentered mt={400}>
-          <Text>{error.message}</Text>
-        </Container>
-      </MainContainer>
-    );
+    if (showAddSheet) {
+      return (
+        <MainContainer>
+          {Header}
+          <Container isCentered mt={400}>
+            <Text>{error.message}</Text>
+          </Container>
+        </MainContainer>
+      );
+    }
   }
 
   if (fetching) {
-    return (
-      <MainContainer>
-        <Header />
-        <Container isCentered mt={400}>
-          <ActivityIndicator size="large" />
-        </Container>
-      </MainContainer>
-    );
+    if (showAddSheet) {
+      return (
+        <MainContainer>
+          {Header}
+          <Container isCentered mt={400}>
+            <ActivityIndicator size="large" />
+          </Container>
+        </MainContainer>
+      );
+    }
   }
 
   return (
     <MainContainer>
-      <Header />
       {showAddSheet ? (
         <>
+          {Header}
           {data?.tags?.length ? (
             <>
               <Container>
