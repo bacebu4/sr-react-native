@@ -49,21 +49,11 @@ export type Book = {
   author: Scalars['String'];
 };
 
-export type AccountInfo = {
-  __typename?: 'AccountInfo';
+export type Info = {
+  __typename?: 'Info';
   reviewAmount: Scalars['Int'];
-  streak: Scalars['Int'];
-  missed: Scalars['Int'];
-  current: Scalars['Int'];
-  createdAt: Scalars['String'];
-  reviewed: Scalars['Boolean'];
-};
-
-export type InitInfo = {
-  __typename?: 'InitInfo';
-  tags: Array<Maybe<Tag>>;
-  latestBooks: Array<Maybe<Book>>;
-  accountInfo?: Maybe<AccountInfo>;
+  latestReviewDate: Scalars['String'];
+  streakBeginningDate: Scalars['String'];
 };
 
 export type Query = {
@@ -71,7 +61,7 @@ export type Query = {
   dailyNotesIds?: Maybe<Array<Maybe<Scalars['String']>>>;
   notesBy?: Maybe<Array<Maybe<Note>>>;
   note?: Maybe<Note>;
-  initInfo?: Maybe<InitInfo>;
+  info?: Maybe<Info>;
   books?: Maybe<Array<Maybe<Book>>>;
   latestBooks?: Maybe<Array<Maybe<Book>>>;
   tags?: Maybe<Array<Maybe<Tag>>>;
@@ -365,6 +355,17 @@ export type DailyNotesIdsQuery = (
   & Pick<Query, 'dailyNotesIds'>
 );
 
+export type InfoQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type InfoQuery = (
+  { __typename?: 'Query' }
+  & { info?: Maybe<(
+    { __typename?: 'Info' }
+    & Pick<Info, 'reviewAmount' | 'latestReviewDate' | 'streakBeginningDate'>
+  )> }
+);
+
 export type LatestBooksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -622,6 +623,19 @@ export const DailyNotesIdsDocument = gql`
 
 export function useDailyNotesIdsQuery(options: Omit<Urql.UseQueryArgs<DailyNotesIdsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<DailyNotesIdsQuery>({ query: DailyNotesIdsDocument, ...options });
+};
+export const InfoDocument = gql`
+    query Info {
+  info {
+    reviewAmount
+    latestReviewDate
+    streakBeginningDate
+  }
+}
+    `;
+
+export function useInfoQuery(options: Omit<Urql.UseQueryArgs<InfoQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<InfoQuery>({ query: InfoDocument, ...options });
 };
 export const LatestBooksDocument = gql`
     query LatestBooks {
