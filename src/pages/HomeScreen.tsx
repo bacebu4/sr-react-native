@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 // @ts-ignore
-import { Navbar } from "../Navbar";
+import { Navbar } from "../components/Navbar";
 import { MainContainer } from "../components/grid/MainContainer";
 import { Container } from "../components/grid/Container";
 import { SettingsModal } from "../components/SettingsModal";

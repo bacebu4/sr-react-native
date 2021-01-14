@@ -3,5 +3,8 @@ query Info {
     reviewAmount
     latestReviewDate
     streakBeginningDate
+    missed
+    reviewed
+    streak
   }
 }

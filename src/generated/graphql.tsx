@@ -365,7 +365,7 @@ export type InfoQuery = (
   { __typename?: 'Query' }
   & { info?: Maybe<(
     { __typename?: 'Info' }
-    & Pick<Info, 'reviewAmount' | 'latestReviewDate' | 'streakBeginningDate'>
+    & Pick<Info, 'reviewAmount' | 'latestReviewDate' | 'streakBeginningDate' | 'missed' | 'reviewed' | 'streak'>
   )> }
 );
 
@@ -633,6 +633,9 @@ export const InfoDocument = gql`
     reviewAmount
     latestReviewDate
     streakBeginningDate
+    missed
+    reviewed
+    streak
   }
 }
     `;

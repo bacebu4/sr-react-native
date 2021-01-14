@@ -1,16 +1,46 @@
 import React, { useContext } from "react";
-import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  GestureResponderEvent,
+  ActivityIndicator,
+} from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
-import { Title } from "./components/Title";
+import { Title } from "./Title";
 import { observer } from "mobx-react-lite";
-import { NotesStoreContext } from "./store/NotesStore";
-import { TextGray } from "./components/TextGray";
-import { TText } from "./components/TText";
-import { Container } from "./components/grid/Container";
+import { TextGray } from "./TextGray";
+import { TText } from "./TText";
+import { Container } from "./grid/Container";
+import { UiStoreContext } from "../store/UiStore";
+import { useInfoQuery } from "../generated/graphql";
 
-export const Navbar = observer(({ title, handleClick }) => {
-  const NotesStore = useContext(NotesStoreContext);
+interface Props {
+  title: string;
+  handleClick: ((event: GestureResponderEvent) => void) | undefined;
+}
+
+export const Navbar: React.FC<Props> = observer(({ title, handleClick }) => {
+  const UiStore = useContext(UiStoreContext);
+  const [result] = useInfoQuery();
+  const { data, fetching, error } = result;
+
+  if (error) {
+    return (
+      <Container isCentered>
+        <TText>{error.message}</TText>
+      </Container>
+    );
+  }
+
+  if (fetching) {
+    return (
+      <Container isCentered>
+        <ActivityIndicator size="large" />
+      </Container>
+    );
+  }
 
   return (
     <>
@@ -35,9 +65,9 @@ export const Navbar = observer(({ title, handleClick }) => {
       >
         <ProgressCircle
           percent={
-            NotesStore.info.reviewed
+            data?.info?.reviewed
               ? 100
-              : (NotesStore.info.current / NotesStore.amount) * 100
+              : (UiStore.currentReviewIndex / data?.info?.reviewAmount!) * 100
           }
           radius={10}
           borderWidth={4}
@@ -46,7 +76,7 @@ export const Navbar = observer(({ title, handleClick }) => {
           bgColor="#fff"
         />
 
-        {!NotesStore.info.reviewed ? (
+        {!data?.info?.reviewed ? (
           <TText style={styles.info}>Review Process Pending</TText>
         ) : (
           <>
