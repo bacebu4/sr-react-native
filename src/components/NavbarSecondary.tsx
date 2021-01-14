@@ -1,30 +1,52 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  GestureResponderEvent,
+} from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
-import { TextGray } from "./components/TextGray";
-import { TText } from "./components/TText";
+import { TextGray } from "./TextGray";
+import { TText } from "./TText";
+import { Title } from "./Title";
+import { Container } from "./grid/Container";
+import { useTranslation } from "react-i18next";
 
-export const NavbarSecondary = ({
+interface Props {
+  title: string;
+  handleClick: ((event: GestureResponderEvent) => void) | undefined;
+  handleNext: ((event: GestureResponderEvent) => void) | undefined;
+  index: number;
+  amount: number;
+}
+
+export const NavbarSecondary: React.FC<Props> = ({
   title,
   handleClick,
   handleNext,
   index,
   amount,
 }) => {
+  const { t } = useTranslation();
+
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.navbar}>
+    <>
+      <Container
+        isRow
+        mt={Constants.statusBarHeight + 40}
+        style={{ alignItems: "baseline" }}
+      >
         <TouchableOpacity onPress={handleClick}>
           <TText style={styles.text}>Exit</TText>
         </TouchableOpacity>
-        <TText style={styles.title}>{title}</TText>
+        <Title title={t(title)} />
         {index !== 0 ? (
           <>
             <TouchableOpacity onPress={handleNext}>
               <Image
                 style={styles.icon}
-                source={require("./assets/arrow.png")}
+                source={require("../assets/arrow.png")}
               />
             </TouchableOpacity>
           </>
@@ -33,13 +55,21 @@ export const NavbarSecondary = ({
             <TouchableOpacity onPress={handleClick}>
               <Image
                 style={styles.icon}
-                source={require("./assets/arrow.png")}
+                source={require("../assets/arrow.png")}
               />
             </TouchableOpacity>
           </>
         )}
-      </View>
-      <View style={styles.subbar}>
+      </Container>
+      <Container
+        isRow
+        mt={12}
+        style={{
+          alignItems: "center",
+          justifyContent: "flex-start",
+          paddingLeft: 4,
+        }}
+      >
         <ProgressCircle
           percent={((amount - index) / amount) * 100}
           radius={10}
@@ -53,28 +83,13 @@ export const NavbarSecondary = ({
         <TextGray ml={4}>
           <TText>more left</TText>
         </TextGray>
-      </View>
-    </View>
+      </Container>
+      <Container hasBorder mt={16} />
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#d7d7d7",
-    paddingBottom: 16,
-  },
-  navbar: {
-    flexDirection: "row",
-    marginTop: Constants.statusBarHeight + 40,
-    justifyContent: "space-between",
-    alignItems: "baseline",
-  },
-  title: {
-    fontSize: 32,
-    fontFamily: "Cochin-Bold",
-    color: "#343434",
-  },
   text: {
     fontSize: 16,
     color: "#CCA9F9",
@@ -83,12 +98,6 @@ const styles = StyleSheet.create({
   icon: {
     width: 24,
     height: 24,
-  },
-  subbar: {
-    marginTop: 12,
-    paddingLeft: 4,
-    flexDirection: "row",
-    alignItems: "center",
   },
   info: {
     marginLeft: 16,

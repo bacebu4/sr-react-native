@@ -1,7 +1,7 @@
 import React, { useContext, useMemo, useEffect } from "react";
 import { Dimensions, Text } from "react-native";
 // @ts-ignore
-import { NavbarSecondary } from "../NavbarSecondary";
+import { NavbarSecondary } from "../components/NavbarSecondary";
 import { SceneRendererProps, TabView } from "react-native-tab-view";
 import { observer } from "mobx-react-lite";
 // @ts-ignore
@@ -119,17 +119,15 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
 
   return (
     <MainContainer>
-      <Container>
-        <NavbarSecondary
-          title={"Review mode"}
-          handleNext={handleNextSlide}
-          handleClick={() => navigation.navigate("Home")}
-          // @ts-ignore
-          index={NotesStore.amount - index}
-          // @ts-ignore
-          amount={NotesStore.amount}
-        ></NavbarSecondary>
-      </Container>
+      <NavbarSecondary
+        title={"Review mode"}
+        handleNext={handleNextSlide}
+        handleClick={() => navigation.navigate("Home")}
+        // @ts-ignore
+        index={NotesStore.amount - index}
+        // @ts-ignore
+        amount={NotesStore.amount}
+      ></NavbarSecondary>
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
