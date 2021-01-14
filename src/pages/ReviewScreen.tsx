@@ -18,6 +18,7 @@ import {
 import { format } from "date-fns";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { HomeStackParamList } from "src/stacks/HomeStackScreen";
+import { UiStoreContext } from "../store/UiStore";
 
 let AMOUNT = 1;
 let maxIndex = 0;
@@ -46,6 +47,7 @@ type Props = {
 
 export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
   const NotesStore = useContext(NotesStoreContext);
+  const UiStore = useContext(UiStoreContext);
   const [, updateReviewHistory] = useUpdateReviewHistoryMutation();
   const [result] = useDailyNotesIdsQuery();
   const { data, fetching } = result;
@@ -98,9 +100,7 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
     }
     if (index > maxIndex) {
       maxIndex = index;
-      // TODO change here
-      // @ts-ignore
-      NotesStore.setCurrent(index);
+      UiStore.setCurrentReviewIndex(index);
 
       // @ts-ignore
       if (index === NotesStore.amount) {
