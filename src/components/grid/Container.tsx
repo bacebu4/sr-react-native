@@ -33,7 +33,6 @@ export const Container: React.FC<Props> = ({
         alignItems: isCentered ? "center" : "stretch",
         borderBottomWidth: hasBorder ? 1 : 0,
         borderBottomColor: hasBorder ? "#d7d7d7" : "white",
-        ...style,
         flexDirection: isRow ? "row" : "column",
         justifyContent: isRow
           ? "space-between"
@@ -41,6 +40,7 @@ export const Container: React.FC<Props> = ({
           ? "center"
           : "flex-start",
         paddingBottom: pb,
+        ...style,
       }}
     >
       {children}

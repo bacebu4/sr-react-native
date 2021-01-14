@@ -7,19 +7,32 @@ import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "./store/NotesStore";
 import { TextGray } from "./components/TextGray";
 import { TText } from "./components/TText";
+import { Container } from "./components/grid/Container";
 
 export const Navbar = observer(({ title, handleClick }) => {
   const NotesStore = useContext(NotesStoreContext);
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.navbar}>
+    <>
+      <Container
+        isRow
+        mt={Constants.statusBarHeight + 40}
+        style={{ justifyContent: "space-between", alignItems: "baseline" }}
+      >
         <Title type="big" title={title} />
         <TouchableOpacity onPress={handleClick}>
           <Image style={styles.icon} source={require("./assets/avatar.png")} />
         </TouchableOpacity>
-      </View>
-      <View style={styles.subbar}>
+      </Container>
+      <Container
+        isRow
+        mt={4}
+        style={{
+          justifyContent: "flex-start",
+          alignItems: "center",
+          paddingLeft: 4,
+        }}
+      >
         <ProgressCircle
           percent={
             NotesStore.info.reviewed
@@ -32,6 +45,7 @@ export const Navbar = observer(({ title, handleClick }) => {
           shadowColor="#d7d7d7"
           bgColor="#fff"
         />
+
         {!NotesStore.info.reviewed ? (
           <TText style={styles.info}>Review Process Pending</TText>
         ) : (
@@ -42,32 +56,16 @@ export const Navbar = observer(({ title, handleClick }) => {
             </TextGray>
           </>
         )}
-      </View>
-    </View>
+      </Container>
+      <Container hasBorder mt={16} />
+    </>
   );
 });
 
 const styles = StyleSheet.create({
-  wrapper: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#d7d7d7",
-    paddingBottom: 16,
-  },
-  navbar: {
-    flexDirection: "row",
-    marginTop: Constants.statusBarHeight + 40,
-    justifyContent: "space-between",
-    alignItems: "baseline",
-  },
   icon: {
     width: 44,
     height: 44,
-  },
-  subbar: {
-    marginTop: 4,
-    paddingLeft: 4,
-    flexDirection: "row",
-    alignItems: "center",
   },
   info: {
     marginLeft: 16,
