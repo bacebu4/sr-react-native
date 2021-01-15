@@ -1,7 +1,7 @@
 import React, { useContext, useMemo, useEffect } from "react";
 import { Dimensions, Text } from "react-native";
 import { NavbarSecondary } from "../components/NavbarSecondary";
-import { Route, SceneRendererProps, TabView } from "react-native-tab-view";
+import { SceneRendererProps, TabView } from "react-native-tab-view";
 import { observer } from "mobx-react-lite";
 import { ReviewTabScreen } from "./review/ReviewTabScreen";
 import { ReviewFinalScreen } from "./review/ReviewFinalScreen";
@@ -101,7 +101,6 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
     }
   }, [index]);
 
-  // @ts-ignore
   const [routes] = React.useState(generateRoutes);
 
   const handleNextSlide = () => {
