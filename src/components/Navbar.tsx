@@ -76,7 +76,8 @@ export const Navbar: React.FC<Props> = observer(({ title, handleClick }) => {
           bgColor="#fff"
         />
 
-        {!data?.info?.reviewed ? (
+        {(UiStore.currentReviewIndex / data?.info?.reviewAmount!) * 100 !==
+          100 && !data?.info?.reviewed ? (
           <TText style={styles.info}>Review Process Pending</TText>
         ) : (
           <>
