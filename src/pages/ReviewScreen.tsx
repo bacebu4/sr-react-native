@@ -47,6 +47,11 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
   const [result] = useDailyNotesIdsQuery();
   const { data, fetching } = result;
   const [resultInfo] = useInfoQuery();
+  const [index, setIndex] = React.useState(0);
+
+  const handleNextSlide = () => {
+    setIndex((prev) => prev + 1);
+  };
 
   if (fetching || resultInfo.fetching) {
     return (
@@ -67,22 +72,20 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
 
     for (let i = 1; i <= resultInfo.data?.info?.reviewAmount!; i++) {
       initialRoutes.push({
-        key: i,
-        title: i,
+        key: String(i),
+        title: String(i),
         noteId: data?.dailyNotesIds![i - 1]
           ? (data!.dailyNotesIds![i - 1]! as string)
           : "",
       });
     }
     initialRoutes.push({
-      key: resultInfo.data?.info?.reviewAmount! + 1,
-      title: resultInfo.data?.info?.reviewAmount! + 1,
+      key: String(resultInfo.data?.info?.reviewAmount! + 1),
+      title: String(resultInfo.data?.info?.reviewAmount! + 1),
       noteId: "",
     });
     return initialRoutes;
   }, [resultInfo.data?.info?.reviewAmount, fetching, resultInfo.fetching]);
-
-  const [index, setIndex] = React.useState(0);
 
   useEffect(() => {
     if (index === resultInfo.data?.info?.reviewAmount) {
@@ -102,10 +105,6 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
   }, [index]);
 
   const [routes] = React.useState(generateRoutes);
-
-  const handleNextSlide = () => {
-    setIndex((prev) => prev + 1);
-  };
 
   return (
     <MainContainer>
