@@ -1,11 +1,8 @@
 import React, { useContext, useMemo, useEffect } from "react";
 import { Dimensions, Text } from "react-native";
-// @ts-ignore
 import { NavbarSecondary } from "../components/NavbarSecondary";
-import { SceneRendererProps, TabView } from "react-native-tab-view";
+import { Route, SceneRendererProps, TabView } from "react-native-tab-view";
 import { observer } from "mobx-react-lite";
-// @ts-ignore
-import { NotesStoreContext } from "../store/NotesStore";
 import { ReviewTabScreen } from "./review/ReviewTabScreen";
 import { ReviewFinalScreen } from "./review/ReviewFinalScreen";
 import * as Haptics from "expo-haptics";
@@ -13,6 +10,7 @@ import { MainContainer } from "../components/grid/MainContainer";
 import { Container } from "../components/grid/Container";
 import {
   useDailyNotesIdsQuery,
+  useInfoQuery,
   useUpdateReviewHistoryMutation,
 } from "../generated/graphql";
 import { format } from "date-fns";
@@ -39,20 +37,18 @@ const renderScene: React.FC<
   return <ReviewTabScreen jumpTo={jumpTo} noteId={route.noteId} />;
 };
 
-const initialLayout = { width: Dimensions.get("window").width };
-
 type Props = {
   navigation: StackNavigationProp<HomeStackParamList, "Review">;
 };
 
 export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
-  const NotesStore = useContext(NotesStoreContext);
   const UiStore = useContext(UiStoreContext);
   const [, updateReviewHistory] = useUpdateReviewHistoryMutation();
   const [result] = useDailyNotesIdsQuery();
   const { data, fetching } = result;
+  const [resultInfo] = useInfoQuery();
 
-  if (fetching) {
+  if (fetching || resultInfo.fetching) {
     return (
       <MainContainer>
         <Container isCentered mt={400}>
@@ -63,14 +59,13 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
   }
 
   useEffect(() => {
-    // @ts-ignore
-    AMOUNT = NotesStore.amount;
+    AMOUNT = Number(resultInfo.data?.info?.reviewAmount);
   }, []);
 
   const generateRoutes = useMemo(() => {
     const initialRoutes = [];
-    // @ts-ignore
-    for (let i = 1; i <= NotesStore.amount; i++) {
+
+    for (let i = 1; i <= resultInfo.data?.info?.reviewAmount!; i++) {
       initialRoutes.push({
         key: i,
         title: i,
@@ -80,21 +75,17 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
       });
     }
     initialRoutes.push({
-      // @ts-ignore
-      key: NotesStore.amount + 1,
-      // @ts-ignore
-      title: NotesStore.amount + 1,
+      key: resultInfo.data?.info?.reviewAmount! + 1,
+      title: resultInfo.data?.info?.reviewAmount! + 1,
       noteId: "",
     });
     return initialRoutes;
-    // @ts-ignore
-  }, [NotesStore.amount, fetching]);
+  }, [resultInfo.data?.info?.reviewAmount, fetching, resultInfo.fetching]);
 
   const [index, setIndex] = React.useState(0);
 
   useEffect(() => {
-    // @ts-ignore
-    if (index === NotesStore.amount) {
+    if (index === resultInfo.data?.info?.reviewAmount) {
       // @ts-ignore
       Haptics.notificationAsync("success");
     }
@@ -102,8 +93,7 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
       maxIndex = index;
       UiStore.setCurrentReviewIndex(index);
 
-      // @ts-ignore
-      if (index === NotesStore.amount) {
+      if (index === resultInfo.data?.info?.reviewAmount) {
         updateReviewHistory({
           date: format(Date.now(), "yyyy-MM-dd"),
         });
@@ -111,6 +101,7 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
     }
   }, [index]);
 
+  // @ts-ignore
   const [routes] = React.useState(generateRoutes);
 
   const handleNextSlide = () => {
@@ -123,16 +114,14 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
         title={"Review mode"}
         handleNext={handleNextSlide}
         handleClick={() => navigation.navigate("Home")}
-        // @ts-ignore
-        index={NotesStore.amount - index}
-        // @ts-ignore
-        amount={NotesStore.amount}
+        index={AMOUNT - index}
+        amount={AMOUNT}
       ></NavbarSecondary>
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
-        initialLayout={initialLayout}
+        initialLayout={{ width: Dimensions.get("window").width }}
         renderTabBar={() => null}
       />
     </MainContainer>
