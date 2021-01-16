@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { NavbarTop } from "../../components/NavbarTop";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";
@@ -7,6 +7,7 @@ import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
 import { useMessage } from "../../hooks/message.hook";
 import { MainButton } from "../../components/MainButton";
+import { BaseInput } from "../../components/BaseInput";
 
 export const AuthPasswordScreen = observer(({ navigation }) => {
   const [password, onPassword] = useState("123456");
@@ -24,13 +25,11 @@ export const AuthPasswordScreen = observer(({ navigation }) => {
   return (
     <MainContainer>
       <Container>
-        <NavbarTop
-          title="Password"
-          handleClick={() => navigation.goBack()}
-        ></NavbarTop>
-        <TextInput
+        <NavbarTop title="Password" handleClick={() => navigation.goBack()} />
+
+        <BaseInput
+          mt={32}
           autoFocus
-          style={styles.input}
           onChangeText={(text) => onPassword(text)}
           value={password}
           secureTextEntry
@@ -52,17 +51,6 @@ export const AuthPasswordScreen = observer(({ navigation }) => {
 });
 
 const styles = StyleSheet.create({
-  input: {
-    height: 38,
-    backgroundColor: "#eee",
-    borderRadius: 10,
-    color: "#343434",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginTop: 32,
-    fontSize: 16,
-  },
-
   button: {
     marginTop: 74,
     width: 180,

@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, TextInput } from "react-native";
 import { NavbarTop } from "../../components/NavbarTop";
 import { observer } from "mobx-react-lite";
 import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
+import { BaseInput } from "../../components/BaseInput";
 
 export const AuthEmailScreen = observer(({ navigation }) => {
   const [email, onEmail] = useState("v@mail.ru");
@@ -23,11 +23,12 @@ export const AuthEmailScreen = observer(({ navigation }) => {
           title="Email"
           handleClick={() => navigation.goBack()}
           handleNext={handleSubmit}
-        ></NavbarTop>
-        <TextInput
+        />
+
+        <BaseInput
+          mt={32}
           autoFocus
           autoCompleteType="email"
-          style={styles.input}
           onChangeText={(text) => onEmail(text)}
           value={email}
           keyboardType="email-address"
@@ -36,17 +37,4 @@ export const AuthEmailScreen = observer(({ navigation }) => {
       </Container>
     </MainContainer>
   );
-});
-
-const styles = StyleSheet.create({
-  input: {
-    height: 38,
-    backgroundColor: "#eeeeee",
-    borderRadius: 10,
-    color: "#343434",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginTop: 32,
-    fontSize: 16,
-  },
 });

@@ -7,6 +7,7 @@ import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
 import { useMessage } from "../../hooks/message.hook";
 import { MainButton } from "../../components/MainButton";
+import { BaseInput } from "../../components/BaseInput";
 
 export const AuthLoginScreen = observer(({ navigation }) => {
   const [email, onEmail] = useState("");
@@ -32,18 +33,19 @@ export const AuthLoginScreen = observer(({ navigation }) => {
           handleClick={() => navigation.goBack()}
         ></NavbarTop>
         <Text style={styles.heading}>Email</Text>
-        <TextInput
+
+        <BaseInput
+          mt={8}
           autoFocus
-          style={styles.input}
           onChangeText={(text) => onEmail(text)}
           value={email}
           keyboardType="email-address"
           onSubmitEditing={() => passwordInput.current.focus()}
         />
         <Text style={styles.heading}>Password</Text>
-        <TextInput
+        <BaseInput
+          mt={8}
           ref={passwordInput}
-          style={styles.input}
           onChangeText={(text) => onPassword(text)}
           value={password}
           secureTextEntry
@@ -69,16 +71,6 @@ const styles = StyleSheet.create({
     color: "#343434",
     fontWeight: "700",
     marginTop: 22,
-  },
-  input: {
-    height: 38,
-    backgroundColor: "#eee",
-    borderRadius: 10,
-    color: "#343434",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginTop: 8,
-    fontSize: 16,
   },
   text: {
     fontSize: 45,
