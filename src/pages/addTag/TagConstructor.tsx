@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   Image,
   GestureResponderEvent,
@@ -21,6 +20,7 @@ import {
 import { TText } from "../../components/TText";
 import { MainContainer } from "../../components/grid/MainContainer";
 import { ColorPicker } from "../../components/ColorPicker";
+import { StrippedInput } from "../../components/StrippedInput";
 const { v4: uuidv4 } = require("uuid");
 
 interface Props {
@@ -154,16 +154,18 @@ export const TagConstructor: React.FC<Props> = ({
         <Container isCentered>
           <Tag hue={hue} title={tagName} />
         </Container>
-        <TextInput
-          style={styles.input}
+
+        <StrippedInput
+          mt={16}
           onChangeText={(text) => onTagName(text)}
           value={tagName}
           autoFocus
           onSubmitEditing={handleSubmit}
         />
+
         <TouchableOpacity onPress={refreshHue}>
           <Image
-            style={{ ...styles.icon, ...styles.mt }}
+            style={{ ...styles.icon, marginTop: 32 }}
             source={require("../../assets/refresh.png")}
           />
         </TouchableOpacity>
@@ -180,20 +182,5 @@ const styles = StyleSheet.create({
   icon: {
     width: 24,
     height: 24,
-  },
-  mt: {
-    marginTop: 32,
-  },
-  input: {
-    height: 40,
-    borderRadius: 4,
-    color: "#343434",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginTop: 16,
-    borderBottomColor: "#dbdbdb",
-    borderBottomWidth: 1,
-    textAlign: "center",
-    width: 150,
   },
 });
