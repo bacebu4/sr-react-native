@@ -18,9 +18,9 @@ class UiStore {
     this.currentTag = value;
   }
 
-  *setToken(value: string) {
+  *setToken(value: string | null) {
     const available = yield SecureStore.isAvailableAsync();
-    if (available) {
+    if (available && value) {
       this.token = value;
       yield SecureStore.setItemAsync("token", value);
     }
@@ -57,6 +57,12 @@ class UiStore {
     } finally {
       this.setLoading(false);
     }
+  }
+
+  *logout() {
+    this.setLogged(false);
+    this.setToken(null);
+    yield SecureStore.deleteItemAsync("token");
   }
 
   constructor() {

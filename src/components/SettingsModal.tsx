@@ -3,10 +3,9 @@ import { GestureResponderEvent, Modal } from "react-native";
 import { MainContainer } from "./grid/MainContainer";
 import { Container } from "./grid/Container";
 import { NavbarTopSecondary } from "./NavbarTopSecondary";
-// @ts-ignore
-import { NotesStoreContext } from "../store/NotesStore";
 import { MainButton } from "./MainButton";
 import { useTranslation } from "react-i18next";
+import { UiStoreContext } from "../store/UiStore";
 
 interface Props {
   modalState: boolean;
@@ -19,12 +18,11 @@ export const SettingsModal: React.FC<Props> = ({
   setModalState,
   handleDone,
 }) => {
-  const NotesStore = useContext(NotesStoreContext);
+  const UiStore = useContext(UiStoreContext);
   const { t, i18n } = useTranslation();
 
   const handleLogout = () => {
-    // @ts-ignore
-    NotesStore.logout();
+    UiStore.logout();
   };
 
   return (
@@ -47,15 +45,15 @@ export const SettingsModal: React.FC<Props> = ({
           ></NavbarTopSecondary>
         </Container>
         <Container mt={32} isCentered>
-          <MainButton onPress={handleLogout} title="Log out"></MainButton>
+          <MainButton onPress={handleLogout} title="Log out" />
           <MainButton
             onPress={() => i18n.changeLanguage("en")}
             title="English lng"
-          ></MainButton>
+          />
           <MainButton
             onPress={() => i18n.changeLanguage("ru")}
             title="Russian lng"
-          ></MainButton>
+          />
         </Container>
       </MainContainer>
     </Modal>

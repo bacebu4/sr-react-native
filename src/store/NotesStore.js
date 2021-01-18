@@ -26,59 +26,6 @@ class NotesStore {
     makeAutoObservable(this);
   }
 
-  *init() {
-    this.setLoading(true);
-    console.log(BACKEND_URL, "hey");
-    try {
-      const available = yield SecureStore.isAvailableAsync();
-      if (available) {
-        const token = yield SecureStore.getItemAsync("token");
-        if (token) {
-          console.log("avail token");
-
-          this.setToken(token);
-          this.setLogged(true);
-          yield this.fetchInitInfo();
-        } else {
-          throw new Error();
-        }
-      }
-    } catch (error) {
-      this.setLogged(false);
-      this.setLoading(false);
-      console.log("token was not foundd");
-    }
-  }
-
-  *login(email, password) {
-    try {
-      console.log(BACKEND_URL);
-      this.setLoginLoading(true);
-      this.setEmail(email);
-      const token = yield request(`${BACKEND_URL}/api/login`, "POST", "", {
-        email,
-        password,
-      });
-
-      console.log("success login ", token);
-      this.setToken(token);
-      const available = yield SecureStore.isAvailableAsync();
-      if (available) {
-        yield SecureStore.setItemAsync("token", token);
-      }
-
-      this.setLogged(true);
-      this.setLoading(true);
-
-      yield this.fetchInitInfo();
-    } catch (error) {
-      throw new Error(error.message);
-    } finally {
-      this.setLoginLoading(false);
-      this.setLoading(false);
-    }
-  }
-
   *register(password) {
     try {
       console.log(BACKEND_URL);
@@ -105,72 +52,6 @@ class NotesStore {
       this.setLoginLoading(false);
       this.setLoading(false);
     }
-  }
-
-  *fetchInitInfo() {
-    try {
-      // const initInfo = yield request(
-      //   `${BACKEND_URL}/api/getInitInfo?id=1`,
-      //   "GET",
-      //   this.token
-      // );
-      // console.log("latestReviewDate", initInfo.latestReviewDate);
-
-      // const daysPast = differenceInCalendarDays(
-      //   Date.now(),
-      //   new Date(initInfo.latestReviewDate).getTime()
-      // );
-
-      const daysPast = 1;
-
-      // const streak = differenceInCalendarDays(
-      //   new Date(initInfo.latestReviewDate).getTime(),
-      //   new Date(initInfo.streakBeginningDate).getTime()
-      // );
-
-      let streak = 0;
-
-      let missed = 0;
-      const current = 0;
-      streak = streak + 1;
-      console.log("daysPast", daysPast);
-      console.log("streak", streak + 1);
-      let reviewed;
-
-      switch (daysPast) {
-        case 0:
-          reviewed = true;
-          break;
-
-        case 1:
-          reviewed = false;
-          break;
-
-        default:
-          reviewed = false;
-          missed = daysPast - 1;
-          break;
-      }
-      // this.setTags(initInfo.tags);
-      // this.setLatestBooks(initInfo.latestBooks);
-      this.setAmount(3);
-      this.info = {
-        missed,
-        current,
-        reviewed,
-        streak,
-      };
-    } catch (error) {
-      console.log("error fetching init", error);
-    } finally {
-      this.setLoading(false);
-    }
-  }
-
-  *logout() {
-    this.setLogged(false);
-    this.setToken(null);
-    yield SecureStore.deleteItemAsync("token");
   }
 
   *searchNotes(substring) {
