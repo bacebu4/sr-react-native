@@ -3,12 +3,17 @@ import { StyleSheet, TextInput, TextInputProps } from "react-native";
 
 interface Props extends TextInputProps {
   mt?: number;
+  refProp?: React.RefObject<TextInput>;
 }
 
 export const BaseInput: React.FC<Props> = (props) => {
-  const { style, mt, ...restProps } = props;
+  const { style, mt, refProp, ...restProps } = props;
   return (
-    <TextInput {...restProps} style={{ ...styles.input, marginTop: mt }} />
+    <TextInput
+      ref={refProp}
+      {...restProps}
+      style={{ ...styles.input, marginTop: mt }}
+    />
   );
 };
 
