@@ -272,10 +272,6 @@ export default observer(function App() {
 
   useEffect(() => {
     initAsync();
-  }, []);
-
-  useEffect(() => {
-    initAsync();
   }, [UiStore.isLogged]);
 
   return (
