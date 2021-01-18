@@ -265,13 +265,18 @@ export default observer(function App() {
   const UiStore = useContext(UiStoreContext);
   const { t } = useTranslation();
 
+  async function initAsync() {
+    await UiStore.init();
+    TOKEN = UiStore.token;
+  }
+
   useEffect(() => {
-    async function initAsync() {
-      await UiStore.init();
-      TOKEN = UiStore.token;
-    }
     initAsync();
   }, []);
+
+  useEffect(() => {
+    initAsync();
+  }, [UiStore.isLogged]);
 
   return (
     <Provider value={client}>

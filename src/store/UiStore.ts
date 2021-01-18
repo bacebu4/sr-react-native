@@ -18,8 +18,12 @@ class UiStore {
     this.currentTag = value;
   }
 
-  setToken(value: string) {
-    this.token = value;
+  *setToken(value: string) {
+    const available = yield SecureStore.isAvailableAsync();
+    if (available) {
+      this.token = value;
+      yield SecureStore.setItemAsync("token", value);
+    }
   }
 
   setCurrentReviewIndex(value: number) {

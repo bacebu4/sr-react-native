@@ -10,25 +10,33 @@ import { BaseInput } from "../../components/BaseInput";
 import { AuthStackParamList } from "src/stacks/AuthStackScreen";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { UiStoreContext } from "../../store/UiStore";
+import { useLoginMutation } from "../../generated/graphql";
 
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "AuthLogin">;
 }
 
 export const AuthLoginScreen: React.FC<Props> = observer(({ navigation }) => {
-  const [email, onEmail] = useState("");
-  const [password, onPassword] = useState("");
+  const [email, onEmail] = useState("vasua14735@icloud.com");
+  const [password, onPassword] = useState("123456");
   const passwordInput = useRef<React.RefObject<React.MutableRefObject<null>>>(
     null
   );
   const message = useMessage();
+  const [loginResult, login] = useLoginMutation();
 
   const UiStore = useContext(UiStoreContext);
 
   const handleSubmit = async () => {
     try {
-      // await NotesStore.login(email, password);
-      console.log("logged");
+      const result = await login({ email, password });
+
+      if (result.data?.login) {
+        UiStore.setToken(result.data?.login);
+        UiStore.setLogged(true);
+      } else {
+        throw new Error("You got it wrong!");
+      }
     } catch (error) {
       message(error.message);
     }
@@ -36,10 +44,7 @@ export const AuthLoginScreen: React.FC<Props> = observer(({ navigation }) => {
   return (
     <MainContainer>
       <Container>
-        <NavbarTop
-          title="Log In"
-          handleClick={() => navigation.goBack()}
-        ></NavbarTop>
+        <NavbarTop title="Log In" handleClick={() => navigation.goBack()} />
         <Text style={styles.heading}>Email</Text>
 
         <BaseInput
@@ -66,8 +71,8 @@ export const AuthLoginScreen: React.FC<Props> = observer(({ navigation }) => {
             <MainButton
               title="Log In"
               onPress={handleSubmit}
-              // isLoading={NotesStore.isLoginLoading}
-            ></MainButton>
+              isLoading={loginResult.fetching}
+            />
           </View>
         </View>
       </Container>
