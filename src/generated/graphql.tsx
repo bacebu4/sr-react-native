@@ -101,6 +101,7 @@ export type Mutation = {
   deleteNote?: Maybe<Scalars['Boolean']>;
   updateNote?: Maybe<Note>;
   updateComment?: Maybe<Comment>;
+  login?: Maybe<Scalars['String']>;
 };
 
 
@@ -168,6 +169,12 @@ export type MutationUpdateNoteArgs = {
 export type MutationUpdateCommentArgs = {
   commentId?: Maybe<Scalars['ID']>;
   text?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationLoginArgs = {
+  email?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
 };
 
 export enum CacheControlScope {
@@ -287,6 +294,17 @@ export type DeleteTagFromNoteMutation = (
       & Pick<Tag, 'id' | 'name' | 'hue'>
     )>>> }
   )> }
+);
+
+export type LoginMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type LoginMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'login'>
 );
 
 export type UpdateCommentMutationVariables = Exact<{
@@ -562,6 +580,15 @@ export const DeleteTagFromNoteDocument = gql`
 
 export function useDeleteTagFromNoteMutation() {
   return Urql.useMutation<DeleteTagFromNoteMutation, DeleteTagFromNoteMutationVariables>(DeleteTagFromNoteDocument);
+};
+export const LoginDocument = gql`
+    mutation Login($email: String!, $password: String!) {
+  login(email: $email, password: $password)
+}
+    `;
+
+export function useLoginMutation() {
+  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
 };
 export const UpdateCommentDocument = gql`
     mutation UpdateComment($commentId: ID!, $text: String!) {
