@@ -1,25 +1,33 @@
 import React, { useContext, useState, useRef } from "react";
-import { StyleSheet, View, Text, TextInput } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { NavbarTop } from "../../components/NavbarTop";
 import { observer } from "mobx-react-lite";
-import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
 import { useMessage } from "../../hooks/message.hook";
 import { MainButton } from "../../components/MainButton";
 import { BaseInput } from "../../components/BaseInput";
+import { AuthStackParamList } from "src/stacks/AuthStackScreen";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { UiStoreContext } from "../../store/UiStore";
 
-export const AuthLoginScreen = observer(({ navigation }) => {
+interface Props {
+  navigation: StackNavigationProp<AuthStackParamList, "AuthLogin">;
+}
+
+export const AuthLoginScreen: React.FC<Props> = observer(({ navigation }) => {
   const [email, onEmail] = useState("");
   const [password, onPassword] = useState("");
-  const passwordInput = useRef(null);
+  const passwordInput = useRef<React.RefObject<React.MutableRefObject<null>>>(
+    null
+  );
   const message = useMessage();
 
-  const NotesStore = useContext(NotesStoreContext);
+  const UiStore = useContext(UiStoreContext);
 
   const handleSubmit = async () => {
     try {
-      await NotesStore.login(email, password);
+      // await NotesStore.login(email, password);
       console.log("logged");
     } catch (error) {
       message(error.message);
@@ -40,11 +48,13 @@ export const AuthLoginScreen = observer(({ navigation }) => {
           onChangeText={(text) => onEmail(text)}
           value={email}
           keyboardType="email-address"
-          onSubmitEditing={() => passwordInput.current.focus()}
+          // @ts-ignore
+          onSubmitEditing={() => passwordInput?.current?.focus()}
         />
         <Text style={styles.heading}>Password</Text>
         <BaseInput
           mt={8}
+          // @ts-ignore
           ref={passwordInput}
           onChangeText={(text) => onPassword(text)}
           value={password}
@@ -56,7 +66,7 @@ export const AuthLoginScreen = observer(({ navigation }) => {
             <MainButton
               title="Log In"
               onPress={handleSubmit}
-              isLoading={NotesStore.isLoginLoading}
+              // isLoading={NotesStore.isLoginLoading}
             ></MainButton>
           </View>
         </View>
