@@ -26,73 +26,71 @@ export const HomeStackScreen = () => {
   const { t } = useTranslation();
 
   return (
-    <>
-      <HomeStack.Navigator>
-        <HomeStack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <HomeStack.Screen
-          name="Review"
-          component={ReviewScreen}
-          options={{
-            headerShown: false,
-            ...TransitionPresets.ModalSlideFromBottomIOS,
-          }}
-        />
-        <HomeStack.Screen
-          name="AllBooks"
-          component={AllBooksScreen}
-          options={{
-            title: t("All books"),
-            headerTitle: t("All books"),
-            headerTintColor: "#CCA9F9",
-            headerTitleStyle: {
-              color: "#343434",
-            },
-          }}
-        />
-        <HomeStack.Screen
-          name="AllTags"
-          component={AllTagsScreen}
-          options={{
-            title: t("All tags"),
-            headerTitle: t("All tags"),
-            headerTintColor: "#CCA9F9",
-            headerTitleStyle: {
-              color: "#343434",
-            },
-          }}
-        />
-        <HomeStack.Screen
-          name="By"
-          component={ByScreen}
-          options={({ route }) => ({
-            title: route.params.name,
-            headerTitle: route.params.name,
-            headerTintColor: "#CCA9F9",
-            headerTitleStyle: {
-              color: "#343434",
-            },
-            headerRight: () => <MoreButton route={route}></MoreButton>,
-          })}
-        />
-        <HomeStack.Screen
-          name="Highlight"
-          component={HighlightScreen}
-          options={({ route }) => ({
-            title: route.params.name,
-            headerTitle: route.params.name,
-            headerTintColor: "#CCA9F9",
-            headerTitleStyle: {
-              color: "#343434",
-            },
-          })}
-        />
-      </HomeStack.Navigator>
-    </>
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <HomeStack.Screen
+        name="Review"
+        component={ReviewScreen}
+        options={{
+          headerShown: false,
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+        }}
+      />
+      <HomeStack.Screen
+        name="AllBooks"
+        component={AllBooksScreen}
+        options={{
+          title: t("All books"),
+          headerTitle: t("All books"),
+          headerTintColor: "#CCA9F9",
+          headerTitleStyle: {
+            color: "#343434",
+          },
+        }}
+      />
+      <HomeStack.Screen
+        name="AllTags"
+        component={AllTagsScreen}
+        options={{
+          title: t("All tags"),
+          headerTitle: t("All tags"),
+          headerTintColor: "#CCA9F9",
+          headerTitleStyle: {
+            color: "#343434",
+          },
+        }}
+      />
+      <HomeStack.Screen
+        name="By"
+        component={ByScreen}
+        options={({ route }) => ({
+          title: route.params.name,
+          headerTitle: route.params.name,
+          headerTintColor: "#CCA9F9",
+          headerTitleStyle: {
+            color: "#343434",
+          },
+          headerRight: () => <MoreButton route={route}></MoreButton>,
+        })}
+      />
+      <HomeStack.Screen
+        name="Highlight"
+        component={HighlightScreen}
+        options={({ route }) => ({
+          title: route.params.name,
+          headerTitle: route.params.name,
+          headerTintColor: "#CCA9F9",
+          headerTitleStyle: {
+            color: "#343434",
+          },
+        })}
+      />
+    </HomeStack.Navigator>
   );
 };

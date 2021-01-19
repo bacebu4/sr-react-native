@@ -12,7 +12,6 @@ import ActionSheet from "react-native-actionsheet";
 import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../store/UiStore";
 import { TagModal } from "./TagModal";
-// @ts-ignore
 import { TagConstructor } from "../pages/addTag/TagConstructor";
 import { useConfirm } from "../hooks/confirm.hook";
 import { SeeAll } from "./SeeAll";

@@ -5,7 +5,6 @@ import {
   Text,
   ActivityIndicator,
 } from "react-native";
-// @ts-ignore
 import { Navbar } from "../components/Navbar";
 import { MainContainer } from "../components/grid/MainContainer";
 import { Container } from "../components/grid/Container";

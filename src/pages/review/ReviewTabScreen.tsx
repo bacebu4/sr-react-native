@@ -17,9 +17,7 @@ import { Container } from "../../components/grid/Container";
 import { TagContainer } from "../../components/grid/TagContainer";
 import { useConfirm } from "../../hooks/confirm.hook";
 import { TagModal } from "../../components/TagModal";
-// @ts-ignore
 import { ChooseScreen } from "../addTag/ChooseScreen";
-// @ts-ignore
 import { TagConstructor } from "../addTag/TagConstructor";
 import { EditTextModal } from "../../components/EditTextModal";
 import {
