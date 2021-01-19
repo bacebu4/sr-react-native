@@ -13,6 +13,7 @@ import { BACKEND_URL } from "./src/variables";
 import i18n from "./src/i18n";
 import { useTranslation } from "react-i18next";
 import { UiStoreContext } from "./src/store/UiStore";
+import { iconsConfig } from "./src/utils/iconsConfig";
 import {
   LatestTagsDocument,
   NoteDocument,
@@ -245,22 +246,6 @@ const client = createClient({
 
 const Tab = createBottomTabNavigator();
 
-// configuring icons here
-const screenOptions = ({ route }) => ({
-  tabBarIcon: ({ _, color, size }) => {
-    let iconName;
-    const { t } = useTranslation();
-
-    if (route.name === t("Home")) {
-      iconName = "ios-home";
-    } else if (route.name === t("Search")) {
-      iconName = "ios-search";
-    }
-
-    return <Ionicons name={iconName} size={size} color={color} />;
-  },
-});
-
 export default observer(function App() {
   const UiStore = useContext(UiStoreContext);
   const { t } = useTranslation();
@@ -278,7 +263,7 @@ export default observer(function App() {
     <Provider value={client}>
       <NavigationContainer>
         <Tab.Navigator
-          screenOptions={screenOptions}
+          screenOptions={iconsConfig}
           tabBarOptions={{
             activeTintColor: "#CCA9F9",
             inactiveTintColor: "#B0AFAF",
