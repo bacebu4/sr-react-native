@@ -83,11 +83,9 @@ export const SearchScreen: React.FC<Props> = observer(({ navigation }) => {
 
       {/* @ts-ignore */}
       {NotesStore.isSearching ? (
-        <>
-          <Container isCentered mt={200}>
-            <ActivityIndicator size="large" />
-          </Container>
-        </>
+        <Container isCentered mt={200}>
+          <ActivityIndicator size="large" />
+        </Container>
       ) : (
         <>
           {/* @ts-ignore */}
@@ -106,11 +104,11 @@ export const SearchScreen: React.FC<Props> = observer(({ navigation }) => {
                       })
                     }
                   >
-                    <Card note={item}></Card>
+                    <Card note={item} />
                   </TouchableOpacity>
                 </Container>
               )}
-            ></FlatList>
+            />
           ) : (
             <>
               {hasSearched ? (
@@ -118,7 +116,7 @@ export const SearchScreen: React.FC<Props> = observer(({ navigation }) => {
                   <Image
                     style={styles.image}
                     source={require("../assets/empty_search.png")}
-                  ></Image>
+                  />
                   <TextGray mt={32}>Nothing found</TextGray>
                 </Container>
               ) : (
@@ -142,9 +140,7 @@ export const SearchScreen: React.FC<Props> = observer(({ navigation }) => {
                       })}
                     </>
                   ) : (
-                    <>
-                      <View />
-                    </>
+                    <View />
                   )}
                 </>
               )}
