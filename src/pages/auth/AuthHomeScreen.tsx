@@ -23,20 +23,20 @@ export const AuthHomeScreen: React.FC<Props> = ({ navigation }) => {
           style={styles.image}
           source={require("../../assets/login.png")}
         />
-        <TText style={{ ...styles.mtx, ...styles.text }}>
+        <TText style={{ marginTop: 44, ...styles.text }}>
           Remember what you read
         </TText>
-        <View style={styles.button}>
+        <Container mt={74} style={{ marginHorizontal: 80 }}>
           <MainButton
             title="Sign up free"
             onPress={() => navigation.navigate("AuthEmail")}
-          ></MainButton>
-        </View>
-        <View style={styles.mts}>
+          />
+        </Container>
+        <View style={{ marginTop: 16 }}>
           <MainLink
             title={t("Already have an account?")}
             onPress={() => navigation.navigate("AuthLogin")}
-          ></MainLink>
+          />
         </View>
       </Container>
     </MainContainer>
@@ -44,13 +44,6 @@ export const AuthHomeScreen: React.FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginLeft: 32,
-    marginRight: 32,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   image: {
     width: 315,
     height: 250,
@@ -60,20 +53,5 @@ const styles = StyleSheet.create({
     fontFamily: "Cochin-Bold",
     textAlign: "center",
     color: "#343434",
-  },
-  button: {
-    marginTop: 74,
-    width: 180,
-  },
-
-  mts: {
-    marginTop: 16,
-  },
-  mtx: {
-    marginTop: 44,
-  },
-
-  center: {
-    alignItems: "center",
   },
 });
