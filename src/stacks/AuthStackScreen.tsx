@@ -12,7 +12,7 @@ export type AuthStackParamList = {
   AuthHome: undefined;
   AuthLogin: undefined;
   AuthEmail: undefined;
-  AuthPassword: undefined;
+  AuthPassword: { email: string };
 };
 
 const AuthStack = createStackNavigator<AuthStackParamList>();

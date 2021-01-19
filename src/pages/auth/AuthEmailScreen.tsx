@@ -1,19 +1,20 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { NavbarTop } from "../../components/NavbarTop";
-import { observer } from "mobx-react-lite";
-import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
 import { BaseInput } from "../../components/BaseInput";
+import { AuthStackParamList } from "src/stacks/AuthStackScreen";
+import { StackNavigationProp } from "@react-navigation/stack";
 
-export const AuthEmailScreen = observer(({ navigation }) => {
+interface Props {
+  navigation: StackNavigationProp<AuthStackParamList, "AuthEmail">;
+}
+
+export const AuthEmailScreen: React.FC<Props> = ({ navigation }) => {
   const [email, onEmail] = useState("v@mail.ru");
 
-  const NotesStore = useContext(NotesStoreContext);
-
   const handleSubmit = () => {
-    navigation.navigate("AuthPassword");
-    NotesStore.setEmail(email);
+    navigation.navigate("AuthPassword", { email });
   };
 
   return (
@@ -37,4 +38,4 @@ export const AuthEmailScreen = observer(({ navigation }) => {
       </Container>
     </MainContainer>
   );
-});
+};
