@@ -16,6 +16,14 @@ export const MainHighlight: React.FC<Props> = ({ noteId }) => {
   const { data, fetching } = result;
   const navigation = useNavigation();
 
+  if (fetching) {
+    return (
+      <Container isCentered mt={400}>
+        <ActivityIndicator size="large" />
+      </Container>
+    );
+  }
+
   if (!data?.note) {
     return (
       <Container mt={32} isCentered>
@@ -29,14 +37,6 @@ export const MainHighlight: React.FC<Props> = ({ noteId }) => {
         <Container mt={32}>
           <MainButton title="Learn how to add" />
         </Container>
-      </Container>
-    );
-  }
-
-  if (fetching) {
-    return (
-      <Container isCentered mt={400}>
-        <ActivityIndicator size="large" />
       </Container>
     );
   }
