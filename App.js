@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { observer } from "mobx-react-lite";
 import { HomeStackScreen } from "./src/stacks/HomeStackScreen";
 import { AuthStackScreen } from "./src/stacks/AuthStackScreen";
