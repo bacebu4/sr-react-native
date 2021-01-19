@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "react-native";
+import { ActivityIndicator, Text } from "react-native";
 import { Container } from "../components/grid/Container";
 import { MainContainer } from "../components/grid/MainContainer";
 import { useTagsQuery } from "../generated/graphql";
@@ -22,7 +22,7 @@ export const AllTagsScreen: React.FC = () => {
     return (
       <MainContainer>
         <Container isCentered mt={400}>
-          <Text>Loading...</Text>
+          <ActivityIndicator size="large" />
         </Container>
       </MainContainer>
     );

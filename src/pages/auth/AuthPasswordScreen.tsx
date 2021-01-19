@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavbarTop } from "../../components/NavbarTop";
 import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
@@ -6,9 +6,10 @@ import { useMessage } from "../../hooks/message.hook";
 import { MainButton } from "../../components/MainButton";
 import { BaseInput } from "../../components/BaseInput";
 import { RouteProp } from "@react-navigation/native";
-import { AuthStackParamList } from "src/stacks/AuthStackScreen";
+import { AuthStackParamList } from "../../stacks/AuthStackScreen";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useRegisterMutation } from "src/generated/graphql";
+import { useRegisterMutation } from "../../generated/graphql";
+import { UiStoreContext } from "../../store/UiStore";
 
 interface Props {
   route: RouteProp<AuthStackParamList, "AuthPassword">;
@@ -20,6 +21,8 @@ export const AuthPasswordScreen: React.FC<Props> = ({ navigation, route }) => {
   const message = useMessage();
   const [registerResult, register] = useRegisterMutation();
 
+  const UiStore = useContext(UiStoreContext);
+
   const handleSubmit = async () => {
     try {
       const result = await register({ email: route.params.email, password });
@@ -27,6 +30,9 @@ export const AuthPasswordScreen: React.FC<Props> = ({ navigation, route }) => {
       if (!result.data?.register) {
         throw new Error("You got it wrong! Try again");
       }
+
+      UiStore.setToken(result.data?.register);
+      UiStore.setLogged(true);
     } catch (error) {
       message(error.message);
       navigation.navigate("AuthEmail");

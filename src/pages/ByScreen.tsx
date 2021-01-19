@@ -1,7 +1,12 @@
 import React from "react";
 import { MainContainer } from "../components/grid/MainContainer";
 import { Container } from "../components/grid/Container";
-import { FlatList, Text, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { useNotesByQuery } from "../generated/graphql";
 import { Card } from "../components/CardNew";
 import { HomeStackParamList } from "src/stacks/HomeStackScreen";
@@ -32,7 +37,7 @@ export const ByScreen: React.FC<Props> = ({ route, navigation }) => {
     return (
       <MainContainer>
         <Container isCentered mt={400}>
-          <Text>Loading...</Text>
+          <ActivityIndicator size="large" />
         </Container>
       </MainContainer>
     );

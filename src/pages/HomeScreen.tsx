@@ -65,7 +65,7 @@ export const HomeScreen = () => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          <Navbar title="Book stash" handleClick={openSettings}></Navbar>
+          <Navbar title="Book stash" handleClick={openSettings} />
 
           <MainHighlight noteId={data?.dailyNotesIds![0]!} />
 
