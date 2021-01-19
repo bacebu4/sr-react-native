@@ -39,6 +39,7 @@ export const AuthLoginScreen: React.FC<Props> = observer(({ navigation }) => {
       message(error.message);
     }
   };
+
   return (
     <MainContainer>
       <Container>
@@ -81,17 +82,5 @@ const styles = StyleSheet.create({
     color: "#343434",
     fontWeight: "700",
     marginTop: 22,
-  },
-  text: {
-    fontSize: 45,
-    fontFamily: "Cochin",
-    textAlign: "center",
-  },
-  button: {
-    marginTop: 74,
-    width: 180,
-  },
-  center: {
-    alignItems: "center",
   },
 });
