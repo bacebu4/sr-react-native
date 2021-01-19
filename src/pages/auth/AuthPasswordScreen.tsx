@@ -1,23 +1,26 @@
-import React, { useContext, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState } from "react";
 import { NavbarTop } from "../../components/NavbarTop";
-import { observer } from "mobx-react-lite";
-import { NotesStoreContext } from "../../store/NotesStore";
 import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
 import { useMessage } from "../../hooks/message.hook";
 import { MainButton } from "../../components/MainButton";
 import { BaseInput } from "../../components/BaseInput";
+import { RouteProp } from "@react-navigation/native";
+import { AuthStackParamList } from "src/stacks/AuthStackScreen";
+import { StackNavigationProp } from "@react-navigation/stack";
 
-export const AuthPasswordScreen = observer(({ navigation }) => {
+interface Props {
+  route: RouteProp<AuthStackParamList, "AuthPassword">;
+  navigation: StackNavigationProp<AuthStackParamList, "AuthLogin">;
+}
+
+export const AuthPasswordScreen: React.FC<Props> = ({ navigation, route }) => {
   const [password, onPassword] = useState("123456");
   const message = useMessage();
 
-  const NotesStore = useContext(NotesStoreContext);
-
   const handleSubmit = async () => {
     try {
-      await NotesStore.register(password);
+      // await NotesStore.register(password);
     } catch (error) {
       message(error.message);
     }
@@ -36,26 +39,14 @@ export const AuthPasswordScreen = observer(({ navigation }) => {
           onSubmitEditing={handleSubmit}
         />
 
-        <View style={styles.center}>
-          <View style={styles.button}>
-            <MainButton
-              title="Register"
-              onPress={handleSubmit}
-              isLoading={NotesStore.isLoginLoading}
-            ></MainButton>
-          </View>
-        </View>
+        <Container mt={94} style={{ marginHorizontal: 80 }}>
+          <MainButton
+            title="Register"
+            onPress={handleSubmit}
+            // isLoading={NotesStore.isLoginLoading}
+          />
+        </Container>
       </Container>
     </MainContainer>
   );
-});
-
-const styles = StyleSheet.create({
-  button: {
-    marginTop: 74,
-    width: 180,
-  },
-  center: {
-    alignItems: "center",
-  },
-});
+};
