@@ -8,6 +8,7 @@ import { BaseInput } from "../../components/BaseInput";
 import { RouteProp } from "@react-navigation/native";
 import { AuthStackParamList } from "src/stacks/AuthStackScreen";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useRegisterMutation } from "src/generated/graphql";
 
 interface Props {
   route: RouteProp<AuthStackParamList, "AuthPassword">;
@@ -17,12 +18,18 @@ interface Props {
 export const AuthPasswordScreen: React.FC<Props> = ({ navigation, route }) => {
   const [password, onPassword] = useState("123456");
   const message = useMessage();
+  const [registerResult, register] = useRegisterMutation();
 
   const handleSubmit = async () => {
     try {
-      // await NotesStore.register(password);
+      const result = await register({ email: route.params.email, password });
+
+      if (!result.data?.register) {
+        throw new Error("You got it wrong! Try again");
+      }
     } catch (error) {
       message(error.message);
+      navigation.navigate("AuthEmail");
     }
   };
   return (
@@ -43,7 +50,7 @@ export const AuthPasswordScreen: React.FC<Props> = ({ navigation, route }) => {
           <MainButton
             title="Register"
             onPress={handleSubmit}
-            // isLoading={NotesStore.isLoginLoading}
+            isLoading={registerResult.fetching}
           />
         </Container>
       </Container>

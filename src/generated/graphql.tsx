@@ -102,6 +102,7 @@ export type Mutation = {
   updateNote?: Maybe<Note>;
   updateComment?: Maybe<Comment>;
   login?: Maybe<Scalars['String']>;
+  register?: Maybe<Scalars['String']>;
 };
 
 
@@ -173,6 +174,12 @@ export type MutationUpdateCommentArgs = {
 
 
 export type MutationLoginArgs = {
+  email?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationRegisterArgs = {
   email?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
 };
@@ -305,6 +312,17 @@ export type LoginMutationVariables = Exact<{
 export type LoginMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'login'>
+);
+
+export type RegisterMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type RegisterMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'register'>
 );
 
 export type UpdateCommentMutationVariables = Exact<{
@@ -589,6 +607,15 @@ export const LoginDocument = gql`
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+};
+export const RegisterDocument = gql`
+    mutation Register($email: String!, $password: String!) {
+  register(email: $email, password: $password)
+}
+    `;
+
+export function useRegisterMutation() {
+  return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
 };
 export const UpdateCommentDocument = gql`
     mutation UpdateComment($commentId: ID!, $text: String!) {
