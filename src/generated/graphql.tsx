@@ -52,8 +52,8 @@ export type Book = {
 export type Info = {
   __typename?: 'Info';
   reviewAmount: Scalars['Int'];
-  latestReviewDate: Scalars['String'];
-  streakBeginningDate: Scalars['String'];
+  latestReviewDate?: Maybe<Scalars['String']>;
+  streakBeginningDate?: Maybe<Scalars['String']>;
   streak: Scalars['Int'];
   missed: Scalars['Int'];
   reviewed: Scalars['Boolean'];
@@ -103,6 +103,7 @@ export type Mutation = {
   updateComment?: Maybe<Comment>;
   login?: Maybe<Scalars['String']>;
   register?: Maybe<Scalars['String']>;
+  searchNotes?: Maybe<Array<Maybe<Note>>>;
 };
 
 
@@ -182,6 +183,11 @@ export type MutationLoginArgs = {
 export type MutationRegisterArgs = {
   email?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationSearchNotesArgs = {
+  substring?: Maybe<Scalars['String']>;
 };
 
 export enum CacheControlScope {
@@ -323,6 +329,19 @@ export type RegisterMutationVariables = Exact<{
 export type RegisterMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'register'>
+);
+
+export type SearchNotesMutationVariables = Exact<{
+  substring: Scalars['String'];
+}>;
+
+
+export type SearchNotesMutation = (
+  { __typename?: 'Mutation' }
+  & { searchNotes?: Maybe<Array<Maybe<(
+    { __typename?: 'Note' }
+    & Pick<Note, 'text' | 'id' | 'title' | 'author'>
+  )>>> }
 );
 
 export type UpdateCommentMutationVariables = Exact<{
@@ -616,6 +635,20 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const SearchNotesDocument = gql`
+    mutation SearchNotes($substring: String!) {
+  searchNotes(substring: $substring) {
+    text
+    id
+    title
+    author
+  }
+}
+    `;
+
+export function useSearchNotesMutation() {
+  return Urql.useMutation<SearchNotesMutation, SearchNotesMutationVariables>(SearchNotesDocument);
 };
 export const UpdateCommentDocument = gql`
     mutation UpdateComment($commentId: ID!, $text: String!) {
