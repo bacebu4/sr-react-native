@@ -4,14 +4,20 @@ import { StyleSheet, View } from "react-native";
 interface Props {
   children: React.ReactNode;
   isCentered?: boolean;
+  isCenteredY?: boolean;
 }
 
-export const MainContainer: React.FC<Props> = ({ children, isCentered }) => {
+export const MainContainer: React.FC<Props> = ({
+  children,
+  isCentered,
+  isCenteredY = false,
+}) => {
   return (
     <View
       style={{
         ...styles.mainContainer,
         justifyContent: isCentered ? "center" : "flex-start",
+        alignItems: isCenteredY ? "center" : "stretch",
       }}
     >
       {children}
