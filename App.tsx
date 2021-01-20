@@ -13,6 +13,7 @@ import { UiStoreContext } from "./src/store/UiStore";
 import { iconsConfig } from "./src/utils/iconsConfig";
 import { createUrqlClient } from "./src/utils/createUrqlClient";
 
+// @ts-ignore
 const initI18n = i18n;
 
 const Tab = createBottomTabNavigator();
