@@ -1,9 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
 import request from "../functions/request";
-import * as SecureStore from "expo-secure-store";
 import "react-native-get-random-values";
-import { differenceInCalendarDays } from "date-fns/esm";
 import { BACKEND_URL } from "../variables";
 
 class NotesStore {
@@ -24,34 +22,6 @@ class NotesStore {
 
   constructor() {
     makeAutoObservable(this);
-  }
-
-  *register(password) {
-    try {
-      console.log(BACKEND_URL);
-      this.setLoginLoading(true);
-      const token = yield request(`${BACKEND_URL}/api/register`, "POST", "", {
-        email: this.email,
-        password,
-      });
-
-      console.log("success register ", token);
-      this.setToken(token);
-      const available = yield SecureStore.isAvailableAsync();
-      if (available) {
-        yield SecureStore.setItemAsync("token", token);
-      }
-
-      this.setLogged(true);
-      this.setLoading(true);
-
-      yield this.fetchInitInfo();
-    } catch (error) {
-      throw new Error(error.message);
-    } finally {
-      this.setLoginLoading(false);
-      this.setLoading(false);
-    }
   }
 
   *searchNotes(substring) {

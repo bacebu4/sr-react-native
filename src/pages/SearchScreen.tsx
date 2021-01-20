@@ -58,6 +58,7 @@ export const SearchScreen: React.FC<Props> = observer(({ navigation }) => {
 
   return (
     <MainContainer>
+      {/* header */}
       <Container mt={Constants.statusBarHeight + 40}>
         <Title type="big" title="Search" />
         <SearchBar
@@ -81,6 +82,7 @@ export const SearchScreen: React.FC<Props> = observer(({ navigation }) => {
         />
       </Container>
 
+      {/* loading */}
       {/* @ts-ignore */}
       {NotesStore.isSearching ? (
         <Container isCentered mt={200}>
@@ -88,6 +90,7 @@ export const SearchScreen: React.FC<Props> = observer(({ navigation }) => {
         </Container>
       ) : (
         <>
+          {/* found results */}
           {/* @ts-ignore */}
           {NotesStore.searchResults.length ? (
             <FlatList
@@ -111,6 +114,7 @@ export const SearchScreen: React.FC<Props> = observer(({ navigation }) => {
             />
           ) : (
             <>
+              {/* nothing found */}
               {hasSearched ? (
                 <Container isCentered mt={150}>
                   <Image
@@ -121,6 +125,7 @@ export const SearchScreen: React.FC<Props> = observer(({ navigation }) => {
                 </Container>
               ) : (
                 <>
+                  {/* showing history when no search results */}
                   {history.length ? (
                     <>
                       <Container isRow>
@@ -140,6 +145,7 @@ export const SearchScreen: React.FC<Props> = observer(({ navigation }) => {
                       })}
                     </>
                   ) : (
+                    // when nothing
                     <View />
                   )}
                 </>
