@@ -3,19 +3,14 @@ import { createContext } from "react";
 import * as SecureStore from "expo-secure-store";
 
 class UiStore {
-  currentNote: string | null = null;
-  currentTag: string | null = null;
+  currentTagId: string | null = null;
   token: string | null = null;
   currentReviewIndex: number = 0;
   isLoading = false;
   isLogged = false;
 
-  setCurrentNoteId(value: string) {
-    this.currentNote = value;
-  }
-
   setCurrentTagId(value: string) {
-    this.currentTag = value;
+    this.currentTagId = value;
   }
 
   *setToken(value: string | null) {

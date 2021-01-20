@@ -49,7 +49,7 @@ export const TagConstructor: React.FC<Props> = ({
   useEffect(() => {
     if (editMode) {
       const initialTagResults = data?.tags?.find(
-        (t) => t?.id === UiStore.currentTag
+        (t) => t?.id === UiStore.currentTagId
       );
       if (initialTagResults) {
         setInitialTag(initialTagResults);
@@ -70,7 +70,7 @@ export const TagConstructor: React.FC<Props> = ({
   const handleSubmit = () => {
     if (editMode) {
       let findResults = data?.tags?.find((t) => t?.name === tagName.trim());
-      if (findResults?.id === UiStore.currentTag) {
+      if (findResults?.id === UiStore.currentTagId) {
         findResults = undefined;
       }
       try {
@@ -80,7 +80,7 @@ export const TagConstructor: React.FC<Props> = ({
         if (findResults) {
           throw new Error("This tag name already exists");
         }
-        updateTag({ tagId: UiStore.currentTag!, name: tagName, hue });
+        updateTag({ tagId: UiStore.currentTagId!, name: tagName, hue });
         onTagName("");
         refreshHue();
         // @ts-ignore

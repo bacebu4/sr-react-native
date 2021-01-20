@@ -52,7 +52,6 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
 
   const showAddTagStack = () => {
     setModalTagVisible(true);
-    UiStore.setCurrentNoteId(data!.note!.id);
   };
 
   const handleLongAddPress = (tagId: string) => {
@@ -121,7 +120,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
         text={text}
         onText={setText}
         handleSave={handleSave}
-      ></EditTextModal>
+      />
 
       <TagModal
         modalState={modalEditTagVisible}
@@ -142,7 +141,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
             <ChooseScreen
               handleCancel={() => setModalTagVisible(false)}
               note={data!.note!}
-            ></ChooseScreen>
+            />
           </TagModal>
 
           <Container mt={32}>
@@ -172,7 +171,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
                   <Image
                     style={styles.image}
                     source={require("../../assets/plus.png")}
-                  ></Image>
+                  />
                 </TouchableOpacity>
               </Container>
 
@@ -213,7 +212,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
                     <Image
                       style={styles.image}
                       source={require("../../assets/plus.png")}
-                    ></Image>
+                    />
                   </TouchableOpacity>
                 </View>
 
