@@ -34,7 +34,12 @@ declare module "react-native-actionsheet" {
 }
 
 interface Props {
-  note: Maybe<Note>;
+  note: Maybe<
+    { __typename?: "Note" | undefined } & Pick<
+      Note,
+      "title" | "text" | "id" | "author"
+    >
+  >;
   dense?: boolean;
 }
 
