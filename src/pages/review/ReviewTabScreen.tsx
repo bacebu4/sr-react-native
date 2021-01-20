@@ -28,7 +28,7 @@ import {
 import { TText } from "../../components/TText";
 import { Card } from "../../components/CardNew";
 import { Comment } from "../../components/Comment";
-const { v4: uuidv4 } = require("uuid");
+const uuid = require("react-native-uuid");
 
 interface Props {
   noteId?: string;
@@ -86,7 +86,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
 
   const handleSave = () => {
     setModalVisible(false);
-    const commentId = uuidv4();
+    const commentId = uuid.v4();
     if (text) {
       addComment({
         noteId: data!.note!.id!,
