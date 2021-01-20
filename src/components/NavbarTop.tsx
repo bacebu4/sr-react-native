@@ -2,13 +2,13 @@ import React from "react";
 import {
   View,
   StyleSheet,
-  Image,
   TouchableOpacity,
   Text,
   GestureResponderEvent,
 } from "react-native";
 import Constants from "expo-constants";
 import { Title } from "./Title";
+import { BaseImage } from "./BaseImage";
 
 interface Props {
   handleClick?: ((event: GestureResponderEvent) => void) | undefined;
@@ -38,8 +38,9 @@ export const NavbarTop: React.FC<Props> = ({
         {titleLeft ? (
           <Text style={styles.link}>{titleLeft}</Text>
         ) : (
-          <Image
-            style={styles.icon}
+          <BaseImage
+            w={24}
+            h={24}
             source={require("../assets/back-arrow.png")}
           />
         )}
@@ -63,10 +64,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-  },
-  icon: {
-    width: 24,
-    height: 24,
   },
   link: {
     color: "#CCA9F9",

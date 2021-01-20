@@ -1,9 +1,9 @@
 import React from "react";
 import { TText } from "./TText";
+import { BaseImage } from "./BaseImage";
 import {
   StyleSheet,
   TouchableOpacity,
-  Image,
   TouchableOpacityProps,
 } from "react-native";
 
@@ -11,7 +11,7 @@ export const SeeAll: React.FC<TouchableOpacityProps> = (props) => {
   return (
     <TouchableOpacity {...props} style={styles.wrapper}>
       <TText style={styles.title}>See All</TText>
-      <Image style={styles.icon} source={require("../assets/arrow.png")} />
+      <BaseImage w={24} h={24} ml={4} source={require("../assets/arrow.png")} />
     </TouchableOpacity>
   );
 };
@@ -25,10 +25,5 @@ const styles = StyleSheet.create({
     color: "#343434",
     fontSize: 16,
     fontWeight: "600",
-  },
-  icon: {
-    marginLeft: 4,
-    width: 24,
-    height: 24,
   },
 });

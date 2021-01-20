@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
-  Image,
 } from "react-native";
 import { Container } from "../components/grid/Container";
 import { MainContainer } from "../components/grid/MainContainer";
@@ -17,6 +16,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { SearchStackParamList } from "src/stacks/SearchStackScreen";
 import { useSearchNotesMutation } from "../generated/graphql";
 import { Card } from "../components/CardNew";
+import { BaseImage } from "../components/BaseImage";
 
 type Props = {
   navigation: StackNavigationProp<SearchStackParamList, "Search">;
@@ -113,8 +113,9 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
       <MainContainer>
         {Header}
         <Container isCentered mt={150}>
-          <Image
-            style={styles.image}
+          <BaseImage
+            w={190}
+            h={213}
             source={require("../assets/empty_search.png")}
           />
           <TextGray mt={32}>Nothing found</TextGray>
@@ -150,10 +151,6 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  image: {
-    width: 190,
-    height: 213,
-  },
   textGrayCapital: {
     color: "#B0AFAF",
     fontSize: 12,

@@ -1,12 +1,5 @@
 import React, { useRef, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-  Share,
-} from "react-native";
+import { View, StyleSheet, Text, Share } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import { Maybe, Note } from "src/generated/graphql";
 import { useConfirm } from "../hooks/confirm.hook";
@@ -15,6 +8,7 @@ import { EditTextModal } from "./EditTextModal";
 import { useDeleteNoteMutation } from "../generated/graphql";
 import { useUpdateNoteMutation } from "../generated/graphql";
 import { useTranslation } from "react-i18next";
+import { BaseImage } from "./BaseImage";
 
 declare module "react-native-actionsheet" {
   interface Props {
@@ -37,7 +31,7 @@ interface Props {
   note: Maybe<
     { __typename?: "Note" | undefined } & Pick<
       Note,
-      "title" | "text" | "id" | "author"
+      "title" | "text" | "id" | "author" | "deleted"
     >
   >;
   dense?: boolean;
@@ -110,10 +104,10 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
         ) : (
           <>
             <View style={styles.header}>
-              <Image
-                style={{
-                  borderRadius: 5,
-                }}
+              <BaseImage
+                br={5}
+                w={48}
+                h={60}
                 source={require("../assets/cover.png")}
               />
               <View style={styles.info}>
@@ -125,18 +119,13 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
                 </View>
               </View>
               <View style={styles.more}>
-                <TouchableOpacity
+                <BaseImage
+                  w={24}
+                  h={22.2}
                   onPress={() => showActionSheet()}
-                  disabled={note?.deleted}
-                >
-                  <Image
-                    style={{
-                      width: 24,
-                      height: 22.2,
-                    }}
-                    source={require("../assets/dots.png")}
-                  />
-                </TouchableOpacity>
+                  disabled={note?.deleted ?? undefined}
+                  source={require("../assets/dots.png")}
+                />
               </View>
             </View>
           </>

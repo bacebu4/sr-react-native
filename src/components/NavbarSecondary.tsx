@@ -1,7 +1,6 @@
 import React from "react";
 import {
   StyleSheet,
-  Image,
   TouchableOpacity,
   GestureResponderEvent,
 } from "react-native";
@@ -12,6 +11,7 @@ import { TText } from "./TText";
 import { Title } from "./Title";
 import { Container } from "./grid/Container";
 import { useTranslation } from "react-i18next";
+import { BaseImage } from "./BaseImage";
 
 interface Props {
   title: string;
@@ -42,23 +42,19 @@ export const NavbarSecondary: React.FC<Props> = ({
         </TouchableOpacity>
         <Title title={t(title)} />
         {index !== 0 ? (
-          <>
-            <TouchableOpacity onPress={handleNext}>
-              <Image
-                style={styles.icon}
-                source={require("../assets/arrow.png")}
-              />
-            </TouchableOpacity>
-          </>
+          <BaseImage
+            w={24}
+            h={24}
+            source={require("../assets/arrow.png")}
+            onPress={handleNext}
+          />
         ) : (
-          <>
-            <TouchableOpacity onPress={handleClick}>
-              <Image
-                style={styles.icon}
-                source={require("../assets/arrow.png")}
-              />
-            </TouchableOpacity>
-          </>
+          <BaseImage
+            w={24}
+            h={24}
+            source={require("../assets/arrow.png")}
+            onPress={handleClick}
+          />
         )}
       </Container>
       <Container
@@ -77,7 +73,7 @@ export const NavbarSecondary: React.FC<Props> = ({
           color="#CCA9F9"
           shadowColor="#d7d7d7"
           bgColor="#fff"
-        ></ProgressCircle>
+        />
         <TText style={styles.info}>Review Process</TText>
         <TextGray ml={16}>{index}</TextGray>
         <TextGray ml={4}>
@@ -94,10 +90,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#CCA9F9",
     fontWeight: "600",
-  },
-  icon: {
-    width: 24,
-    height: 24,
   },
   info: {
     marginLeft: 16,

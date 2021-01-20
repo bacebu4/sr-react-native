@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { AuthStackParamList } from "src/stacks/AuthStackScreen";
 import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
@@ -8,6 +8,7 @@ import { MainButton } from "../../components/MainButton";
 import { MainLink } from "../../components/MainLink";
 import { TText } from "../../components/TText";
 import { useTranslation } from "react-i18next";
+import { BaseImage } from "../../components/BaseImage";
 
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "AuthHome">;
@@ -19,10 +20,7 @@ export const AuthHomeScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <MainContainer isCentered>
       <Container isCentered>
-        <Image
-          style={styles.image}
-          source={require("../../assets/login.png")}
-        />
+        <BaseImage w={315} h={250} source={require("../../assets/login.png")} />
         <TText style={{ marginTop: 44, ...styles.text }}>
           Remember what you read
         </TText>
@@ -44,10 +42,6 @@ export const AuthHomeScreen: React.FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  image: {
-    width: 315,
-    height: 250,
-  },
   text: {
     fontSize: 45,
     fontFamily: "Cochin-Bold",

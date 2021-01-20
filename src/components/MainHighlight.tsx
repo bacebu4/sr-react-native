@@ -1,11 +1,12 @@
 import React from "react";
-import { ActivityIndicator, Image } from "react-native";
+import { ActivityIndicator } from "react-native";
 import { Container } from "./grid/Container";
 import { TextGray } from "./TextGray";
 import { useNavigation } from "@react-navigation/native";
 import { Card } from "./CardNew";
 import { MainButton } from "./MainButton";
 import { useNoteQuery } from "../generated/graphql";
+import { BaseImage } from "./BaseImage";
 
 interface Props {
   noteId: string;
@@ -27,8 +28,9 @@ export const MainHighlight: React.FC<Props> = ({ noteId }) => {
   if (!data?.note) {
     return (
       <Container mt={32} isCentered>
-        <Image
-          style={{ width: 186, height: 173 }}
+        <BaseImage
+          w={186}
+          h={173}
           source={require("../assets/empty_main.png")}
         />
 

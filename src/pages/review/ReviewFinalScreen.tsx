@@ -1,5 +1,4 @@
 import React from "react";
-import { StyleSheet, Image } from "react-native";
 import { MainButton } from "../../components/MainButton";
 import { Title } from "../../components/Title";
 import { useNavigation } from "@react-navigation/native";
@@ -7,6 +6,7 @@ import { TextGray } from "../../components/TextGray";
 import { useTranslation } from "react-i18next";
 import { useInfoQuery } from "../../generated/graphql";
 import { MainContainer } from "../../components/grid/MainContainer";
+import { BaseImage } from "../../components/BaseImage";
 
 interface Props {
   jumpTo?: (key: string) => void;
@@ -23,8 +23,10 @@ export const ReviewFinalScreen: React.FC<Props> = () => {
 
   return (
     <MainContainer isCentered isCenteredY>
-      <Image
-        style={styles.image}
+      <BaseImage
+        w={289}
+        h={240}
+        mb={32}
         source={require("../../assets/success.png")}
       />
       <Title title={t("Congrats")} />
@@ -41,11 +43,3 @@ export const ReviewFinalScreen: React.FC<Props> = () => {
     </MainContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  image: {
-    width: 289,
-    height: 240,
-    marginBottom: 32,
-  },
-});

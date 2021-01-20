@@ -1,7 +1,8 @@
 import React from "react";
-import { Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Book as BookType } from "src/generated/graphql";
+import { BaseImage } from "./BaseImage";
 
 interface Props {
   book: BookType;
@@ -21,7 +22,7 @@ export const Book: React.FC<Props> = ({ book }) => {
         })
       }
     >
-      <Image style={styles.cover} source={require("../assets/book.png")} />
+      <BaseImage br={5} w={86} h={108} source={require("../assets/book.png")} />
       <Text style={styles.title} numberOfLines={2}>
         {book.title}
       </Text>
@@ -46,8 +47,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Cochin",
     color: "#B0AFAF",
-  },
-  cover: {
-    borderRadius: 5,
   },
 });

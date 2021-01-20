@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import {
   StyleSheet,
-  Image,
-  TouchableOpacity,
   GestureResponderEvent,
   ActivityIndicator,
 } from "react-native";
@@ -15,6 +13,7 @@ import { TText } from "./TText";
 import { Container } from "./grid/Container";
 import { UiStoreContext } from "../store/UiStore";
 import { useInfoQuery } from "../generated/graphql";
+import { BaseImage } from "./BaseImage";
 
 interface Props {
   title: string;
@@ -50,9 +49,12 @@ export const Navbar: React.FC<Props> = observer(({ title, handleClick }) => {
         style={{ justifyContent: "space-between", alignItems: "baseline" }}
       >
         <Title type="big" title={title} />
-        <TouchableOpacity onPress={handleClick}>
-          <Image style={styles.icon} source={require("../assets/avatar.png")} />
-        </TouchableOpacity>
+        <BaseImage
+          w={44}
+          h={44}
+          source={require("../assets/avatar.png")}
+          onPress={handleClick}
+        />
       </Container>
       <Container
         isRow

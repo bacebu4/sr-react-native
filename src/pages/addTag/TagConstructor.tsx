@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
-  StyleSheet,
   TouchableOpacity,
-  Image,
   GestureResponderEvent,
   ActivityIndicator,
 } from "react-native";
@@ -21,6 +19,7 @@ import { TText } from "../../components/TText";
 import { MainContainer } from "../../components/grid/MainContainer";
 import { ColorPicker } from "../../components/ColorPicker";
 import { StrippedInput } from "../../components/StrippedInput";
+import { BaseImage } from "../../components/BaseImage";
 const uuid = require("react-native-uuid");
 
 interface Props {
@@ -164,8 +163,11 @@ export const TagConstructor: React.FC<Props> = ({
         />
 
         <TouchableOpacity onPress={refreshHue}>
-          <Image
-            style={{ ...styles.icon, marginTop: 32 }}
+          <BaseImage
+            onPress={refreshHue}
+            w={24}
+            h={24}
+            mt={32}
             source={require("../../assets/refresh.png")}
           />
         </TouchableOpacity>
@@ -177,10 +179,3 @@ export const TagConstructor: React.FC<Props> = ({
     </MainContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  icon: {
-    width: 24,
-    height: 24,
-  },
-});

@@ -1,12 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Image,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
+import { ScrollView, StyleSheet, View, ActivityIndicator } from "react-native";
 import { Title } from "../../components/Title";
 import { Tag } from "../../components/Tag";
 import { observer } from "mobx-react-lite";
@@ -28,6 +21,7 @@ import {
 import { TText } from "../../components/TText";
 import { Card } from "../../components/CardNew";
 import { Comment } from "../../components/Comment";
+import { BaseImage } from "../../components/BaseImage";
 const uuid = require("react-native-uuid");
 
 interface Props {
@@ -164,15 +158,14 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
                 }}
               >
                 <Title title="Your comment:" type="small"></Title>
-                <TouchableOpacity
+
+                <BaseImage
                   onPress={showAddCommentModal}
-                  disabled={data?.note?.deleted}
-                >
-                  <Image
-                    style={styles.image}
-                    source={require("../../assets/plus.png")}
-                  />
-                </TouchableOpacity>
+                  disabled={data?.note?.deleted ?? undefined}
+                  w={24}
+                  h={24}
+                  source={require("../../assets/plus.png")}
+                />
               </Container>
 
               {data.note.comments.map((comment) => {
@@ -204,16 +197,15 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
             {data?.note?.tags?.length ? (
               <>
                 <View style={styles.line}>
-                  <Title title="Your tags:" type="small"></Title>
-                  <TouchableOpacity
+                  <Title title="Your tags:" type="small" />
+
+                  <BaseImage
                     onPress={showAddTagStack}
-                    disabled={data?.note?.deleted}
-                  >
-                    <Image
-                      style={styles.image}
-                      source={require("../../assets/plus.png")}
-                    />
-                  </TouchableOpacity>
+                    disabled={data?.note?.deleted ?? undefined}
+                    w={24}
+                    h={24}
+                    source={require("../../assets/plus.png")}
+                  />
                 </View>
 
                 <TagContainer>
@@ -236,16 +228,15 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
             ) : (
               /* when no comments and tags show big plus */
               <Container isCentered mt={32}>
-                <TouchableOpacity
+                <BaseImage
+                  style={{ tintColor: "#B0AFAF" }}
+                  w={40}
+                  h={40}
                   // @ts-ignore
                   onPress={() => actionAddRef.current.show()}
-                  disabled={data?.note?.deleted}
-                >
-                  <Image
-                    style={styles.imageBigger}
-                    source={require("../../assets/bigPlus.png")}
-                  />
-                </TouchableOpacity>
+                  disabled={data?.note?.deleted ?? undefined}
+                  source={require("../../assets/bigPlus.png")}
+                />
               </Container>
             )}
           </Container>
@@ -287,14 +278,5 @@ const styles = StyleSheet.create({
   line: {
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  image: {
-    width: 24,
-    height: 24,
-  },
-  imageBigger: {
-    width: 40,
-    height: 40,
-    tintColor: "#B0AFAF",
   },
 });

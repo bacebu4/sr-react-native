@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import {
   Comment as CommentType,
@@ -11,6 +11,7 @@ import { useConfirm } from "../hooks/confirm.hook";
 import { EditTextModal } from "./EditTextModal";
 import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
+import { BaseImage } from "./BaseImage";
 
 interface Props {
   comment: Maybe<CommentType>;
@@ -72,12 +73,12 @@ export const Comment: React.FC<Props> = ({ comment, disabled = false }) => {
             </Text>
           </View>
           <View style={styles.more}>
-            <TouchableOpacity onPress={showActionSheet} disabled={disabled}>
-              <Image
-                style={{ width: 24, height: 22.2 }}
-                source={require("../assets/dots.png")}
-              />
-            </TouchableOpacity>
+            <BaseImage
+              w={24}
+              h={22.2}
+              source={require("../assets/dots.png")}
+              onPress={showActionSheet}
+            />
           </View>
         </View>
         <View style={styles.note}>
