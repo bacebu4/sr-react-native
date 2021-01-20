@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import {
-  View,
   Text,
   ActivityIndicator,
   TouchableOpacity,
@@ -13,150 +12,155 @@ import { MainContainer } from "../components/grid/MainContainer";
 import Constants from "expo-constants";
 import { Title } from "../components/Title";
 import { SearchBar } from "react-native-elements";
-import { observer } from "mobx-react-lite";
-// @ts-ignore
-import { NotesStoreContext } from "../store/NotesStore";
-// @ts-ignore
-import { Card } from "../Card";
 import { TextGray } from "../components/TextGray";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { SearchStackParamList } from "src/stacks/SearchStackScreen";
+import { useSearchNotesMutation } from "../generated/graphql";
+import { Maybe, Note } from "../generated/graphql";
+import { Card } from "../components/CardNew";
 
 type Props = {
   navigation: StackNavigationProp<SearchStackParamList, "Search">;
 };
 
-export const SearchScreen: React.FC<Props> = observer(({ navigation }) => {
+export const SearchScreen: React.FC<Props> = ({ navigation }) => {
   const [search, setSearch] = useState("");
   const [history, setHistory] = useState<string[]>([]);
-  const [hasSearched, setSearched] = useState(false);
-  const NotesStore = useContext(NotesStoreContext);
+  const [searchResults, setSearchResults] = useState<
+    | Maybe<
+        { __typename?: "Note" | undefined } & Pick<
+          Note,
+          "title" | "text" | "id" | "author"
+        >
+      >[]
+    | null
+    | undefined
+  >(null);
+  const [searchNotesResult, searchNotes] = useSearchNotesMutation();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (search.trim()) {
-      setSearched(true);
       setHistory([search, ...history]);
       if (history.length > 8) {
         setHistory(history.slice(0, 8));
       }
-      // @ts-ignore
-      NotesStore.searchNotes(search);
+      const result = await searchNotes({ substring: search });
+      setSearchResults(result.data?.searchNotes);
     }
   };
 
   const handleClear = () => {
-    setSearched(false);
-    // @ts-ignore
-    NotesStore.setSearchResults([]);
+    setSearchResults(null);
   };
 
-  const handleHistory = (pastSearch: string) => {
+  const handleHistory = async (pastSearch: string) => {
     setSearch(pastSearch);
-    // @ts-ignore
-    NotesStore.searchNotes(pastSearch);
+    const result = await searchNotes({ substring: pastSearch });
+    setSearchResults(result.data?.searchNotes);
   };
 
-  return (
-    <MainContainer>
-      {/* header */}
-      <Container mt={Constants.statusBarHeight + 40}>
-        <Title type="big" title="Search" />
-        <SearchBar
-          placeholder="Highlights"
-          onChangeText={setSearch}
-          value={search}
-          platform="ios"
-          inputContainerStyle={{
-            height: 35,
-            marginLeft: 0,
-            backgroundColor: "#eee",
-          }}
-          cancelButtonProps={{
-            color: "#343434",
-            buttonStyle: {
-              marginLeft: 4,
-            },
-          }}
-          onSubmitEditing={handleSubmit}
-          onClear={handleClear}
-        />
-      </Container>
+  const Header = (
+    <Container mt={Constants.statusBarHeight + 40}>
+      <Title type="big" title="Search" />
+      <SearchBar
+        placeholder="Highlights"
+        onChangeText={setSearch}
+        value={search}
+        platform="ios"
+        inputContainerStyle={{
+          height: 35,
+          marginLeft: 0,
+          backgroundColor: "#eee",
+        }}
+        cancelButtonProps={{
+          color: "#343434",
+          buttonStyle: {
+            marginLeft: 4,
+          },
+        }}
+        onSubmitEditing={handleSubmit}
+        onClear={handleClear}
+      />
+    </Container>
+  );
 
-      {/* loading */}
-      {/* @ts-ignore */}
-      {NotesStore.isSearching ? (
+  if (searchNotesResult.fetching) {
+    return (
+      <MainContainer>
+        {Header}
         <Container isCentered mt={200}>
           <ActivityIndicator size="large" />
         </Container>
-      ) : (
-        <>
-          {/* found results */}
-          {/* @ts-ignore */}
-          {NotesStore.searchResults.length ? (
-            <FlatList
-              // @ts-ignore
-              data={NotesStore.searchResults}
-              keyExtractor={(item) => item.note_id}
-              renderItem={({ item }) => (
-                <Container mt={16} mb={16} key={item.note_id}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("Highlight", {
-                        name: "Highlight",
-                        noteId: item.note_id,
-                      })
-                    }
-                  >
-                    <Card note={item} />
-                  </TouchableOpacity>
-                </Container>
-              )}
-            />
-          ) : (
-            <>
-              {/* nothing found */}
-              {hasSearched ? (
-                <Container isCentered mt={150}>
-                  <Image
-                    style={styles.image}
-                    source={require("../assets/empty_search.png")}
-                  />
-                  <TextGray mt={32}>Nothing found</TextGray>
-                </Container>
-              ) : (
-                <>
-                  {/* showing history when no search results */}
-                  {history.length ? (
-                    <>
-                      <Container isRow>
-                        <Text style={styles.textGrayCapital}>RECENT</Text>
-                        <TouchableOpacity onPress={() => setHistory([])}>
-                          <Text style={styles.textBlackCapital}>CLEAR</Text>
-                        </TouchableOpacity>
-                      </Container>
-                      {history.map((h) => {
-                        return (
-                          <Container mt={16}>
-                            <TouchableOpacity onPress={() => handleHistory(h)}>
-                              <Title title={h} type="small"></Title>
-                            </TouchableOpacity>
-                          </Container>
-                        );
-                      })}
-                    </>
-                  ) : (
-                    // when nothing
-                    <View />
-                  )}
-                </>
-              )}
-            </>
+      </MainContainer>
+    );
+  }
+
+  if (searchResults?.length) {
+    return (
+      <MainContainer>
+        {Header}
+        <FlatList
+          data={searchResults}
+          keyExtractor={(item) => item!.id}
+          renderItem={({ item }) => (
+            <Container mt={16} mb={16} key={item?.id}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("Highlight", {
+                    name: "Highlight",
+                    noteId: item!.id,
+                  })
+                }
+              >
+                <Card note={item} />
+              </TouchableOpacity>
+            </Container>
           )}
-        </>
-      )}
-    </MainContainer>
-  );
-});
+        />
+      </MainContainer>
+    );
+  }
+
+  if (searchResults?.length === 0) {
+    return (
+      <MainContainer>
+        {Header}
+        <Container isCentered mt={150}>
+          <Image
+            style={styles.image}
+            source={require("../assets/empty_search.png")}
+          />
+          <TextGray mt={32}>Nothing found</TextGray>
+        </Container>
+      </MainContainer>
+    );
+  }
+
+  if (history.length) {
+    return (
+      <MainContainer>
+        {Header}
+        <Container isRow>
+          <Text style={styles.textGrayCapital}>RECENT</Text>
+          <TouchableOpacity onPress={() => setHistory([])}>
+            <Text style={styles.textBlackCapital}>CLEAR</Text>
+          </TouchableOpacity>
+        </Container>
+        {history.map((h) => {
+          return (
+            <Container mt={16}>
+              <TouchableOpacity onPress={() => handleHistory(h)}>
+                <Title title={h} type="small"></Title>
+              </TouchableOpacity>
+            </Container>
+          );
+        })}
+      </MainContainer>
+    );
+  }
+
+  return <MainContainer>{Header}</MainContainer>;
+};
 
 const styles = StyleSheet.create({
   image: {
