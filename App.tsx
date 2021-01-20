@@ -20,11 +20,11 @@ const Tab = createBottomTabNavigator();
 export default observer(function App() {
   const UiStore = useContext(UiStoreContext);
   const { t } = useTranslation();
-  let client = createUrqlClient(UiStore.token);
+  let client = createUrqlClient(UiStore.token ?? "");
 
   async function initAsync() {
     await UiStore.init();
-    client = createUrqlClient(UiStore.token);
+    client = createUrqlClient(UiStore.token ?? "");
   }
 
   useEffect(() => {
@@ -39,9 +39,6 @@ export default observer(function App() {
           tabBarOptions={{
             activeTintColor: "#CCA9F9",
             inactiveTintColor: "#B0AFAF",
-          }}
-          navigationOptions={{
-            header: null,
           }}
         >
           {UiStore.isLoading ? (
