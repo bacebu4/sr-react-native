@@ -16,7 +16,6 @@ import { TextGray } from "../components/TextGray";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { SearchStackParamList } from "src/stacks/SearchStackScreen";
 import { useSearchNotesMutation } from "../generated/graphql";
-import { Maybe, Note } from "../generated/graphql";
 import { Card } from "../components/CardNew";
 
 type Props = {
@@ -26,16 +25,6 @@ type Props = {
 export const SearchScreen: React.FC<Props> = ({ navigation }) => {
   const [search, setSearch] = useState("");
   const [history, setHistory] = useState<string[]>([]);
-  const [searchResults, setSearchResults] = useState<
-    | Maybe<
-        { __typename?: "Note" | undefined } & Pick<
-          Note,
-          "title" | "text" | "id" | "author"
-        >
-      >[]
-    | null
-    | undefined
-  >(null);
   const [searchNotesResult, searchNotes] = useSearchNotesMutation();
 
   const handleSubmit = async () => {
@@ -44,19 +33,17 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
       if (history.length > 8) {
         setHistory(history.slice(0, 8));
       }
-      const result = await searchNotes({ substring: search });
-      setSearchResults(result.data?.searchNotes);
+      await searchNotes({ substring: search });
     }
   };
 
   const handleClear = () => {
-    setSearchResults(null);
+    searchNotesResult.data!.searchNotes = null;
   };
 
   const handleHistory = async (pastSearch: string) => {
     setSearch(pastSearch);
-    const result = await searchNotes({ substring: pastSearch });
-    setSearchResults(result.data?.searchNotes);
+    await searchNotes({ substring: pastSearch });
   };
 
   const Header = (
@@ -95,12 +82,12 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
     );
   }
 
-  if (searchResults?.length) {
+  if (searchNotesResult.data?.searchNotes?.length) {
     return (
       <MainContainer>
         {Header}
         <FlatList
-          data={searchResults}
+          data={searchNotesResult.data.searchNotes}
           keyExtractor={(item) => item!.id}
           renderItem={({ item }) => (
             <Container mt={16} mb={16} key={item?.id}>
@@ -121,7 +108,7 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
     );
   }
 
-  if (searchResults?.length === 0) {
+  if (searchNotesResult.data?.searchNotes?.length === 0) {
     return (
       <MainContainer>
         {Header}
@@ -150,7 +137,7 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
           return (
             <Container mt={16}>
               <TouchableOpacity onPress={() => handleHistory(h)}>
-                <Title title={h} type="small"></Title>
+                <Title title={h} type="small" />
               </TouchableOpacity>
             </Container>
           );
