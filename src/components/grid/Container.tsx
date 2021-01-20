@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, ViewStyle } from "react-native";
+import { View, ViewStyle } from "react-native";
 
 interface Props {
   children?: React.ReactNode;
@@ -11,6 +11,7 @@ interface Props {
   hasBorder?: boolean;
   style?: ViewStyle;
   isRow?: boolean;
+  hasNoMargin?: boolean;
 }
 
 export const Container: React.FC<Props> = ({
@@ -19,6 +20,7 @@ export const Container: React.FC<Props> = ({
   isCentered = false,
   isCenteredY = false,
   hasBorder = false,
+  hasNoMargin = false,
   mb = 0,
   pb = 0,
   style = {},
@@ -27,7 +29,7 @@ export const Container: React.FC<Props> = ({
   return (
     <View
       style={{
-        ...styles.container,
+        marginHorizontal: hasNoMargin ? undefined : 32,
         marginTop: mt,
         marginBottom: mb,
         alignItems: isCentered ? "center" : "stretch",
@@ -47,9 +49,3 @@ export const Container: React.FC<Props> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: 32,
-  },
-});
