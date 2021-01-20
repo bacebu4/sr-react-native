@@ -7,7 +7,7 @@ import { AuthStackScreen } from "./src/stacks/AuthStackScreen";
 import { LoadingScreen } from "./src/pages/LoadingScreen";
 import { SearchStackScreen } from "./src/stacks/SearchStackScreen";
 import { Provider } from "urql";
-import i18n from "./src/i18n";
+import i18n from "./src/utils/i18n";
 import { useTranslation } from "react-i18next";
 import { UiStoreContext } from "./src/store/UiStore";
 import { iconsConfig } from "./src/utils/iconsConfig";
