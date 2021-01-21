@@ -4,7 +4,6 @@ import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
 import { Title } from "./Title";
 import { observer } from "mobx-react-lite";
-import { TextGray } from "./TextGray";
 import { TText } from "./TText";
 import { Container } from "./grid/Container";
 import { UiStoreContext } from "../utils/UiStore";
@@ -86,9 +85,9 @@ export const Navbar: React.FC<Props> = observer(({ title, handleClick }) => {
             <BaseText color="purple" ml={16} isBold>
               Today's Review
             </BaseText>
-            <TextGray ml={8}>
-              <TText>Goal achieved</TText>
-            </TextGray>
+            <BaseText color="gray" fz={14} ml={16} mt={2}>
+              Goal achieved
+            </BaseText>
           </>
         )}
       </Container>
