@@ -115,7 +115,7 @@ export const SettingsModal: React.FC<Props> = observer(
                 source={require("../assets/chevronLeft.png")}
                 onPress={handleLanguageChange}
               />
-              <BaseText isBold fz={18} shouldNotTranslate>
+              <BaseText isBold isUppercase fz={18} shouldNotTranslate>
                 {i18n.language}
               </BaseText>
               <BaseImage

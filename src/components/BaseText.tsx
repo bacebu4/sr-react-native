@@ -34,6 +34,7 @@ interface Props extends TextProps {
   mr?: number;
   fz?: number;
   isBold?: boolean;
+  isUppercase?: boolean;
   isSerif?: boolean;
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
   shouldNotTranslate?: boolean;
@@ -50,6 +51,7 @@ export const BaseText: React.FC<Props> = (props) => {
     fz,
     isBold,
     isSerif,
+    isUppercase,
     onPress,
     color,
     shouldNotTranslate,
@@ -68,6 +70,7 @@ export const BaseText: React.FC<Props> = (props) => {
     fontWeight: isBold ? "600" : undefined,
     fontFamily: isSerif ? "Cochin" : undefined,
     color: colorSwitch(color),
+    textTransform: isUppercase ? "uppercase" : undefined,
   };
 
   const TextComponentTranslated = (
