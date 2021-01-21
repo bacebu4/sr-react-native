@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { PURPLE_COLOR } from "../utils/colors";
 import {
   Text,
   TextProps,
@@ -17,7 +18,7 @@ const colorSwitch = (color: colorVariants) => {
       return "#B0AFAF";
 
     case "purple":
-      return "#CCA9F9";
+      return PURPLE_COLOR;
 
     case "white":
       return "#ffffff";

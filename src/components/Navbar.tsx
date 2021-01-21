@@ -1,9 +1,5 @@
 import React, { useContext } from "react";
-import {
-  StyleSheet,
-  GestureResponderEvent,
-  ActivityIndicator,
-} from "react-native";
+import { GestureResponderEvent, ActivityIndicator } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
 import { Title } from "./Title";
@@ -14,6 +10,8 @@ import { Container } from "./grid/Container";
 import { UiStoreContext } from "../utils/UiStore";
 import { useInfoQuery } from "../generated/graphql";
 import { BaseImage } from "./BaseImage";
+import { PURPLE_COLOR } from "../utils/colors";
+import { BaseText } from "./BaseText";
 
 interface Props {
   title: string;
@@ -73,17 +71,21 @@ export const Navbar: React.FC<Props> = observer(({ title, handleClick }) => {
           }
           radius={10}
           borderWidth={4}
-          color="#CCA9F9"
+          color={PURPLE_COLOR}
           shadowColor="#d7d7d7"
           bgColor="#fff"
         />
 
         {(UiStore.currentReviewIndex / data?.info?.reviewAmount!) * 100 !==
           100 && !data?.info?.reviewed ? (
-          <TText style={styles.info}>Review Process Pending</TText>
+          <BaseText color="purple" ml={16} isBold>
+            Review Process Pending
+          </BaseText>
         ) : (
           <>
-            <TText style={styles.info}>Today's Review</TText>
+            <BaseText color="purple" ml={16} isBold>
+              Today's Review
+            </BaseText>
             <TextGray ml={8}>
               <TText>Goal achieved</TText>
             </TextGray>
@@ -93,16 +95,4 @@ export const Navbar: React.FC<Props> = observer(({ title, handleClick }) => {
       <Container hasBorder mt={16} />
     </>
   );
-});
-
-const styles = StyleSheet.create({
-  icon: {
-    width: 44,
-    height: 44,
-  },
-  info: {
-    marginLeft: 16,
-    fontWeight: "600",
-    color: "#CCA9F9",
-  },
 });

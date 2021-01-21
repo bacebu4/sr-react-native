@@ -4,6 +4,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 
 import { useConfirm } from "../hooks/confirm.hook";
+import { PURPLE_COLOR } from "../utils/colors";
 
 interface Props {
   route: any;
@@ -42,7 +43,7 @@ export const MoreButton: React.FC<Props> = ({ route }) => {
       onPress={handleDelete}
       name="ios-trash"
       size={24}
-      color="#CCA9F9"
+      color={PURPLE_COLOR}
       style={{ marginRight: 16 }}
     />
   );

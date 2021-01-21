@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  TouchableOpacity,
-  GestureResponderEvent,
-} from "react-native";
+import { TouchableOpacity, GestureResponderEvent } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
 import { TextGray } from "./TextGray";
@@ -12,6 +8,8 @@ import { Title } from "./Title";
 import { Container } from "./grid/Container";
 import { useTranslation } from "react-i18next";
 import { BaseImage } from "./BaseImage";
+import { PURPLE_COLOR } from "../utils/colors";
+import { BaseText } from "./BaseText";
 
 interface Props {
   title: string;
@@ -38,7 +36,9 @@ export const NavbarSecondary: React.FC<Props> = ({
         style={{ alignItems: "baseline" }}
       >
         <TouchableOpacity onPress={handleClick}>
-          <TText style={styles.text}>Exit</TText>
+          <BaseText color="purple" isBold>
+            Exit
+          </BaseText>
         </TouchableOpacity>
         <Title title={t(title)} />
         {index !== 0 ? (
@@ -70,11 +70,13 @@ export const NavbarSecondary: React.FC<Props> = ({
           percent={((amount - index) / amount) * 100}
           radius={10}
           borderWidth={4}
-          color="#CCA9F9"
+          color={PURPLE_COLOR}
           shadowColor="#d7d7d7"
           bgColor="#fff"
         />
-        <TText style={styles.info}>Review Process</TText>
+        <BaseText ml={16} isBold color="purple">
+          Review Process
+        </BaseText>
         <TextGray ml={16}>{index}</TextGray>
         <TextGray ml={4}>
           <TText>more left</TText>
@@ -84,17 +86,3 @@ export const NavbarSecondary: React.FC<Props> = ({
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 16,
-    color: "#CCA9F9",
-    fontWeight: "600",
-  },
-  info: {
-    marginLeft: 16,
-    fontWeight: "600",
-    alignItems: "center",
-    color: "#CCA9F9",
-  },
-});

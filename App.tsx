@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { UiStoreContext } from "./src/utils/UiStore";
 import { iconsConfig } from "./src/utils/iconsConfig";
 import { createUrqlClient } from "./src/utils/createUrqlClient";
+import { PURPLE_COLOR } from "./src/utils/colors";
 
 // @ts-ignore
 const initI18n = i18n;
@@ -38,7 +39,7 @@ export default observer(function App() {
         <Tab.Navigator
           screenOptions={iconsConfig}
           tabBarOptions={{
-            activeTintColor: "#CCA9F9",
+            activeTintColor: PURPLE_COLOR,
             inactiveTintColor: "#B0AFAF",
           }}
         >
