@@ -1,5 +1,5 @@
 import React from "react";
-import { TText } from "./TText";
+import { BaseText } from "./BaseText";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -33,9 +33,11 @@ export const MainButton: React.FC<Props> = ({
       }}
     >
       {!isLoading ? (
-        <TText style={styles.title}>{title}</TText>
+        <BaseText isBold isSerif color="white" fz={14}>
+          {title}
+        </BaseText>
       ) : (
-        <ActivityIndicator></ActivityIndicator>
+        <ActivityIndicator />
       )}
     </TouchableOpacity>
   );
@@ -48,9 +50,5 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
-  },
-  title: {
-    color: "white",
-    fontFamily: "Cochin-Bold",
   },
 });
