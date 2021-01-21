@@ -115,8 +115,8 @@ export const SettingsModal: React.FC<Props> = observer(
                 source={require("../assets/chevronLeft.png")}
                 onPress={handleLanguageChange}
               />
-              <BaseText isBold fz={18}>
-                En
+              <BaseText isBold fz={18} shouldNotTranslate>
+                {i18n.language}
               </BaseText>
               <BaseImage
                 w={24}
@@ -136,13 +136,13 @@ export const SettingsModal: React.FC<Props> = observer(
 
           <Container mt={32}>
             <BaseText isBold fz={18}>
-              Restart manual
+              Restart tutorial
             </BaseText>
           </Container>
 
           <Container mt={8}>
             <BaseText color="gray">
-              Click this button if you want to see thr tutorial all over again
+              Click this button if you want to see the tutorial all over again
               in case you miss something
             </BaseText>
           </Container>
@@ -161,14 +161,6 @@ export const SettingsModal: React.FC<Props> = observer(
 
           <Container mt={64} isCentered>
             <MainButton onPress={handleLogout} title="Sign Out" />
-            {/* <MainButton
-            onPress={() => i18n.changeLanguage("en")}
-            title="English lng"
-          />
-          <MainButton
-            onPress={() => i18n.changeLanguage("ru")}
-            title="Russian lng"
-          /> */}
           </Container>
         </MainContainer>
       </Modal>

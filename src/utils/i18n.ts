@@ -2,7 +2,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
 i18n.use(initReactI18next).init({
-  lng: "en",
+  lng: "ru",
   fallbackLng: "en",
   resources: {
     en: {
@@ -40,6 +40,18 @@ i18n.use(initReactI18next).init({
         "Already have an account?": "Уже есть аккаунт?",
         "All books": "Все книги",
         "All tags": "Все теги",
+        "Hightlights per day": "Заметок в день",
+        "Configure how much highlights you want to see on a daily basis":
+          "Настройте сколько заметок в день вы хотите видеть",
+        Language: "Язык",
+        "Configure the language you want to see in the application":
+          "Настройте какой язык вы хотите видеть в приложении",
+        "Restart tutorial": "Перезапустить обучение",
+        "Click this button if you want to see the tutorial all over again in case you miss something":
+          "Нажмите на ссылку выше если вы хотите перепройти обучение заново",
+        "Show terms and conditions": "Условия использования",
+        "Show privacy policy": "Политика конфиденциальности",
+        "Sign Out": "Выйти",
       },
     },
   },
