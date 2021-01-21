@@ -2,11 +2,12 @@ import React from "react";
 import { MainButton } from "../../components/MainButton";
 import { Title } from "../../components/Title";
 import { useNavigation } from "@react-navigation/native";
-import { TextGray } from "../../components/TextGray";
 import { useTranslation } from "react-i18next";
 import { useInfoQuery } from "../../generated/graphql";
 import { MainContainer } from "../../components/grid/MainContainer";
 import { BaseImage } from "../../components/BaseImage";
+import { BaseText } from "../../components/BaseText";
+import { Container } from "../../components/grid/Container";
 
 interface Props {
   jumpTo?: (key: string) => void;
@@ -30,10 +31,25 @@ export const ReviewFinalScreen: React.FC<Props> = () => {
         source={require("../../assets/success.png")}
       />
       <Title title={t("Congrats")} />
-      <TextGray mt={32}>
-        You've been on the track for {result.data?.info?.streak}{" "}
-        {result.data?.info?.streak === 1 ? "day" : "days"}
-      </TextGray>
+
+      <Container isRow isCentered mt={32}>
+        <BaseText color="gray" fz={14}>
+          You've been on the track for
+        </BaseText>
+        <BaseText color="gray" fz={14}>
+          {" "}
+        </BaseText>
+        <BaseText color="gray" fz={14}>
+          {result.data?.info?.streak}
+        </BaseText>
+        <BaseText color="gray" fz={14}>
+          {" "}
+        </BaseText>
+        <BaseText color="gray" fz={14}>
+          {result.data?.info?.streak === 1 ? "day" : "days"}
+        </BaseText>
+      </Container>
+
       <MainButton
         isDark
         title="Go home"
