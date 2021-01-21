@@ -9,7 +9,7 @@ import { RouteProp } from "@react-navigation/native";
 import { AuthStackParamList } from "../../stacks/AuthStackScreen";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useRegisterMutation } from "../../generated/graphql";
-import { UiStoreContext } from "../../store/UiStore";
+import { UiStoreContext } from "../../utils/UiStore";
 
 interface Props {
   route: RouteProp<AuthStackParamList, "AuthPassword">;

@@ -9,7 +9,7 @@ import { SearchStackScreen } from "./src/stacks/SearchStackScreen";
 import { Provider } from "urql";
 import i18n from "./src/utils/i18n";
 import { useTranslation } from "react-i18next";
-import { UiStoreContext } from "./src/store/UiStore";
+import { UiStoreContext } from "./src/utils/UiStore";
 import { iconsConfig } from "./src/utils/iconsConfig";
 import { createUrqlClient } from "./src/utils/createUrqlClient";
 

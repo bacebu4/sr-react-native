@@ -11,7 +11,7 @@ import { observer } from "mobx-react-lite";
 import { TextGray } from "./TextGray";
 import { TText } from "./TText";
 import { Container } from "./grid/Container";
-import { UiStoreContext } from "../store/UiStore";
+import { UiStoreContext } from "../utils/UiStore";
 import { useInfoQuery } from "../generated/graphql";
 import { BaseImage } from "./BaseImage";
 

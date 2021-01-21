@@ -5,7 +5,7 @@ import { Container } from "./grid/Container";
 import { NavbarTopSecondary } from "./NavbarTopSecondary";
 import { MainButton } from "./MainButton";
 import { useTranslation } from "react-i18next";
-import { UiStoreContext } from "../store/UiStore";
+import { UiStoreContext } from "../utils/UiStore";
 import { BaseImage } from "./BaseImage";
 import { observer } from "mobx-react-lite";
 import { BaseText } from "./BaseText";

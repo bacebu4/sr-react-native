@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, View, ActivityIndicator } from "react-native";
 import { Title } from "../../components/Title";
 import { Tag } from "../../components/Tag";
 import { observer } from "mobx-react-lite";
-import { UiStoreContext } from "../../store/UiStore";
+import { UiStoreContext } from "../../utils/UiStore";
 import ActionSheet from "react-native-actionsheet";
 import * as Haptics from "expo-haptics";
 import { Container } from "../../components/grid/Container";

@@ -8,7 +8,7 @@ import { Container } from "../../components/grid/Container";
 import { useMessage } from "../../hooks/message.hook";
 import { NavbarTop } from "../../components/NavbarTop";
 import { Tag } from "../../components/Tag";
-import { UiStoreContext } from "../../store/UiStore";
+import { UiStoreContext } from "../../utils/UiStore";
 import {
   Tag as TagType,
   useAddNewTagMutation,

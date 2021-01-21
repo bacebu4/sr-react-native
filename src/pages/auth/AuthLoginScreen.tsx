@@ -9,7 +9,7 @@ import { MainButton } from "../../components/MainButton";
 import { BaseInput } from "../../components/BaseInput";
 import { AuthStackParamList } from "src/stacks/AuthStackScreen";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { UiStoreContext } from "../../store/UiStore";
+import { UiStoreContext } from "../../utils/UiStore";
 import { useLoginMutation } from "../../generated/graphql";
 
 interface Props {

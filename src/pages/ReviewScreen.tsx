@@ -16,7 +16,7 @@ import {
 import { format } from "date-fns";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { HomeStackParamList } from "src/stacks/HomeStackScreen";
-import { UiStoreContext } from "../store/UiStore";
+import { UiStoreContext } from "../utils/UiStore";
 
 let AMOUNT = 1;
 let maxIndex = 0;

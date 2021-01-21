@@ -10,7 +10,7 @@ import { Tag } from "./Tag";
 import * as Haptics from "expo-haptics";
 import ActionSheet from "react-native-actionsheet";
 import { observer } from "mobx-react-lite";
-import { UiStoreContext } from "../store/UiStore";
+import { UiStoreContext } from "../utils/UiStore";
 import { TagModal } from "./TagModal";
 import { TagConstructor } from "../pages/addTag/TagConstructor";
 import { useConfirm } from "../hooks/confirm.hook";
