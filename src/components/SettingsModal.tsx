@@ -25,6 +25,20 @@ export const SettingsModal: React.FC<Props> = observer(
       UiStore.logout();
     };
 
+    const handleLanguageChange = () => {
+      const currentLanguage = i18n.language;
+
+      switch (currentLanguage) {
+        case "en":
+          i18n.changeLanguage("ru");
+          break;
+
+        default:
+          i18n.changeLanguage("en");
+          break;
+      }
+    };
+
     return (
       <Modal
         animationType="slide"
@@ -93,9 +107,25 @@ export const SettingsModal: React.FC<Props> = observer(
             <BaseText isBold fz={18}>
               Language
             </BaseText>
-            <BaseText isBold fz={18}>
-              En
-            </BaseText>
+            <Container isRow isCentered hasNoMargin>
+              <BaseImage
+                w={24}
+                h={24}
+                mr={16}
+                source={require("../assets/chevronLeft.png")}
+                onPress={handleLanguageChange}
+              />
+              <BaseText isBold fz={18}>
+                En
+              </BaseText>
+              <BaseImage
+                w={24}
+                h={24}
+                ml={16}
+                source={require("../assets/chevronRight.png")}
+                onPress={handleLanguageChange}
+              />
+            </Container>
           </Container>
 
           <Container mt={8}>
