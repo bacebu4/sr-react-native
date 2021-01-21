@@ -1,13 +1,9 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  GestureResponderEvent,
-} from "react-native";
+import { View, GestureResponderEvent } from "react-native";
 import Constants from "expo-constants";
 import { Title } from "./Title";
+import { BaseText } from "./BaseText";
+import { Container } from "./grid/Container";
 
 interface Props {
   title?: string;
@@ -23,38 +19,19 @@ export const NavbarTopSecondary: React.FC<Props> = ({
   hasNoMargin = false,
 }) => {
   return (
-    <View
-      style={{
-        ...styles.navbar,
-        marginTop: hasNoMargin ? 40 : Constants.statusBarHeight + 40,
-      }}
+    <Container
+      isRow
+      style={{ alignItems: "baseline" }}
+      mt={hasNoMargin ? 40 : Constants.statusBarHeight + 40}
     >
       <Title title={title} />
       {handleNext ? (
-        <TouchableOpacity onPress={handleNext}>
-          <Text style={styles.link}>{titleRight}</Text>
-        </TouchableOpacity>
+        <BaseText isBold mt={4} color="purple" onPress={handleNext}>
+          {titleRight}
+        </BaseText>
       ) : (
         <View />
       )}
-    </View>
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  navbar: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "baseline",
-  },
-  icon: {
-    width: 24,
-    height: 24,
-  },
-  link: {
-    color: "#CCA9F9",
-    fontSize: 16,
-    fontWeight: "600",
-    marginTop: 4,
-  },
-});
