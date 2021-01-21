@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import { GestureResponderEvent, Modal, StyleSheet, Text } from "react-native";
+import { GestureResponderEvent, Modal } from "react-native";
 import { MainContainer } from "./grid/MainContainer";
 import { Container } from "./grid/Container";
 import { NavbarTopSecondary } from "./NavbarTopSecondary";
 import { MainButton } from "./MainButton";
 import { useTranslation } from "react-i18next";
 import { UiStoreContext } from "../store/UiStore";
-import { TextGray } from "./TextGray";
 import { BaseImage } from "./BaseImage";
 import { observer } from "mobx-react-lite";
+import { BaseText } from "./BaseText";
 
 interface Props {
   modalState: boolean;
@@ -53,13 +53,15 @@ export const SettingsModal: React.FC<Props> = observer(
           >
             <BaseImage w={44} h={44} source={require("../assets/avatar.png")} />
             <Container>
-              <Text style={styles.text}>Vasilii Krasikov</Text>
-              <TextGray>vasua14735@icloud.com</TextGray>
+              <BaseText isBold>Vasilii Krasikov</BaseText>
+              <BaseText color="gray" mt={16}>
+                vasua14735@icloud.com
+              </BaseText>
             </Container>
           </Container>
 
           <Container mt={44} isRow isCentered>
-            <Text style={styles.text}>Hightlights per day</Text>
+            <BaseText isBold>Hightlights per day</BaseText>
             <Container isRow isCentered hasNoMargin>
               <BaseImage
                 w={24}
@@ -67,7 +69,7 @@ export const SettingsModal: React.FC<Props> = observer(
                 mr={16}
                 source={require("../assets/chevronLeft.png")}
               />
-              <Text style={styles.text}>3</Text>
+              <BaseText isBold>3</BaseText>
               <BaseImage
                 w={24}
                 h={24}
@@ -78,39 +80,39 @@ export const SettingsModal: React.FC<Props> = observer(
           </Container>
 
           <Container mt={16}>
-            <TextGray>
+            <BaseText color="gray">
               Configure how much highlights you want to see on a daily basis
-            </TextGray>
+            </BaseText>
           </Container>
 
           <Container mt={32} isRow isCentered>
-            <Text style={styles.text}>Language</Text>
-            <Text style={styles.text}>En</Text>
+            <BaseText isBold>Language</BaseText>
+            <BaseText isBold>En</BaseText>
           </Container>
 
           <Container mt={16}>
-            <TextGray>
+            <BaseText color="gray">
               Configure the language you want to see in the application
-            </TextGray>
+            </BaseText>
           </Container>
 
           <Container mt={32}>
-            <Text style={styles.text}>Restart manual</Text>
+            <BaseText isBold>Restart manual</BaseText>
           </Container>
 
           <Container mt={16}>
-            <TextGray>
+            <BaseText color="gray">
               Click this button if you want to see thr tutorial all over again
               in case you miss something
-            </TextGray>
+            </BaseText>
           </Container>
 
           <Container mt={44}>
-            <Text style={styles.text}>Show terms and conditions</Text>
+            <BaseText isBold>Show terms and conditions</BaseText>
           </Container>
 
           <Container mt={24}>
-            <Text style={styles.text}>Show privacy policy</Text>
+            <BaseText isBold>Show privacy policy</BaseText>
           </Container>
 
           <Container mt={64} isCentered>
@@ -129,11 +131,3 @@ export const SettingsModal: React.FC<Props> = observer(
     );
   }
 );
-
-const styles = StyleSheet.create({
-  text: {
-    fontWeight: "600",
-    color: "#343434",
-    fontSize: 16,
-  },
-});

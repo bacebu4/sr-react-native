@@ -38,7 +38,7 @@ interface Props extends TextProps {
   children: React.ReactNode;
 }
 
-export const BaseImage: React.FC<Props> = (props) => {
+export const BaseText: React.FC<Props> = (props) => {
   const {
     mt,
     mb,
