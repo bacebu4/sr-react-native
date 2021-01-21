@@ -109,16 +109,14 @@ export const TagConstructor: React.FC<Props> = ({
 
   const Header = (
     <>
-      <Container>
-        <NavbarTop
-          handleClick={handleBack}
-          handleNext={handleSubmit}
-          title={editMode ? "Editing tag" : "Creating tag"}
-          titleLeft="Cancel"
-          titleRight="Save"
-          hasNoMargin
-        />
-      </Container>
+      <NavbarTop
+        handleClick={handleBack}
+        handleNext={handleSubmit}
+        title={editMode ? "Editing tag" : "Creating tag"}
+        titleLeft="Cancel"
+        titleRight="Save"
+        hasNoMargin
+      />
       <Container hasBorder mt={16} />
     </>
   );

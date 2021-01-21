@@ -42,16 +42,14 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
 
   const Header = (
     <>
-      <Container>
-        <NavbarTop
-          handleClick={handleCancel}
-          handleNext={handleShowCreate}
-          title="Choose from existing"
-          titleLeft="Cancel"
-          titleRight="Create"
-          hasNoMargin
-        />
-      </Container>
+      <NavbarTop
+        handleClick={handleCancel}
+        handleNext={handleShowCreate}
+        title="Choose from existing"
+        titleLeft="Cancel"
+        titleRight="Create"
+        hasNoMargin
+      />
       <Container hasBorder mt={16} />
     </>
   );

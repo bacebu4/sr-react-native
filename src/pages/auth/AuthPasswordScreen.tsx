@@ -40,9 +40,8 @@ export const AuthPasswordScreen: React.FC<Props> = ({ navigation, route }) => {
   };
   return (
     <MainContainer>
+      <NavbarTop title="Password" handleClick={() => navigation.goBack()} />
       <Container>
-        <NavbarTop title="Password" handleClick={() => navigation.goBack()} />
-
         <BaseInput
           mt={32}
           autoFocus

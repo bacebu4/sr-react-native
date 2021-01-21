@@ -42,8 +42,8 @@ export const AuthLoginScreen: React.FC<Props> = observer(({ navigation }) => {
 
   return (
     <MainContainer>
+      <NavbarTop title="Log In" handleClick={() => navigation.goBack()} />
       <Container>
-        <NavbarTop title="Log In" handleClick={() => navigation.goBack()} />
         <Text style={styles.heading}>Email</Text>
 
         <BaseInput

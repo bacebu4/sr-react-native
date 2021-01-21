@@ -1,14 +1,10 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  GestureResponderEvent,
-} from "react-native";
+import { View, TouchableOpacity, GestureResponderEvent } from "react-native";
 import Constants from "expo-constants";
 import { Title } from "./Title";
 import { BaseImage } from "./BaseImage";
+import { Container } from "./grid/Container";
+import { BaseText } from "./BaseText";
 
 interface Props {
   handleClick?: ((event: GestureResponderEvent) => void) | undefined;
@@ -28,15 +24,16 @@ export const NavbarTop: React.FC<Props> = ({
   title = "Default",
 }) => {
   return (
-    <View
-      style={{
-        ...styles.navbar,
-        marginTop: hasNoMargin ? 40 : Constants.statusBarHeight + 40,
-      }}
+    <Container
+      isRow
+      isCenteredY
+      mt={hasNoMargin ? 40 : Constants.statusBarHeight + 40}
     >
       <TouchableOpacity onPress={handleClick}>
         {titleLeft ? (
-          <Text style={styles.link}>{titleLeft}</Text>
+          <BaseText isBold color="purple" mt={4}>
+            {titleLeft}
+          </BaseText>
         ) : (
           <BaseImage
             w={24}
@@ -49,26 +46,12 @@ export const NavbarTop: React.FC<Props> = ({
       <Title type="small" title={title} numberOfLines={1} />
 
       {handleNext ? (
-        <TouchableOpacity onPress={handleNext}>
-          <Text style={styles.link}>{titleRight}</Text>
-        </TouchableOpacity>
+        <BaseText color="purple" isBold mt={4} onPress={handleNext}>
+          {titleRight}
+        </BaseText>
       ) : (
         <View />
       )}
-    </View>
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  navbar: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  link: {
-    color: "#CCA9F9",
-    fontSize: 16,
-    fontWeight: "600",
-    marginTop: 4,
-  },
-});

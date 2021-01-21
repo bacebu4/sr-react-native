@@ -30,16 +30,14 @@ const TextSheet: React.FC<Props> = ({
 
   return (
     <MainContainer>
-      <Container>
-        <NavbarTop
-          handleClick={handleCancel}
-          handleNext={handleSave}
-          title={title}
-          titleLeft="Cancel"
-          titleRight="Save"
-          hasNoMargin
-        ></NavbarTop>
-      </Container>
+      <NavbarTop
+        handleClick={handleCancel}
+        handleNext={handleSave}
+        title={title}
+        titleLeft="Cancel"
+        titleRight="Save"
+        hasNoMargin
+      />
       <Container hasBorder mt={16}></Container>
       <Container mt={16}>
         <TextInput

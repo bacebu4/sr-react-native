@@ -19,13 +19,12 @@ export const AuthEmailScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <MainContainer>
+      <NavbarTop
+        title="Email"
+        handleClick={() => navigation.goBack()}
+        handleNext={handleSubmit}
+      />
       <Container>
-        <NavbarTop
-          title="Email"
-          handleClick={() => navigation.goBack()}
-          handleNext={handleSubmit}
-        />
-
         <BaseInput
           mt={32}
           autoFocus
