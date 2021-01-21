@@ -51,10 +51,12 @@ export const SettingsModal: React.FC<Props> = observer(
           >
             <BaseImage w={44} h={44} source={require("../assets/avatar.png")} />
             <Container>
-              <BaseText isBold fz={18}>
+              <BaseText isBold fz={18} shouldNotTranslate>
                 Vasilii Krasikov
               </BaseText>
-              <BaseText color="gray">vasua14735@icloud.com</BaseText>
+              <BaseText color="gray" shouldNotTranslate>
+                vasua14735@icloud.com
+              </BaseText>
             </Container>
           </Container>
 
