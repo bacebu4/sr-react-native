@@ -9,7 +9,7 @@ import {
   TextStyle,
 } from "react-native";
 
-type colorVariants = "purple" | "gray" | undefined;
+type colorVariants = "purple" | "gray" | "white" | undefined;
 
 const colorSwitch = (color: colorVariants) => {
   switch (color) {
@@ -18,6 +18,9 @@ const colorSwitch = (color: colorVariants) => {
 
     case "purple":
       return "#CCA9F9";
+
+    case "white":
+      return "#ffffff";
 
     default:
       return "#343434";
