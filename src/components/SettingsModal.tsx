@@ -36,14 +36,12 @@ export const SettingsModal: React.FC<Props> = observer(
         presentationStyle="formSheet"
       >
         <MainContainer>
-          <Container>
-            <NavbarTopSecondary
-              title={t("Account preferences")}
-              handleNext={handleDone}
-              titleRight={t("Done")}
-              hasNoMargin
-            />
-          </Container>
+          <NavbarTopSecondary
+            title={t("Account preferences")}
+            handleNext={handleDone}
+            titleRight={t("Done")}
+            hasNoMargin
+          />
 
           <Container
             mt={32}
@@ -53,15 +51,17 @@ export const SettingsModal: React.FC<Props> = observer(
           >
             <BaseImage w={44} h={44} source={require("../assets/avatar.png")} />
             <Container>
-              <BaseText isBold>Vasilii Krasikov</BaseText>
-              <BaseText color="gray" mt={16}>
-                vasua14735@icloud.com
+              <BaseText isBold fz={18}>
+                Vasilii Krasikov
               </BaseText>
+              <BaseText color="gray">vasua14735@icloud.com</BaseText>
             </Container>
           </Container>
 
           <Container mt={44} isRow isCentered>
-            <BaseText isBold>Hightlights per day</BaseText>
+            <BaseText isBold fz={18}>
+              Hightlights per day
+            </BaseText>
             <Container isRow isCentered hasNoMargin>
               <BaseImage
                 w={24}
@@ -69,7 +69,9 @@ export const SettingsModal: React.FC<Props> = observer(
                 mr={16}
                 source={require("../assets/chevronLeft.png")}
               />
-              <BaseText isBold>3</BaseText>
+              <BaseText isBold fz={18}>
+                3
+              </BaseText>
               <BaseImage
                 w={24}
                 h={24}
@@ -79,28 +81,34 @@ export const SettingsModal: React.FC<Props> = observer(
             </Container>
           </Container>
 
-          <Container mt={16}>
+          <Container mt={8}>
             <BaseText color="gray">
               Configure how much highlights you want to see on a daily basis
             </BaseText>
           </Container>
 
           <Container mt={32} isRow isCentered>
-            <BaseText isBold>Language</BaseText>
-            <BaseText isBold>En</BaseText>
+            <BaseText isBold fz={18}>
+              Language
+            </BaseText>
+            <BaseText isBold fz={18}>
+              En
+            </BaseText>
           </Container>
 
-          <Container mt={16}>
+          <Container mt={8}>
             <BaseText color="gray">
               Configure the language you want to see in the application
             </BaseText>
           </Container>
 
           <Container mt={32}>
-            <BaseText isBold>Restart manual</BaseText>
+            <BaseText isBold fz={18}>
+              Restart manual
+            </BaseText>
           </Container>
 
-          <Container mt={16}>
+          <Container mt={8}>
             <BaseText color="gray">
               Click this button if you want to see thr tutorial all over again
               in case you miss something
@@ -108,11 +116,15 @@ export const SettingsModal: React.FC<Props> = observer(
           </Container>
 
           <Container mt={44}>
-            <BaseText isBold>Show terms and conditions</BaseText>
+            <BaseText isBold fz={18}>
+              Show terms and conditions
+            </BaseText>
           </Container>
 
           <Container mt={24}>
-            <BaseText isBold>Show privacy policy</BaseText>
+            <BaseText isBold fz={18}>
+              Show privacy policy
+            </BaseText>
           </Container>
 
           <Container mt={64} isCentered>

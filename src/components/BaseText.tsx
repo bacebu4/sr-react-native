@@ -61,7 +61,7 @@ export const BaseText: React.FC<Props> = (props) => {
     marginBottom: mb,
     marginLeft: ml,
     marginRight: mr,
-    fontSize: fz,
+    fontSize: fz ?? 16,
     fontWeight: isBold ? "600" : undefined,
     fontFamily: isSerif ? "Cochin" : undefined,
     color: colorSwitch(color),
