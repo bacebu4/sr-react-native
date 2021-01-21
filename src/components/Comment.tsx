@@ -12,6 +12,7 @@ import { EditTextModal } from "./EditTextModal";
 import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
 import { BaseImage } from "./BaseImage";
+import { BLACK_COLOR } from "../utils/colors";
 
 interface Props {
   comment: Maybe<CommentType>;
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
   noteText: {
     textAlign: "justify",
     fontSize: 17,
-    color: "#343434",
+    color: BLACK_COLOR,
     fontFamily: "Cochin",
   },
   note: {

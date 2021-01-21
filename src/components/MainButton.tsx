@@ -7,6 +7,7 @@ import {
   GestureResponderEvent,
   ViewStyle,
 } from "react-native";
+import { BLACK_COLOR } from "../utils/colors";
 
 interface Props {
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
@@ -29,7 +30,7 @@ export const MainButton: React.FC<Props> = ({
       style={{
         ...styles.wrapper,
         ...style,
-        backgroundColor: isDark ? "#343434" : "#FE9CA4",
+        backgroundColor: isDark ? BLACK_COLOR : "#FE9CA4",
       }}
     >
       {!isLoading ? (

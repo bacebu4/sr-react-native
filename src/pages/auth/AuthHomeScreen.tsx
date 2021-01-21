@@ -9,6 +9,7 @@ import { MainLink } from "../../components/MainLink";
 import { TText } from "../../components/TText";
 import { useTranslation } from "react-i18next";
 import { BaseImage } from "../../components/BaseImage";
+import { BLACK_COLOR } from "../../utils/colors";
 
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "AuthHome">;
@@ -46,6 +47,6 @@ const styles = StyleSheet.create({
     fontSize: 45,
     fontFamily: "Cochin-Bold",
     textAlign: "center",
-    color: "#343434",
+    color: BLACK_COLOR,
   },
 });

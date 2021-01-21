@@ -9,6 +9,7 @@ import { useDeleteNoteMutation } from "../generated/graphql";
 import { useUpdateNoteMutation } from "../generated/graphql";
 import { useTranslation } from "react-i18next";
 import { BaseImage } from "./BaseImage";
+import { BLACK_COLOR } from "../utils/colors";
 
 declare module "react-native-actionsheet" {
   interface Props {
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    color: "#343434",
+    color: BLACK_COLOR,
     fontWeight: "bold",
     fontFamily: "Cochin",
     lineHeight: 22,
@@ -199,7 +200,7 @@ const styles = StyleSheet.create({
   noteText: {
     textAlign: "justify",
     fontSize: 17,
-    color: "#343434",
+    color: BLACK_COLOR,
     fontFamily: "Cochin",
   },
   menu: {

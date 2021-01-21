@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { BLACK_COLOR } from "../utils/colors";
 
 interface Props {
   numberOfLines?: number | undefined;
@@ -41,6 +42,6 @@ export const Title: React.FC<Props> = ({
 const styles = StyleSheet.create({
   text: {
     fontFamily: "Cochin-Bold",
-    color: "#343434",
+    color: BLACK_COLOR,
   },
 });

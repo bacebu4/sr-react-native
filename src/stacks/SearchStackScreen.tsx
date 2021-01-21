@@ -2,7 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { SearchScreen } from "../pages/SearchScreen";
 import { HighlightScreen } from "../pages/HighlightScreen";
-import { PURPLE_COLOR } from "../utils/colors";
+import { PURPLE_COLOR, BLACK_COLOR } from "../utils/colors";
 
 export type SearchStackParamList = {
   Highlight: { name: string; noteId: string };
@@ -29,7 +29,7 @@ export const SearchStackScreen = () => {
           headerTitle: route.params.name,
           headerTintColor: PURPLE_COLOR,
           headerTitleStyle: {
-            color: "#343434",
+            color: BLACK_COLOR,
           },
         })}
       />

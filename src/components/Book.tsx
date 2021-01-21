@@ -3,6 +3,7 @@ import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Book as BookType } from "src/generated/graphql";
 import { BaseImage } from "./BaseImage";
+import { BLACK_COLOR } from "../utils/colors";
 
 interface Props {
   book: BookType;
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     fontSize: 16,
     fontFamily: "Cochin",
-    color: "#343434",
+    color: BLACK_COLOR,
   },
   author: {
     fontSize: 16,

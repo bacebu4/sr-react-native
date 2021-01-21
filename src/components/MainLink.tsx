@@ -1,10 +1,6 @@
 import React from "react";
-import {
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  GestureResponderEvent,
-} from "react-native";
+import { BaseText } from "./BaseText";
+import { GestureResponderEvent } from "react-native";
 
 interface Props {
   onPress?: (event: GestureResponderEvent) => void;
@@ -16,19 +12,8 @@ export const MainLink: React.FC<Props> = ({
   title = "Default title",
 }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.wrapper}>
-      <Text style={styles.title}>{title}</Text>
-    </TouchableOpacity>
+    <BaseText isSerif isBold fz={14} onPress={onPress}>
+      {title}
+    </BaseText>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    color: "#343434",
-    fontFamily: "Cochin-Bold",
-  },
-});

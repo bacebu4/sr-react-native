@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Text,
-  ActivityIndicator,
-  TouchableOpacity,
-  FlatList,
-  StyleSheet,
-} from "react-native";
+import { ActivityIndicator, TouchableOpacity, FlatList } from "react-native";
 import { Container } from "../components/grid/Container";
 import { MainContainer } from "../components/grid/MainContainer";
 import Constants from "expo-constants";
@@ -17,6 +11,8 @@ import { SearchStackParamList } from "src/stacks/SearchStackScreen";
 import { useSearchNotesMutation } from "../generated/graphql";
 import { Card } from "../components/CardNew";
 import { BaseImage } from "../components/BaseImage";
+import { BLACK_COLOR } from "../utils/colors";
+import { BaseText } from "../components/BaseText";
 
 type Props = {
   navigation: StackNavigationProp<SearchStackParamList, "Search">;
@@ -60,7 +56,7 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
           backgroundColor: "#eee",
         }}
         cancelButtonProps={{
-          color: "#343434",
+          color: BLACK_COLOR,
           buttonStyle: {
             marginLeft: 4,
           },
@@ -129,9 +125,19 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
       <MainContainer>
         {Header}
         <Container isRow>
-          <Text style={styles.textGrayCapital}>RECENT</Text>
+          <BaseText
+            color="gray"
+            fz={12}
+            mt={16}
+            isBold
+            style={{ letterSpacing: 0.5 }}
+          >
+            RECENT
+          </BaseText>
           <TouchableOpacity onPress={() => setHistory([])}>
-            <Text style={styles.textBlackCapital}>CLEAR</Text>
+            <BaseText fz={12} mt={16} isBold style={{ letterSpacing: 0.5 }}>
+              CLEAR
+            </BaseText>
           </TouchableOpacity>
         </Container>
         {history.map((h) => {
@@ -149,20 +155,3 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
 
   return <MainContainer>{Header}</MainContainer>;
 };
-
-const styles = StyleSheet.create({
-  textGrayCapital: {
-    color: "#B0AFAF",
-    fontSize: 12,
-    marginTop: 16,
-    fontWeight: "700",
-    letterSpacing: 0.5,
-  },
-  textBlackCapital: {
-    color: "#343434",
-    fontSize: 12,
-    marginTop: 16,
-    fontWeight: "700",
-    letterSpacing: 0.5,
-  },
-});

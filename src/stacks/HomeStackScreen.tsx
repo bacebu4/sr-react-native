@@ -9,7 +9,7 @@ import { MoreButton } from "../components/MoreButton";
 import { AllBooksScreen } from "../pages/AllBooks";
 import { AllTagsScreen } from "../pages/AllTags";
 import { useTranslation } from "react-i18next";
-import { PURPLE_COLOR } from "../utils/colors";
+import { PURPLE_COLOR, BLACK_COLOR } from "../utils/colors";
 
 export type HomeStackParamList = {
   Home: undefined;
@@ -51,7 +51,7 @@ export const HomeStackScreen = () => {
           headerTitle: t("All books"),
           headerTintColor: PURPLE_COLOR,
           headerTitleStyle: {
-            color: "#343434",
+            color: BLACK_COLOR,
           },
         }}
       />
@@ -63,7 +63,7 @@ export const HomeStackScreen = () => {
           headerTitle: t("All tags"),
           headerTintColor: PURPLE_COLOR,
           headerTitleStyle: {
-            color: "#343434",
+            color: BLACK_COLOR,
           },
         }}
       />
@@ -75,7 +75,7 @@ export const HomeStackScreen = () => {
           headerTitle: route.params.name,
           headerTintColor: PURPLE_COLOR,
           headerTitleStyle: {
-            color: "#343434",
+            color: BLACK_COLOR,
           },
           headerRight: () => <MoreButton route={route}></MoreButton>,
         })}
@@ -88,7 +88,7 @@ export const HomeStackScreen = () => {
           headerTitle: route.params.name,
           headerTintColor: PURPLE_COLOR,
           headerTitleStyle: {
-            color: "#343434",
+            color: BLACK_COLOR,
           },
         })}
       />

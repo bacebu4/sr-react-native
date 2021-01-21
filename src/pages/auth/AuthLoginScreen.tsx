@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef } from "react";
-import { StyleSheet, Text, TextInput } from "react-native";
+import { TextInput } from "react-native";
 import { NavbarTop } from "../../components/NavbarTop";
 import { observer } from "mobx-react-lite";
 import { Container } from "../../components/grid/Container";
@@ -11,6 +11,7 @@ import { AuthStackParamList } from "src/stacks/AuthStackScreen";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { UiStoreContext } from "../../utils/UiStore";
 import { useLoginMutation } from "../../generated/graphql";
+import { BaseText } from "../../components/BaseText";
 
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "AuthLogin">;
@@ -44,7 +45,9 @@ export const AuthLoginScreen: React.FC<Props> = observer(({ navigation }) => {
     <MainContainer>
       <NavbarTop title="Log In" handleClick={() => navigation.goBack()} />
       <Container>
-        <Text style={styles.heading}>Email</Text>
+        <BaseText fz={20} isBold mt={22}>
+          Email
+        </BaseText>
 
         <BaseInput
           mt={8}
@@ -54,7 +57,9 @@ export const AuthLoginScreen: React.FC<Props> = observer(({ navigation }) => {
           keyboardType="email-address"
           onSubmitEditing={() => passwordInput?.current?.focus()}
         />
-        <Text style={styles.heading}>Password</Text>
+        <BaseText fz={20} isBold mt={22}>
+          Password
+        </BaseText>
         <BaseInput
           mt={8}
           refProp={passwordInput}
@@ -74,13 +79,4 @@ export const AuthLoginScreen: React.FC<Props> = observer(({ navigation }) => {
       </Container>
     </MainContainer>
   );
-});
-
-const styles = StyleSheet.create({
-  heading: {
-    fontSize: 20,
-    color: "#343434",
-    fontWeight: "700",
-    marginTop: 22,
-  },
 });

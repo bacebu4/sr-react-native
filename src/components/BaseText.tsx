@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { PURPLE_COLOR } from "../utils/colors";
+import { BLACK_COLOR, PURPLE_COLOR } from "../utils/colors";
 import {
   Text,
   TextProps,
@@ -24,7 +24,7 @@ const colorSwitch = (color: colorVariants) => {
       return "#ffffff";
 
     default:
-      return "#343434";
+      return BLACK_COLOR;
   }
 };
 
