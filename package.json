@@ -9,14 +9,12 @@
     "gen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
-    "@apollo/client": "^3.3.5",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.10.0",
     "@react-navigation/native": "^5.8.0",
     "@react-navigation/stack": "^5.10.0",
     "@urql/exchange-graphcache": "^3.3.3",
     "date-fns": "^2.16.1",
-    "dateformat": "^3.0.3",
     "expo": "~39.0.2",
     "expo-haptics": "~8.3.0",
     "expo-secure-store": "~9.2.0",
@@ -47,8 +45,7 @@
     "react-native-web": "~0.13.12",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "tsconfig.json": "^1.0.7",
-    "urql": "^1.11.4",
-    "uuid": "^8.3.1"
+    "urql": "^1.11.4"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
