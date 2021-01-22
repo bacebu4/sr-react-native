@@ -5,7 +5,6 @@ import { MainContainer } from "../components/grid/MainContainer";
 import Constants from "expo-constants";
 import { Title } from "../components/Title";
 import { SearchBar } from "react-native-elements";
-import { TextGray } from "../components/TextGray";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { SearchStackParamList } from "src/stacks/SearchStackScreen";
 import { useSearchNotesMutation } from "../generated/graphql";
@@ -114,7 +113,9 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
             h={213}
             source={require("../assets/empty_search.png")}
           />
-          <TextGray mt={32}>Nothing found</TextGray>
+          <BaseText color="gray" fz={14} mt={32}>
+            Nothing found
+          </BaseText>
         </Container>
       </MainContainer>
     );

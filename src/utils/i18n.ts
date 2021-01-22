@@ -58,6 +58,8 @@ i18n.use(initReactI18next).init({
         "You've been on the track for": "Вы на верном пути",
         day: "день",
         days: "дней",
+        "No tags created yet": "Вы пока не создали ни одного тега",
+        "Nothing found": "Ничего не найдено",
       },
     },
   },

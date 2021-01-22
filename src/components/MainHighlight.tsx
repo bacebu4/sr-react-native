@@ -1,12 +1,12 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
 import { Container } from "./grid/Container";
-import { TextGray } from "./TextGray";
 import { useNavigation } from "@react-navigation/native";
 import { Card } from "./CardNew";
 import { MainButton } from "./MainButton";
 import { useNoteQuery } from "../generated/graphql";
 import { BaseImage } from "./BaseImage";
+import { BaseText } from "./BaseText";
 
 interface Props {
   noteId: string;
@@ -34,7 +34,9 @@ export const MainHighlight: React.FC<Props> = ({ noteId }) => {
           source={require("../assets/empty_main.png")}
         />
 
-        <TextGray mt={32}>No highlights added yet</TextGray>
+        <BaseText color="gray" fz={14} mt={32}>
+          No highlights added yet
+        </BaseText>
 
         <Container mt={32}>
           <MainButton title="Learn how to add" />

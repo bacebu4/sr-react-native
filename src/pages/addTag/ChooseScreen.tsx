@@ -4,10 +4,10 @@ import { Container } from "../../components/grid/Container";
 import { TagContainer } from "../../components/grid/TagContainer";
 import { NavbarTop } from "../../components/NavbarTop";
 import { TagConstructor } from "./TagConstructor";
-import { TextGray } from "../../components/TextGray";
 import { Tag } from "../../components/Tag";
 import { MainContainer } from "../../components/grid/MainContainer";
 import { BaseImage } from "../../components/BaseImage";
+import { BaseText } from "../../components/BaseText";
 import {
   Note,
   useTagsQuery,
@@ -80,6 +80,7 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
     }
   }
 
+  // TODO better returns
   return (
     <MainContainer>
       {showAddSheet ? (
@@ -119,7 +120,9 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
                 h={120}
                 source={require("../../assets/empty_tags.png")}
               />
-              <TextGray mt={16}>No tags created yet</TextGray>
+              <BaseText color="gray" fz={14} mt={16}>
+                No tags created yet
+              </BaseText>
             </Container>
           )}
         </>

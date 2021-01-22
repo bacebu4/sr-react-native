@@ -2,8 +2,6 @@ import React from "react";
 import { TouchableOpacity, GestureResponderEvent } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
-import { TextGray } from "./TextGray";
-import { TText } from "./TText";
 import { Title } from "./Title";
 import { Container } from "./grid/Container";
 import { useTranslation } from "react-i18next";
@@ -77,10 +75,12 @@ export const NavbarSecondary: React.FC<Props> = ({
         <BaseText ml={16} isBold color="purple">
           Review Process
         </BaseText>
-        <TextGray ml={16}>{index}</TextGray>
-        <TextGray ml={4}>
-          <TText>more left</TText>
-        </TextGray>
+        <BaseText color="gray" fz={14} mt={2} ml={16}>
+          {index}
+        </BaseText>
+        <BaseText color="gray" fz={14} mt={2} ml={4}>
+          more left
+        </BaseText>
       </Container>
       <Container hasBorder mt={16} />
     </>
