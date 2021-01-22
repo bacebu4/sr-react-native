@@ -1,15 +1,14 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { AuthStackParamList } from "src/stacks/AuthStackScreen";
 import { Container } from "../../components/grid/Container";
 import { MainContainer } from "../../components/grid/MainContainer";
 import { MainButton } from "../../components/MainButton";
 import { MainLink } from "../../components/MainLink";
-import { TText } from "../../components/TText";
 import { useTranslation } from "react-i18next";
 import { BaseImage } from "../../components/BaseImage";
-import { BLACK_COLOR } from "../../utils/colors";
+import { BaseText } from "../../components/BaseText";
 
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "AuthHome">;
@@ -22,9 +21,15 @@ export const AuthHomeScreen: React.FC<Props> = ({ navigation }) => {
     <MainContainer isCentered>
       <Container isCentered>
         <BaseImage w={315} h={250} source={require("../../assets/login.png")} />
-        <TText style={{ marginTop: 44, ...styles.text }}>
+        <BaseText
+          mt={44}
+          fz={45}
+          isBold
+          isSerif
+          style={{ textAlign: "center" }}
+        >
           Remember what you read
-        </TText>
+        </BaseText>
         <Container mt={74} style={{ marginHorizontal: 80 }}>
           <MainButton
             title="Sign up free"
@@ -41,12 +46,3 @@ export const AuthHomeScreen: React.FC<Props> = ({ navigation }) => {
     </MainContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 45,
-    fontFamily: "Cochin-Bold",
-    textAlign: "center",
-    color: BLACK_COLOR,
-  },
-});

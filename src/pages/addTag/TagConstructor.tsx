@@ -15,11 +15,11 @@ import {
   useUpdateTagMutation,
   useTagsQuery,
 } from "../../generated/graphql";
-import { TText } from "../../components/TText";
 import { MainContainer } from "../../components/grid/MainContainer";
 import { ColorPicker } from "../../components/ColorPicker";
 import { StrippedInput } from "../../components/StrippedInput";
 import { BaseImage } from "../../components/BaseImage";
+import { BaseText } from "../../components/BaseText";
 const uuid = require("react-native-uuid");
 
 interface Props {
@@ -126,7 +126,9 @@ export const TagConstructor: React.FC<Props> = ({
       <MainContainer>
         {Header}
         <Container isCentered mt={400}>
-          <TText>{error.message}</TText>
+          <BaseText color="gray" fz={14}>
+            {error.message}
+          </BaseText>
         </Container>
       </MainContainer>
     );

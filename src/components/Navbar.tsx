@@ -4,7 +4,6 @@ import ProgressCircle from "react-native-progress-circle";
 import Constants from "expo-constants";
 import { Title } from "./Title";
 import { observer } from "mobx-react-lite";
-import { TText } from "./TText";
 import { Container } from "./grid/Container";
 import { UiStoreContext } from "../utils/UiStore";
 import { useInfoQuery } from "../generated/graphql";
@@ -25,7 +24,9 @@ export const Navbar: React.FC<Props> = observer(({ title, handleClick }) => {
   if (error) {
     return (
       <Container isCentered>
-        <TText>{error.message}</TText>
+        <BaseText color="gray" fz={14}>
+          {error.message}
+        </BaseText>
       </Container>
     );
   }

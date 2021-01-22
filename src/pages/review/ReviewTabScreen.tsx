@@ -18,11 +18,11 @@ import {
   useAddCommentMutation,
   useDeleteTagFromNoteMutation,
 } from "../../generated/graphql";
-import { TText } from "../../components/TText";
 import { Card } from "../../components/CardNew";
 import { Comment } from "../../components/Comment";
 import { BaseImage } from "../../components/BaseImage";
 import { GRAY_COLOR } from "../../utils/colors";
+import { BaseText } from "../../components/BaseText";
 const uuid = require("react-native-uuid");
 
 interface Props {
@@ -101,7 +101,9 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
   if (error) {
     return (
       <Container isCentered mt={400}>
-        <TText>{error.message}</TText>
+        <BaseText color="gray" fz={14}>
+          {error.message}
+        </BaseText>
       </Container>
     );
   }
