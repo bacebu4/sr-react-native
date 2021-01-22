@@ -12,7 +12,7 @@ import { EditTextModal } from "./EditTextModal";
 import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
 import { BaseImage } from "./BaseImage";
-import { BLACK_COLOR } from "../utils/colors";
+import { BLACK_COLOR, GRAY_COLOR } from "../utils/colors";
 
 interface Props {
   comment: Maybe<CommentType>;
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     borderRadius: 20,
     elevation: 10,
-    shadowColor: "#B0AFAF",
+    shadowColor: GRAY_COLOR,
     // @ts-ignore
     shadowOffset: { height: 8 },
     shadowOpacity: 0.25,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   date: {
     fontFamily: "Cochin-Bold",
-    color: "#B0AFAF",
+    color: GRAY_COLOR,
   },
   more: {
     marginLeft: "auto",

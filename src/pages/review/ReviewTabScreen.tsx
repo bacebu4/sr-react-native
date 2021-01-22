@@ -22,6 +22,7 @@ import { TText } from "../../components/TText";
 import { Card } from "../../components/CardNew";
 import { Comment } from "../../components/Comment";
 import { BaseImage } from "../../components/BaseImage";
+import { GRAY_COLOR } from "../../utils/colors";
 const uuid = require("react-native-uuid");
 
 interface Props {
@@ -229,7 +230,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
               /* when no comments and tags show big plus */
               <Container isCentered mt={32}>
                 <BaseImage
-                  style={{ tintColor: "#B0AFAF" }}
+                  tintColor={GRAY_COLOR}
                   w={40}
                   h={40}
                   // @ts-ignore

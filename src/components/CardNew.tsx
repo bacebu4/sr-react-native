@@ -9,7 +9,7 @@ import { useDeleteNoteMutation } from "../generated/graphql";
 import { useUpdateNoteMutation } from "../generated/graphql";
 import { useTranslation } from "react-i18next";
 import { BaseImage } from "./BaseImage";
-import { BLACK_COLOR } from "../utils/colors";
+import { BLACK_COLOR, GRAY_COLOR } from "../utils/colors";
 
 declare module "react-native-actionsheet" {
   interface Props {
@@ -85,7 +85,6 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
       noteId: note!.id,
       text: text!,
     });
-    // note!.text = text!;
   };
 
   return (
@@ -166,7 +165,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     borderRadius: 20,
     elevation: 10,
-    shadowColor: "#B0AFAF",
+    shadowColor: GRAY_COLOR,
     //@ts-ignore
     shadowOffset: { height: 8 },
     shadowOpacity: 0.25,
@@ -194,7 +193,7 @@ const styles = StyleSheet.create({
   author: {
     fontSize: 18,
     fontFamily: "Cochin",
-    color: "#B0AFAF",
+    color: GRAY_COLOR,
     marginTop: 0,
   },
   noteText: {
