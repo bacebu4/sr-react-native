@@ -57,7 +57,7 @@ export type Info = {
   streak: Scalars['Int'];
   missed: Scalars['Int'];
   reviewed: Scalars['Boolean'];
-  userId: Scalars['ID'];
+  id: Scalars['ID'];
 };
 
 export type Query = {
@@ -421,7 +421,7 @@ export type InfoQuery = (
   { __typename?: 'Query' }
   & { info?: Maybe<(
     { __typename?: 'Info' }
-    & Pick<Info, 'reviewAmount' | 'latestReviewDate' | 'streakBeginningDate' | 'missed' | 'reviewed' | 'streak' | 'userId'>
+    & Pick<Info, 'reviewAmount' | 'latestReviewDate' | 'streakBeginningDate' | 'missed' | 'reviewed' | 'streak' | 'id'>
   )> }
 );
 
@@ -724,7 +724,7 @@ export const InfoDocument = gql`
     missed
     reviewed
     streak
-    userId
+    id
   }
 }
     `;

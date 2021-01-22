@@ -6,6 +6,6 @@ query Info {
     missed
     reviewed
     streak
-    userId
+    id
   }
 }

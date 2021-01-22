@@ -10,6 +10,8 @@ i18n.use(initReactI18next).init({
         "Start review": "Start review process",
         "Account preferences": "Account Preferences",
         Congrats: "Congratulations!",
+        "Configure how much highlights you want to see on a daily basis":
+          "Configure how much highlights you want to see on a daily basis. The changes will be applied the next day.",
       },
     },
     ru: {
@@ -43,13 +45,13 @@ i18n.use(initReactI18next).init({
         "All tags": "Все теги",
         "Hightlights per day": "Заметок в день",
         "Configure how much highlights you want to see on a daily basis":
-          "Настройте сколько заметок в день вы хотите видеть",
+          "Настройте сколько заметок в день вы хотите видеть. Изменения вступят в силу на следующий день.",
         Language: "Язык",
         "Configure the language you want to see in the application":
           "Настройте какой язык вы хотите видеть в приложении",
         "Restart tutorial": "Перезапустить обучение",
         "Click this button if you want to see the tutorial all over again in case you miss something":
-          "Нажмите на ссылку выше если вы хотите перепройти обучение заново",
+          "Нажмите на ссылку выше если вы хотите перепройти обучение",
         "Show terms and conditions": "Условия использования",
         "Show privacy policy": "Политика конфиденциальности",
         "Sign Out": "Выйти",
