@@ -4,7 +4,15 @@ import { Container } from "./grid/Container";
 import { useNavigation } from "@react-navigation/native";
 import { Title } from "./Title";
 import { useTranslation } from "react-i18next";
-import { useLatestTagsQuery, useDeleteTagMutation } from "../generated/graphql";
+import {
+  useLatestTagsQuery,
+  useDeleteTagMutation,
+  useTagsQuery,
+  LatestTagsQuery,
+  TagsQuery,
+  Maybe,
+  Tag as TagType,
+} from "../generated/graphql";
 import { TagContainer } from "./grid/TagContainer";
 import { Tag } from "./Tag";
 import * as Haptics from "expo-haptics";
@@ -16,10 +24,32 @@ import { TagConstructor } from "../pages/addTag/TagConstructor";
 import { useConfirm } from "../hooks/confirm.hook";
 import { SeeAll } from "./SeeAll";
 
-export const LatestTags: React.FC = observer(() => {
+interface Props {
+  type?: "latest";
+}
+
+export const Tags: React.FC<Props> = observer(({ type }) => {
   const actionTagRef = useRef(null);
-  const [result] = useLatestTagsQuery();
-  const { data, fetching, error } = result;
+  const [result] = type === "latest" ? useLatestTagsQuery() : useTagsQuery();
+  let { data, fetching, error } = result;
+
+  let finalData:
+    | Maybe<
+        {
+          __typename?: "Tag" | undefined;
+        } & Pick<TagType, "id" | "name" | "hue">
+      >[]
+    | null
+    | undefined;
+
+  if (type === "latest") {
+    let tempData = data as LatestTagsQuery;
+    finalData = tempData?.latestTags;
+  } else {
+    let tempData = data as TagsQuery;
+    finalData = tempData?.tags;
+  }
+
   const navigation = useNavigation();
   const { t } = useTranslation();
   const [tagId, setTagId] = useState<string | null>(null);
@@ -68,7 +98,7 @@ export const LatestTags: React.FC = observer(() => {
     );
   }
 
-  if (!data?.latestTags?.length) {
+  if (!finalData?.length) {
     return <View />;
   }
 
@@ -88,7 +118,7 @@ export const LatestTags: React.FC = observer(() => {
         <Title title={t("View by tags")}></Title>
 
         <TagContainer>
-          {data?.latestTags?.map((tag) => (
+          {finalData?.map((tag) => (
             <Tag
               hue={tag?.hue}
               key={tag?.id}

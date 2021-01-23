@@ -11,7 +11,7 @@ import { Container } from "../components/grid/Container";
 import { SettingsModal } from "../components/SettingsModal";
 import { MainHighlight } from "../components/MainHighlight";
 import { LatestBooks } from "../components/LatestBooks";
-import { LatestTags } from "../components/LatestTags";
+import { Tags } from "../components/Tags";
 import { useDailyNotesIdsQuery } from "../generated/graphql";
 
 export const HomeScreen = () => {
@@ -70,7 +70,7 @@ export const HomeScreen = () => {
 
           <LatestBooks />
 
-          <LatestTags />
+          <Tags type="latest" />
         </ScrollView>
       </MainContainer>
     </>
