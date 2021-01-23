@@ -2,8 +2,6 @@ import React, { useContext, useRef, useState } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
 import { Container } from "./grid/Container";
 import { useNavigation } from "@react-navigation/native";
-import { Title } from "./Title";
-import { useTranslation } from "react-i18next";
 import {
   useLatestTagsQuery,
   useDeleteTagMutation,
@@ -22,7 +20,7 @@ import { UiStoreContext } from "../utils/UiStore";
 import { TagModal } from "./TagModal";
 import { TagConstructor } from "../pages/addTag/TagConstructor";
 import { useConfirm } from "../hooks/confirm.hook";
-import { SeeAll } from "./SeeAll";
+import { FlatList } from "react-native-gesture-handler";
 
 interface Props {
   type?: "latest";
@@ -51,7 +49,6 @@ export const Tags: React.FC<Props> = observer(({ type }) => {
   }
 
   const navigation = useNavigation();
-  const { t } = useTranslation();
   const [tagId, setTagId] = useState<string | null>(null);
   const UiStore = useContext(UiStoreContext);
   const [modalEditTagVisible, setModalEditTagVisible] = useState(false);
@@ -98,6 +95,7 @@ export const Tags: React.FC<Props> = observer(({ type }) => {
     );
   }
 
+  // state when no tags at all, user should not be here
   if (!finalData?.length) {
     return <View />;
   }
@@ -111,35 +109,52 @@ export const Tags: React.FC<Props> = observer(({ type }) => {
         <TagConstructor
           handleBack={() => setModalEditTagVisible(false)}
           editMode
-        ></TagConstructor>
+        />
       </TagModal>
 
-      <Container mt={44}>
-        <Title title={t("View by tags")}></Title>
-
+      {type === "latest" ? (
         <TagContainer>
-          {finalData?.map((tag) => (
+          {finalData?.map((item) => (
             <Tag
-              hue={tag?.hue}
-              key={tag?.id}
-              title={tag?.name}
+              hue={item?.hue}
+              key={item?.id}
+              title={item?.name}
               style={{ marginRight: 16, marginTop: 16 }}
-              onLongPress={() => handleLongAddPress(tag!.id)}
+              onLongPress={() => handleLongAddPress(item!.id)}
               onPress={() =>
                 navigation.navigate("By", {
-                  id: tag?.id,
-                  name: tag?.name,
+                  id: item?.id,
+                  name: item?.name,
                   type: "Tag",
                 })
               }
             />
           ))}
         </TagContainer>
-      </Container>
-      <Container mt={16} hasBorder />
-      <Container mt={16} mb={96}>
-        <SeeAll onPress={() => navigation.navigate("AllTags")} />
-      </Container>
+      ) : (
+        <TagContainer>
+          <FlatList
+            data={finalData}
+            keyExtractor={(item) => item!.id}
+            renderItem={({ item }) => (
+              <Tag
+                hue={item?.hue}
+                key={item?.id}
+                title={item?.name}
+                style={{ marginRight: 16, marginTop: 16 }}
+                onLongPress={() => handleLongAddPress(item!.id)}
+                onPress={() =>
+                  navigation.navigate("By", {
+                    id: item?.id,
+                    name: item?.name,
+                    type: "Tag",
+                  })
+                }
+              />
+            )}
+          />
+        </TagContainer>
+      )}
 
       <ActionSheet
         ref={actionTagRef}

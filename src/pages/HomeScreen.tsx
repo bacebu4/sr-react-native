@@ -11,8 +11,8 @@ import { Container } from "../components/grid/Container";
 import { SettingsModal } from "../components/SettingsModal";
 import { MainHighlight } from "../components/MainHighlight";
 import { LatestBooks } from "../components/LatestBooks";
-import { Tags } from "../components/Tags";
 import { useDailyNotesIdsQuery } from "../generated/graphql";
+import { LatestTags } from "../components/LatestTags";
 
 export const HomeScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -70,7 +70,7 @@ export const HomeScreen = () => {
 
           <LatestBooks />
 
-          <Tags type="latest" />
+          <LatestTags />
         </ScrollView>
       </MainContainer>
     </>
