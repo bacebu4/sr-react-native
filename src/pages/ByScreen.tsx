@@ -64,7 +64,6 @@ export const ByScreen: React.FC<Props> = ({ route, navigation }) => {
                   title: item!.title,
                   id: item!.id,
                   text: item!.text,
-                  comments: [],
                 }}
                 dense={type === "Book"}
               />
