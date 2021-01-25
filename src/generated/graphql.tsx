@@ -69,7 +69,6 @@ export type Query = {
   books?: Maybe<Array<Maybe<Book>>>;
   latestBooks?: Maybe<Array<Maybe<Book>>>;
   tags?: Maybe<Array<Maybe<Tag>>>;
-  latestTags?: Maybe<Array<Maybe<Tag>>>;
 };
 
 
@@ -81,6 +80,11 @@ export type QueryNotesByArgs = {
 
 export type QueryNoteArgs = {
   id?: Maybe<Scalars['ID']>;
+};
+
+
+export type QueryTagsArgs = {
+  type?: Maybe<Scalars['String']>;
 };
 
 export type UpdatedNote = {
@@ -436,17 +440,6 @@ export type LatestBooksQuery = (
   )>>> }
 );
 
-export type LatestTagsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type LatestTagsQuery = (
-  { __typename?: 'Query' }
-  & { latestTags?: Maybe<Array<Maybe<(
-    { __typename?: 'Tag' }
-    & Pick<Tag, 'id' | 'name' | 'hue'>
-  )>>> }
-);
-
 export type NoteQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -507,7 +500,9 @@ export type NotesByTagQuery = (
   )>>> }
 );
 
-export type TagsQueryVariables = Exact<{ [key: string]: never; }>;
+export type TagsQueryVariables = Exact<{
+  type?: Maybe<Scalars['String']>;
+}>;
 
 
 export type TagsQuery = (
@@ -745,19 +740,6 @@ export const LatestBooksDocument = gql`
 export function useLatestBooksQuery(options: Omit<Urql.UseQueryArgs<LatestBooksQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<LatestBooksQuery>({ query: LatestBooksDocument, ...options });
 };
-export const LatestTagsDocument = gql`
-    query LatestTags {
-  latestTags {
-    id
-    name
-    hue
-  }
-}
-    `;
-
-export function useLatestTagsQuery(options: Omit<Urql.UseQueryArgs<LatestTagsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<LatestTagsQuery>({ query: LatestTagsDocument, ...options });
-};
 export const NoteDocument = gql`
     query Note($id: ID!) {
   note(id: $id) {
@@ -825,8 +807,8 @@ export function useNotesByTagQuery(options: Omit<Urql.UseQueryArgs<NotesByTagQue
   return Urql.useQuery<NotesByTagQuery>({ query: NotesByTagDocument, ...options });
 };
 export const TagsDocument = gql`
-    query Tags {
-  tags {
+    query Tags($type: String) {
+  tags(type: $type) {
     id
     name
     hue

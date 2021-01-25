@@ -4,14 +4,14 @@ import { Container } from "./grid/Container";
 import { useNavigation } from "@react-navigation/native";
 import { Title } from "./Title";
 import { useTranslation } from "react-i18next";
-import { useLatestTagsQuery } from "../generated/graphql";
+import { useTagsQuery } from "../generated/graphql";
 import { TagModal } from "./TagModal";
 import { TagConstructor } from "../pages/addTag/TagConstructor";
 import { SeeAll } from "./SeeAll";
 import { Tags } from "./Tags";
 
 export const LatestTags: React.FC = () => {
-  const [result] = useLatestTagsQuery();
+  const [result] = useTagsQuery({ variables: { type: "latest" } });
   const { data, fetching, error } = result;
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ export const LatestTags: React.FC = () => {
     );
   }
 
-  if (!data?.latestTags?.length) {
+  if (!data?.tags?.length) {
     return <View />;
   }
 
@@ -49,13 +49,12 @@ export const LatestTags: React.FC = () => {
         />
       </TagModal>
 
-      <Container mt={44}>
+      <Container mt={44} hasBorder pb={16}>
         <Title title={t("View by tags")} />
 
         <Tags type="latest" />
       </Container>
 
-      <Container mt={16} hasBorder />
       <Container mt={16} mb={96}>
         <SeeAll onPress={() => navigation.navigate("AllTags")} />
       </Container>

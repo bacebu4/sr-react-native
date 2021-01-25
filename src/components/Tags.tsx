@@ -2,15 +2,7 @@ import React, { useContext, useRef, useState } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
 import { Container } from "./grid/Container";
 import { useNavigation } from "@react-navigation/native";
-import {
-  useLatestTagsQuery,
-  useDeleteTagMutation,
-  useTagsQuery,
-  LatestTagsQuery,
-  TagsQuery,
-  Maybe,
-  Tag as TagType,
-} from "../generated/graphql";
+import { useDeleteTagMutation, useTagsQuery } from "../generated/graphql";
 import { TagContainer } from "./grid/TagContainer";
 import { Tag } from "./Tag";
 import * as Haptics from "expo-haptics";
@@ -28,25 +20,8 @@ interface Props {
 
 export const Tags: React.FC<Props> = observer(({ type }) => {
   const actionTagRef = useRef(null);
-  const [result] = type === "latest" ? useLatestTagsQuery() : useTagsQuery();
+  const [result] = useTagsQuery({ variables: { type } });
   let { data, fetching, error } = result;
-
-  let finalData:
-    | Maybe<
-        {
-          __typename?: "Tag" | undefined;
-        } & Pick<TagType, "id" | "name" | "hue">
-      >[]
-    | null
-    | undefined;
-
-  if (type === "latest") {
-    let tempData = data as LatestTagsQuery;
-    finalData = tempData?.latestTags;
-  } else {
-    let tempData = data as TagsQuery;
-    finalData = tempData?.tags;
-  }
 
   const navigation = useNavigation();
   const [tagId, setTagId] = useState<string | null>(null);
@@ -96,7 +71,7 @@ export const Tags: React.FC<Props> = observer(({ type }) => {
   }
 
   // state when no tags at all, user should not be here
-  if (!finalData?.length) {
+  if (!data?.tags?.length) {
     return <View />;
   }
 
@@ -114,7 +89,7 @@ export const Tags: React.FC<Props> = observer(({ type }) => {
 
       {type === "latest" ? (
         <TagContainer>
-          {finalData?.map((item) => (
+          {data?.tags?.map((item) => (
             <Tag
               hue={item?.hue}
               key={item?.id}
@@ -134,7 +109,7 @@ export const Tags: React.FC<Props> = observer(({ type }) => {
       ) : (
         <TagContainer>
           <FlatList
-            data={finalData}
+            data={data?.tags}
             keyExtractor={(item) => item!.id}
             renderItem={({ item }) => (
               <Tag

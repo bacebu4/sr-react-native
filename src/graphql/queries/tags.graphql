@@ -1,5 +1,5 @@
-query Tags {
-  tags {
+query Tags($type: String) {
+  tags(type: $type) {
     id
     name
     hue
