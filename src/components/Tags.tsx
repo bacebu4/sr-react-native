@@ -108,35 +108,31 @@ export const Tags: React.FC<Props> = observer(({ type }) => {
           ))}
         </TagContainer>
       ) : (
-        <TagContainer>
-          <FlatList
-            data={data?.tags}
-            columnWrapperStyle={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-            }}
-            numColumns={10}
-            keyExtractor={(item) => item!.id}
-            renderItem={({ item }) => (
-              <>
-                <Tag
-                  hue={item?.hue}
-                  key={item?.id}
-                  title={item?.name}
-                  style={{ marginRight: 16, marginTop: 16 }}
-                  onLongPress={() => handleLongAddPress(item!.id)}
-                  onPress={() =>
-                    navigation.navigate("By", {
-                      id: item?.id,
-                      name: item?.name,
-                      type: "Tag",
-                    })
-                  }
-                />
-              </>
-            )}
-          />
-        </TagContainer>
+        <FlatList
+          data={data?.tags}
+          columnWrapperStyle={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+          }}
+          numColumns={10}
+          keyExtractor={(item) => item!.id}
+          renderItem={({ item }) => (
+            <Tag
+              hue={item?.hue}
+              key={item?.id}
+              title={item?.name}
+              style={{ marginRight: 16, marginTop: 16 }}
+              onLongPress={() => handleLongAddPress(item!.id)}
+              onPress={() =>
+                navigation.navigate("By", {
+                  id: item?.id,
+                  name: item?.name,
+                  type: "Tag",
+                })
+              }
+            />
+          )}
+        />
       )}
 
       <ActionSheet

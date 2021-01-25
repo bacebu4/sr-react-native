@@ -41,6 +41,8 @@ export default observer(function App() {
           tabBarOptions={{
             activeTintColor: PURPLE_COLOR,
             inactiveTintColor: GRAY_COLOR,
+            activeBackgroundColor: "#ffffff",
+            inactiveBackgroundColor: "#ffffff",
           }}
         >
           {UiStore.isLoading ? (
