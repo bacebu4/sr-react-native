@@ -29,7 +29,7 @@ export const AllBooksScreen: React.FC = () => {
     );
   }
 
-  if (!data?.books) {
+  if (!data?.books?.length) {
     return (
       <MainContainer>
         <Container isCentered mt={400}>
