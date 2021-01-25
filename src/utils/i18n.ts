@@ -60,6 +60,10 @@ i18n.use(initReactI18next).init({
         days: "дней",
         "No tags created yet": "Вы пока не создали ни одного тега",
         "Nothing found": "Ничего не найдено",
+        "Choose the action": "Выберите действие",
+        "Delete the tag globally?": "Удалить тег везде?",
+        "Are you sure you want to delete the tag?":
+          "Вы уверены что хотите удалить этот тег?",
       },
     },
   },

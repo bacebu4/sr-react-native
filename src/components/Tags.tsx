@@ -13,6 +13,7 @@ import { TagModal } from "./TagModal";
 import { TagConstructor } from "../pages/addTag/TagConstructor";
 import { useConfirm } from "../hooks/confirm.hook";
 import { FlatList } from "react-native-gesture-handler";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   type?: "latest";
@@ -21,8 +22,8 @@ interface Props {
 export const Tags: React.FC<Props> = observer(({ type }) => {
   const actionTagRef = useRef(null);
   const [result] = useTagsQuery({ variables: { type } });
-  let { data, fetching, error } = result;
-
+  const { data, fetching, error } = result;
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const [tagId, setTagId] = useState<string | null>(null);
   const UiStore = useContext(UiStoreContext);
@@ -49,8 +50,8 @@ export const Tags: React.FC<Props> = observer(({ type }) => {
           deleteTag({ tagId });
         }
       },
-      "Delete the tag globally?",
-      "Are you sure you want to delete the tag?"
+      t("Delete the tag globally?"),
+      t("Are you sure you want to delete the tag?")
     );
   };
 
@@ -133,8 +134,8 @@ export const Tags: React.FC<Props> = observer(({ type }) => {
 
       <ActionSheet
         ref={actionTagRef}
-        title="What you want to add?"
-        options={["Delete", "Edit", "Cancel"]}
+        title={t("Choose the action")}
+        options={[t("Delete"), t("Edit"), t("Cancel")]}
         cancelButtonIndex={2}
         onPress={(index) => {
           if (index === 0) {
