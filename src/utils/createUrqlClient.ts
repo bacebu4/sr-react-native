@@ -9,6 +9,8 @@ import {
   TagsQuery,
   TagsDocument,
   Tag,
+  InfoQuery,
+  InfoDocument,
 } from "../generated/graphql";
 
 export const createUrqlClient = (TOKEN: string) => {
@@ -158,6 +160,16 @@ export const createUrqlClient = (TOKEN: string) => {
             id: variables.commentId as string,
             text: variables.text,
           }),
+          updateReviewAmount: (variables, cache, _) => {
+            const { reviewAmount } = variables;
+
+            cache.updateQuery<InfoQuery>({ query: InfoDocument }, (data) => {
+              data!.info!.reviewAmount = reviewAmount as number;
+              return data;
+            });
+
+            return null;
+          },
         },
         updates: {
           Mutation: {

@@ -9,6 +9,10 @@ import { UiStoreContext } from "../utils/UiStore";
 import { BaseImage } from "./BaseImage";
 import { observer } from "mobx-react-lite";
 import { BaseText } from "./BaseText";
+import {
+  useInfoQuery,
+  useUpdateReviewAmountMutation,
+} from "../generated/graphql";
 
 interface Props {
   modalState: boolean;
@@ -20,6 +24,9 @@ export const SettingsModal: React.FC<Props> = observer(
   ({ modalState, setModalState, handleDone }) => {
     const UiStore = useContext(UiStoreContext);
     const { t, i18n } = useTranslation();
+    const [result] = useInfoQuery();
+    const { data } = result;
+    const [, updateReviewAmount] = useUpdateReviewAmountMutation();
 
     const handleLogout = () => {
       UiStore.logout();
@@ -84,15 +91,25 @@ export const SettingsModal: React.FC<Props> = observer(
                 h={24}
                 mr={16}
                 source={require("../assets/chevronLeft.png")}
+                onPress={() =>
+                  updateReviewAmount({
+                    reviewAmount: data?.info?.reviewAmount! - 1,
+                  })
+                }
               />
               <BaseText isBold fz={18}>
-                3
+                {data?.info?.reviewAmount}
               </BaseText>
               <BaseImage
                 w={24}
                 h={24}
                 ml={16}
                 source={require("../assets/chevronRight.png")}
+                onPress={() =>
+                  updateReviewAmount({
+                    reviewAmount: data?.info?.reviewAmount! + 1,
+                  })
+                }
               />
             </Container>
           </Container>
