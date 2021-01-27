@@ -103,6 +103,7 @@ export type Mutation = {
   deleteTagFromNote?: Maybe<Note>;
   deleteComment?: Maybe<Note>;
   updateReviewHistory?: Maybe<Scalars['Boolean']>;
+  updateReviewAmount?: Maybe<Info>;
   deleteNote?: Maybe<Scalars['Boolean']>;
   updateNote?: Maybe<Note>;
   updateComment?: Maybe<Comment>;
@@ -159,6 +160,11 @@ export type MutationDeleteCommentArgs = {
 
 export type MutationUpdateReviewHistoryArgs = {
   date?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationUpdateReviewAmountArgs = {
+  reviewAmount?: Maybe<Scalars['Int']>;
 };
 
 
@@ -374,6 +380,19 @@ export type UpdateNoteMutation = (
   & { updateNote?: Maybe<(
     { __typename?: 'Note' }
     & Pick<Note, 'id' | 'text'>
+  )> }
+);
+
+export type UpdateReviewAmountMutationVariables = Exact<{
+  reviewAmount: Scalars['Int'];
+}>;
+
+
+export type UpdateReviewAmountMutation = (
+  { __typename?: 'Mutation' }
+  & { updateReviewAmount?: Maybe<(
+    { __typename?: 'Info' }
+    & Pick<Info, 'reviewAmount' | 'latestReviewDate' | 'streakBeginningDate' | 'missed' | 'reviewed' | 'streak' | 'id'>
   )> }
 );
 
@@ -669,6 +688,23 @@ export const UpdateNoteDocument = gql`
 
 export function useUpdateNoteMutation() {
   return Urql.useMutation<UpdateNoteMutation, UpdateNoteMutationVariables>(UpdateNoteDocument);
+};
+export const UpdateReviewAmountDocument = gql`
+    mutation UpdateReviewAmount($reviewAmount: Int!) {
+  updateReviewAmount(reviewAmount: $reviewAmount) {
+    reviewAmount
+    latestReviewDate
+    streakBeginningDate
+    missed
+    reviewed
+    streak
+    id
+  }
+}
+    `;
+
+export function useUpdateReviewAmountMutation() {
+  return Urql.useMutation<UpdateReviewAmountMutation, UpdateReviewAmountMutationVariables>(UpdateReviewAmountDocument);
 };
 export const UpdateReviewHistoryDocument = gql`
     mutation UpdateReviewHistory($date: String!) {
