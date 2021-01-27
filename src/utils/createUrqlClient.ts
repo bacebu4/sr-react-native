@@ -8,8 +8,6 @@ import {
   NoteQuery,
   TagsQuery,
   TagsDocument,
-  LatestTagsDocument,
-  LatestTagsQuery,
   Tag,
 } from "../generated/graphql";
 
@@ -91,16 +89,6 @@ export const createUrqlClient = (TOKEN: string) => {
           deleteTag: (variables, cache, _) => {
             const { tagId } = variables;
             console.log("tagId", tagId);
-
-            cache.updateQuery<LatestTagsQuery>(
-              { query: LatestTagsDocument },
-              (data) => {
-                data!.latestTags = data?.latestTags?.filter(
-                  (t) => t?.id !== tagId
-                );
-                return data;
-              }
-            );
 
             cache.updateQuery<TagsQuery>({ query: TagsDocument }, (data) => {
               if (data && data.tags) {
@@ -232,16 +220,6 @@ export const createUrqlClient = (TOKEN: string) => {
                   }
                 );
               });
-
-              cache.updateQuery<LatestTagsQuery>(
-                { query: LatestTagsDocument },
-                (data) => {
-                  data!.latestTags = data?.latestTags?.filter(
-                    (t) => t?.id !== tagId
-                  );
-                  return data;
-                }
-              );
 
               cache.updateQuery<TagsQuery>({ query: TagsDocument }, (data) => {
                 if (data && data.tags) {
