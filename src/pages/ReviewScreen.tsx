@@ -10,7 +10,6 @@ import { MainContainer } from "../components/grid/MainContainer";
 import { Container } from "../components/grid/Container";
 import {
   useDailyNotesIdsQuery,
-  useInfoQuery,
   useUpdateReviewHistoryMutation,
 } from "../generated/graphql";
 import { format } from "date-fns";
@@ -46,14 +45,13 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
   const [, updateReviewHistory] = useUpdateReviewHistoryMutation();
   const [result] = useDailyNotesIdsQuery();
   const { data, fetching } = result;
-  const [resultInfo] = useInfoQuery();
   const [index, setIndex] = React.useState(0);
 
   const handleNextSlide = () => {
     setIndex((prev) => prev + 1);
   };
 
-  if (fetching || resultInfo.fetching) {
+  if (fetching) {
     return (
       <MainContainer>
         <Container isCentered mt={400}>
@@ -64,13 +62,13 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
   }
 
   useEffect(() => {
-    AMOUNT = Number(resultInfo.data?.info?.reviewAmount);
+    AMOUNT = Number(data?.dailyNotesIds?.length);
   }, []);
 
   const generateRoutes = useMemo(() => {
     const initialRoutes = [];
 
-    for (let i = 1; i <= resultInfo.data?.info?.reviewAmount!; i++) {
+    for (let i = 1; i <= data?.dailyNotesIds?.length!; i++) {
       initialRoutes.push({
         key: String(i),
         title: String(i),
@@ -80,15 +78,15 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
       });
     }
     initialRoutes.push({
-      key: String(resultInfo.data?.info?.reviewAmount! + 1),
-      title: String(resultInfo.data?.info?.reviewAmount! + 1),
+      key: String(data?.dailyNotesIds?.length! + 1),
+      title: String(data?.dailyNotesIds?.length! + 1),
       noteId: "",
     });
     return initialRoutes;
-  }, [resultInfo.data?.info?.reviewAmount, fetching, resultInfo.fetching]);
+  }, [data?.dailyNotesIds?.length, fetching]);
 
   useEffect(() => {
-    if (index === resultInfo.data?.info?.reviewAmount) {
+    if (index === data?.dailyNotesIds?.length) {
       // @ts-ignore
       Haptics.notificationAsync("success");
     }
@@ -96,7 +94,7 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
       maxIndex = index;
       UiStore.setCurrentReviewIndex(index);
 
-      if (index === resultInfo.data?.info?.reviewAmount) {
+      if (index === data?.dailyNotesIds?.length) {
         updateReviewHistory({
           date: format(Date.now(), "yyyy-MM-dd"),
         });
@@ -114,7 +112,7 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
         handleClick={() => navigation.navigate("Home")}
         index={AMOUNT - index}
         amount={AMOUNT}
-      ></NavbarSecondary>
+      />
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
