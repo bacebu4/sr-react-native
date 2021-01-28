@@ -23,27 +23,30 @@ export const ReviewAmountStepper: React.FC<Props> = ({ reviewAmount }) => {
       <BaseText isBold fz={18}>
         Highlights per day
       </BaseText>
+
       <Container isRow isCentered hasNoMargin>
         <BaseImage
           w={24}
           h={24}
           mr={16}
           source={require("../../../assets/chevronLeft.png")}
-          onPress={() =>
-            updateReviewAmount({
-              reviewAmount: reviewAmount! - 1,
-            })
-          }
+          onPress={() => handleReviewAmountDecrease()}
         />
+
         <BaseText isBold fz={18}>
           {reviewAmount}
         </BaseText>
+
         <BaseImage
           w={24}
           h={24}
           ml={16}
           source={require("../../../assets/chevronRight.png")}
-          onPress={() => handleReviewAmountDecrease()}
+          onPress={() =>
+            updateReviewAmount({
+              reviewAmount: reviewAmount! + 1,
+            })
+          }
         />
       </Container>
     </Container>
