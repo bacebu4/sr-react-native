@@ -66,12 +66,6 @@ export const SettingsModal: React.FC<Props> = observer(
 
           <ReviewAmountStepper reviewAmount={data?.info?.reviewAmount} />
 
-          <Container mt={8}>
-            <BaseText color="gray">
-              Configure how much highlights you want to see on a daily basis
-            </BaseText>
-          </Container>
-
           <Container mt={32} isRow isCentered>
             <BaseText isBold fz={18}>
               Language
