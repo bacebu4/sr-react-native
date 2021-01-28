@@ -7,12 +7,12 @@ import { MainButton } from "../../components/MainButton";
 import { useTranslation } from "react-i18next";
 import { UiStoreContext } from "../../utils/UiStore";
 import { observer } from "mobx-react-lite";
-import { BaseText } from "../../components/BaseText";
 import { useInfoQuery } from "../../generated/graphql";
 import { BaseInfo } from "./sections/BaseInfo";
 import { ReviewAmountStepper } from "./sections/ReviewAmountStepper";
 import { LanguageSwitcher } from "./sections/LanguageSwitcher";
 import { LegalInfo } from "./sections/LegalInfo";
+import { RestartTutorial } from "./sections/RestartTutorial";
 
 interface Props {
   modalState: boolean;
@@ -55,18 +55,7 @@ export const SettingsModal: React.FC<Props> = observer(
 
           <LanguageSwitcher />
 
-          <Container mt={32}>
-            <BaseText isBold fz={18}>
-              Restart tutorial
-            </BaseText>
-          </Container>
-
-          <Container mt={8}>
-            <BaseText color="gray">
-              Click this button if you want to see the tutorial all over again
-              in case you miss something
-            </BaseText>
-          </Container>
+          <RestartTutorial />
 
           <LegalInfo />
 
