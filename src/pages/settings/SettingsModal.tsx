@@ -12,6 +12,7 @@ import { useInfoQuery } from "../../generated/graphql";
 import { BaseInfo } from "./sections/BaseInfo";
 import { ReviewAmountStepper } from "./sections/ReviewAmountStepper";
 import { LanguageSwitcher } from "./sections/LanguageSwitcher";
+import { LegalInfo } from "./sections/LegalInfo";
 
 interface Props {
   modalState: boolean;
@@ -67,17 +68,7 @@ export const SettingsModal: React.FC<Props> = observer(
             </BaseText>
           </Container>
 
-          <Container mt={44}>
-            <BaseText isBold fz={18}>
-              Show terms and conditions
-            </BaseText>
-          </Container>
-
-          <Container mt={24}>
-            <BaseText isBold fz={18}>
-              Show privacy policy
-            </BaseText>
-          </Container>
+          <LegalInfo />
 
           <Container mt={64} isCentered>
             <MainButton onPress={handleLogout} title="Sign Out" />
