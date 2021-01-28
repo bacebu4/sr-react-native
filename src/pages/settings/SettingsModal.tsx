@@ -1,18 +1,19 @@
 import React, { useContext } from "react";
 import { GestureResponderEvent, Modal } from "react-native";
-import { MainContainer } from "./grid/MainContainer";
-import { Container } from "./grid/Container";
-import { NavbarTopSecondary } from "./NavbarTopSecondary";
-import { MainButton } from "./MainButton";
+import { MainContainer } from "../../components/grid/MainContainer";
+import { Container } from "../../components/grid/Container";
+import { NavbarTopSecondary } from "../../components/NavbarTopSecondary";
+import { MainButton } from "../../components/MainButton";
 import { useTranslation } from "react-i18next";
-import { UiStoreContext } from "../utils/UiStore";
-import { BaseImage } from "./BaseImage";
+import { UiStoreContext } from "../../utils/UiStore";
+import { BaseImage } from "../../components/BaseImage";
 import { observer } from "mobx-react-lite";
-import { BaseText } from "./BaseText";
+import { BaseText } from "../../components/BaseText";
 import {
   useInfoQuery,
   useUpdateReviewAmountMutation,
-} from "../generated/graphql";
+} from "../../generated/graphql";
+import { BaseInfo } from "./sections/BaseInfo";
 
 interface Props {
   modalState: boolean;
@@ -64,22 +65,7 @@ export const SettingsModal: React.FC<Props> = observer(
             hasNoMargin
           />
 
-          <Container
-            mt={32}
-            isRow
-            isCentered
-            style={{ justifyContent: "flex-start" }}
-          >
-            <BaseImage w={44} h={44} source={require("../assets/avatar.png")} />
-            <Container>
-              <BaseText isBold fz={18} shouldNotTranslate>
-                Vasilii Krasikov
-              </BaseText>
-              <BaseText color="gray" shouldNotTranslate>
-                {data?.info?.email}
-              </BaseText>
-            </Container>
-          </Container>
+          <BaseInfo email={data?.info?.email} />
 
           <Container mt={44} isRow isCentered>
             <BaseText isBold fz={18}>
@@ -90,7 +76,7 @@ export const SettingsModal: React.FC<Props> = observer(
                 w={24}
                 h={24}
                 mr={16}
-                source={require("../assets/chevronLeft.png")}
+                source={require("../../assets/chevronLeft.png")}
                 onPress={() =>
                   updateReviewAmount({
                     reviewAmount: data?.info?.reviewAmount! - 1,
@@ -104,7 +90,7 @@ export const SettingsModal: React.FC<Props> = observer(
                 w={24}
                 h={24}
                 ml={16}
-                source={require("../assets/chevronRight.png")}
+                source={require("../../assets/chevronRight.png")}
                 onPress={() =>
                   updateReviewAmount({
                     reviewAmount: data?.info?.reviewAmount! + 1,
@@ -129,7 +115,7 @@ export const SettingsModal: React.FC<Props> = observer(
                 w={24}
                 h={24}
                 mr={16}
-                source={require("../assets/chevronLeft.png")}
+                source={require("../../assets/chevronLeft.png")}
                 onPress={handleLanguageChange}
               />
               <BaseText isBold isUppercase fz={18} shouldNotTranslate>
@@ -139,7 +125,7 @@ export const SettingsModal: React.FC<Props> = observer(
                 w={24}
                 h={24}
                 ml={16}
-                source={require("../assets/chevronRight.png")}
+                source={require("../../assets/chevronRight.png")}
                 onPress={handleLanguageChange}
               />
             </Container>
