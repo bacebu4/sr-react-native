@@ -40,7 +40,7 @@ export const AllBooksScreen: React.FC = () => {
   }
 
   return (
-    <MainContainer pt={16}>
+    <MainContainer>
       <FlatList
         data={data.books}
         columnWrapperStyle={{

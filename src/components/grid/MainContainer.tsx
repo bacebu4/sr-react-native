@@ -12,7 +12,6 @@ export const MainContainer: React.FC<Props> = ({
   children,
   isCentered,
   isCenteredY = false,
-  pt,
 }) => {
   return (
     <View
@@ -20,7 +19,6 @@ export const MainContainer: React.FC<Props> = ({
         ...styles.mainContainer,
         justifyContent: isCentered ? "center" : "flex-start",
         alignItems: isCenteredY ? "center" : "stretch",
-        paddingTop: pt,
       }}
     >
       {children}
