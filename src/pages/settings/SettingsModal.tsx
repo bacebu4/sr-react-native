@@ -9,11 +9,9 @@ import { UiStoreContext } from "../../utils/UiStore";
 import { BaseImage } from "../../components/BaseImage";
 import { observer } from "mobx-react-lite";
 import { BaseText } from "../../components/BaseText";
-import {
-  useInfoQuery,
-  useUpdateReviewAmountMutation,
-} from "../../generated/graphql";
+import { useInfoQuery } from "../../generated/graphql";
 import { BaseInfo } from "./sections/BaseInfo";
+import { ReviewAmountStepper } from "./sections/ReviewAmountStepper";
 
 interface Props {
   modalState: boolean;
@@ -27,7 +25,6 @@ export const SettingsModal: React.FC<Props> = observer(
     const { t, i18n } = useTranslation();
     const [result] = useInfoQuery();
     const { data } = result;
-    const [, updateReviewAmount] = useUpdateReviewAmountMutation();
 
     const handleLogout = () => {
       UiStore.logout();
@@ -67,38 +64,7 @@ export const SettingsModal: React.FC<Props> = observer(
 
           <BaseInfo email={data?.info?.email} />
 
-          <Container mt={44} isRow isCentered>
-            <BaseText isBold fz={18}>
-              Hightlights per day
-            </BaseText>
-            <Container isRow isCentered hasNoMargin>
-              <BaseImage
-                w={24}
-                h={24}
-                mr={16}
-                source={require("../../assets/chevronLeft.png")}
-                onPress={() =>
-                  updateReviewAmount({
-                    reviewAmount: data?.info?.reviewAmount! - 1,
-                  })
-                }
-              />
-              <BaseText isBold fz={18}>
-                {data?.info?.reviewAmount}
-              </BaseText>
-              <BaseImage
-                w={24}
-                h={24}
-                ml={16}
-                source={require("../../assets/chevronRight.png")}
-                onPress={() =>
-                  updateReviewAmount({
-                    reviewAmount: data?.info?.reviewAmount! + 1,
-                  })
-                }
-              />
-            </Container>
-          </Container>
+          <ReviewAmountStepper reviewAmount={data?.info?.reviewAmount} />
 
           <Container mt={8}>
             <BaseText color="gray">

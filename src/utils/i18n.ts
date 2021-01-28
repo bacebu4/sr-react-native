@@ -43,7 +43,7 @@ i18n.use(initReactI18next).init({
         "Already have an account?": "Уже есть аккаунт?",
         "All books": "Все книги",
         "All tags": "Все теги",
-        "Hightlights per day": "Заметок в день",
+        "Highlights per day": "Заметок в день",
         "Configure how much highlights you want to see on a daily basis":
           "Настройте сколько заметок в день вы хотите видеть. Изменения вступят в силу на следующий день.",
         Language: "Язык",
