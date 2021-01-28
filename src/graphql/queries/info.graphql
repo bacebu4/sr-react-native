@@ -1,6 +1,7 @@
 query Info {
   info {
     reviewAmount
+    email
     latestReviewDate
     streakBeginningDate
     missed

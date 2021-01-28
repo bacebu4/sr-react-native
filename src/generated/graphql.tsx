@@ -57,6 +57,7 @@ export type Info = {
   streak: Scalars['Int'];
   missed: Scalars['Int'];
   reviewed: Scalars['Boolean'];
+  email: Scalars['String'];
   id: Scalars['ID'];
 };
 
@@ -392,7 +393,7 @@ export type UpdateReviewAmountMutation = (
   { __typename?: 'Mutation' }
   & { updateReviewAmount?: Maybe<(
     { __typename?: 'Info' }
-    & Pick<Info, 'reviewAmount' | 'latestReviewDate' | 'streakBeginningDate' | 'missed' | 'reviewed' | 'streak' | 'id'>
+    & Pick<Info, 'reviewAmount' | 'id'>
   )> }
 );
 
@@ -444,7 +445,7 @@ export type InfoQuery = (
   { __typename?: 'Query' }
   & { info?: Maybe<(
     { __typename?: 'Info' }
-    & Pick<Info, 'reviewAmount' | 'latestReviewDate' | 'streakBeginningDate' | 'missed' | 'reviewed' | 'streak' | 'id'>
+    & Pick<Info, 'reviewAmount' | 'email' | 'latestReviewDate' | 'streakBeginningDate' | 'missed' | 'reviewed' | 'streak' | 'id'>
   )> }
 );
 
@@ -693,11 +694,6 @@ export const UpdateReviewAmountDocument = gql`
     mutation UpdateReviewAmount($reviewAmount: Int!) {
   updateReviewAmount(reviewAmount: $reviewAmount) {
     reviewAmount
-    latestReviewDate
-    streakBeginningDate
-    missed
-    reviewed
-    streak
     id
   }
 }
@@ -750,6 +746,7 @@ export const InfoDocument = gql`
     query Info {
   info {
     reviewAmount
+    email
     latestReviewDate
     streakBeginningDate
     missed

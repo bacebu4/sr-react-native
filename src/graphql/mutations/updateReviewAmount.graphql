@@ -1,11 +1,6 @@
 mutation UpdateReviewAmount($reviewAmount: Int!) {
   updateReviewAmount(reviewAmount: $reviewAmount) {
     reviewAmount
-    latestReviewDate
-    streakBeginningDate
-    missed
-    reviewed
-    streak
     id
   }
 }

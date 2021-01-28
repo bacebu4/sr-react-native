@@ -76,7 +76,7 @@ export const SettingsModal: React.FC<Props> = observer(
                 Vasilii Krasikov
               </BaseText>
               <BaseText color="gray" shouldNotTranslate>
-                vasua14735@icloud.com
+                {data?.info?.email}
               </BaseText>
             </Container>
           </Container>
