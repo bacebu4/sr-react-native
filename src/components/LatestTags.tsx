@@ -42,7 +42,7 @@ export const LatestTags: React.FC = () => {
         <Tags type="latest" />
       </Container>
 
-      <Container mt={16} mb={96}>
+      <Container mt={16}>
         <SeeAll onPress={() => navigation.navigate("AllTags")} />
       </Container>
     </>
