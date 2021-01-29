@@ -34,6 +34,7 @@ interface Props extends TextProps {
   ml?: number;
   mr?: number;
   fz?: number;
+  style?: TextStyle;
   isBold?: boolean;
   isUppercase?: boolean;
   isSerif?: boolean;
@@ -57,6 +58,7 @@ export const BaseText: React.FC<Props> = (props) => {
     color,
     shouldNotTranslate,
     children,
+    style,
     ...restProps
   } = props;
 
@@ -75,7 +77,7 @@ export const BaseText: React.FC<Props> = (props) => {
   };
 
   const TextComponentTranslated = (
-    <Text {...restProps} style={styles}>
+    <Text {...restProps} style={{ ...styles, ...style }}>
       {t(String(children))}
     </Text>
   );

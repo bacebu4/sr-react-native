@@ -13,6 +13,7 @@ import { MainHighlight } from "../components/MainHighlight";
 import { LatestBooks } from "../components/LatestBooks";
 import { useDailyNotesIdsQuery } from "../generated/graphql";
 import { LatestTags } from "../components/LatestTags";
+import { ReviewingGoals } from "./home/sections/ReviewingGoals";
 
 export const HomeScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -71,6 +72,8 @@ export const HomeScreen = () => {
           <LatestBooks />
 
           <LatestTags />
+
+          <ReviewingGoals />
         </ScrollView>
       </MainContainer>
     </>
