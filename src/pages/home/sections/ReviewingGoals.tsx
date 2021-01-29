@@ -88,7 +88,9 @@ export const ReviewingGoals: React.FC = observer(() => {
           fz={24}
           style={{ textAlign: "center", maxWidth: 300 }}
         >
-          You have 0 days in a row...
+          You have{" "}
+          {data?.info?.reviewed ? data?.info?.streak : data?.info?.streak! - 1}{" "}
+          days in a row...
         </BaseText>
       </Container>
 
