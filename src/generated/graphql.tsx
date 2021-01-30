@@ -70,6 +70,7 @@ export type Query = {
   books?: Maybe<Array<Maybe<Book>>>;
   latestBooks?: Maybe<Array<Maybe<Book>>>;
   tags?: Maybe<Array<Maybe<Tag>>>;
+  reviewHistoryThisWeek?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
@@ -520,6 +521,14 @@ export type NotesByTagQuery = (
   )>>> }
 );
 
+export type ReviewHistoryThisWeekQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ReviewHistoryThisWeekQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'reviewHistoryThisWeek'>
+);
+
 export type TagsQueryVariables = Exact<{
   type?: Maybe<Scalars['String']>;
 }>;
@@ -838,6 +847,15 @@ export const NotesByTagDocument = gql`
 
 export function useNotesByTagQuery(options: Omit<Urql.UseQueryArgs<NotesByTagQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<NotesByTagQuery>({ query: NotesByTagDocument, ...options });
+};
+export const ReviewHistoryThisWeekDocument = gql`
+    query ReviewHistoryThisWeek {
+  reviewHistoryThisWeek
+}
+    `;
+
+export function useReviewHistoryThisWeekQuery(options: Omit<Urql.UseQueryArgs<ReviewHistoryThisWeekQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<ReviewHistoryThisWeekQuery>({ query: ReviewHistoryThisWeekDocument, ...options });
 };
 export const TagsDocument = gql`
     query Tags($type: String) {

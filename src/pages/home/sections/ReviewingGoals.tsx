@@ -11,6 +11,7 @@ import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../../../utils/UiStore";
 import { MainButton } from "../../../components/MainButton";
 import { useNavigation } from "@react-navigation/native";
+import { WeekView } from "../../../components/WeekView";
 
 export const ReviewingGoals: React.FC = observer(() => {
   const [result] = useInfoQuery();
@@ -87,12 +88,15 @@ export const ReviewingGoals: React.FC = observer(() => {
           isSerif
           fz={24}
           style={{ textAlign: "center", maxWidth: 300 }}
+          shouldNotTranslate
         >
           You have{" "}
           {data?.info?.reviewed ? data?.info?.streak : data?.info?.streak! - 1}{" "}
           days in a row...
         </BaseText>
       </Container>
+
+      <WeekView />
 
       <Container mt={32} pb={64} isCentered>
         <MainButton
