@@ -1,6 +1,6 @@
 import React from "react";
 import { Day } from "../utils/getWeekDaysArray";
-import { View } from "react-native";
+import { View, ViewStyle } from "react-native";
 import { BaseText } from "./BaseText";
 import { isFuture, isSameDay, isToday } from "date-fns";
 import { BLACK_COLOR, GRAY_COLOR } from "../utils/colors";
@@ -12,35 +12,46 @@ interface SingleDayCircleProps {
   reviewed: boolean | undefined;
 }
 
-function backgroundColorSwitcher(
-  date: Date,
-  reviewed: boolean | undefined,
-  reviewHistoryThisWeek: Maybe<string>[] | null | undefined
-) {
-  if (isFuture(date)) {
-    return "white";
+function stylesSwitcher(props: SingleDayCircleProps): ViewStyle {
+  if (isFuture(props.day.date)) {
+    return {
+      backgroundColor: "white",
+      borderColor: GRAY_COLOR,
+    };
   }
 
-  if (isToday(date) && !reviewed) {
-    return "white";
+  if (isToday(props.day.date) && !props.reviewed) {
+    return {
+      backgroundColor: "white",
+      borderColor: BLACK_COLOR,
+    };
   }
 
-  if (isToday(date) && reviewed) {
-    return BLACK_COLOR;
+  if (isToday(props.day.date) && props.reviewed) {
+    return {
+      backgroundColor: BLACK_COLOR,
+      borderColor: BLACK_COLOR,
+    };
   }
 
   let isReviewed = false;
-  reviewHistoryThisWeek?.forEach((d) => {
-    if (isSameDay(new Date(d!), date)) {
+  props.reviewHistoryThisWeek?.forEach((d) => {
+    if (isSameDay(new Date(d!), props.day.date)) {
       isReviewed = true;
     }
   });
 
   if (isReviewed) {
-    return BLACK_COLOR;
+    return {
+      backgroundColor: BLACK_COLOR,
+      borderColor: BLACK_COLOR,
+    };
   }
 
-  return GRAY_COLOR;
+  return {
+    backgroundColor: GRAY_COLOR,
+    borderColor: GRAY_COLOR,
+  };
 }
 
 function colorSwitcher(date: Date, reviewed: boolean | undefined) {
@@ -55,58 +66,26 @@ function colorSwitcher(date: Date, reviewed: boolean | undefined) {
   return "white";
 }
 
-function borderColorSwitcher(
-  date: Date,
-  reviewed: boolean | undefined,
-  reviewHistoryThisWeek: Maybe<string>[] | null | undefined
-) {
-  if (isToday(date)) {
-    return BLACK_COLOR;
-  }
-
-  let isReviewed = false;
-  reviewHistoryThisWeek?.forEach((d) => {
-    if (isSameDay(new Date(d!), date)) {
-      isReviewed = true;
-    }
-  });
-
-  if (isReviewed) {
-    return BLACK_COLOR;
-  }
-
-  return GRAY_COLOR;
-}
-
-export const SingleDayCircle: React.FC<SingleDayCircleProps> = ({
-  day,
-  reviewHistoryThisWeek,
-  reviewed,
-}) => {
+export const SingleDayCircle: React.FC<SingleDayCircleProps> = (props) => {
   return (
     <View
       style={{
-        backgroundColor: backgroundColorSwitcher(
-          day.date,
-          reviewed,
-          reviewHistoryThisWeek
-        ),
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 100,
-        height: 35,
-        width: 35,
+        height: 30,
+        width: 30,
         marginTop: 8,
-        borderColor: borderColorSwitcher(
-          day.date,
-          reviewed,
-          reviewHistoryThisWeek
-        ),
         borderWidth: 2,
+        ...stylesSwitcher(props),
       }}
     >
-      <BaseText color={colorSwitcher(day.date, reviewed)} isSerif isBold>
-        {day.dayOfTheMonth}
+      <BaseText
+        color={colorSwitcher(props.day.date, props.reviewed)}
+        isSerif
+        isBold
+      >
+        {props.day.dayOfTheMonth}
       </BaseText>
     </View>
   );

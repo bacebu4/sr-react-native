@@ -31,14 +31,15 @@ export const WeekView: React.FC = () => {
   }
 
   return (
-    <Container mt={32} isRow>
-      {getWeekDaysArray(new Date()).map((day) => {
+    <Container mt={32} isRow style={{ justifyContent: "center" }}>
+      {getWeekDaysArray(new Date()).map((day, index) => {
         return (
           <View
             key={day.dayOfTheMonth}
             style={{
               alignItems: "center",
               justifyContent: "center",
+              marginLeft: index === 0 ? 0 : 16,
             }}
           >
             <BaseText color="gray" fz={12} isUppercase isBold>
