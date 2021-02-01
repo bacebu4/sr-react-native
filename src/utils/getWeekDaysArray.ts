@@ -23,9 +23,10 @@ function getDayName(dayOfWeek: number): DayOfWeek {
 
 type DayOfWeek = "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat";
 
-interface Day {
+export interface Day {
   dayOfTheMonth: number;
   name: DayOfWeek;
+  date: Date;
 }
 
 export function getWeekDaysArray(date: Date): Array<Day> {
@@ -37,7 +38,7 @@ export function getWeekDaysArray(date: Date): Array<Day> {
     const dayOfWeekNumber = getDay(dayOfWeek);
     const dayOfTheMonth = getDate(dayOfWeek);
     const dayName = getDayName(dayOfWeekNumber);
-    weekDatesArray.push({ dayOfTheMonth, name: dayName });
+    weekDatesArray.push({ dayOfTheMonth, name: dayName, date: dayOfWeek });
   }
 
   return weekDatesArray;

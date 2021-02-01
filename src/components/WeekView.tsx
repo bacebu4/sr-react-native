@@ -1,15 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Container } from "./grid/Container";
-import { ActivityIndicator, Text } from "react-native";
-import { useReviewHistoryThisWeekQuery } from "../generated/graphql";
+import { ActivityIndicator, Text, View } from "react-native";
+import {
+  useReviewHistoryThisWeekQuery,
+  useInfoQuery,
+} from "../generated/graphql";
+import { getWeekDaysArray } from "../utils/getWeekDaysArray";
+import { BaseText } from "./BaseText";
+import { SingleDayCircle } from "./SingleDayCircle";
 
 export const WeekView: React.FC = () => {
   const [result] = useReviewHistoryThisWeekQuery();
   const { data, fetching, error } = result;
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const [infoResult] = useInfoQuery();
 
   if (error) {
     return (
@@ -19,7 +22,7 @@ export const WeekView: React.FC = () => {
     );
   }
 
-  if (fetching) {
+  if (fetching || infoResult.fetching) {
     return (
       <Container isCentered mt={400}>
         <ActivityIndicator size="large" />
@@ -28,8 +31,27 @@ export const WeekView: React.FC = () => {
   }
 
   return (
-    <Container mt={16}>
-      <Text>{JSON.stringify(data)}</Text>
+    <Container mt={32} isRow>
+      {getWeekDaysArray(new Date()).map((day) => {
+        return (
+          <View
+            key={day.dayOfTheMonth}
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <BaseText color="gray" fz={12} isUppercase isBold>
+              {day.name}
+            </BaseText>
+            <SingleDayCircle
+              day={day}
+              reviewHistoryThisWeek={data?.reviewHistoryThisWeek}
+              reviewed={infoResult.data?.info?.reviewed}
+            />
+          </View>
+        );
+      })}
     </Container>
   );
 };
