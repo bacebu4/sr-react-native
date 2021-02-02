@@ -11,6 +11,7 @@ import { Container } from "../components/grid/Container";
 import {
   useDailyNotesIdsQuery,
   useUpdateReviewHistoryMutation,
+  useInfoQuery,
 } from "../generated/graphql";
 import { format } from "date-fns";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -45,6 +46,7 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
   const [, updateReviewHistory] = useUpdateReviewHistoryMutation();
   const [result] = useDailyNotesIdsQuery();
   const { data, fetching } = result;
+  const [resultInfo] = useInfoQuery();
   const [index, setIndex] = React.useState(0);
 
   const handleNextSlide = () => {
@@ -87,18 +89,18 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
 
   useEffect(() => {
     if (index === data?.dailyNotesIds?.length) {
-      // @ts-ignore
-      Haptics.notificationAsync("success");
-    }
-    if (index > maxIndex) {
-      maxIndex = index;
-      UiStore.setCurrentReviewIndex(index);
+      Haptics.notificationAsync("success" as Haptics.NotificationFeedbackType);
 
-      if (index === data?.dailyNotesIds?.length) {
+      if (!resultInfo.data?.info?.reviewed) {
         updateReviewHistory({
           date: format(Date.now(), "yyyy-MM-dd"),
         });
       }
+    }
+
+    if (index > maxIndex) {
+      maxIndex = index;
+      UiStore.setCurrentReviewIndex(index);
     }
   }, [index]);
 

@@ -170,6 +170,14 @@ export const createUrqlClient = (TOKEN: string) => {
 
             return null;
           },
+          updateReviewHistory: (_, cache, __) => {
+            cache.updateQuery<InfoQuery>({ query: InfoDocument }, (data) => {
+              data!.info!.streak = data!.info!.streak + 1;
+              return data;
+            });
+
+            return null;
+          },
         },
         updates: {
           Mutation: {
