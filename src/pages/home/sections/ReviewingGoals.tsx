@@ -78,7 +78,10 @@ export const ReviewingGoals: React.FC = observer(() => {
           bgColor="#fff"
         >
           <BaseText isSerif isBold fz={40} shouldNotTranslate>
-            {UiStore.currentReviewIndex} / {data?.info?.reviewAmount!}
+            {data?.info?.reviewed
+              ? data?.info?.reviewAmount!
+              : UiStore.currentReviewIndex}{" "}
+            / {data?.info?.reviewAmount!}
           </BaseText>
         </ProgressCircle>
       </Container>
@@ -90,9 +93,7 @@ export const ReviewingGoals: React.FC = observer(() => {
           style={{ textAlign: "center", maxWidth: 300 }}
           shouldNotTranslate
         >
-          You have{" "}
-          {data?.info?.reviewed ? data?.info?.streak : data?.info?.streak! - 1}{" "}
-          days in a row
+          You have {data?.info?.streak} days in a row
         </BaseText>
       </Container>
 
