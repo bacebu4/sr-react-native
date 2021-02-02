@@ -13,10 +13,12 @@
     "@react-navigation/bottom-tabs": "^5.10.0",
     "@react-navigation/native": "^5.8.0",
     "@react-navigation/stack": "^5.10.0",
+    "@types/uuid": "^8.3.0",
     "@urql/exchange-graphcache": "^3.3.3",
     "date-fns": "^2.16.1",
     "expo": "~39.0.2",
     "expo-haptics": "~8.3.0",
+    "expo-random": "~9.0.0",
     "expo-secure-store": "~9.2.0",
     "expo-status-bar": "~1.0.2",
     "graphql": "^15.4.0",
@@ -41,11 +43,11 @@
     "react-native-screens": "^2.15.0",
     "react-native-selection-menu": "^1.0.2",
     "react-native-tab-view": "^2.15.2",
-    "react-native-uuid": "^1.4.9",
     "react-native-web": "~0.13.12",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "tsconfig.json": "^1.0.7",
-    "urql": "^1.11.4"
+    "urql": "^1.11.4",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

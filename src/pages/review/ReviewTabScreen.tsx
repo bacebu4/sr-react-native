@@ -23,7 +23,7 @@ import { Comment } from "../../components/Comment";
 import { BaseImage } from "../../components/BaseImage";
 import { GRAY_COLOR } from "../../utils/colors";
 import { BaseText } from "../../components/BaseText";
-const uuid = require("react-native-uuid");
+import { uuidExpo } from "../../utils/uuidExpo";
 
 interface Props {
   noteId?: string;
@@ -80,7 +80,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
 
   const handleSave = () => {
     setModalVisible(false);
-    const commentId = uuid.v4();
+    const commentId = uuidExpo();
     if (text) {
       addComment({
         noteId: data!.note!.id!,

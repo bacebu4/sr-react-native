@@ -20,7 +20,7 @@ import { ColorPicker } from "../../components/ColorPicker";
 import { StrippedInput } from "../../components/StrippedInput";
 import { BaseImage } from "../../components/BaseImage";
 import { BaseText } from "../../components/BaseText";
-const uuid = require("react-native-uuid");
+import { uuidExpo } from "../../utils/uuidExpo";
 
 interface Props {
   handleBack: ((event: GestureResponderEvent) => void) | undefined;
@@ -94,7 +94,7 @@ export const TagConstructor: React.FC<Props> = ({
           throw new Error("This tag name already exists");
         }
         if (noteId) {
-          const tagId = uuid.v4();
+          const tagId = uuidExpo();
           addNewTag({ noteId, tagId, name: tagName, hue });
           onTagName("");
           refreshHue();
