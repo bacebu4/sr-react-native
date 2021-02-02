@@ -104,7 +104,7 @@ export type Mutation = {
   deleteTag?: Maybe<Scalars['Boolean']>;
   deleteTagFromNote?: Maybe<Note>;
   deleteComment?: Maybe<Note>;
-  updateReviewHistory?: Maybe<Scalars['Boolean']>;
+  updateReviewHistory?: Maybe<Info>;
   updateReviewAmount?: Maybe<Info>;
   deleteNote?: Maybe<Scalars['Boolean']>;
   updateNote?: Maybe<Note>;
@@ -405,7 +405,10 @@ export type UpdateReviewHistoryMutationVariables = Exact<{
 
 export type UpdateReviewHistoryMutation = (
   { __typename?: 'Mutation' }
-  & Pick<Mutation, 'updateReviewHistory'>
+  & { updateReviewHistory?: Maybe<(
+    { __typename?: 'Info' }
+    & Pick<Info, 'streak' | 'id'>
+  )> }
 );
 
 export type UpdateTagMutationVariables = Exact<{
@@ -713,7 +716,10 @@ export function useUpdateReviewAmountMutation() {
 };
 export const UpdateReviewHistoryDocument = gql`
     mutation UpdateReviewHistory($date: String!) {
-  updateReviewHistory(date: $date)
+  updateReviewHistory(date: $date) {
+    streak
+    id
+  }
 }
     `;
 
