@@ -173,6 +173,7 @@ export const createUrqlClient = (TOKEN: string) => {
           updateReviewHistory: (_, cache, __) => {
             cache.updateQuery<InfoQuery>({ query: InfoDocument }, (data) => {
               data!.info!.streak = data!.info!.streak + 1;
+              data!.info!.reviewed = true;
               return data;
             });
 

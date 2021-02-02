@@ -407,7 +407,7 @@ export type UpdateReviewHistoryMutation = (
   { __typename?: 'Mutation' }
   & { updateReviewHistory?: Maybe<(
     { __typename?: 'Info' }
-    & Pick<Info, 'streak' | 'id'>
+    & Pick<Info, 'streak' | 'reviewed' | 'id'>
   )> }
 );
 
@@ -718,6 +718,7 @@ export const UpdateReviewHistoryDocument = gql`
     mutation UpdateReviewHistory($date: String!) {
   updateReviewHistory(date: $date) {
     streak
+    reviewed
     id
   }
 }

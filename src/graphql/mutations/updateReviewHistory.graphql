@@ -1,6 +1,7 @@
 mutation UpdateReviewHistory($date: String!) {
   updateReviewHistory(date: $date) {
     streak
+    reviewed
     id
   }
 }
