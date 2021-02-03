@@ -31,7 +31,7 @@ export default observer(function App() {
 
   useEffect(() => {
     initAsync();
-  }, [UiStore.isLogged]);
+  }, [UiStore.isLogged, UiStore.token]);
 
   return (
     <Provider value={client}>

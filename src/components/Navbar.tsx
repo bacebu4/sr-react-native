@@ -21,6 +21,10 @@ export const Navbar: React.FC<Props> = observer(({ title, handleClick }) => {
   const [result] = useInfoQuery();
   const { data, fetching, error } = result;
 
+  if (error?.graphQLErrors[0].message === "invalid user") {
+    UiStore.logout();
+  }
+
   if (error) {
     return (
       <Container isCentered>
