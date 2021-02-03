@@ -36,7 +36,7 @@ function stylesSwitcher(props: SingleDayCircleProps): ViewStyle {
 
   let isReviewed = false;
   props.reviewHistoryThisWeek?.forEach((d) => {
-    if (isSameDay(new Date(d!), props.day.date)) {
+    if (isSameDay(new Date(+d!), props.day.date)) {
       isReviewed = true;
     }
   });
