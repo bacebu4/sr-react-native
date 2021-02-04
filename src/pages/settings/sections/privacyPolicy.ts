@@ -1,4 +1,4 @@
-export const pricacyPolicy = `
+export const privacyPolicy = `
 # PRIVACY POLICY
 *Last updated December 13, 2019*
 

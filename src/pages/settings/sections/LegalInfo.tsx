@@ -3,7 +3,7 @@ import { Container } from "../../../components/grid/Container";
 import { BaseText } from "../../../components/BaseText";
 import { PopUpModal } from "../../../components/PopUpModal";
 import { termsAndConditions } from "./termsAndConditions";
-import { pricacyPolicy } from "./pricacyPolicy";
+import { privacyPolicy } from "./privacyPolicy";
 
 export const LegalInfo: React.FC = () => {
   const [showTerms, setShowTerms] = useState(false);
@@ -34,7 +34,7 @@ export const LegalInfo: React.FC = () => {
         visible={showPrivacyPolicy}
         onRequestClose={() => setShowPrivacyPolicy(false)}
       >
-        {pricacyPolicy}
+        {privacyPolicy}
       </PopUpModal>
     </>
   );
