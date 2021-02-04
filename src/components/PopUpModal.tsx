@@ -3,7 +3,6 @@ import { Modal, ModalProps, View } from "react-native";
 import { BaseImage } from "./BaseImage";
 import { Container } from "./grid/Container";
 import Constants from "expo-constants";
-import { BaseText } from "./BaseText";
 import { ScrollView } from "react-native-gesture-handler";
 import Markdown from "react-native-markdown-display";
 

@@ -3,9 +3,11 @@ import { Container } from "../../../components/grid/Container";
 import { BaseText } from "../../../components/BaseText";
 import { PopUpModal } from "../../../components/PopUpModal";
 import { termsAndConditions } from "./termsAndConditions";
+import { pricacyPolicy } from "./pricacyPolicy";
 
 export const LegalInfo: React.FC = () => {
   const [showTerms, setShowTerms] = useState(false);
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   return (
     <>
@@ -23,10 +25,17 @@ export const LegalInfo: React.FC = () => {
       </PopUpModal>
 
       <Container mt={24}>
-        <BaseText isBold fz={18}>
+        <BaseText isBold fz={18} onPress={() => setShowPrivacyPolicy(true)}>
           Show privacy policy
         </BaseText>
       </Container>
+
+      <PopUpModal
+        visible={showPrivacyPolicy}
+        onRequestClose={() => setShowPrivacyPolicy(false)}
+      >
+        {pricacyPolicy}
+      </PopUpModal>
     </>
   );
 };
