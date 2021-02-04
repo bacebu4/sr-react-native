@@ -12,9 +12,12 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** Date custom scalar type */
+  DateTime: any;
   /** The `Upload` scalar type represents a file upload. */
   Upload: any;
 };
+
 
 export type Note = {
   __typename?: 'Note';
@@ -70,7 +73,7 @@ export type Query = {
   books?: Maybe<Array<Maybe<Book>>>;
   latestBooks?: Maybe<Array<Maybe<Book>>>;
   tags?: Maybe<Array<Maybe<Tag>>>;
-  reviewHistoryThisWeek?: Maybe<Array<Maybe<Scalars['String']>>>;
+  reviewHistoryThisWeek?: Maybe<Array<Maybe<Scalars['DateTime']>>>;
 };
 
 

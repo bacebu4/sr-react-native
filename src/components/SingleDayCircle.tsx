@@ -4,11 +4,10 @@ import { View, ViewStyle } from "react-native";
 import { BaseText } from "./BaseText";
 import { isFuture, isSameDay, isToday } from "date-fns";
 import { BLACK_COLOR, GRAY_COLOR } from "../utils/colors";
-import { Maybe } from "src/generated/graphql";
 
 interface SingleDayCircleProps {
   day: Day;
-  reviewHistoryThisWeek: Maybe<string>[] | null | undefined;
+  reviewHistoryThisWeek: any[] | null | undefined;
   reviewed: boolean | undefined;
 }
 
@@ -36,7 +35,7 @@ function stylesSwitcher(props: SingleDayCircleProps): ViewStyle {
 
   let isReviewed = false;
   props.reviewHistoryThisWeek?.forEach((d) => {
-    if (isSameDay(new Date(+d!), props.day.date)) {
+    if (isSameDay(d!, props.day.date)) {
       isReviewed = true;
     }
   });
