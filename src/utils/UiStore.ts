@@ -7,7 +7,7 @@ class UiStore {
   token: string | null = null;
   currentReviewIndex: number = 0;
   isLoading = false;
-  isLogged = false;
+  isLogged: boolean | null = false;
 
   setCurrentTagId(value: string) {
     this.currentTagId = value;
@@ -55,9 +55,9 @@ class UiStore {
   }
 
   *logout() {
-    this.setLogged(false);
     this.setToken(null);
     yield SecureStore.deleteItemAsync("token");
+    this.setLogged(false);
   }
 
   constructor() {
