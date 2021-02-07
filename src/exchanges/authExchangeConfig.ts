@@ -1,59 +1,49 @@
 import * as SecureStore from "expo-secure-store";
 import { makeOperation } from "@urql/core";
-import { AuthConfig } from "@urql/exchange-auth/dist/types/authExchange";
+import { TOKEN_STORAGE_NAME } from "../variables";
 
-const addAuthToOperation: any = ({ authState, operation }: any) => {
-  if (!authState || !authState.token) {
-    return operation;
-  }
-  const fetchOptions =
-    typeof operation.context.fetchOptions === "function"
-      ? operation.context.fetchOptions()
-      : operation.context.fetchOptions || {};
-  return makeOperation(operation.kind, operation, {
-    ...operation.context,
-    fetchOptions: {
-      ...fetchOptions,
-      headers: {
-        ...fetchOptions.headers,
-        authorization: authState.token,
-      },
-    },
-  });
-};
-
-async function logout() {
-  await SecureStore.deleteItemAsync("token");
-}
-
-export const authExchangeConfig = (
-  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | null>>
-) => {
+export const authExchangeConfig = (setLogged: (value: boolean) => void) => {
   return {
     async getAuth({ authState }: any) {
-      console.log("authState getAuth", authState);
-
       if (!authState) {
-        const token = await SecureStore.getItemAsync("token");
-        console.log("token getAuth", token);
+        const token = await SecureStore.getItemAsync(TOKEN_STORAGE_NAME);
+        console.log(token);
+
         if (token) {
-          console.log("before return");
-          setIsLoggedIn(true);
+          console.log("before");
+
+          setLogged(true);
           return { token };
         }
         return null;
       }
 
-      await logout();
-      setIsLoggedIn(false);
+      await SecureStore.deleteItemAsync(TOKEN_STORAGE_NAME);
+      setLogged(false);
 
       return null;
     },
-    addAuthToOperation,
+
+    addAuthToOperation({ authState, operation }: any) {
+      if (!authState || !authState.token) {
+        return operation;
+      }
+
+      const fetchOptions =
+        typeof operation.context.fetchOptions === "function"
+          ? operation.context.fetchOptions()
+          : operation.context.fetchOptions || {};
+
+      return makeOperation(operation.kind, operation, {
+        ...operation.context,
+        fetchOptions: {
+          ...fetchOptions,
+          headers: {
+            ...fetchOptions.headers,
+            authorization: authState.token,
+          },
+        },
+      });
+    },
   };
 };
-
-// export const authExchange = {
-//   getAuth,
-//   addAuthToOperation,
-// };

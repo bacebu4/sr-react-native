@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HomeStackScreen } from "./src/stacks/HomeStackScreen";
@@ -16,20 +16,28 @@ import { BACKEND_URL } from "./src/variables";
 import { cacheExchange } from "@urql/exchange-graphcache";
 import { authExchangeConfig } from "./src/exchanges/authExchangeConfig";
 import { cacheExchangeConfig } from "./src/exchanges/cacheExchangeConfig";
+import { observer } from "mobx-react-lite";
+import { UiStoreContext } from "./src/utils/UiStore";
 
 // @ts-ignore
 const initI18n = i18n;
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+export default observer(function App() {
   const { t } = useTranslation();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(false);
+  const UiStore = useContext(UiStoreContext);
+
+  console.log("TICK");
+
+  useEffect(() => {
+    console.log("changed ", UiStore.isLogged);
+  }, [UiStore.isLogged]);
 
   const client = useMemo(() => {
-    console.log("isLoggedIn: ", isLoggedIn);
+    console.log("UiStore.isLogged: ", UiStore.isLogged);
 
-    if (isLoggedIn === null) {
+    if (UiStore.isLogged === null) {
       return null;
     }
 
@@ -38,11 +46,11 @@ export default function App() {
       exchanges: [
         dedupExchange,
         cacheExchange(cacheExchangeConfig) as any,
-        authExchange(authExchangeConfig(setIsLoggedIn)) as any,
+        authExchange(authExchangeConfig(UiStore.setLogged)) as any,
         fetchExchange,
       ],
     });
-  }, [isLoggedIn]);
+  }, [UiStore.isLogged, UiStore.setLogged]);
 
   if (!client) {
     return null;
@@ -60,7 +68,7 @@ export default function App() {
             inactiveBackgroundColor: "#ffffff",
           }}
         >
-          {!isLoggedIn ? (
+          {!UiStore.isLogged ? (
             <Tab.Screen
               name="Add"
               component={AuthStackScreen}
@@ -78,4 +86,4 @@ export default function App() {
       </NavigationContainer>
     </Provider>
   );
-}
+});

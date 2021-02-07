@@ -1,10 +1,10 @@
 import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
 import * as SecureStore from "expo-secure-store";
+import { TOKEN_STORAGE_NAME } from "../variables";
 
 class UiStore {
   currentTagId: string | null = null;
-  token: string | null = null;
   currentReviewIndex: number = 0;
   isLoading = false;
   isLogged: boolean | null = false;
@@ -16,8 +16,8 @@ class UiStore {
   *setToken(value: string | null) {
     const available = yield SecureStore.isAvailableAsync();
     if (available && value) {
-      this.token = value;
-      yield SecureStore.setItemAsync("token", value);
+      yield SecureStore.setItemAsync(TOKEN_STORAGE_NAME, value);
+      this.setLogged(true);
     }
   }
 
@@ -30,33 +30,14 @@ class UiStore {
   }
 
   setLogged(value: boolean) {
-    this.isLogged = value;
-  }
+    console.log("fired", value);
 
-  *init() {
-    this.setLoading(true);
-    try {
-      const available = yield SecureStore.isAvailableAsync();
-      if (available) {
-        const token = yield SecureStore.getItemAsync("token");
-        if (token) {
-          this.setLogged(true);
-          this.setToken(token);
-        } else {
-          throw new Error();
-        }
-      }
-    } catch (error) {
-      this.setLogged(false);
-      console.log("Token was not found");
-    } finally {
-      this.setLoading(false);
-    }
+    this.isLogged = value;
+    console.log(this.isLogged);
   }
 
   *logout() {
-    this.setToken(null);
-    yield SecureStore.deleteItemAsync("token");
+    yield SecureStore.deleteItemAsync(TOKEN_STORAGE_NAME);
     this.setLogged(false);
   }
 

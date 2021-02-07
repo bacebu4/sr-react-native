@@ -32,7 +32,6 @@ export const AuthPasswordScreen: React.FC<Props> = ({ navigation, route }) => {
       }
 
       UiStore.setToken(result.data?.register);
-      UiStore.setLogged(true);
     } catch (error) {
       message(error.message);
       navigation.navigate("AuthEmail");

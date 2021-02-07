@@ -32,7 +32,6 @@ export const AuthLoginScreen: React.FC<Props> = observer(({ navigation }) => {
 
       if (result.data?.login) {
         UiStore.setToken(result.data?.login);
-        UiStore.setLogged(true);
       } else {
         throw new Error("You got it wrong!");
       }
