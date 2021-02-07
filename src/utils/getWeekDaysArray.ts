@@ -31,7 +31,7 @@ export interface Day {
 
 export function getWeekDaysArray(date: Date): Array<Day> {
   const weekDatesArray: Array<Day> = [];
-  const startOfWeekDate = startOfWeek(date);
+  const startOfWeekDate = startOfWeek(addDays(date, -1));
 
   for (let i = 1; i < 8; ++i) {
     const dayOfWeek = addDays(startOfWeekDate, i);
