@@ -15,9 +15,14 @@ class UiStore {
 
   *setToken(value: string | null) {
     const available = yield SecureStore.isAvailableAsync();
+
     if (available && value) {
       this.token = value;
       yield SecureStore.setItemAsync("token", value);
+    }
+
+    if (!value) {
+      yield SecureStore.deleteItemAsync("token");
     }
   }
 
@@ -40,14 +45,13 @@ class UiStore {
       if (available) {
         const token = yield SecureStore.getItemAsync("token");
         if (token) {
-          this.setLogged(true);
-          this.setToken(token);
+          this.login(token);
         } else {
           throw new Error();
         }
       }
     } catch (error) {
-      this.setLogged(false);
+      this.logout();
       console.log("Token was not found");
     } finally {
       this.setLoading(false);
@@ -55,9 +59,8 @@ class UiStore {
   }
 
   *logout() {
-    this.setLogged(false);
     this.setToken(null);
-    yield SecureStore.deleteItemAsync("token");
+    this.setLogged(false);
   }
 
   *login(token: string) {
