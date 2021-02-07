@@ -13,6 +13,7 @@ import { ReviewAmountStepper } from "./sections/ReviewAmountStepper";
 import { LanguageSwitcher } from "./sections/LanguageSwitcher";
 import { LegalInfo } from "./sections/LegalInfo";
 import { RestartTutorial } from "./sections/RestartTutorial";
+import { ScrollView } from "react-native-gesture-handler";
 
 interface Props {
   modalState: boolean;
@@ -42,26 +43,28 @@ export const SettingsModal: React.FC<Props> = observer(
         presentationStyle="formSheet"
       >
         <MainContainer>
-          <NavbarTopSecondary
-            title={t("Account preferences")}
-            handleNext={handleDone}
-            titleRight={t("Done")}
-            hasNoMargin
-          />
+          <ScrollView>
+            <NavbarTopSecondary
+              title={t("Account preferences")}
+              handleNext={handleDone}
+              titleRight={t("Done")}
+              hasNoMargin
+            />
 
-          <BaseInfo email={data?.info?.email} />
+            <BaseInfo email={data?.info?.email} />
 
-          <ReviewAmountStepper reviewAmount={data?.info?.reviewAmount} />
+            <ReviewAmountStepper reviewAmount={data?.info?.reviewAmount} />
 
-          <LanguageSwitcher />
+            <LanguageSwitcher />
 
-          <RestartTutorial />
+            <RestartTutorial />
 
-          <LegalInfo />
+            <LegalInfo />
 
-          <Container mt={64} isCentered>
-            <MainButton onPress={handleLogout} title="Sign Out" />
-          </Container>
+            <Container mt={64} mb={64} isCentered>
+              <MainButton onPress={handleLogout} title="Sign Out" />
+            </Container>
+          </ScrollView>
         </MainContainer>
       </Modal>
     );

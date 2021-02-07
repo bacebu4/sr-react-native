@@ -31,8 +31,7 @@ export const AuthLoginScreen: React.FC<Props> = observer(({ navigation }) => {
       const result = await login({ email, password });
 
       if (result.data?.login) {
-        UiStore.setToken(result.data?.login);
-        UiStore.setLogged(true);
+        await UiStore.login(result.data?.login);
       } else {
         throw new Error("You got it wrong!");
       }

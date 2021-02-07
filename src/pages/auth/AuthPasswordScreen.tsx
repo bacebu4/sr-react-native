@@ -31,8 +31,7 @@ export const AuthPasswordScreen: React.FC<Props> = ({ navigation, route }) => {
         throw new Error("You got it wrong! Try again");
       }
 
-      UiStore.setToken(result.data?.register);
-      UiStore.setLogged(true);
+      await UiStore.login(result.data?.register);
     } catch (error) {
       message(error.message);
       navigation.navigate("AuthEmail");

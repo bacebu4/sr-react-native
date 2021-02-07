@@ -60,6 +60,11 @@ class UiStore {
     yield SecureStore.deleteItemAsync("token");
   }
 
+  *login(token: string) {
+    this.setToken(token);
+    this.setLogged(true);
+  }
+
   constructor() {
     makeAutoObservable(this);
   }
