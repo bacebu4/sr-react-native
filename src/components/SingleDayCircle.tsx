@@ -66,8 +66,6 @@ function colorSwitcher(date: Date, reviewed: boolean | undefined) {
 }
 
 export const SingleDayCircle: React.FC<SingleDayCircleProps> = (props) => {
-  console.log(props.reviewHistoryThisWeek?.length);
-
   return (
     <View
       style={{
