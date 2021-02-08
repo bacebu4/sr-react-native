@@ -66,6 +66,7 @@ export type Info = {
 
 export type Query = {
   __typename?: 'Query';
+  /** Get note ids to display in review mode */
   dailyNotesIds?: Maybe<Array<Maybe<Scalars['String']>>>;
   notesBy?: Maybe<Array<Maybe<Note>>>;
   note?: Maybe<Note>;
@@ -160,11 +161,6 @@ export type MutationDeleteTagFromNoteArgs = {
 export type MutationDeleteCommentArgs = {
   commentId?: Maybe<Scalars['ID']>;
   noteId?: Maybe<Scalars['ID']>;
-};
-
-
-export type MutationUpdateReviewHistoryArgs = {
-  date?: Maybe<Scalars['String']>;
 };
 
 
@@ -401,9 +397,7 @@ export type UpdateReviewAmountMutation = (
   )> }
 );
 
-export type UpdateReviewHistoryMutationVariables = Exact<{
-  date: Scalars['String'];
-}>;
+export type UpdateReviewHistoryMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UpdateReviewHistoryMutation = (
@@ -718,8 +712,8 @@ export function useUpdateReviewAmountMutation() {
   return Urql.useMutation<UpdateReviewAmountMutation, UpdateReviewAmountMutationVariables>(UpdateReviewAmountDocument);
 };
 export const UpdateReviewHistoryDocument = gql`
-    mutation UpdateReviewHistory($date: String!) {
-  updateReviewHistory(date: $date) {
+    mutation UpdateReviewHistory {
+  updateReviewHistory {
     streak
     reviewed
     id

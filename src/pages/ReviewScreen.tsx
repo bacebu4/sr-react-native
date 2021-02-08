@@ -92,9 +92,7 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
       Haptics.notificationAsync("success" as Haptics.NotificationFeedbackType);
 
       if (!resultInfo.data?.info?.reviewed) {
-        updateReviewHistory({
-          date: format(Date.now(), "yyyy-MM-dd"),
-        });
+        updateReviewHistory();
       }
     }
 

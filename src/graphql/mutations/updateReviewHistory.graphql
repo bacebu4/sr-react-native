@@ -1,5 +1,5 @@
-mutation UpdateReviewHistory($date: String!) {
-  updateReviewHistory(date: $date) {
+mutation UpdateReviewHistory {
+  updateReviewHistory {
     streak
     reviewed
     id
