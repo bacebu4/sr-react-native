@@ -14,6 +14,8 @@ i18n.use(initReactI18next).init({
           "Configure how much highlights you want to see on a daily basis. The changes will be applied the next day.",
         "You don't have any highlights referred to this ,tag":
           "You don't have any highlights referred to this tag",
+        Dontforgetwhatyouread:
+          "Don’t forget what you read. Review your notes daily!",
       },
     },
     ru: {
@@ -71,6 +73,9 @@ i18n.use(initReactI18next).init({
           "У вас нет ни одной заметки относящейся к этому тегу",
         "You don't have any highlights referred to this book":
           "У вас нет ни одной заметки относящейся к этой книге",
+        Dontforgetwhatyouread:
+          "Не забывайте, что вы прочитали. Просматривайте свою подборку ежедневно!",
+        "Reviewing Goals": "Цели",
       },
     },
   },

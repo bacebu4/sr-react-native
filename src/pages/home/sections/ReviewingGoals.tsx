@@ -58,9 +58,9 @@ export const ReviewingGoals: React.FC = observer(() => {
         <BaseText
           color="gray"
           mt={16}
-          style={{ textAlign: "center", maxWidth: 300 }}
+          style={{ textAlign: "center", maxWidth: 350 }}
         >
-          Don’t forget what you read. Review your notes daily!
+          Dontforgetwhatyouread
         </BaseText>
       </Container>
 
