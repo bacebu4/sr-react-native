@@ -83,7 +83,7 @@ export const BaseText: React.FC<Props> = (props) => {
   );
 
   const TextComponentNotTranslated = (
-    <Text {...restProps} style={styles}>
+    <Text {...restProps} style={{ ...styles, ...style }}>
       {children}
     </Text>
   );

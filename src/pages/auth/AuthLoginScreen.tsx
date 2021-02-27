@@ -33,6 +33,7 @@ export const AuthLoginScreen: React.FC<Props> = observer(({ navigation }) => {
       if (result.data?.login) {
         await UiStore.login(result.data?.login);
       } else {
+        console.log(result);
         throw new Error("You got it wrong!");
       }
     } catch (error) {

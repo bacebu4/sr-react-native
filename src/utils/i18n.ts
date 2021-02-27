@@ -12,6 +12,8 @@ i18n.use(initReactI18next).init({
         Congrats: "Congratulations!",
         "Configure how much highlights you want to see on a daily basis":
           "Configure how much highlights you want to see on a daily basis. The changes will be applied the next day.",
+        "You don't have any highlights referred to this ,tag":
+          "You don't have any highlights referred to this tag",
       },
     },
     ru: {
@@ -19,7 +21,7 @@ i18n.use(initReactI18next).init({
         "Start review": "Просмотреть все",
         "Account preferences": "Настройки",
         Done: "Готово",
-        "Review Process Pending": "Ожидается что-то",
+        "Review Process Pending": "Просмотр сегодня",
         "Review mode": "Просмотр",
         Exit: "Выход",
         Save: "Сохранить",
@@ -64,6 +66,11 @@ i18n.use(initReactI18next).init({
         "Delete the tag globally?": "Удалить тег везде?",
         "Are you sure you want to delete the tag?":
           "Вы уверены что хотите удалить этот тег?",
+        "Do you want to delete it?": "Удалить?",
+        "You don't have any highlights referred to this ,tag":
+          "У вас нет ни одной заметки относящейся к этому тегу",
+        "You don't have any highlights referred to this book":
+          "У вас нет ни одной заметки относящейся к этой книге",
       },
     },
   },

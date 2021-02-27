@@ -1,17 +1,19 @@
+import { RouteProp } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import { MainContainer } from "../components/grid/MainContainer";
-import { Container } from "../components/grid/Container";
 import {
   ActivityIndicator,
   FlatList,
   Text,
   TouchableOpacity,
 } from "react-native";
-import { useNotesByQuery } from "../generated/graphql";
-import { Card } from "../components/CardNew";
 import { HomeStackParamList } from "src/stacks/HomeStackScreen";
-import { RouteProp } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { BaseImage } from "../components/BaseImage";
+import { BaseText } from "../components/BaseText";
+import { Card } from "../components/CardNew";
+import { Container } from "../components/grid/Container";
+import { MainContainer } from "../components/grid/MainContainer";
+import { useNotesByQuery } from "../generated/graphql";
 
 type Props = {
   route: RouteProp<HomeStackParamList, "By">;
@@ -38,6 +40,32 @@ export const ByScreen: React.FC<Props> = ({ route, navigation }) => {
       <MainContainer>
         <Container isCentered mt={400}>
           <ActivityIndicator size="large" />
+        </Container>
+      </MainContainer>
+    );
+  }
+
+  if (!data?.notesBy?.length) {
+    return (
+      <MainContainer>
+        <Container isCentered isCenteredY style={{ flex: 1 }}>
+          <BaseImage
+            source={require("../assets/empty_tags.png")}
+            w={153}
+            h={120}
+          />
+
+          <BaseText
+            fz={16}
+            mt={32}
+            color="gray"
+            style={{ textAlign: "center" }}
+          >
+            You don't have any highlights referred to this {type.toLowerCase()}
+          </BaseText>
+          <BaseText mt={16} isSerif isBold fz={18}>
+            Do you want to delete it?
+          </BaseText>
         </Container>
       </MainContainer>
     );
