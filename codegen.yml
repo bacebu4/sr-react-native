@@ -1,6 +1,8 @@
 overwrite: true
 schema: "http://192.168.1.70:3000/graphql"
-documents: "src/graphql/**/*.graphql"
+documents:
+  - "src/graphql/**/*.graphql"
+  - "src/**/*.tsx"
 generates:
   src/generated/graphql.tsx:
     plugins:
