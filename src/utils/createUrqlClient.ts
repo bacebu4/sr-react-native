@@ -92,8 +92,22 @@ export const createUrqlClient = (TOKEN: string) => {
             const { tagId } = variables;
             console.log("tagId", tagId);
 
+            cache.updateQuery<TagsQuery>(
+              { query: TagsDocument, variables: { type: "latest" } },
+              (data) => {
+                console.log(data);
+
+                if (data?.tags) {
+                  data.tags = data.tags.filter((t) => t?.id !== tagId);
+                }
+                return data;
+              }
+            );
+
             cache.updateQuery<TagsQuery>({ query: TagsDocument }, (data) => {
-              if (data && data.tags) {
+              console.log(data);
+
+              if (data?.tags) {
                 data.tags = data.tags.filter((t) => t?.id !== tagId);
               }
               return data;
@@ -115,6 +129,14 @@ export const createUrqlClient = (TOKEN: string) => {
               hue: hue as number,
               id: tagId as string,
             };
+
+            cache.updateQuery<TagsQuery>(
+              { query: TagsDocument, variables: { type: "latest" } },
+              (data) => {
+                data?.tags?.push(addedTag);
+                return data;
+              }
+            );
 
             return {
               __typename: "Note",
@@ -196,6 +218,14 @@ export const createUrqlClient = (TOKEN: string) => {
                 data?.tags?.push(addedTag);
                 return data;
               });
+
+              cache.updateQuery<TagsQuery>(
+                { query: TagsDocument, variables: { type: "latest" } },
+                (data) => {
+                  data?.tags?.push(addedTag);
+                  return data;
+                }
+              );
             },
             updateTag: (_, args, cache, __) => {
               const { name, hue, tagId } = args;
@@ -230,24 +260,39 @@ export const createUrqlClient = (TOKEN: string) => {
               );
 
               noteQueries.forEach((q) => {
-                const noteId = q!.arguments!.id;
-                cache.updateQuery<NoteQuery>(
-                  { query: NoteDocument, variables: { id: noteId } },
-                  (data) => {
-                    data!.note!.tags = data?.note?.tags?.filter(
-                      (t) => t?.id !== tagId
-                    );
-                    return data;
-                  }
-                );
+                const noteId = q?.arguments?.id;
+
+                if (noteId) {
+                  cache.updateQuery<NoteQuery>(
+                    { query: NoteDocument, variables: { id: noteId } },
+                    (data) => {
+                      if (data?.note?.tags) {
+                        data.note.tags = data.note.tags.filter(
+                          (t) => t?.id !== tagId
+                        );
+                      }
+                      return data;
+                    }
+                  );
+                }
               });
 
               cache.updateQuery<TagsQuery>({ query: TagsDocument }, (data) => {
-                if (data && data.tags) {
+                if (data?.tags) {
                   data.tags = data.tags.filter((t) => t?.id !== tagId);
                 }
                 return data;
               });
+
+              cache.updateQuery<TagsQuery>(
+                { query: TagsDocument, variables: { type: "Latest" } },
+                (data) => {
+                  if (data?.tags) {
+                    data.tags = data.tags.filter((t) => t?.id !== tagId);
+                  }
+                  return data;
+                }
+              );
             },
           },
         },
