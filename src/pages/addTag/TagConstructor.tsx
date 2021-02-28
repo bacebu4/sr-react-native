@@ -95,6 +95,8 @@ export const TagConstructor: React.FC<Props> = ({
         }
         if (noteId) {
           const tagId = uuidExpo();
+          console.log("new tag id", tagId);
+
           addNewTag({ noteId, tagId, name: tagName, hue });
           onTagName("");
           refreshHue();
