@@ -5,23 +5,10 @@ import { useNavigation } from "@react-navigation/native";
 
 import { useConfirm } from "../hooks/confirm.hook";
 import { PURPLE_COLOR } from "../utils/colors";
-import gql from "graphql-tag";
 import {
   useDeleteTagMutation,
   useDeleteBookMutation,
 } from "../generated/graphql";
-
-export const DELETE_TAG_MUTATION = gql`
-  mutation DeleteTag($tagId: ID!) {
-    deleteTag(tagId: $tagId)
-  }
-`;
-
-export const DELETE_BOOK_MUTATION = gql`
-  mutation DeleteBook($bookId: ID!) {
-    deleteBook(bookId: $bookId)
-  }
-`;
 
 interface Props {
   route: any;

@@ -1,4 +1,4 @@
-import { RouteProp } from "@react-navigation/native";
+import { RouteProp, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import {
@@ -13,7 +13,8 @@ import { BaseText } from "../components/BaseText";
 import { Card } from "../components/CardNew";
 import { Container } from "../components/grid/Container";
 import { MainContainer } from "../components/grid/MainContainer";
-import { useNotesByQuery } from "../generated/graphql";
+import { useNotesByQuery, useDeleteTagMutation } from "../generated/graphql";
+import { useConfirm } from "../hooks/confirm.hook";
 
 type Props = {
   route: RouteProp<HomeStackParamList, "By">;
@@ -24,6 +25,18 @@ export const ByScreen: React.FC<Props> = ({ route, navigation }) => {
   const { id, type } = route.params;
   const [result] = useNotesByQuery({ variables: { id, type } });
   const { data, fetching, error } = result;
+  const [, deleteTag] = useDeleteTagMutation();
+  const confirm = useConfirm();
+
+  function handleDelete() {
+    confirm(() => {
+      deleteTag({
+        tagId: id,
+      });
+
+      navigation.navigate("Home");
+    }, "Delete this tag?");
+  }
 
   if (error) {
     return (
@@ -63,7 +76,7 @@ export const ByScreen: React.FC<Props> = ({ route, navigation }) => {
           >
             You don't have any highlights referred to this {type.toLowerCase()}
           </BaseText>
-          <BaseText mt={16} isSerif isBold fz={18}>
+          <BaseText mt={16} isSerif isBold fz={18} onPress={handleDelete}>
             Do you want to delete it?
           </BaseText>
         </Container>
