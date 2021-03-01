@@ -130,19 +130,13 @@ export const createUrqlClient = (TOKEN: string) => {
               id: tagId as string,
             };
 
-            cache.updateQuery<TagsQuery>(
-              { query: TagsDocument, variables: { type: "latest" } },
-              (data) => {
-                data?.tags?.push(addedTag);
-                return data;
-              }
-            );
-
-            return {
-              __typename: "Note",
-              id: variables.noteId,
-              tags: [...cachedTagsFromNote!, addedTag],
-            } as any;
+            if (cachedTagsFromNote) {
+              return {
+                __typename: "Note",
+                id: variables.noteId,
+                tags: [...cachedTagsFromNote, addedTag],
+              } as any;
+            }
           },
           deleteTagFromNote: (variables, cache, _) => {
             const cachedTagsFromNote = cache.readQuery<NoteQuery>({
