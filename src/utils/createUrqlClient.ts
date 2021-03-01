@@ -293,7 +293,7 @@ export const createUrqlClient = (TOKEN: string) => {
               });
 
               cache.updateQuery<TagsQuery>(
-                { query: TagsDocument, variables: { type: "Latest" } },
+                { query: TagsDocument, variables: { type: "latest" } },
                 (data) => {
                   if (data?.tags) {
                     data.tags = data.tags.filter((t) => t?.id !== tagId);
