@@ -90,13 +90,10 @@ export const createUrqlClient = (TOKEN: string) => {
           },
           deleteTag: (variables, cache, _) => {
             const { tagId } = variables;
-            console.log("tagId", tagId);
 
             cache.updateQuery<TagsQuery>(
               { query: TagsDocument, variables: { type: "latest" } },
               (data) => {
-                console.log(data);
-
                 if (data?.tags) {
                   data.tags = data.tags.filter((t) => t?.id !== tagId);
                 }
@@ -105,8 +102,6 @@ export const createUrqlClient = (TOKEN: string) => {
             );
 
             cache.updateQuery<TagsQuery>({ query: TagsDocument }, (data) => {
-              console.log(data);
-
               if (data?.tags) {
                 data.tags = data.tags.filter((t) => t?.id !== tagId);
               }
