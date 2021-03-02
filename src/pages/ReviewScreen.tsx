@@ -17,19 +17,17 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { HomeStackParamList } from "src/stacks/HomeStackScreen";
 import { UiStoreContext } from "../utils/UiStore";
 
-let AMOUNT = 1;
-let maxIndex = 0;
-
 const renderScene: React.FC<
   SceneRendererProps & {
     route: {
       key: any;
       title: any;
       noteId: string;
+      amount: number;
     };
   }
 > = ({ route, jumpTo }) => {
-  if (Number(route.key) > AMOUNT) {
+  if (Number(route.key) > route.amount) {
     return <ReviewFinalScreen jumpTo={jumpTo} />;
   }
 
@@ -47,6 +45,7 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
   const { data, fetching } = result;
   const [resultInfo] = useInfoQuery();
   const [index, setIndex] = React.useState(0);
+  const [maxIndex, setMaxIndex] = React.useState(0);
 
   const handleNextSlide = () => {
     setIndex((prev) => prev + 1);
@@ -62,10 +61,6 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
     );
   }
 
-  useEffect(() => {
-    AMOUNT = Number(data?.dailyNotesIds?.length);
-  }, []);
-
   const generateRoutes = useMemo(() => {
     const initialRoutes = [];
 
@@ -76,12 +71,14 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
         noteId: data?.dailyNotesIds![i - 1]
           ? (data!.dailyNotesIds![i - 1]! as string)
           : "",
+        amount: data?.dailyNotesIds?.length || 1,
       });
     }
     initialRoutes.push({
       key: String(data?.dailyNotesIds?.length! + 1),
       title: String(data?.dailyNotesIds?.length! + 1),
       noteId: "",
+      amount: data?.dailyNotesIds?.length || 1,
     });
     return initialRoutes;
   }, [data?.dailyNotesIds?.length, fetching]);
@@ -96,7 +93,7 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
     }
 
     if (index > maxIndex) {
-      maxIndex = index;
+      setMaxIndex(index);
       UiStore.setCurrentReviewIndex(index);
     }
   }, [index]);
@@ -109,8 +106,8 @@ export const ReviewScreen: React.FC<Props> = observer(({ navigation }) => {
         title={"Review mode"}
         handleNext={handleNextSlide}
         handleClick={() => navigation.navigate("Home")}
-        index={AMOUNT - index}
-        amount={AMOUNT}
+        index={data?.dailyNotesIds?.length! - index}
+        amount={data?.dailyNotesIds?.length!}
       />
       <TabView
         navigationState={{ index, routes }}
