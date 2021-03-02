@@ -6,7 +6,7 @@ import { Title } from "./Title";
 import { observer } from "mobx-react-lite";
 import { Container } from "./grid/Container";
 import { UiStoreContext } from "../utils/UiStore";
-import { useInfoQuery } from "../generated/graphql";
+import { useInfoQuery, useDailyNotesIdsQuery } from "../generated/graphql";
 import { BaseImage } from "./BaseImage";
 import { PURPLE_COLOR } from "../utils/colors";
 import { BaseText } from "./BaseText";
@@ -20,22 +20,29 @@ export const Navbar: React.FC<Props> = observer(({ title, handleClick }) => {
   const UiStore = useContext(UiStoreContext);
   const [result] = useInfoQuery();
   const { data, fetching, error } = result;
+  const [
+    {
+      data: dailyNotesData,
+      fetching: dailyNotesFetching,
+      error: dailyNotesError,
+    },
+  ] = useDailyNotesIdsQuery();
 
   if (error?.graphQLErrors[0].message === "invalid user") {
     UiStore.logout();
   }
 
-  if (error) {
+  if (error || dailyNotesError) {
     return (
       <Container isCentered>
         <BaseText color="gray" fz={14}>
-          {error.message}
+          {error?.message}
         </BaseText>
       </Container>
     );
   }
 
-  if (fetching) {
+  if (fetching || dailyNotesFetching) {
     return (
       <Container isCentered>
         <ActivityIndicator size="large" />
@@ -71,7 +78,9 @@ export const Navbar: React.FC<Props> = observer(({ title, handleClick }) => {
           percent={
             data?.info?.reviewed
               ? 100
-              : (UiStore.currentReviewIndex / data?.info?.reviewAmount!) * 100
+              : (UiStore.currentReviewIndex /
+                  dailyNotesData?.dailyNotesIds?.length!) *
+                100
           }
           radius={10}
           borderWidth={4}
@@ -80,7 +89,8 @@ export const Navbar: React.FC<Props> = observer(({ title, handleClick }) => {
           bgColor="#fff"
         />
 
-        {(UiStore.currentReviewIndex / data?.info?.reviewAmount!) * 100 !==
+        {(UiStore.currentReviewIndex / dailyNotesData?.dailyNotesIds?.length!) *
+          100 !==
           100 && !data?.info?.reviewed ? (
           <BaseText color="purple" ml={16} isBold>
             Review Process Pending

@@ -5,7 +5,10 @@ import { Title } from "../../../components/Title";
 import { useTranslation } from "react-i18next";
 import { GRAY_COLOR, PURPLE_COLOR } from "../../../utils/colors";
 import { BaseText } from "../../../components/BaseText";
-import { useInfoQuery } from "../../../generated/graphql";
+import {
+  useInfoQuery,
+  useDailyNotesIdsQuery,
+} from "../../../generated/graphql";
 import ProgressCircle from "react-native-progress-circle";
 import { observer } from "mobx-react-lite";
 import { UiStoreContext } from "../../../utils/UiStore";
@@ -15,12 +18,19 @@ import { WeekView } from "../../../components/WeekView";
 
 export const ReviewingGoals: React.FC = observer(() => {
   const [result] = useInfoQuery();
+  const [
+    {
+      data: dailyNotesData,
+      fetching: dailyNotesFetching,
+      error: dailyNotesError,
+    },
+  ] = useDailyNotesIdsQuery();
   const { data, error, fetching } = result;
   const { t } = useTranslation();
   const UiStore = useContext(UiStoreContext);
   const navigation = useNavigation();
 
-  if (error) {
+  if (error || dailyNotesError) {
     return (
       <Container isCentered mt={400}>
         <Text>{error.message}</Text>
@@ -28,7 +38,7 @@ export const ReviewingGoals: React.FC = observer(() => {
     );
   }
 
-  if (fetching) {
+  if (fetching || dailyNotesFetching) {
     return (
       <Container isCentered mt={400}>
         <ActivityIndicator size="large" />
@@ -69,7 +79,9 @@ export const ReviewingGoals: React.FC = observer(() => {
           percent={
             data?.info?.reviewed
               ? 100
-              : (UiStore.currentReviewIndex / data?.info?.reviewAmount!) * 100
+              : (UiStore.currentReviewIndex /
+                  dailyNotesData?.dailyNotesIds?.length!) *
+                100
           }
           radius={120}
           borderWidth={32}
