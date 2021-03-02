@@ -33,7 +33,7 @@ export const ReviewingGoals: React.FC = observer(() => {
   if (error || dailyNotesError) {
     return (
       <Container isCentered mt={400}>
-        <Text>{error.message}</Text>
+        <Text>{error?.message}</Text>
       </Container>
     );
   }
