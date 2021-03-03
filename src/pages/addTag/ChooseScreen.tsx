@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { GestureResponderEvent, Text, ActivityIndicator } from "react-native";
 import { Container } from "../../components/grid/Container";
 import { TagContainer } from "../../components/grid/TagContainer";
@@ -39,6 +39,17 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
     // @ts-ignore
     handleCancel();
   };
+
+  const availableTags = useMemo(() => {
+    return data?.tags?.filter((tag) => {
+      const findResults = note?.tags?.find((t) => t?.id === tag?.id);
+
+      if (!findResults) {
+        return true;
+      }
+      return false;
+    });
+  }, [data, note]);
 
   const Header = (
     <>
@@ -86,32 +97,22 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
       {showAddSheet ? (
         <>
           {Header}
-          {data?.tags?.length ? (
-            <>
-              <Container>
-                <TagContainer>
-                  {/* TODO getter for note tags */}
-                  {/* @ts-ignore */}
-                  {data!.tags.map((tag) => {
-                    const findResults = note?.tags?.find(
-                      (t) => t?.id === tag?.id
-                    );
-
-                    if (!findResults) {
-                      return (
-                        <Tag
-                          title={tag?.name}
-                          hue={tag?.hue}
-                          key={tag?.id}
-                          style={{ marginRight: 16, marginTop: 24 }}
-                          onPress={() => handleSubmitFromExisting(tag!.id)}
-                        />
-                      );
-                    }
-                  })}
-                </TagContainer>
-              </Container>
-            </>
+          {availableTags?.length ? (
+            <Container>
+              <TagContainer>
+                {availableTags.map((tag) => {
+                  return (
+                    <Tag
+                      title={tag?.name}
+                      hue={tag?.hue}
+                      key={tag?.id}
+                      style={{ marginRight: 16, marginTop: 24 }}
+                      onPress={() => handleSubmitFromExisting(tag!.id)}
+                    />
+                  );
+                })}
+              </TagContainer>
+            </Container>
           ) : (
             // empty state
             <Container isCentered mt={44}>
@@ -121,7 +122,7 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
                 source={require("../../assets/empty_tags.png")}
               />
               <BaseText color="gray" fz={14} mt={16}>
-                No tags created yet
+                No tags to choose from
               </BaseText>
             </Container>
           )}
