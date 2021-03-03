@@ -132,7 +132,6 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
         )}
         <View style={{ marginTop: dense ? 0 : 16 }}>
           <Text style={styles.noteText}>
-            {/* TODO how safe it is? */}
             {note?.text.replace(/\&nbsp;/g, " ")}
           </Text>
         </View>
