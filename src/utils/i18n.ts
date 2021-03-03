@@ -76,6 +76,11 @@ i18n.use(initReactI18next).init({
         Dontforgetwhatyouread:
           "Не забывайте, что вы прочитали. Просматривайте свою подборку ежедневно!",
         "Reviewing Goals": "Цели",
+        "Choose from existing": "Выберите",
+        Create: "Создать",
+        "No tags to choose from":
+          "У вас пока нет тегов, из которых вы можете выбрать",
+        "Create a new one?": "Создать новый?",
       },
     },
   },
