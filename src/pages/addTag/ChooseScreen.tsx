@@ -21,17 +21,17 @@ interface Props {
 }
 
 export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
-  const [showAddSheet, setShowAddSheet] = useState(true);
+  const [showCreateTag, setShowCreateTag] = useState(false);
   const [, addExistingTag] = useAddExistingTagMutation();
   const [result] = useTagsQuery();
   const { data, fetching, error } = result;
 
   const handleShowCreate = () => {
-    setShowAddSheet(false);
+    setShowCreateTag(true);
   };
 
   const handleBack = () => {
-    setShowAddSheet(true);
+    setShowCreateTag(false);
   };
 
   const handleSubmitFromExisting = (tagId: string) => {
@@ -65,75 +65,71 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
     </>
   );
 
-  if (error) {
-    if (showAddSheet) {
-      return (
-        <MainContainer>
-          {Header}
-          <Container isCentered mt={400}>
-            <Text>{error.message}</Text>
-          </Container>
-        </MainContainer>
-      );
-    }
-  }
-
-  if (fetching) {
-    if (showAddSheet) {
-      return (
-        <MainContainer>
-          {Header}
-          <Container isCentered mt={400}>
-            <ActivityIndicator size="large" />
-          </Container>
-        </MainContainer>
-      );
-    }
-  }
-
-  // TODO better returns
-  return (
-    <MainContainer>
-      {showAddSheet ? (
-        <>
-          {Header}
-          {availableTags?.length ? (
-            <Container>
-              <TagContainer>
-                {availableTags.map((tag) => {
-                  return (
-                    <Tag
-                      title={tag?.name}
-                      hue={tag?.hue}
-                      key={tag?.id}
-                      style={{ marginRight: 16, marginTop: 24 }}
-                      onPress={() => handleSubmitFromExisting(tag!.id)}
-                    />
-                  );
-                })}
-              </TagContainer>
-            </Container>
-          ) : (
-            // empty state
-            <Container isCentered mt={44}>
-              <BaseImage
-                w={153}
-                h={120}
-                source={require("../../assets/empty_tags.png")}
-              />
-              <BaseText color="gray" fz={14} mt={16}>
-                No tags to choose from
-              </BaseText>
-            </Container>
-          )}
-        </>
-      ) : (
-        // adding new tag
+  if (showCreateTag) {
+    return (
+      <MainContainer>
         <TagConstructor
           handleBack={handleBack}
           handleClose={handleCancel}
           noteId={note?.id}
         />
+      </MainContainer>
+    );
+  }
+
+  if (error) {
+    return (
+      <MainContainer>
+        {Header}
+        <Container isCentered mt={400}>
+          <Text>{error.message}</Text>
+        </Container>
+      </MainContainer>
+    );
+  }
+
+  if (fetching) {
+    return (
+      <MainContainer>
+        {Header}
+        <Container isCentered mt={400}>
+          <ActivityIndicator size="large" />
+        </Container>
+      </MainContainer>
+    );
+  }
+
+  return (
+    <MainContainer>
+      {Header}
+      {availableTags?.length ? (
+        <Container>
+          <TagContainer>
+            {availableTags.map((tag) => {
+              return (
+                <Tag
+                  title={tag?.name}
+                  hue={tag?.hue}
+                  key={tag?.id}
+                  style={{ marginRight: 16, marginTop: 24 }}
+                  onPress={() => handleSubmitFromExisting(tag!.id)}
+                />
+              );
+            })}
+          </TagContainer>
+        </Container>
+      ) : (
+        // empty state
+        <Container isCentered mt={44}>
+          <BaseImage
+            w={153}
+            h={120}
+            source={require("../../assets/empty_tags.png")}
+          />
+          <BaseText color="gray" fz={14} mt={16}>
+            No tags to choose from
+          </BaseText>
+        </Container>
       )}
     </MainContainer>
   );
