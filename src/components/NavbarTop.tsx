@@ -5,6 +5,7 @@ import { Title } from "./Title";
 import { BaseImage } from "./BaseImage";
 import { Container } from "./grid/Container";
 import { BaseText } from "./BaseText";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   handleClick?: ((event: GestureResponderEvent) => void) | undefined;
@@ -23,6 +24,7 @@ export const NavbarTop: React.FC<Props> = ({
   hasNoMargin = false,
   title = "Default",
 }) => {
+  const { t } = useTranslation();
   return (
     <Container
       isRow
@@ -43,7 +45,7 @@ export const NavbarTop: React.FC<Props> = ({
         )}
       </TouchableOpacity>
 
-      <Title type="small" title={title} numberOfLines={1} />
+      <Title type="small" title={t(title)} numberOfLines={1} />
 
       {handleNext ? (
         <BaseText color="purple" isBold mt={4} onPress={handleNext}>
