@@ -126,7 +126,7 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
             h={120}
             source={require("../../assets/empty_tags.png")}
           />
-          <BaseText color="gray" fz={14} mt={16}>
+          <BaseText color="gray" fz={14} mt={16} isCentered>
             No tags to choose from
           </BaseText>
           <BaseText mt={16} isSerif isBold fz={18} onPress={handleShowCreate}>

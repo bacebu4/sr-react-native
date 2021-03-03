@@ -65,11 +65,7 @@ export const ReviewingGoals: React.FC = observer(() => {
       />
       <Container isCentered>
         <Title title={t("Reviewing Goals")} />
-        <BaseText
-          color="gray"
-          mt={16}
-          style={{ textAlign: "center", maxWidth: 350 }}
-        >
+        <BaseText color="gray" mt={16} isCentered style={{ maxWidth: 350 }}>
           Dontforgetwhatyouread
         </BaseText>
       </Container>
@@ -102,7 +98,8 @@ export const ReviewingGoals: React.FC = observer(() => {
         <BaseText
           isSerif
           fz={24}
-          style={{ textAlign: "center", maxWidth: 300 }}
+          isCentered
+          style={{ maxWidth: 300 }}
           shouldNotTranslate
         >
           You have {data?.info?.streak} days in a row

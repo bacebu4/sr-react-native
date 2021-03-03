@@ -36,6 +36,7 @@ interface Props extends TextProps {
   fz?: number;
   style?: TextStyle;
   isBold?: boolean;
+  isCentered?: boolean;
   isUppercase?: boolean;
   isSerif?: boolean;
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
@@ -44,24 +45,23 @@ interface Props extends TextProps {
   children: React.ReactNode;
 }
 
-export const BaseText: React.FC<Props> = (props) => {
-  const {
-    mt,
-    mb,
-    ml,
-    mr,
-    fz,
-    isBold,
-    isSerif,
-    isUppercase,
-    onPress,
-    color,
-    shouldNotTranslate,
-    children,
-    style,
-    ...restProps
-  } = props;
-
+export const BaseText: React.FC<Props> = ({
+  mt,
+  mb,
+  ml,
+  mr,
+  fz,
+  isBold,
+  isSerif,
+  isUppercase,
+  onPress,
+  color,
+  shouldNotTranslate,
+  children,
+  isCentered,
+  style,
+  ...restProps
+}) => {
   const { t } = useTranslation();
 
   const styles: StyleProp<TextStyle> = {
@@ -74,10 +74,11 @@ export const BaseText: React.FC<Props> = (props) => {
     fontFamily: isSerif ? "Cochin" : undefined,
     color: colorSwitch(color),
     textTransform: isUppercase ? "uppercase" : undefined,
+    textAlign: isCentered === true ? "center" : "left",
   };
 
   const TextComponentTranslated = (
-    <Text {...restProps} style={{ ...styles, ...style }}>
+    <Text style={{ ...styles, ...style }} {...restProps}>
       {t(String(children))}
     </Text>
   );

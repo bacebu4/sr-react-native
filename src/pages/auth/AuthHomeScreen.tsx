@@ -21,13 +21,7 @@ export const AuthHomeScreen: React.FC<Props> = ({ navigation }) => {
     <MainContainer isCentered>
       <Container isCentered>
         <BaseImage w={315} h={250} source={require("../../assets/login.png")} />
-        <BaseText
-          mt={44}
-          fz={45}
-          isBold
-          isSerif
-          style={{ textAlign: "center" }}
-        >
+        <BaseText mt={44} fz={45} isBold isSerif isCentered>
           Remember what you read
         </BaseText>
         <Container mt={74} style={{ marginHorizontal: 80 }}>

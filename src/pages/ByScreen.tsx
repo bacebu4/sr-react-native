@@ -68,12 +68,7 @@ export const ByScreen: React.FC<Props> = ({ route, navigation }) => {
             h={120}
           />
 
-          <BaseText
-            fz={16}
-            mt={32}
-            color="gray"
-            style={{ textAlign: "center" }}
-          >
+          <BaseText fz={16} mt={32} color="gray" isCentered>
             You don't have any highlights referred to this {type.toLowerCase()}
           </BaseText>
           <BaseText mt={16} isSerif isBold fz={18} onPress={handleDelete}>
