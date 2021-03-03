@@ -129,6 +129,9 @@ export const ChooseScreen: React.FC<Props> = ({ handleCancel, note }) => {
           <BaseText color="gray" fz={14} mt={16}>
             No tags to choose from
           </BaseText>
+          <BaseText mt={16} isSerif isBold fz={18} onPress={handleShowCreate}>
+            Create a new one?
+          </BaseText>
         </Container>
       )}
     </MainContainer>
