@@ -54,9 +54,11 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
 
   const onShare = async () => {
     try {
-      await Share.share({
-        message: note!.text.replace(/\&nbsp;/g, " "),
-      });
+      if (note?.text) {
+        await Share.share({
+          message: note?.text.split("&nbsp;").join(" "),
+        });
+      }
     } catch (error) {
       message(error.message);
     }
@@ -132,7 +134,7 @@ export const Card: React.FC<Props> = ({ note, dense = false }) => {
         )}
         <View style={{ marginTop: dense ? 0 : 16 }}>
           <Text style={styles.noteText}>
-            {note?.text.replace(/\&nbsp;/g, " ")}
+            {note?.text.split("&nbsp;").join(" ")}
           </Text>
         </View>
         <ActionSheet
