@@ -25,8 +25,8 @@ export const MoreButton: React.FC<Props> = ({ route }) => {
     switch (type) {
       case "Book":
         confirm(
-          () => {
-            deleteBook({ bookId: id });
+          async () => {
+            await deleteBook({ bookId: id });
             navigation.navigate("Home");
           },
           "Delete the book?",

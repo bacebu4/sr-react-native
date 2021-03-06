@@ -11,6 +11,10 @@ import {
   Tag,
   InfoQuery,
   InfoDocument,
+  BooksQuery,
+  LatestBooksQuery,
+  BooksDocument,
+  LatestBooksDocument,
 } from "../generated/graphql";
 
 export const createUrqlClient = (TOKEN: string) => {
@@ -209,6 +213,55 @@ export const createUrqlClient = (TOKEN: string) => {
         },
         updates: {
           Mutation: {
+            deleteBook: (_, { bookId }, cache) => {
+              const allFields = cache.inspectFields("Query");
+
+              const notesByQueries = allFields.filter(
+                (x) => x.fieldName === "notesBy"
+              );
+              notesByQueries.forEach((x) => {
+                if (x?.arguments?.type === "tag") {
+                  cache.invalidate("Query", "notesBy", x.arguments);
+                }
+              });
+
+              const dailyNotesIdsQueries = allFields.filter(
+                (x) => x.fieldName === "dailyNotesIds"
+              );
+              dailyNotesIdsQueries.forEach((x) =>
+                cache.invalidate(
+                  "Query",
+                  "dailyNotesIds",
+                  x.arguments ?? undefined
+                )
+              );
+
+              cache.updateQuery<BooksQuery>(
+                { query: BooksDocument },
+                (data) => {
+                  if (data?.books) {
+                    data.books = data.books.filter(
+                      (book) => book?.id !== bookId
+                    );
+                    return data;
+                  }
+                  return data;
+                }
+              );
+
+              cache.updateQuery<LatestBooksQuery>(
+                { query: LatestBooksDocument },
+                (data) => {
+                  if (data?.latestBooks) {
+                    data.latestBooks = data.latestBooks.filter(
+                      (book) => book?.id !== bookId
+                    );
+                    return data;
+                  }
+                  return data;
+                }
+              );
+            },
             addNewTag: (_, args, cache, __) => {
               const { name, hue, tagId } = args;
 

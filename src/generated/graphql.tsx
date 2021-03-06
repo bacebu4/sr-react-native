@@ -22,6 +22,7 @@ export type Scalars = {
 export type Note = {
   __typename?: 'Note';
   id: Scalars['ID'];
+  bookId: Scalars['ID'];
   text: Scalars['String'];
   title: Scalars['String'];
   author: Scalars['String'];
