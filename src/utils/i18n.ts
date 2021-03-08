@@ -81,6 +81,13 @@ i18n.use(initReactI18next).init({
         "No tags to choose from":
           "У вас пока нет тегов, из которых вы можете выбрать",
         "Create a new one?": "Создать новый?",
+        Mon: "Пн",
+        Tue: "Вт",
+        Wed: "Ср",
+        Thu: "Чт",
+        Fri: "Пт",
+        Sat: "Сб",
+        Sun: "Вс",
       },
     },
   },
