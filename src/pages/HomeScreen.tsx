@@ -37,8 +37,8 @@ export const HomeScreen = () => {
   const UiStore = useContext(UiStoreContext);
   const [refreshing, setRefreshing] = useState(false);
   const [modalSettings, setModalSettings] = useState(false);
-  const [result] = useHomeScreenQuery();
-  const { data, fetching, error } = result;
+  const [result, reexecuteHomeScreenQuery] = useHomeScreenQuery();
+  const { data, error } = result;
 
   const closeSettings = () => {
     setModalSettings(false);
@@ -48,13 +48,16 @@ export const HomeScreen = () => {
     setModalSettings(true);
   };
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
+    await reexecuteHomeScreenQuery({ requestPolicy: "network-only" });
     setRefreshing(false);
-    // NotesStore.fetchHighlights().then(() => setRefreshing(false));
   }, []);
 
-  if (error?.graphQLErrors[0].message === "invalid user") {
+  if (
+    error?.graphQLErrors.length &&
+    error?.graphQLErrors[0]?.message === "invalid user"
+  ) {
     UiStore.logout();
   }
 
@@ -66,50 +69,50 @@ export const HomeScreen = () => {
     );
   }
 
-  if (fetching) {
+  if (data) {
     return (
-      <Container isCentered mt={400}>
-        <ActivityIndicator size="large" />
-      </Container>
+      <>
+        <SettingsModal
+          modalState={modalSettings}
+          setModalState={setModalSettings}
+          handleDone={closeSettings}
+        />
+
+        <MainContainer>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
+            <Navbar
+              info={data?.info}
+              dailyNotesIds={data?.dailyNotesIds}
+              title="Book stash"
+              handleClick={openSettings}
+            />
+
+            <MainHighlight
+              noteId={
+                data && data.dailyNotesIds?.length
+                  ? data.dailyNotesIds[0]
+                  : undefined
+              }
+            />
+
+            <LatestBooks />
+
+            <LatestTags />
+
+            <ReviewingGoals />
+          </ScrollView>
+        </MainContainer>
+      </>
     );
   }
 
   return (
-    <>
-      <SettingsModal
-        modalState={modalSettings}
-        setModalState={setModalSettings}
-        handleDone={closeSettings}
-      />
-
-      <MainContainer>
-        <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
-          <Navbar
-            info={data?.info}
-            dailyNotesIds={data?.dailyNotesIds}
-            title="Book stash"
-            handleClick={openSettings}
-          />
-
-          <MainHighlight
-            noteId={
-              data && data.dailyNotesIds?.length
-                ? data.dailyNotesIds[0]
-                : undefined
-            }
-          />
-
-          <LatestBooks />
-
-          <LatestTags />
-
-          <ReviewingGoals />
-        </ScrollView>
-      </MainContainer>
-    </>
+    <Container isCentered mt={400}>
+      <ActivityIndicator size="large" />
+    </Container>
   );
 };
