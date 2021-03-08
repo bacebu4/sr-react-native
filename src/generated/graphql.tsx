@@ -22,7 +22,6 @@ export type Scalars = {
 export type Note = {
   __typename?: 'Note';
   id: Scalars['ID'];
-  bookId: Scalars['ID'];
   text: Scalars['String'];
   title: Scalars['String'];
   author: Scalars['String'];
@@ -559,6 +558,18 @@ export type TagsQuery = (
   )>>> }
 );
 
+export type HomeScreenQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type HomeScreenQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'dailyNotesIds'>
+  & { info?: Maybe<(
+    { __typename?: 'Info' }
+    & Pick<Info, 'reviewAmount' | 'email' | 'latestReviewDate' | 'streakBeginningDate' | 'missed' | 'reviewed' | 'streak' | 'id'>
+  )> }
+);
+
 
 export const AddCommentDocument = gql`
     mutation AddComment($noteId: ID!, $commentId: ID!, $text: String!) {
@@ -899,4 +910,23 @@ export const TagsDocument = gql`
 
 export function useTagsQuery(options: Omit<Urql.UseQueryArgs<TagsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<TagsQuery>({ query: TagsDocument, ...options });
+};
+export const HomeScreenDocument = gql`
+    query HomeScreen {
+  info {
+    reviewAmount
+    email
+    latestReviewDate
+    streakBeginningDate
+    missed
+    reviewed
+    streak
+    id
+  }
+  dailyNotesIds
+}
+    `;
+
+export function useHomeScreenQuery(options: Omit<Urql.UseQueryArgs<HomeScreenQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<HomeScreenQuery>({ query: HomeScreenDocument, ...options });
 };

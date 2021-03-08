@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   ScrollView,
   RefreshControl,
@@ -11,14 +11,33 @@ import { Container } from "../components/grid/Container";
 import { SettingsModal } from "./settings/SettingsModal";
 import { MainHighlight } from "../components/MainHighlight";
 import { LatestBooks } from "../components/LatestBooks";
-import { useDailyNotesIdsQuery } from "../generated/graphql";
+import { useHomeScreenQuery } from "../generated/graphql";
 import { LatestTags } from "../components/LatestTags";
 import { ReviewingGoals } from "./home/sections/ReviewingGoals";
+import gql from "graphql-tag";
+import { UiStoreContext } from "../utils/UiStore";
+
+export const HOME_SCREEN_QUERY = gql`
+  query HomeScreen {
+    info {
+      reviewAmount
+      email
+      latestReviewDate
+      streakBeginningDate
+      missed
+      reviewed
+      streak
+      id
+    }
+    dailyNotesIds
+  }
+`;
 
 export const HomeScreen = () => {
+  const UiStore = useContext(UiStoreContext);
   const [refreshing, setRefreshing] = useState(false);
   const [modalSettings, setModalSettings] = useState(false);
-  const [result] = useDailyNotesIdsQuery();
+  const [result] = useHomeScreenQuery();
   const { data, fetching, error } = result;
 
   const closeSettings = () => {
@@ -34,6 +53,10 @@ export const HomeScreen = () => {
     setRefreshing(false);
     // NotesStore.fetchHighlights().then(() => setRefreshing(false));
   }, []);
+
+  if (error?.graphQLErrors[0].message === "invalid user") {
+    UiStore.logout();
+  }
 
   if (error) {
     return (
@@ -57,7 +80,7 @@ export const HomeScreen = () => {
         modalState={modalSettings}
         setModalState={setModalSettings}
         handleDone={closeSettings}
-      ></SettingsModal>
+      />
 
       <MainContainer>
         <ScrollView
@@ -65,9 +88,20 @@ export const HomeScreen = () => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          <Navbar title="Book stash" handleClick={openSettings} />
+          <Navbar
+            info={data?.info}
+            dailyNotesIds={data?.dailyNotesIds}
+            title="Book stash"
+            handleClick={openSettings}
+          />
 
-          <MainHighlight noteId={data?.dailyNotesIds![0]!} />
+          <MainHighlight
+            noteId={
+              data && data.dailyNotesIds?.length
+                ? data.dailyNotesIds[0]
+                : undefined
+            }
+          />
 
           <LatestBooks />
 
