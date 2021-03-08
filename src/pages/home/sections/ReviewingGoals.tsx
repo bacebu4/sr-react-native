@@ -85,15 +85,25 @@ export const ReviewingGoals: React.FC<ReviewingGoalsProps> = observer(
           </ProgressCircle>
         </Container>
 
-        <Container isCentered mt={32}>
-          <BaseText
-            isSerif
-            fz={24}
-            isCentered
-            style={{ maxWidth: 300 }}
-            shouldNotTranslate
-          >
-            You have {info?.streak} days in a row
+        <Container
+          style={{ flexDirection: "row", justifyContent: "center" }}
+          isCentered
+          mt={32}
+        >
+          <BaseText isSerif fz={24}>
+            You've been on the track for
+          </BaseText>
+          <BaseText isSerif fz={24}>
+            {" "}
+          </BaseText>
+          <BaseText isSerif fz={24}>
+            {info?.streak}
+          </BaseText>
+          <BaseText isSerif fz={24}>
+            {" "}
+          </BaseText>
+          <BaseText isSerif fz={24}>
+            {info?.streak === 1 ? "day" : "days"}
           </BaseText>
         </Container>
 
