@@ -3,7 +3,7 @@ import * as Haptics from "expo-haptics";
 import { observer } from "mobx-react-lite";
 import React, { useContext, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { View, FlatList, VirtualizedList } from "react-native";
+import { View } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import {
   Maybe,
