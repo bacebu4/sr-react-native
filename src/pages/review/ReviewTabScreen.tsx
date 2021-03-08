@@ -24,6 +24,7 @@ import { BaseImage } from "../../components/BaseImage";
 import { GRAY_COLOR } from "../../utils/colors";
 import { BaseText } from "../../components/BaseText";
 import { uuidExpo } from "../../utils/uuidExpo";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   noteId?: string;
@@ -44,6 +45,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
   const [, deleteTagFromNote] = useDeleteTagFromNoteMutation();
   const [result] = useNoteQuery({ variables: { id: noteId } });
   const { data, fetching, error } = result;
+  const { t } = useTranslation();
 
   const showAddTagStack = () => {
     setModalTagVisible(true);
@@ -160,7 +162,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
                   opacity: data?.note?.deleted ? 0.3 : 1,
                 }}
               >
-                <Title title="Your comment:" type="small"></Title>
+                <Title title={t("Your comments") + ": "} type="small"></Title>
 
                 <BaseImage
                   onPress={showAddCommentModal}
@@ -200,7 +202,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
             {data?.note?.tags?.length ? (
               <>
                 <View style={styles.line}>
-                  <Title title="Your tags:" type="small" />
+                  <Title title={t("Your tags") + ": "} type="small" />
 
                   <BaseImage
                     onPress={showAddTagStack}
@@ -248,8 +250,8 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
 
       <ActionSheet
         ref={actionAddRef}
-        title="What you want to add?"
-        options={["Add comment", "Add tag", "Cancel"]}
+        title={t("What you want to add?")}
+        options={[t("Add comment"), t("Add tag"), t("Cancel")]}
         cancelButtonIndex={2}
         onPress={(index) => {
           if (index === 1) {
@@ -262,7 +264,7 @@ export const ReviewTabScreen: React.FC<Props> = observer(({ noteId = "" }) => {
 
       <ActionSheet
         ref={actionTagRef}
-        options={["Delete", "Edit", "Cancel"]}
+        options={[t("Delete"), t("Edit"), t("Cancel")]}
         cancelButtonIndex={2}
         onPress={(index) => {
           if (index === 0) {
