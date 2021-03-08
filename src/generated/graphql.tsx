@@ -558,6 +558,17 @@ export type TagsQuery = (
   )>>> }
 );
 
+export type AllTagsScreenQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllTagsScreenQuery = (
+  { __typename?: 'Query' }
+  & { tags?: Maybe<Array<Maybe<(
+    { __typename?: 'Tag' }
+    & Pick<Tag, 'id' | 'name' | 'hue'>
+  )>>> }
+);
+
 export type HomeScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -916,6 +927,19 @@ export const TagsDocument = gql`
 
 export function useTagsQuery(options: Omit<Urql.UseQueryArgs<TagsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<TagsQuery>({ query: TagsDocument, ...options });
+};
+export const AllTagsScreenDocument = gql`
+    query AllTagsScreen {
+  tags {
+    id
+    name
+    hue
+  }
+}
+    `;
+
+export function useAllTagsScreenQuery(options: Omit<Urql.UseQueryArgs<AllTagsScreenQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<AllTagsScreenQuery>({ query: AllTagsScreenDocument, ...options });
 };
 export const HomeScreenDocument = gql`
     query HomeScreen {

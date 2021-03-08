@@ -33,7 +33,7 @@ export const LatestTags: React.FC<LatestTagsProps> = ({ tags }) => {
       <Container mt={44} hasBorder pb={16}>
         <Title title={t("View by tags")} />
 
-        <Tags type="latest" />
+        <Tags tags={tags} />
       </Container>
 
       <Container mt={16}>
