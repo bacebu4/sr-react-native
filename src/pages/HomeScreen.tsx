@@ -97,7 +97,6 @@ export const HomeScreen = () => {
             <Navbar
               info={data?.info}
               dailyNotesIds={data?.dailyNotesIds}
-              title="Book stash"
               handleClick={openSettings}
             />
 

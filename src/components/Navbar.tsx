@@ -12,7 +12,6 @@ import { Container } from "./grid/Container";
 import { Title } from "./Title";
 
 interface Props {
-  title: string;
   handleClick: ((event: GestureResponderEvent) => void) | undefined;
   info:
     | Maybe<
@@ -35,7 +34,7 @@ interface Props {
 }
 
 export const Navbar: React.FC<Props> = observer(
-  ({ title, handleClick, info, dailyNotesIds }) => {
+  ({ handleClick, info, dailyNotesIds }) => {
     const UiStore = useContext(UiStoreContext);
 
     return (
@@ -45,7 +44,7 @@ export const Navbar: React.FC<Props> = observer(
           mt={Constants.statusBarHeight + 40}
           style={{ justifyContent: "space-between", alignItems: "baseline" }}
         >
-          <Title type="big" title={title} />
+          <Title type="big" title="Book stash" />
           <BaseImage
             w={44}
             h={44}
