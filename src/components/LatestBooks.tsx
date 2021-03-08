@@ -1,44 +1,38 @@
-import React from "react";
-import { ActivityIndicator, Text, View } from "react-native";
-import { Container } from "./grid/Container";
 import { useNavigation } from "@react-navigation/native";
-import { useLatestBooksQuery } from "../generated/graphql";
-import { Title } from "./Title";
-import { SeeAll } from "./SeeAll";
-import { Carousel } from "./Carousel";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { View } from "react-native";
+import { Book, Maybe } from "../generated/graphql";
+import { Carousel } from "./Carousel";
+import { Container } from "./grid/Container";
+import { SeeAll } from "./SeeAll";
+import { Title } from "./Title";
 
-export const LatestBooks: React.FC = () => {
-  const [result] = useLatestBooksQuery();
-  const { data, fetching, error } = result;
+type LatestBooksProps = {
+  latestBooks:
+    | Maybe<
+        Maybe<
+          {
+            __typename?: "Book" | undefined;
+          } & Pick<Book, "id" | "title" | "author">
+        >[]
+      >
+    | undefined;
+};
+
+export const LatestBooks: React.FC<LatestBooksProps> = ({ latestBooks }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  if (error) {
-    return (
-      <Container isCentered mt={400}>
-        <Text>{error.message}</Text>
-      </Container>
-    );
-  }
-
-  if (fetching) {
-    return (
-      <Container isCentered mt={400}>
-        <ActivityIndicator size="large" />
-      </Container>
-    );
-  }
-
-  if (data?.latestBooks?.length) {
+  if (latestBooks?.length) {
     return (
       <>
         <Container mt={32}>
           <Title title={t("Latest books")}></Title>
         </Container>
 
-        <Carousel books={data?.latestBooks}></Carousel>
-        <Container mt={16} hasBorder></Container>
+        <Carousel books={latestBooks} />
+        <Container mt={16} hasBorder />
         <Container mt={16}>
           <SeeAll onPress={() => navigation.navigate("AllBooks")} />
         </Container>

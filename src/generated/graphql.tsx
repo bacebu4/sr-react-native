@@ -567,7 +567,10 @@ export type HomeScreenQuery = (
   & { info?: Maybe<(
     { __typename?: 'Info' }
     & Pick<Info, 'reviewAmount' | 'email' | 'latestReviewDate' | 'streakBeginningDate' | 'missed' | 'reviewed' | 'streak' | 'id'>
-  )> }
+  )>, latestBooks?: Maybe<Array<Maybe<(
+    { __typename?: 'Book' }
+    & Pick<Book, 'id' | 'title' | 'author'>
+  )>>> }
 );
 
 
@@ -924,6 +927,11 @@ export const HomeScreenDocument = gql`
     id
   }
   dailyNotesIds
+  latestBooks {
+    id
+    title
+    author
+  }
 }
     `;
 

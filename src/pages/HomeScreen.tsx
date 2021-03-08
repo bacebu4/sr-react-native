@@ -30,6 +30,11 @@ export const HOME_SCREEN_QUERY = gql`
       id
     }
     dailyNotesIds
+    latestBooks {
+      id
+      title
+      author
+    }
   }
 `;
 
@@ -99,7 +104,7 @@ export const HomeScreen = () => {
               }
             />
 
-            <LatestBooks />
+            <LatestBooks latestBooks={data.latestBooks} />
 
             <LatestTags />
 
