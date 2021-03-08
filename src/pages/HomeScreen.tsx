@@ -113,7 +113,10 @@ export const HomeScreen = () => {
 
             <LatestTags tags={data.tags} />
 
-            <ReviewingGoals />
+            <ReviewingGoals
+              info={data?.info}
+              dailyNotesIds={data?.dailyNotesIds}
+            />
           </ScrollView>
         </MainContainer>
       </>
