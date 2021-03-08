@@ -4,16 +4,16 @@ import { Container } from "./grid/Container";
 import { useNavigation } from "@react-navigation/native";
 import { Card } from "./CardNew";
 import { MainButton } from "./MainButton";
-import { useNoteQuery } from "../generated/graphql";
+import { useNoteQuery, Maybe } from "../generated/graphql";
 import { BaseImage } from "./BaseImage";
 import { BaseText } from "./BaseText";
 
 interface Props {
-  noteId: string;
+  noteId: Maybe<string> | undefined;
 }
 
 export const MainHighlight: React.FC<Props> = ({ noteId }) => {
-  const [result] = useNoteQuery({ variables: { id: noteId } });
+  const [result] = useNoteQuery({ variables: { id: noteId || "" } });
   const { data, fetching } = result;
   const navigation = useNavigation();
 

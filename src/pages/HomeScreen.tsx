@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   ScrollView,
   RefreshControl,
@@ -11,15 +11,44 @@ import { Container } from "../components/grid/Container";
 import { SettingsModal } from "./settings/SettingsModal";
 import { MainHighlight } from "../components/MainHighlight";
 import { LatestBooks } from "../components/LatestBooks";
-import { useDailyNotesIdsQuery } from "../generated/graphql";
+import { useHomeScreenQuery } from "../generated/graphql";
 import { LatestTags } from "../components/LatestTags";
 import { ReviewingGoals } from "./home/sections/ReviewingGoals";
+import gql from "graphql-tag";
+import { UiStoreContext } from "../utils/UiStore";
+
+export const HOME_SCREEN_QUERY = gql`
+  query HomeScreen {
+    info {
+      reviewAmount
+      email
+      latestReviewDate
+      streakBeginningDate
+      missed
+      reviewed
+      streak
+      id
+    }
+    dailyNotesIds
+    latestBooks {
+      id
+      title
+      author
+    }
+    tags(type: "latest") {
+      id
+      name
+      hue
+    }
+  }
+`;
 
 export const HomeScreen = () => {
+  const UiStore = useContext(UiStoreContext);
   const [refreshing, setRefreshing] = useState(false);
   const [modalSettings, setModalSettings] = useState(false);
-  const [result] = useDailyNotesIdsQuery();
-  const { data, fetching, error } = result;
+  const [result, reexecuteHomeScreenQuery] = useHomeScreenQuery();
+  const { data, error } = result;
 
   const closeSettings = () => {
     setModalSettings(false);
@@ -29,11 +58,18 @@ export const HomeScreen = () => {
     setModalSettings(true);
   };
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
+    await reexecuteHomeScreenQuery({ requestPolicy: "network-only" });
     setRefreshing(false);
-    // NotesStore.fetchHighlights().then(() => setRefreshing(false));
   }, []);
+
+  if (
+    error?.graphQLErrors.length &&
+    error?.graphQLErrors[0]?.message === "invalid user"
+  ) {
+    UiStore.logout();
+  }
 
   if (error) {
     return (
@@ -43,39 +79,52 @@ export const HomeScreen = () => {
     );
   }
 
-  if (fetching) {
+  if (data) {
     return (
-      <Container isCentered mt={400}>
-        <ActivityIndicator size="large" />
-      </Container>
+      <>
+        <SettingsModal
+          modalState={modalSettings}
+          setModalState={setModalSettings}
+          handleDone={closeSettings}
+        />
+
+        <MainContainer>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
+            <Navbar
+              info={data?.info}
+              dailyNotesIds={data?.dailyNotesIds}
+              handleClick={openSettings}
+            />
+
+            <MainHighlight
+              noteId={
+                data && data.dailyNotesIds?.length
+                  ? data.dailyNotesIds[0]
+                  : undefined
+              }
+            />
+
+            <LatestBooks latestBooks={data.latestBooks} />
+
+            <LatestTags tags={data.tags} />
+
+            <ReviewingGoals
+              info={data?.info}
+              dailyNotesIds={data?.dailyNotesIds}
+            />
+          </ScrollView>
+        </MainContainer>
+      </>
     );
   }
 
   return (
-    <>
-      <SettingsModal
-        modalState={modalSettings}
-        setModalState={setModalSettings}
-        handleDone={closeSettings}
-      ></SettingsModal>
-
-      <MainContainer>
-        <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
-          <Navbar title="Book stash" handleClick={openSettings} />
-
-          <MainHighlight noteId={data?.dailyNotesIds![0]!} />
-
-          <LatestBooks />
-
-          <LatestTags />
-
-          <ReviewingGoals />
-        </ScrollView>
-      </MainContainer>
-    </>
+    <Container isCentered mt={400}>
+      <ActivityIndicator size="large" />
+    </Container>
   );
 };

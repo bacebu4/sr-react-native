@@ -1,28 +1,36 @@
-import React, { useContext, useRef, useState } from "react";
-import { ActivityIndicator, Text, View } from "react-native";
-import { Container } from "./grid/Container";
 import { useNavigation } from "@react-navigation/native";
-import { useDeleteTagMutation, useTagsQuery } from "../generated/graphql";
-import { TagContainer } from "./grid/TagContainer";
-import { Tag } from "./Tag";
 import * as Haptics from "expo-haptics";
-import ActionSheet from "react-native-actionsheet";
 import { observer } from "mobx-react-lite";
-import { UiStoreContext } from "../utils/UiStore";
-import { TagModal } from "./TagModal";
-import { TagConstructor } from "../pages/addTag/TagConstructor";
-import { useConfirm } from "../hooks/confirm.hook";
-import { FlatList } from "react-native-gesture-handler";
+import React, { useContext, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { View } from "react-native";
+import ActionSheet from "react-native-actionsheet";
+import {
+  Maybe,
+  Tag as TagType,
+  useDeleteTagMutation,
+} from "../generated/graphql";
+import { useConfirm } from "../hooks/confirm.hook";
+import { TagConstructor } from "../pages/addTag/TagConstructor";
+import { UiStoreContext } from "../utils/UiStore";
+import { Container } from "./grid/Container";
+import { Tag } from "./Tag";
+import { TagModal } from "./TagModal";
 
 interface Props {
-  type?: "latest";
+  tags:
+    | Maybe<
+        Maybe<
+          {
+            __typename?: "Tag" | undefined;
+          } & Pick<TagType, "id" | "name" | "hue">
+        >[]
+      >
+    | undefined;
 }
 
-export const Tags: React.FC<Props> = observer(({ type }) => {
+export const Tags: React.FC<Props> = observer(({ tags }) => {
   const actionTagRef = useRef(null);
-  const [result] = useTagsQuery({ variables: { type } });
-  const { data, fetching, error } = result;
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [tagId, setTagId] = useState<string | null>(null);
@@ -55,24 +63,8 @@ export const Tags: React.FC<Props> = observer(({ type }) => {
     );
   };
 
-  if (error) {
-    return (
-      <Container isCentered mt={400}>
-        <Text>{error.message}</Text>
-      </Container>
-    );
-  }
-
-  if (fetching) {
-    return (
-      <Container isCentered mt={400}>
-        <ActivityIndicator size="large" />
-      </Container>
-    );
-  }
-
   // state when no tags at all, user should not be here
-  if (!data?.tags?.length) {
+  if (!tags?.length) {
     return <View />;
   }
 
@@ -88,9 +80,9 @@ export const Tags: React.FC<Props> = observer(({ type }) => {
         />
       </TagModal>
 
-      {type === "latest" ? (
-        <TagContainer>
-          {data?.tags?.map((item) => (
+      <Container hasNoMargin style={{ flexDirection: "row", flexWrap: "wrap" }}>
+        {tags.map((item) => {
+          return (
             <Tag
               hue={item?.hue}
               key={item?.id}
@@ -105,35 +97,9 @@ export const Tags: React.FC<Props> = observer(({ type }) => {
                 })
               }
             />
-          ))}
-        </TagContainer>
-      ) : (
-        <FlatList
-          data={data?.tags}
-          columnWrapperStyle={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-          }}
-          numColumns={10}
-          keyExtractor={(item) => item!.id}
-          renderItem={({ item }) => (
-            <Tag
-              hue={item?.hue}
-              key={item?.id}
-              title={item?.name}
-              style={{ marginRight: 16, marginTop: 16 }}
-              onLongPress={() => handleLongAddPress(item!.id)}
-              onPress={() =>
-                navigation.navigate("By", {
-                  id: item?.id,
-                  name: item?.name,
-                  type: "Tag",
-                })
-              }
-            />
-          )}
-        />
-      )}
+          );
+        })}
+      </Container>
 
       <ActionSheet
         ref={actionTagRef}

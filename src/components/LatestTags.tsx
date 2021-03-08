@@ -1,36 +1,30 @@
-import React from "react";
-import { ActivityIndicator, Text, View } from "react-native";
-import { Container } from "./grid/Container";
 import { useNavigation } from "@react-navigation/native";
-import { Title } from "./Title";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { useTagsQuery } from "../generated/graphql";
+import { View } from "react-native";
+import { Maybe, Tag } from "../generated/graphql";
+import { Container } from "./grid/Container";
 import { SeeAll } from "./SeeAll";
 import { Tags } from "./Tags";
+import { Title } from "./Title";
 
-export const LatestTags: React.FC = () => {
-  const [result] = useTagsQuery({ variables: { type: "latest" } });
-  const { data, fetching, error } = result;
+type LatestTagsProps = {
+  tags:
+    | Maybe<
+        Maybe<
+          {
+            __typename?: "Tag" | undefined;
+          } & Pick<Tag, "id" | "name" | "hue">
+        >[]
+      >
+    | undefined;
+};
+
+export const LatestTags: React.FC<LatestTagsProps> = ({ tags }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  if (error) {
-    return (
-      <Container isCentered mt={400}>
-        <Text>{error.message}</Text>
-      </Container>
-    );
-  }
-
-  if (fetching) {
-    return (
-      <Container isCentered mt={400}>
-        <ActivityIndicator size="large" />
-      </Container>
-    );
-  }
-
-  if (!data?.tags?.length) {
+  if (!tags?.length) {
     return <View />;
   }
 
@@ -39,7 +33,7 @@ export const LatestTags: React.FC = () => {
       <Container mt={44} hasBorder pb={16}>
         <Title title={t("View by tags")} />
 
-        <Tags type="latest" />
+        <Tags tags={tags} />
       </Container>
 
       <Container mt={16}>
