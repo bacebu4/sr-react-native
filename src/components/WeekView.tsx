@@ -1,18 +1,38 @@
 import React from "react";
-import { Container } from "./grid/Container";
 import { ActivityIndicator, Text, View } from "react-native";
 import {
+  Info,
+  Maybe,
   useReviewHistoryThisWeekQuery,
-  useInfoQuery,
 } from "../generated/graphql";
 import { getWeekDaysArray } from "../utils/getWeekDaysArray";
 import { BaseText } from "./BaseText";
+import { Container } from "./grid/Container";
 import { SingleDayCircle } from "./SingleDayCircle";
 
-export const WeekView: React.FC = () => {
+type WeekViewProps = {
+  info:
+    | Maybe<
+        {
+          __typename?: "Info" | undefined;
+        } & Pick<
+          Info,
+          | "reviewAmount"
+          | "email"
+          | "latestReviewDate"
+          | "streakBeginningDate"
+          | "missed"
+          | "reviewed"
+          | "streak"
+          | "id"
+        >
+      >
+    | undefined;
+};
+
+export const WeekView: React.FC<WeekViewProps> = ({ info }) => {
   const [result] = useReviewHistoryThisWeekQuery();
   const { data, fetching, error } = result;
-  const [infoResult] = useInfoQuery();
 
   if (error) {
     return (
@@ -22,7 +42,7 @@ export const WeekView: React.FC = () => {
     );
   }
 
-  if (fetching || infoResult.fetching) {
+  if (fetching) {
     return (
       <Container isCentered mt={400}>
         <ActivityIndicator size="large" />
@@ -48,7 +68,7 @@ export const WeekView: React.FC = () => {
             <SingleDayCircle
               day={day}
               reviewHistoryThisWeek={data?.reviewHistoryThisWeek}
-              reviewed={infoResult.data?.info?.reviewed}
+              reviewed={info?.reviewed}
             />
           </View>
         );

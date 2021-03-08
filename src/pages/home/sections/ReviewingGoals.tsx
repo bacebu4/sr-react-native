@@ -97,7 +97,7 @@ export const ReviewingGoals: React.FC<ReviewingGoalsProps> = observer(
           </BaseText>
         </Container>
 
-        <WeekView />
+        <WeekView info={info} />
 
         <Container mt={32} pb={64} isCentered>
           <MainButton
