@@ -35,6 +35,11 @@ export const HOME_SCREEN_QUERY = gql`
       title
       author
     }
+    tags(type: "latest") {
+      id
+      name
+      hue
+    }
   }
 `;
 
@@ -106,7 +111,7 @@ export const HomeScreen = () => {
 
             <LatestBooks latestBooks={data.latestBooks} />
 
-            <LatestTags />
+            <LatestTags tags={data.tags} />
 
             <ReviewingGoals />
           </ScrollView>

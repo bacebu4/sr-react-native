@@ -570,6 +570,9 @@ export type HomeScreenQuery = (
   )>, latestBooks?: Maybe<Array<Maybe<(
     { __typename?: 'Book' }
     & Pick<Book, 'id' | 'title' | 'author'>
+  )>>>, tags?: Maybe<Array<Maybe<(
+    { __typename?: 'Tag' }
+    & Pick<Tag, 'id' | 'name' | 'hue'>
   )>>> }
 );
 
@@ -931,6 +934,11 @@ export const HomeScreenDocument = gql`
     id
     title
     author
+  }
+  tags(type: "latest") {
+    id
+    name
+    hue
   }
 }
     `;
