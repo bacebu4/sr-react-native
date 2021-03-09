@@ -1,5 +1,4 @@
 import { createClient, dedupExchange, fetchExchange } from "urql";
-
 import { BACKEND_URL } from "../variables";
 import { cacheExchange } from "@urql/exchange-graphcache";
 import {
@@ -15,6 +14,8 @@ import {
   LatestBooksQuery,
   BooksDocument,
   LatestBooksDocument,
+  NotesByDocument,
+  NotesByQuery,
 } from "../generated/graphql";
 
 export const createUrqlClient = (TOKEN: string) => {
@@ -147,6 +148,35 @@ export const createUrqlClient = (TOKEN: string) => {
           },
           deleteTagFromNote: (variables, cache, _) => {
             const { noteId, tagId } = variables;
+            const allFields = cache.inspectFields("Query");
+
+            const notesByQueries = allFields.filter(
+              (x) => x.fieldName === "notesBy"
+            );
+
+            notesByQueries.forEach((x) => {
+              if (x?.arguments?.type === "Tag") {
+                cache.updateQuery<NotesByQuery>(
+                  {
+                    query: NotesByDocument,
+                    variables: { id: tagId, type: "Tag" },
+                  },
+                  (data) => {
+                    console.log(data);
+                    console.log(noteId);
+
+                    if (data?.notesBy) {
+                      data.notesBy = data.notesBy.filter(
+                        (n) => n?.id !== noteId
+                      );
+                    }
+                    console.log("new data", data);
+
+                    return data;
+                  }
+                );
+              }
+            });
 
             const cachedTagsFromNote = cache.readQuery<NoteQuery>({
               query: NoteDocument,
@@ -213,6 +243,37 @@ export const createUrqlClient = (TOKEN: string) => {
         },
         updates: {
           Mutation: {
+            deleteTagFromNote: (_, { tagId, noteId }, cache) => {
+              const allFields = cache.inspectFields("Query");
+
+              const notesByQueries = allFields.filter(
+                (x) => x.fieldName === "notesBy"
+              );
+
+              notesByQueries.forEach((x) => {
+                if (x?.arguments?.type === "Tag") {
+                  cache.updateQuery<NotesByQuery>(
+                    {
+                      query: NotesByDocument,
+                      variables: { id: tagId, type: "Tag" },
+                    },
+                    (data) => {
+                      console.log(data);
+                      console.log(noteId);
+
+                      if (data?.notesBy) {
+                        data.notesBy = data.notesBy.filter(
+                          (n) => n?.id !== noteId
+                        );
+                      }
+                      console.log("new data", data);
+
+                      return data;
+                    }
+                  );
+                }
+              });
+            },
             deleteBook: (_, { bookId }, cache) => {
               const allFields = cache.inspectFields("Query");
 
