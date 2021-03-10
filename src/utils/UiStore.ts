@@ -14,6 +14,7 @@ class UiStore {
   }
 
   *setToken(value: string | null) {
+    // @ts-ignore
     const available = yield SecureStore.isAvailableAsync();
 
     if (available && value) {
@@ -41,8 +42,10 @@ class UiStore {
   *init() {
     this.setLoading(true);
     try {
+      // @ts-ignore
       const available = yield SecureStore.isAvailableAsync();
       if (available) {
+        // @ts-ignore
         const token = yield SecureStore.getItemAsync("token");
         if (token) {
           this.login(token);
