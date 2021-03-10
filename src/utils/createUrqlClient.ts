@@ -57,10 +57,12 @@ export const createUrqlClient = (TOKEN: string) => {
           addExistingTag: (variables, cache, _) => {
             const { noteId, tagId } = variables;
 
-            const cachedTagsFromNote = cache.readQuery<NoteQuery>({
+            const changedNote = cache.readQuery<NoteQuery>({
               query: NoteDocument,
               variables: { id: noteId },
-            })?.note?.tags;
+            })?.note;
+
+            const cachedTagsFromNote = changedNote?.tags || [];
 
             const allCachedTags = cache.readQuery<TagsQuery>({
               query: TagsDocument,
@@ -68,13 +70,15 @@ export const createUrqlClient = (TOKEN: string) => {
 
             const addedTag = allCachedTags?.find((t) => t?.id === tagId);
 
-            if (cachedTagsFromNote) {
-              return {
-                __typename: "Note",
-                id: noteId,
-                tags: [...cachedTagsFromNote, addedTag],
-              } as any;
+            if (addedTag) {
+              addedTag.__typename = "Tag";
             }
+
+            return {
+              __typename: "Note",
+              id: noteId,
+              tags: [...cachedTagsFromNote, addedTag],
+            } as any;
           },
           updateTag: (variables, cache, _) => {
             const { name, hue, tagId } = variables;
@@ -322,6 +326,41 @@ export const createUrqlClient = (TOKEN: string) => {
                   return data;
                 }
               );
+            },
+            addExistingTag: (_, { noteId, tagId }, cache, __) => {
+              const changedNote = cache.readQuery<NoteQuery>({
+                query: NoteDocument,
+                variables: { id: noteId },
+              })?.note;
+
+              const allFields = cache.inspectFields("Query");
+
+              const notesByQueries = allFields.filter(
+                (x) => x.fieldName === "notesBy"
+              );
+
+              if (changedNote) {
+                notesByQueries.forEach((x) => {
+                  if (x?.arguments?.type === "Tag") {
+                    cache.updateQuery<NotesByQuery>(
+                      {
+                        query: NotesByDocument,
+                        variables: { id: tagId, type: "Tag" },
+                      },
+                      (data) => {
+                        data?.notesBy?.push({
+                          text: changedNote.text,
+                          id: changedNote.id,
+                          title: changedNote.title,
+                          author: changedNote.author,
+                        });
+
+                        return data;
+                      }
+                    );
+                  }
+                });
+              }
             },
             addNewTag: (_, args, cache, __) => {
               const { name, hue, tagId } = args;
